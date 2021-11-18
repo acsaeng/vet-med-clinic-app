@@ -10,20 +10,31 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository("tempStatusRepo")
-public class StatusRepository { //Dummy repo, Need to update to pull status from DataBase
+public class StatusRepository { 
 	
 	private static List<Status> DB_status = new ArrayList<>();
 	
+	/** insertStatus function
+	 * @param status = new status object for particular animal
+	 * @return integer verifying successful code execution
+	 */
 	public int insertStatus(Status status) {
 		UUID id = UUID.randomUUID(); 
 		DB_status.add(new Status(id, status.getStatus()));
 		return 1;
 	}
 	
+	/** selectAllStatus function
+	 * @return DB of statuses for all animals
+	 */
 	public List<Status> selectAllStatus(){
 		return DB_status;
 	}
 	
+	/** selectStatusById function
+	 * @param id = UUID pertaining to specific animal
+	 * @return Optional<Status> object which contains the status of particular animal or is empty
+	 */
 	public Optional<Status> selectStatusById(UUID id) {
 		
 		return DB_status.stream()
@@ -31,6 +42,10 @@ public class StatusRepository { //Dummy repo, Need to update to pull status from
 				.findFirst();
 	}
 	
+	/** deleteStatusById function
+	 * @param id = UUID pertaining to specific animal
+	 * @return integer verifying successful code execution
+	 */
 	public int deleteStatusById(UUID id) {
 		Optional<Status> animalMaybe = selectStatusById(id);
 		if (animalMaybe.isEmpty()) { return 0; }
@@ -38,12 +53,17 @@ public class StatusRepository { //Dummy repo, Need to update to pull status from
 		return 1;
 	}
 	
-	public int updateStatusById(UUID id, Status update) {//Person update only contains the RequestBody from the HTTP request, so the Postman request has a json input with just a name
+	/**updateStatusById function
+	 * @param id = UUID pertaining to specific animal 
+	 * @param update = Status object containing new data members
+	 * @return integer verifying successful code execution
+	 */
+	public int updateStatusById(UUID id, Status update) {
 		return selectStatusById(id)
 				.map(animalFound -> {
 					int indexOfPersonToUpdate = DB_status.indexOf(animalFound);
-					if (indexOfPersonToUpdate >= 0) { //index was found, ie animal object exists
-						DB_status.set(indexOfPersonToUpdate, new Status(id, update.getStatus())); //update that status object at index found to the new status object
+					if (indexOfPersonToUpdate >= 0) { //index was found, 
+						DB_status.set(indexOfPersonToUpdate, new Status(id, update.getStatus())); 
 						return 1;   
 					}
 					return 0; 

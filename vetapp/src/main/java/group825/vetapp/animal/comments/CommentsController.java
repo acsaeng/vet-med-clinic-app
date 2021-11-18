@@ -1,4 +1,4 @@
-package group825.vetapp.animal.status;
+package group825.vetapp.animal.comments;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,53 +18,53 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
-@RequestMapping("app/status/animal")
+@RequestMapping("app/comments/animal")
 @RestController
-public class StatusController {
-	private final StatusService statusService;
+public class CommentsController {
+	private final  CommentsService commentsService;
 
-	/** StatusController Constructor 
-	 * @param statusService = StatusService object which interacts with the "StatusRepository" Class
+	/** CommentsController Constructor 
+	 * @param commentsService = CommentsService object which interacts with the "CommentsRepository" Class
 	 */
 	@Autowired
-	public StatusController(StatusService statusService) {
-		this.statusService = statusService;
+	public CommentsController(CommentsService commentsService) {
+		this.commentsService = commentsService;
 	}
 	
 	
 	
-	/** addStatus function - POST MAPPING
-	 * @param status = RequestBody json object to be passed to the Status class where the json keys are already mapped to specific data members
+	/** addComments function - POST MAPPING
+	 * @param comment = RequestBody json object to be passed to the Comments class where the json keys are already mapped to specific data members
 	 */
 	@PostMapping
-	public void addStatus(@RequestBody Status status){	
-		if (status.anyNulls()) {
+	public void addComment(@RequestBody Comment comment){	
+		if (comment.anyNulls()) {
 			throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
 		}
-		statusService.addStatus(status);
+		commentsService.insertComment(comment);
 	}
 
 
 	
-	/** selectAllStatus function - GET MAPPING
-	 * @return List<Status> object containing the statuses of all animals by calling method from the repository
+	/** selectAllComments function - GET MAPPING
+	 * @return List<Comment> object containing the Comments of all animals by calling method from the repository
 	 */
 	@GetMapping
-	public List<Status> selectAllStatus(){
-		return statusService.selectAllStatus();
+	public List<Comment> selectAllComments(){
+		return commentsService.selectAllComments();
 	}
 	
 	
 	
-	/** selectStatusById function - GET MAPPING
+	/** selectCommentsById function - GET MAPPING
 	 * @param id = UUID path variable obtained by path denoted inside the GetMapping annotation
-	 * @return Status object or throw exception
+	 * @return Comment object or throw exception
 	 */
 	@GetMapping(path="{id}") 
-	public Status selectStatusById(@PathVariable("id") String id_str) {	
+	public Comment selectCommentsById(@PathVariable("id") String id_str) {	
 		try {
 			UUID id = UUID.fromString(id_str);
-			return statusService.selectStatusById(id)
+			return commentsService.selectCommentsById(id)
 					.orElseThrow(ApiExceptions.invalidIdException()); //throw exception if UUID is valid but does not exist in database
 		}catch(java.lang.IllegalArgumentException e) { //catch if id_str is not a valid UUID
 			throw new InvalidIdException();
@@ -74,33 +74,34 @@ public class StatusController {
 	
 
 	
-	/** deleteStatusById function - DELETE MAPPING
+	/** deleteCommentById function - DELETE MAPPING
 	 * @param id = UUID path variable obtained by path denoted inside the DeleteMapping annotation
 	 */
 	@DeleteMapping(path = "{id}")
-	public void deleteStatusById(@PathVariable("id") String id_str) {
+	public void deleteCommentById(@PathVariable("id") String id_str) {
 		try {
 			UUID id = UUID.fromString(id_str);
-			statusService.deleteStatusById(id);
+			commentsService.deleteCommentsById(id);
 		}catch(java.lang.IllegalArgumentException e) {
 			throw new InvalidIdException();
 		}
+		
 	}
 	
 	
 	
-	/** updateStatusById function - PUT MAPPING
+	/** updateCommentById function - PUT MAPPING
 	 * @param id = UUID path variable obtained by path denoted inside the PutMapping annotation
-	 * @param statusToUpdate = response body from HTTP request which should contain keys for necessary data members
+	 * @param commentToUpdate = response body from HTTP request which should contain keys for necessary data members
 	 */
 	@PutMapping(path = "{id}")
-	public void updateStatusById(@PathVariable("id") String id_str, @RequestBody Status statusToUpdate) {	
+	public void updateCommentById(@PathVariable("id") String id_str, @RequestBody Comment commentToUpdate) {	
 		try {
 			UUID id = UUID.fromString(id_str);
-			if (statusToUpdate.anyNulls()) {
+			if (commentToUpdate.anyNulls()) {
 				throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
 			}
-			statusService.updateStatusById(id, statusToUpdate);
+			commentsService.updateCommentById(id, commentToUpdate);
 		}catch(java.lang.IllegalArgumentException e) {
 			throw new InvalidIdException();
 		}

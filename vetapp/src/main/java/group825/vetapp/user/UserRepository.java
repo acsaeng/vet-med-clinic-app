@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository("tempAccountRepo")
 public class UserRepository {
@@ -48,19 +49,45 @@ public class UserRepository {
     }
 
 
+    public List<User> selectAllUsers() {
+        return database;
+    }
 
-
-
-    // @Autowired
     public int addUser(User user) {
         database.add(user);
 
         return 1;
     }
 
+    public int editUser(UUID id, UUID newId, String name, String email) {
+        return selectUserById(id).map(user -> {
+            int accountIdx = database.indexOf(user);
 
-    // **FOR TESTING PURPOSES**
-    public List<User> selectAllUsers() {
-        return database;
+            if (accountIdx >= 0) {
+                database.get(accountIdx).setId(newId);
+                database.get(accountIdx).setName(name);
+                database.get(accountIdx).setEmail(email);
+                return 1;
+            }
+
+            return 0;
+        }).orElse(0);
+    }
+
+    public int blockUser(UUID id) {
+        return selectUserById(id).map(user -> {
+            int accountIdx = database.indexOf(user);
+
+            if (accountIdx >= 0) {
+                database.get(accountIdx).setActive(false);
+                return 1;
+            }
+
+            return 0;
+        }).orElse(0);
+    }
+
+    private Optional<User> selectUserById(UUID id) {
+        return database.stream().filter(user -> user.getId().equals(id)).findFirst();
     }
 }

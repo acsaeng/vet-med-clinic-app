@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/app")
@@ -35,9 +36,9 @@ public class UserController {
     @PutMapping(path = "/password-recovery/{email}")
     public void changeUserPassword(@PathVariable("email") String email) {
         // User inputs this information
-        String inputtedNewPassword = "newPassword456";
+        String newPassword = "new_password456";
 
-        this.userService.changeUserPassword(email, inputtedNewPassword);
+        this.userService.changeUserPassword(email, newPassword);
     }
 
 
@@ -47,19 +48,30 @@ public class UserController {
 
 
 
-    @GetMapping(path = "/users")
+    @GetMapping(path = "/admin/users")
     public List<User> selectAllUsers() {
         return this.userService.selectAllUsers();
     }
 
-    @PostMapping(path = "/users")
+    @PostMapping(path = "/admin/add-user")
     public void addUser(@RequestBody User user) {
         // Add error handling if email is already registered!
         this.userService.addUser(user);
     }
 
-    @PutMapping(path = "/users/{id}")
-    public void editUser()
+    @PutMapping(path = "/admin/edit-user/{id}")
+    public void editUser(@PathVariable("id") UUID id) {
+        UUID newId = UUID.randomUUID();
+        String newName = "New Name";
+        String newEmail = "new.test@example.com";
+
+        this.userService.editUser(id, newId, newName, newEmail);
+    }
+
+    @PutMapping(path = "/admin/block-user/{id}")
+    public void blockUser(@PathVariable("id") UUID id) {
+        this.userService.blockUser(id);
+    }
 
 
 

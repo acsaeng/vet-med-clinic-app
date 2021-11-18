@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -24,17 +25,22 @@ public class UserService {
 
 
 
-
-
+    public List<User> selectAllUsers() {
+        return this.repo.selectAllUsers();
+    }
 
     public int addUser(User user) {
         return this.repo.addUser(user);
     }
 
-
-    // **FOR TESTING PURPOSES**
-    public List<User> selectAllUsers() {
-        return this.repo.selectAllUsers();
+    public int editUser(UUID id, UUID newId, String name, String email) {
+        return this.repo.editUser(id, newId, name, email);
     }
+
+    public int blockUser(UUID id) {
+        return this.repo.blockUser(id);
+    }
+
+
 
 }

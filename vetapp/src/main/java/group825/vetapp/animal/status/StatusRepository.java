@@ -61,9 +61,9 @@ public class StatusRepository {
 	public int updateStatusById(UUID id, Status update) {
 		return selectStatusById(id)
 				.map(animalFound -> {
-					int indexOfPersonToUpdate = DB_status.indexOf(animalFound);
-					if (indexOfPersonToUpdate >= 0) { //index was found, 
-						DB_status.set(indexOfPersonToUpdate, new Status(id, update.getStatus())); 
+					int indexOfAnimalToUpdate = DB_status.indexOf(animalFound);
+					if (indexOfAnimalToUpdate >= 0) { //index was found, 
+						DB_status.set(indexOfAnimalToUpdate, new Status(id, update.getStatus())); 
 						return 1;   
 					}
 					return 0; 

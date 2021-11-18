@@ -3,8 +3,6 @@ package group825.vetapp.animal.status;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.UUID;
 
-import javax.validation.constraints.NotNull;
-
 public class Status {
 	private final UUID id;
 	private final String status;

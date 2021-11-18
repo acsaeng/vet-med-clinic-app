@@ -21,15 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("app/status/animal")
 @RestController
 public class StatusController {
-	private final StatusRepository statusRepo;
+	private final StatusService statusService;
 
 	/** StatusController Constructor 
-	 * @param statusRepo = StatusRepositor object which is autowired using the qualifier annotation
-	 * 						Qualifier annotation matches the Repository Annotation inside the "StatusRepository" Class
+	 * @param statusService = StatusService object which interacts with the "StatusRepository" Class
 	 */
 	@Autowired
-	public StatusController(@Qualifier("tempStatusRepo") StatusRepository statusRepo) {
-		this.statusRepo = statusRepo;
+	public StatusController(StatusService statusService) {
+		this.statusService = statusService;
 	}
 	
 	
@@ -42,7 +41,7 @@ public class StatusController {
 		if (status.anyNulls()) {
 			throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
 		}
-		statusRepo.insertStatus(status);
+		statusService.addStatus(status);
 	}
 
 
@@ -52,7 +51,7 @@ public class StatusController {
 	 */
 	@GetMapping
 	public List<Status> selectAllStatus(){
-		return statusRepo.selectAllStatus();
+		return statusService.selectAllStatus();
 	}
 	
 	
@@ -65,7 +64,7 @@ public class StatusController {
 	public Status selectStatusById(@PathVariable("id") String id_str) {	
 		try {
 			UUID id = UUID.fromString(id_str);
-			return statusRepo.selectStatusById(id)
+			return statusService.selectStatusById(id)
 					.orElseThrow(ApiExceptions.invalidIdException()); //throw exception if UUID is valid but does not exist in database
 		}catch(java.lang.IllegalArgumentException e) { //catch if id_str is not a valid UUID
 			throw new InvalidIdException();
@@ -82,7 +81,7 @@ public class StatusController {
 	public void deleteStatusById(@PathVariable("id") String id_str) {
 		try {
 			UUID id = UUID.fromString(id_str);
-			statusRepo.deleteStatusById(id);
+			statusService.deleteStatusById(id);
 		}catch(java.lang.IllegalArgumentException e) {
 			throw new InvalidIdException();
 		}
@@ -92,13 +91,16 @@ public class StatusController {
 	
 	/** updateStatusById function - PUT MAPPING
 	 * @param id = UUID path variable obtained by path denoted inside the PutMapping annotation
-	 * @param statusToUpdate = response body from HTTP request which should contain the "status" key
+	 * @param statusToUpdate = response body from HTTP request which should contain keys for necessary data members
 	 */
 	@PutMapping(path = "{id}")
 	public void updateStatusById(@PathVariable("id") String id_str, @RequestBody Status statusToUpdate) {	
 		try {
 			UUID id = UUID.fromString(id_str);
-			statusRepo.updateStatusById(id, statusToUpdate);
+			if (statusToUpdate.anyNulls()) {
+				throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
+			}
+			statusService.updateStatusById(id, statusToUpdate);
 		}catch(java.lang.IllegalArgumentException e) {
 			throw new InvalidIdException();
 		}

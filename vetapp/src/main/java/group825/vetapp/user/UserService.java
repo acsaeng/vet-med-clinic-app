@@ -19,9 +19,9 @@ public class UserService {
 
     /**
      * Constructor to initializes the UserService
-     * @param repo
+     * @param repo accesses the database
      */
-    public UserService(@Qualifier("tempAccountRepo") UserRepository repo) {
+    public UserService(@Qualifier("tempUserRepo") UserRepository repo) {
         this.repo = repo;
     }
 
@@ -65,13 +65,12 @@ public class UserService {
     /**
      * Edits a users in the system
      * @param id user's existing ID
-     * @param newId user's new or existing ID
      * @param name user's new or existing name
      * @param email user's new or existing email
      * @return 1 if updates were successful, 0 otherwise
      */
-    public int editUser(UUID id, UUID newId, String name, String email) {
-        return this.repo.editUser(id, newId, name, email);
+    public int editUser(UUID id, String name, String email) {
+        return this.repo.editUser(id, name, email);
     }
 
     /**

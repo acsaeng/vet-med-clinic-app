@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * Repository that stores all user information
  */
-@Repository("tempAccountRepo")
+@Repository("tempUserRepo")
 public class UserRepository {
 
     /**
@@ -82,17 +82,15 @@ public class UserRepository {
     /**
      * Edits a users in the system
      * @param id user's existing ID
-     * @param newId user's new or existing ID
      * @param name user's new or existing name
      * @param email user's new or existing email
      * @return 1 if updates were successful, 0 otherwise
      */
-    public int editUser(UUID id, UUID newId, String name, String email) {
+    public int editUser(UUID id, String name, String email) {
         return selectUserById(id).map(user -> {
             int accountIdx = database.indexOf(user);
 
             if (accountIdx >= 0) {
-                database.get(accountIdx).setId(newId);
                 database.get(accountIdx).setName(name);
                 database.get(accountIdx).setEmail(email);
                 return 1;

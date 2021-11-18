@@ -40,7 +40,10 @@ public class UserController {
 
         if (inputtedEmail.equals("") || inputtedPassword.equals("")) {
             throw new ApiRequestException("Input fields are empty");
+        } else {
+            this.userService.loginUser(inputtedEmail, inputtedPassword);
         }
+
     }
 
     /**
@@ -85,7 +88,6 @@ public class UserController {
     @PutMapping(path = "/admin/edit-user/{id}")
     public void editUser(@PathVariable("id") String strId) {
         // User inputs this information
-        UUID newId = UUID.randomUUID();
         String newName = "New Name";
         String newEmail = "new.test@example.com";
 
@@ -94,13 +96,13 @@ public class UserController {
         // Check if ID is a valid UUID
         try {
             id = UUID.fromString(strId);
-            userService.blockUser(id);
+            userService.editUser(id, newName, newEmail);
         } catch(java.lang.IllegalArgumentException e) {
             throw new InvalidIdException();
         }
 
         // Check if ID exists
-        if (this.userService.editUser(id, newId, newName, newEmail) == 0) {
+        if (this.userService.editUser(id, newName, newEmail) == 0) {
             throw new InvalidIdException();
         }
     }

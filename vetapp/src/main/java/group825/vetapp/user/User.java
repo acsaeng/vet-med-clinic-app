@@ -66,6 +66,6 @@ public class User {
      * @return true if id, name, email, or password is null, false otherwise
      */
     public boolean anyNulls() {
-        return id == null || name == null || email == null || password == null;
+        return this.id == null || this.name == null || this.email == null || this.password == null;
     }
 }

@@ -15,8 +15,8 @@ public class Diagnosis {
 	private String description;
 
 	/**
-	 * Constructor for a treatment protocol
-	 * @param id - the diagnosis id
+	 * Constructor for a diagnosis
+	 * @param id - the diagnosis UUID
 	 * @param animalName - the name of the animal being treated
 	 * @param diagnosis - the ailment associated with the animal
 	 * @param description - describes the condition in further detail

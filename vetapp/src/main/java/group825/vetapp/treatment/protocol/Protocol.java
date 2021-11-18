@@ -17,7 +17,7 @@ public class Protocol {
 
 	/**
 	 * Constructor for a treatment protocol
-	 * @param id - the protocol id
+	 * @param id - the protocol UUID
 	 * @param animalName - the name of the animal being treated
 	 * @param diagnosis - the associated diagnosis
 	 * @param prescription - required medication (optional)
@@ -29,7 +29,12 @@ public class Protocol {
 		this.id = id;
 		this.animalName = animalName;
 		this.diagnosis = diagnosis;
-		this.prescription = prescription;
+		if(prescription.isBlank()) {
+			this.prescription = "No prescription required.";
+		}
+		else {
+			this.prescription = prescription;
+		}
 		this.protocol = protocol;
 	}
 

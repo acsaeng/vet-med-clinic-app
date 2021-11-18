@@ -91,6 +91,9 @@ public class ProtocolController {
             if(protocolToUpdate.anyNulls()) {
     			throw new ApiRequestException("At least one protocol field is null");
     		}
+            if(protocolToUpdate.getPrescription().isBlank()) {
+    			protocolToUpdate.setPrescription("No prescription required.");
+    		}
             protocolService.updateProtocolById(id, protocolToUpdate);
         } catch(java.lang.IllegalArgumentException e) {
             throw new InvalidIdException();

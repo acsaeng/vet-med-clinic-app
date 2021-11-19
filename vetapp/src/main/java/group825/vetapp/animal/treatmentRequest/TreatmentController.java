@@ -8,7 +8,7 @@ import group825.vetapp.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("app/animal/treatment-request")
+@RequestMapping("app/treatment-request/animal")
 @RestController
 public class TreatmentController {
 	

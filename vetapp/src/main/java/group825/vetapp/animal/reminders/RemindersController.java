@@ -1,4 +1,4 @@
-package group825.vetapp.animal.status;
+package group825.vetapp.animal.reminders;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,53 +18,53 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
-@RequestMapping("app/status/animal")
+@RequestMapping("app/reminders/animal")
 @RestController
-public class StatusController {
-	private final StatusService statusService;
+public class RemindersController {
+	private final RemindersService remindersService;
 
-	/** StatusController Constructor 
-	 * @param statusService = StatusService object which interacts with the "StatusRepository" Class
+	/** RemindersController Constructor 
+	 * @param remindersService = RemindersService object which interacts with the "RemindersRepository" Class
 	 */
 	@Autowired
-	public StatusController(StatusService statusService) {
-		this.statusService = statusService;
+	public RemindersController(RemindersService remindersService) {
+		this.remindersService = remindersService;
 	}
 	
 	
 	
-	/** addStatus function - POST MAPPING
-	 * @param status = RequestBody json object to be passed to the Status class where the json keys are already mapped to specific data members
+	/** addReminder function - POST MAPPING
+	 * @param reminder = RequestBody json object to be passed to the Reminder class where the json keys are already mapped to specific data members
 	 */
 	@PostMapping
-	public void addStatus(@RequestBody Status status){	
-		if (status.anyNulls()) {
+	public void addReminder(@RequestBody Reminder reminder){	
+		if (reminder.anyNulls()) {
 			throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
 		}
-		statusService.addStatus(status);
+		remindersService.insertReminder(reminder);
 	}
 
 
 	
-	/** selectAllStatus function - GET MAPPING
-	 * @return List<Status> object containing the statuses of all animals by calling method from the repository
+	/** selectAllReminders function - GET MAPPING
+	 * @return List<Reminder> object containing the Reminders of all animals by calling method from the repository
 	 */
 	@GetMapping
-	public List<Status> selectAllStatus(){
-		return statusService.selectAllStatus();
+	public List<Reminder> selectAllReminders(){
+		return remindersService.selectAllReminders();
 	}
 	
 	
 	
-	/** selectStatusById function - GET MAPPING
+	/** selectReminderById function - GET MAPPING
 	 * @param id = UUID path variable obtained by path denoted inside the GetMapping annotation
-	 * @return Status object or throw exception
+	 * @return Reminder object or throw exception
 	 */
 	@GetMapping(path="{id}") 
-	public Status selectStatusById(@PathVariable("id") String id_str) {	
+	public Reminder selectReminderById(@PathVariable("id") String id_str) {	
 		try {
 			UUID id = UUID.fromString(id_str);
-			return statusService.selectStatusById(id)
+			return remindersService.selectReminderById(id)
 					.orElseThrow(ApiExceptions.invalidIdException()); //throw exception if UUID is valid but does not exist in database
 		}catch(java.lang.IllegalArgumentException e) { //catch if id_str is not a valid UUID
 			throw new InvalidIdException();
@@ -74,33 +74,34 @@ public class StatusController {
 	
 
 	
-	/** deleteStatusById function - DELETE MAPPING
+	/** deleteReminderById function - DELETE MAPPING
 	 * @param id = UUID path variable obtained by path denoted inside the DeleteMapping annotation
 	 */
 	@DeleteMapping(path = "{id}")
-	public void deleteStatusById(@PathVariable("id") String id_str) {
+	public void deleteReminderById(@PathVariable("id") String id_str) {
 		try {
 			UUID id = UUID.fromString(id_str);
-			statusService.deleteStatusById(id);
+			remindersService.deletRemindersById(id);
 		}catch(java.lang.IllegalArgumentException e) {
 			throw new InvalidIdException();
 		}
+		
 	}
 	
 	
 	
-	/** updateStatusById function - PUT MAPPING
+	/** updateReminderById function - PUT MAPPING
 	 * @param id = UUID path variable obtained by path denoted inside the PutMapping annotation
-	 * @param statusToUpdate = response body from HTTP request which should contain keys for necessary data members
+	 * @param reminderToUpdate = response body from HTTP request which should contain keys for necessary data members
 	 */
 	@PutMapping(path = "{id}")
-	public void updateStatusById(@PathVariable("id") String id_str, @RequestBody Status statusToUpdate) {	
+	public void updateReminderById(@PathVariable("id") String id_str, @RequestBody Reminder reminderToUpdate) {	
 		try {
 			UUID id = UUID.fromString(id_str);
-			if (statusToUpdate.anyNulls()) {
+			if (reminderToUpdate.anyNulls()) {
 				throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
 			}
-			statusService.updateStatusById(id, statusToUpdate);
+			remindersService.updateReminderById(id, reminderToUpdate);
 		}catch(java.lang.IllegalArgumentException e) {
 			throw new InvalidIdException();
 		}

@@ -8,60 +8,73 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service that performs Photo requests
+ *
+ * @author Jimmy Zhu
+ * @version 1.0
+ * @since November 15, 2021
+ */
 @Service
 public class PhotosService {
-	private final PhotosRepository dB_Photos;
+
+	/**
+	 * Photo repository that accesses the database
+	 */
+	private final PhotosRepository dbPhotos;
 	
-	/** Constructor 
-	 * @param dB_Photos = Repository denoted with Qualifier annotation storing the Photo objects
+	/**
+	 * Constructor that initializes the PhotoService
+	 * @param dbPhotos repository denoted with Qualifier annotation storing the Photo objects
 	 */
 	@Autowired
-	public PhotosService(@Qualifier("tempPhotosRepo") PhotosRepository dB_Photos) {
-		this.dB_Photos = dB_Photos; 
+	public PhotosService(@Qualifier("tempPhotosRepo") PhotosRepository dbPhotos) {
+		this.dbPhotos = dbPhotos;
 	}
 
-
-	/** insertPhoto function 
-	 * @param photo = new Photo object to be added
+	/**
+	 * Inserts a photo in the database
+	 * @param photo new Photo object to be added
 	 * @return integer verifying successful code execution
 	 */
 	public int insertPhoto(Photo photo ) {
-		return dB_Photos.insertPhoto(photo);
+		return dbPhotos.insertPhoto(photo);
 	}
 	
 
-	/** selectAllPhotos function 
-	 * @return List of all Photo Objects
+	/**
+	 * Selects all photos in the database
+	 * @return list of all Photo Objects
 	 */
-	public List<Photo> selectAllPhotos(){
-		return dB_Photos.selectAllPhotos();
+	public List<Photo> selectAllPhotos() {
+		return dbPhotos.selectAllPhotos();
 	}
 	
-	/** selectPhotosById function
-	 * @param id = UUID pertaining to specific animal
+	/**
+	 * Selects a photo in the database by ID number
+	 * @param id UUID pertaining to specific animal
 	 * @return Optional<Photo> either containing the Photo object for particular animal or is empty
 	 */
-	public Optional<Photo> selectPhotosById(UUID id){
-		return dB_Photos.selectPhotosById(id);
+	public Optional<Photo> selectPhotosById(UUID id) {
+		return dbPhotos.selectPhotosById(id);
 	}
 	
-	/** deletePhotoById function
-	 * @param id = UUID pertaining to specific animal
+	/**
+	 * Deletes a photo from the database by ID number
+	 * @param id UUID pertaining to specific animal
 	 * @return integer verifying successful code execution
 	 */
 	public int deletePhotoById(UUID id) {
-		return dB_Photos.deletePhotoById(id);
+		return dbPhotos.deletePhotoById(id);
 	}
 	
-	/** updatePhotoById function
-	 * @param id = UUID pertaining to specific animal
-	 * @param photo = Photo object with updated data members
+	/**
+	 * Updates a photo from the database by ID number
+	 * @param id UUID pertaining to specific animal
+	 * @param photo Photo object with updated data members
 	 * @return integer verifying successful code execution
 	 */
 	public int updatePhotoById(UUID id, Photo photo) {
-		return dB_Photos.updatePhotoById(id, photo);
+		return dbPhotos.updatePhotoById(id, photo);
 	}
-	
-	
-	
 }

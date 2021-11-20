@@ -8,31 +8,64 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Controller that handles Animal requests
+ *
+ * @author Aron Saengchan
+ * @version 1.0
+ * @since November 15, 2021
+ */
 @RestController
 @RequestMapping(path = "/app/animal")
 public class AnimalController {
 
+    /**
+     * Animal service that performs the request
+     */
     private final AnimalService animalService;
 
+    /**
+     * Constructor that initializes the AnimalController
+     * @param animalService service that performs the request
+     */
     public AnimalController(AnimalService animalService) {
         this.animalService = animalService;
     }
 
+    /**
+     * 'GET' request that retrieves all animals from the database
+     * @return a list of all stored animals
+     */
     @GetMapping
     public List<Animal> selectAllAnimals() {
         return this.animalService.selectAllAnimals();
     }
 
+    /**
+     * 'POST' request that adds an animal to the database
+     * @param animal animal to be added
+     */
     @PostMapping
     public void addAnimal(@RequestBody Animal animal) {
+        int status;
+
         // Checks if animal fields are 'null'
         if (animal.anyNulls()) {
             throw new ApiRequestException("Fields cannot be blank");
         } else {
-            this.animalService.addAnimal(animal);
+            status = this.animalService.addAnimal(animal);
+        }
+
+        // Check if ID already exists
+        if (status == 0) {
+            throw new InvalidIdException();
         }
     }
 
+    /**
+     * 'PUT' request that updates an animal's information
+     * @param strId animal's ID number
+     */
     @PutMapping(path = "/{id}")
     public void editAnimal(@PathVariable("id") String strId) {
         // User inputs this information
@@ -51,13 +84,14 @@ public class AnimalController {
         } catch(java.lang.IllegalArgumentException e) {
             throw new InvalidIdException();
         }
-
-        // Check if ID exists
-        if (this.animalService.editAnimal(id, newName, newType, newSpecies, newSex, newWeight) == 0) {
-            throw new InvalidIdException();
-        }
     }
 
+    /**
+     * 'GET' request that searches for an animal in the database
+     * @param name animal's name
+     * @param strId animal's ID number
+     * @return specified animal if found, null otherwise
+     */
     @GetMapping(path = "/search")
     public Optional<Animal> searchAnimal(@RequestParam(required = false) String name, @RequestParam(name = "id", required = false) String strId) {
         if (name != null) {

@@ -8,60 +8,71 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service that performs Reminder requests
+ *
+ * @author Jimmy Zhu
+ * @version 1.0
+ * @since November 15, 2021
+ */
 @Service
 public class RemindersService {
-	private final RemindersRepository dB_Reminders;
+
+	/**
+	 * Reminder repository that accesses the database
+	 */
+	private final RemindersRepository dbReminders;
 	
-	/** Constructor 
-	 * @param dB_Reminders = Repository denoted with Qualifier annotation storing the Reminder objects
+	/**
+	 * Reminder repository that accesses the database
+	 * @param dbReminders repository denoted with Qualifier annotation storing the Reminder objects
 	 */
 	@Autowired
-	public RemindersService(@Qualifier("tempRemindersRepo") RemindersRepository dB_Reminders) {
-		this.dB_Reminders = dB_Reminders; 
+	public RemindersService(@Qualifier("tempRemindersRepo") RemindersRepository dbReminders) {
+		this.dbReminders = dbReminders;
 	}
 
-
-	/** insertReminder function 
-	 * @param reminder = new Reminder object to be added
+	/**
+	 * Inserts a reminder in the database
+	 * @param reminder new Reminder object to be added
 	 * @return integer verifying successful code execution
 	 */
 	public int insertReminder(Reminder reminder ) {
-		return dB_Reminders.insertReminder(reminder);
+		return dbReminders.insertReminder(reminder);
 	}
-	
 
-	/** selectAllReminder function 
-	 * @return List of all Reminder Objects
+	/**
+	 * Selects all reminders in the database
+	 * @return list of all Reminder Objects
 	 */
-	public List<Reminder> selectAllReminders(){
-		return dB_Reminders.selectAllReminders();
+	public List<Reminder> selectAllReminders() {
+		return dbReminders.selectAllReminders();
 	}
 	
-	/** selectRemindersById function
-	 * @param id = UUID pertaining to specific animal
+	/**
+	 * Selects a reminder in the database by ID number
+	 * @param id UUID pertaining to specific animal
 	 * @return Optional<Reminder> either containing the Reminder object for particular animal or is empty
 	 */
-	public Optional<Reminder> selectReminderById(UUID id){
-		return dB_Reminders.selectReminderById(id);
+	public Optional<Reminder> selectReminderById(UUID id) {
+		return dbReminders.selectReminderById(id);
 	}
 	
-	/** deleteReminderById function
-	 * @param id = UUID pertaining to specific animal
+	/** Deletes a reminder from the database by ID number
+	 * @param id UUID pertaining to specific animal
 	 * @return integer verifying successful code execution
 	 */
 	public int deletRemindersById(UUID id) {
-		return dB_Reminders.deleteReminderById(id);
+		return dbReminders.deleteReminderById(id);
 	}
 	
-	/** updateReminderById function
-	 * @param id = UUID pertaining to specific animal
-	 * @param reminder = Reminder object with updated data members
+	/**
+	 * Updates a reminder from the database by ID number
+	 * @param id UUID pertaining to specific animal
+	 * @param reminder Reminder object with updated data members
 	 * @return integer verifying successful code execution
 	 */
 	public int updateReminderById(UUID id, Reminder reminder) {
-		return dB_Reminders.updateReminderById(id, reminder);
+		return dbReminders.updateReminderById(id, reminder);
 	}
-	
-	
-	
 }

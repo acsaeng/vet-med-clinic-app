@@ -2,44 +2,43 @@ package group825.vetapp.exceptions;
 
 import java.time.ZonedDateTime;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+/**
+ * API exception information
+ *
+ * @author Jimmy Zhu
+ * @version 1.0
+ * @since November 15, 2021
+ */
+@Getter
 public class ApiException {
-	
+
+	/**
+	 * Message associated with the exception
+	 */
 	private final String message;
+
+	/**
+	 * HTTP status of the exception
+	 */
 	private final HttpStatus httpStatus;
+
+	/**
+	 * Timestamp of the exception
+	 */
 	private final ZonedDateTime timestamp;
 	
-	/** Constructor
-	 * @param message = String to be included in the message of the exception
-	 * @param httpStatus = Status of http request
-	 * @param timestamp = timestamp of when the http request was made
+	/**
+	 * Constructor that initializes the ApiExceptionObject
+	 * @param message string to be included in the message of the exception
+	 * @param httpStatus status of http request
+	 * @param timestamp timestamp of when the http request was made
 	 */
 	public ApiException(String message, HttpStatus httpStatus, ZonedDateTime timestamp) {
 		this.message = message;
 		this.httpStatus = httpStatus;
 		this.timestamp = timestamp;
 	}
-
-	/** getter for message
-	 * @return message
-	 */
-	public String getMessage() {
-		return message;
-	}
-
-	/** getter for HttpStatus
-	 * @return httpstatus
-	 */
-	public HttpStatus getHttpStatus() {
-		return httpStatus;
-	}
-
-	/** getter for TimeStamp
-	 * @return timestamp
-	 */
-	public ZonedDateTime getTimestamp() {
-		return timestamp;
-	}
-
 }

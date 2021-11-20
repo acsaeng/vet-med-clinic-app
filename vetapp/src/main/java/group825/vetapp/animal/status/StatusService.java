@@ -8,60 +8,72 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service that performs Status requests
+ *
+ * @author Jimmy Zhu
+ * @version 1.0
+ * @since November 15, 2021
+ */
 @Service
 public class StatusService {
-	private final StatusRepository dB_status;
+
+	/**
+	 * Status repository that accesses the database
+	 */
+	private final StatusRepository dbStatus;
 	
-	/** Constructor 
-	 * @param dB_status = Repository denoted with Qualifier annotation storing the Status objects
+	/**
+	 * Constructor that initializes the StatusService
+	 * @param dbStatus repository denoted with Qualifier annotation storing the Status objects
 	 */
 	@Autowired
-	public StatusService(@Qualifier("tempStatusRepo") StatusRepository dB_status) {
-		this.dB_status = dB_status; 
+	public StatusService(@Qualifier("tempStatusRepo") StatusRepository dbStatus) {
+		this.dbStatus = dbStatus;
 	}
 
-
-	/** addStatus function 
-	 * @param status = new Status object to be added
+	/**
+	 * Adds a status in the database
+	 * @param status new Status object to be added
 	 * @return integer verifying successful code execution
 	 */
 	public int addStatus(Status status) {
-		return dB_status.insertStatus(status);
+		return dbStatus.insertStatus(status);
 	}
-	
 
-	/** selectAllStatus function 
+	/**
+	 * Selects all statuses in the database
 	 * @return List of all Status Objects
 	 */
-	public List<Status> selectAllStatus(){
-		return dB_status.selectAllStatus();
+	public List<Status> selectAllStatus() {
+		return dbStatus.selectAllStatus();
 	}
 	
-	/** selectStatusById function
-	 * @param id = UUID pertaining to specific animal
+	/**
+	 * Selects a status in the database by ID number
+	 * @param id UUID pertaining to specific animal
 	 * @return Optional<Status> either containing the Status object for particular animal or is empty
 	 */
-	public Optional<Status> selectStatusById(UUID id){
-		return dB_status.selectStatusById(id);
+	public Optional<Status> selectStatusById(UUID id) {
+		return dbStatus.selectStatusById(id);
 	}
 	
-	/** deleteStatusById function
-	 * @param id = UUID pertaining to specific animal
+	/**
+	 * Deletes a status from the database by ID number
+	 * @param id UUID pertaining to specific animal
 	 * @return integer verifying successful code execution
 	 */
 	public int deleteStatusById(UUID id) {
-		return dB_status.deleteStatusById(id);
+		return dbStatus.deleteStatusById(id);
 	}
 	
-	/** updateStatusById function
-	 * @param id = UUID pertaining to specific animal
-	 * @param status = Status object with updated data members
+	/**
+	 * Updates a status from the database by ID number
+	 * @param id UUID pertaining to specific animal
+	 * @param status Status object with updated data members
 	 * @return integer verifying successful code execution
 	 */
 	public int updateStatusById(UUID id, Status status) {
-		return dB_status.updateStatusById(id, status);
+		return dbStatus.updateStatusById(id, status);
 	}
-	
-	
-	
 }

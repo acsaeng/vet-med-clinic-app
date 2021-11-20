@@ -7,15 +7,24 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
-
-
+/**
+ * Repository that stores Status information
+ *
+ * @author Jimmy Zhu
+ * @version 1.0
+ * @since November 15, 2021
+ */
 @Repository("tempStatusRepo")
-public class StatusRepository { 
-	
+public class StatusRepository {
+
+	/**
+	 * Database that stores all the statuses
+	 */
 	private static List<Status> DB_status = new ArrayList<>();
 	
-	/** insertStatus function
-	 * @param status = new status object for particular animal
+	/**
+	 * Inserts a status in the database
+	 * @param status new Status object for particular animal
 	 * @return integer verifying successful code execution
 	 */
 	public int insertStatus(Status status) {
@@ -24,53 +33,56 @@ public class StatusRepository {
 		return 1;
 	}
 	
-	/** selectAllStatus function
-	 * @return DB of statuses for all animals
+	/**
+	 * Selects all statuses in the database
+	 * @return database of statuses for all animals
 	 */
-	public List<Status> selectAllStatus(){
+	public List<Status> selectAllStatus() {
 		return DB_status;
 	}
 	
-	/** selectStatusById function
-	 * @param id = UUID pertaining to specific animal
+	/**
+	 * Selects a status in the database by ID number
+	 * @param id UUID pertaining to specific animal
 	 * @return Optional<Status> object which contains the status of particular animal or is empty
 	 */
 	public Optional<Status> selectStatusById(UUID id) {
-		
-		return DB_status.stream()
-				.filter(status -> status.getId().equals(id))
-				.findFirst();
+		return DB_status.stream().filter(status -> status.getId().equals(id)).findFirst();
 	}
 	
-	/** deleteStatusById function
-	 * @param id = UUID pertaining to specific animal
+	/**
+	 * Deletes a status from the database by ID number
+	 * @param id UUID pertaining to specific animal
 	 * @return integer verifying successful code execution
 	 */
 	public int deleteStatusById(UUID id) {
 		Optional<Status> animalMaybe = selectStatusById(id);
-		if (animalMaybe.isEmpty()) { return 0; }
+
+		if (animalMaybe.isEmpty()) {
+			return 0;
+		}
+
 		DB_status.remove(animalMaybe.get());
 		return 1;
 	}
 	
-	/**updateStatusById function
-	 * @param id = UUID pertaining to specific animal 
-	 * @param update = Status object containing new data members
+	/**
+	 * Updates a status from the database by ID number
+	 * @param id UUID pertaining to specific animal
+	 * @param update Status object containing new data members
 	 * @return integer verifying successful code execution
 	 */
 	public int updateStatusById(UUID id, Status update) {
-		return selectStatusById(id)
-				.map(animalFound -> {
-					int indexOfAnimalToUpdate = DB_status.indexOf(animalFound);
-					if (indexOfAnimalToUpdate >= 0) { //index was found, 
-						DB_status.set(indexOfAnimalToUpdate, new Status(id, update.getStatus())); 
-						return 1;   
-					}
-					return 0; 
-				})
-				.orElse(0); //if no animal found by the id then return 0
+		return selectStatusById(id).map(animalFound -> {
+			int indexOfAnimalToUpdate = DB_status.indexOf(animalFound);
+
+			// Index was found
+			if (indexOfAnimalToUpdate >= 0) {
+				DB_status.set(indexOfAnimalToUpdate, new Status(id, update.getStatus()));
+				return 1;
+			}
+
+			return 0;
+		}).orElse(0); // If no animal found by the id then return 0
 	}
-	
-	
-	
 }

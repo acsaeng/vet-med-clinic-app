@@ -8,7 +8,11 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 /**
- * User of a veterinary staff member
+ * User of representing an admin or veterinary staff member
+ *
+ * @author Aron Saengchan
+ * @version 1.0
+ * @since November 15, 2021
  */
 @Getter
 @Setter

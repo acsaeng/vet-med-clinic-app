@@ -7,23 +7,33 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service that performs Diagnosis requests
+ *
+ * @author Timothy Mok
+ * @version 1.0
+ * @since November 15, 2021
+ */
 @Service
 public class DiagnosisService {
 
+	/**
+	 * Diagnosis repository that accesses the database
+	 */
 	private final DiagnosisRepository repo;
-	
-	// UPDATE WITH DATABASE AS NEEDED
+
 	/**
 	 * Constructor for the DiagnosisService to communicate between the Repository and Controller
-	 * @param repo - the DiagnosisRepository
+	 * @param repo the DiagnosisRepository
 	 */
 	public DiagnosisService(@Qualifier("tempDiagnosisRepo") DiagnosisRepository repo) {
-		this.repo = repo; 
+		// UPDATE WITH DATABASE AS NEEDED
+		this.repo = repo;
 	}
 
 	/**
 	 * Service for adding a diagnosis to the system
-	 * @param diagnosis - diagnosis to be added
+	 * @param diagnosis diagnosis to be added
 	 * @return whether the diagnosis was successfully added to the Repository
 	 */
 	public int addDiagnosis(Diagnosis diagnosis) {
@@ -40,16 +50,16 @@ public class DiagnosisService {
 	
 	/**
 	 * Search for a specific diagnosis in the Repository
-	 * @param id - id of the requested diagnosis
+	 * @param id id of the requested diagnosis
 	 * @return the diagnosis from the repository
 	 */
-	public Optional<Diagnosis> selectDiagnosisById(UUID id){
+	public Optional<Diagnosis> selectDiagnosisById(UUID id) {
 		return repo.selectDiagnosisById(id);
 	}
 	
 	/**
 	 * Delete a diagnosis from the Repository
-	 * @param id - diagnosis to be deleted
+	 * @param id diagnosis to be deleted
 	 * @return whether the diagnosis was successfully deleted from the Repository
 	 */
 	public int deleteDiagnosisById(UUID id) {
@@ -58,14 +68,11 @@ public class DiagnosisService {
 	
 	/**
 	 * Update an existing diagnosis in the Repository
-	 * @param id - diagnosis to be updated
-	 * @param diagnosis - diagnosis object containing new information
+	 * @param id diagnosis to be updated
+	 * @param diagnosis diagnosis object containing new information
 	 * @return whether the diagnosis was successfully updated the Repository
 	 */
 	public int updateDiagnosisById(UUID id, Diagnosis diagnosis) {
 		return repo.updateDiagnosisById(id, diagnosis);
 	}
-	
-	
-	
 }

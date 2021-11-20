@@ -9,14 +9,18 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Controller that handles the HTTP requests from the client
+ * Controller that handles User requests
+ *
+ * @author Aron Saengchan
+ * @version 1.0
+ * @since November 15, 2021
  */
 @RestController
 @RequestMapping(path = "/app")
 public class UserController {
 
     /**
-     * User service that implements the request
+     * User service that performs the request
      */
     private final UserService userService;
 
@@ -30,7 +34,7 @@ public class UserController {
     }
 
     /**
-     * 'POST' request to verify email and password inputs
+     * 'POST' request that verifies email and password inputs
      */
     @PostMapping(path = "/login")
     public void loginUser() {
@@ -43,11 +47,10 @@ public class UserController {
         } else {
             this.userService.loginUser(inputtedEmail, inputtedPassword);
         }
-
     }
 
     /**
-     * 'PUT' request to change a user's password
+     * 'PUT' request that changes a user's password
      * @param email user's email
      */
     @PutMapping(path = "/password-recovery/{email}")
@@ -59,7 +62,7 @@ public class UserController {
     }
 
     /**
-     * 'GET' request to retrieve all the stored users
+     * 'GET' request that retrieves all the stored users from the database
      * @return list of all stored users
      */
     @GetMapping(path = "/admin/users")
@@ -68,7 +71,7 @@ public class UserController {
     }
 
     /**
-     * 'POST' request to add a new user
+     * 'POST' request that adds a new user to the database
      * @param user user to be added
      */
     @PostMapping(path = "/admin/add-user")
@@ -82,7 +85,7 @@ public class UserController {
     }
 
     /**
-     * 'PUT' request to edit a user's information
+     * 'PUT' request that updates an users's information
      * @param strId user's id
      */
     @PutMapping(path = "/admin/edit-user/{id}")
@@ -108,7 +111,7 @@ public class UserController {
     }
 
     /**
-     * 'PUT' request to block a user
+     * 'PUT' request that blocks a user
      * @param strId user's id
      */
     @PutMapping(path = "/admin/block-user/{id}")

@@ -2,21 +2,29 @@ package group825.vetapp.exceptions;
 
 import java.util.function.Supplier;
 
+/**
+ * Throws the API exception suppliers
+ *
+ * @author Jimmy Zhu
+ * @version 1.0
+ * @since November 15, 2021
+ */
 public class ApiExceptions {
 	
-    /**apiRequestException function
+    /**
+     * Throws the API request exception supplier
      * @param message = String to be passed into the exception
-     * @return Supplier holding a RuntimeException object
+     * @return supplier holding a RuntimeException object
      */
     public static Supplier<RuntimeException> apiRequestException(String message) {
         return () -> new ApiRequestException(message);
     }
     
-    /** invalidIdException function
-     * @return Supplier holding a RuntimeException object
+    /**
+     * Throws the invalid ID exception supplier
+     * @return supplier holding a RuntimeException object
      */
     public static Supplier<RuntimeException> invalidIdException() {
         return () -> new InvalidIdException();
     }
-
 }

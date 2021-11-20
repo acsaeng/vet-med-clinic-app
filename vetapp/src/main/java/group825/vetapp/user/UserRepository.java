@@ -8,18 +8,22 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository that stores all user information
+ * Repository that stores User information
+ *
+ * @author Aron Saengchan
+ * @version 1.0
+ * @since November 15, 2021
  */
 @Repository("tempUserRepo")
 public class UserRepository {
 
     /**
-     * Store all the users in the system
+     * Database that stores all the users
      */
     private static final List<User> database = new ArrayList<>();
 
     /**
-     * Verifies a user's email and password information in the database
+     * Verifies a user's email and password information
      * @param email user's email
      * @param password user's password
      * @return 1 if login was successful, 0 otherwise
@@ -35,7 +39,7 @@ public class UserRepository {
     }
 
     /**
-     * Changes a user's password in the database
+     * Changes a user's password
      * @param email user's email
      * @param newPassword user's new password
      * @return 1 if password change was successful, 0 otherwise
@@ -54,7 +58,7 @@ public class UserRepository {
     }
 
     /**
-     * Finds a user by email
+     * Finds a user in the database by email
      * @return user associated with a specified email
      */
     private Optional<User> selectUserByEmail(String email) {
@@ -62,7 +66,7 @@ public class UserRepository {
     }
 
     /**
-     * Retrieves a list of all stored users
+     * Retrieves all stored users from the database
      * @return a list of all stored users
      */
     public List<User> selectAllUsers() {
@@ -70,7 +74,7 @@ public class UserRepository {
     }
 
     /**
-     * Adds a user to the system
+     * Adds a user to the database
      * @param user user to be added
      * @return 1 if registration was successful, 0 otherwise
      */
@@ -80,7 +84,7 @@ public class UserRepository {
     }
 
     /**
-     * Edits a users in the system
+     * Updates a user's information
      * @param id user's existing ID
      * @param name user's new or existing name
      * @param email user's new or existing email
@@ -101,7 +105,7 @@ public class UserRepository {
     }
 
     /**
-     * Block a user in the system
+     * Blocks a user in the system
      * @param id user's ID
      * @return 1 if block was successful, 0 otherwise
      */
@@ -119,7 +123,7 @@ public class UserRepository {
     }
 
     /**
-     * Finds a user by ID
+     * Finds a user in the database by ID
      * @return user associated with a specified ID
      */
     private Optional<User> selectUserById(UUID id) {

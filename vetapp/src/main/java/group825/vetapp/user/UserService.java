@@ -7,19 +7,23 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Service that implements the HTTP requests
+ * Service that performs User requests
+ *
+ * @author Aron Saengchan
+ * @version 1.0
+ * @since November 15, 2021
  */
 @Service
 public class UserService {
 
     /**
-     * Stores all user information
+     * User repository that accesses the database
      */
     private final UserRepository repo;
 
     /**
-     * Constructor to initializes the UserService
-     * @param repo accesses the database
+     * Constructor that initializes the UserService
+     * @param repo repository that accesses the database
      */
     public UserService(@Qualifier("tempUserRepo") UserRepository repo) {
         this.repo = repo;
@@ -36,7 +40,7 @@ public class UserService {
     }
 
     /**
-     * Change's a user's password
+     * Changes a user's password
      * @param email user's email
      * @param newPassword user's new password
      * @return 1 if password change was successful, 0 otherwise
@@ -46,7 +50,7 @@ public class UserService {
     }
 
     /**
-     * Retrieves a list of all stored users
+     * Retrieves all stored users from the database
      * @return a list of all stored users
      */
     public List<User> selectAllUsers() {
@@ -54,7 +58,7 @@ public class UserService {
     }
 
     /**
-     * Adds a user to the system
+     * Adds a user to the database
      * @param user user to be added
      * @return 1 if registration was successful, 0 otherwise
      */
@@ -63,7 +67,7 @@ public class UserService {
     }
 
     /**
-     * Edits a users in the system
+     * Updates a user's information
      * @param id user's existing ID
      * @param name user's new or existing name
      * @param email user's new or existing email

@@ -58,7 +58,9 @@ These were setup where each object generates a random UUID pertaining to a speci
 
 The procedure must be followed where a `GET` request is sent to get all objects for all animals. Select one UUID from the JSON response of all objects, then use the new UUID in place of the current UUID at the end of the URL path.
 
-There was a noticeable bug with the UUID library where a UUID is successfully created when only a few characters from the UUID is deleted in the path. If half of the characters of the UUID is deleted in the path, (an invalid id is passed) the UUID will not be created and the custom exception response will be returned. Another bug with the endpoints are the `DELETE` request can be sent multiple times with the same UUID. This is because the ArrayList() has removed the object the first time and the subsequent requests are received successfully. All subsequent requests just delete nothing.
+There was a noticeable bug with the UUID library where a UUID is successfully created when only a few characters from the UUID is deleted in the path. If half of the characters of the UUID is deleted in the path, (an invalid id is passed) the UUID will not be created and the custom exception response will be returned.
+
+Another bug with the endpoints are the `DELETE` request can be sent multiple times with the same UUID. This is because the ArrayList() has removed the object the first time and the subsequent requests are received successfully. All subsequent requests just delete nothing.
 
 ### Example Tests
 

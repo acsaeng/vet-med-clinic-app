@@ -66,7 +66,7 @@ Another bug with the endpoints are the `DELETE` request can be sent multiple tim
 
 ### Example Tests
 
-Some example API endpoint tests that walk through the following user stories can be can be viewed in `testing/example_tests.pdf` 
+Some example API endpoint tests that walk through the following user stories can be can be viewed in `testing/example_tests.pdf`. 
 - Status (`VET-15`)
 - Reminders (`VET-38`)
 - Comments (`VET-24` and `VET-45`)

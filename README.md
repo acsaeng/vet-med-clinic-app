@@ -2,7 +2,7 @@
 
 **Project:** Veterinary Medicine Web Application
 
-__**Group 825**__
+**Group 825**
 - Timothy Mok
 - Aron Saengchan
 - Yong Jun Zhu
@@ -15,8 +15,8 @@ In collaboration with the Veterinary School of Medicine, the objective of this p
 ### Process
 The first three out of five sprint for this project have been completed:
 
-1. Developing epics and user stories
-2. Designing wireframes
+1. [Developing epics and user stories](https://uofeng607825.atlassian.net/jira/software/projects/VET/boards/1/roadmap)
+2. [Designing wireframes](https://www.figma.com/file/xP4gjKlYZXzneQGNvUFXYK/ENSF-607---Term-Project-Wireframes?node-id=0%3A1)
 3. Designing the API
 
 The contents of this repository address the deliverables completed in the third sprint and are described in the following sections.

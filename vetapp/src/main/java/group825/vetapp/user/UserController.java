@@ -45,7 +45,9 @@ public class UserController {
         if (inputtedEmail.equals("") || inputtedPassword.equals("")) {
             throw new ApiRequestException("Input fields are empty");
         } else {
-            this.userService.loginUser(inputtedEmail, inputtedPassword);
+            if (this.userService.loginUser(inputtedEmail, inputtedPassword) == 0) {
+                throw new ApiRequestException("Incorrect email or password.");
+            }
         }
     }
 

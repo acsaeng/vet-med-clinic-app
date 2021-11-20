@@ -44,15 +44,15 @@ Exception handling covering some basic exceptions were also completed. The assoc
 
 ### Postman 
 
-The Postman API platform was used to test all of the created API endpoints. The Postman request collections JSON files used for testing are located in the `testing/postman-requests` folder.
+The Postman API platform was used to test all of the created API endpoints. The Postman request collections JSON files used for testing are located in the `testing/postman-collections` folder.
 
 #### Note
 
-Postman collections file `StatusRemindersCommentsPhotos.postman_collection.json` includes the API request test to the following endpoints:
-- `VET-15` (Status)
-- `VET-38` (Reminders)
-- `VET-45` and `VET-24` (Comments)
-- `VET-25` and `VET-46` (Photos)
+The following Postman collection files includes the API request test to the following endpoints:
+- Status (`VET-15`) - `testing/postman-collections/status.postman_collection.json` 
+- Reminders (`VET-38`) - `testing/postman-collections/reminders.postman_collection.json` 
+- Comments - (`VET-45` and `VET-24`) - `testing/postman-collections/comment.postman_collection.json` 
+- Photos - (`VET-25` and `VET-46`) - `testing/postman-collections/photo.postman_collection.json` 
 
 These were setup where each object generates a random UUID pertaining to a specific animal that is created whenever the object is created. As a result, the Postman requests that involve using a specific animal UUID in the path (GET, PUT, and DELETE requests where the UUID is included) do not work for new executions of the requests.
 
@@ -60,10 +60,10 @@ The procedure must be followed where a GET request is sent to get all objects fo
 
 Note that requests that check if a valid ID was passed in the path were tested by deleting many characters from the UUID in the path.
 
-### Example Test
+### Example Tests
 
-A example test that walks through the following user stories can be can be viewed in `testing/example_test.pdf` 
-- `VET-15` (Status)
-- `VET-38` (Reminders)
-- `VET-24` and `VET-45` (Comments)
-- `VET-25` and `VET-46` (Photos)
+Some example tests that walks through the following user stories can be can be viewed in `testing/example_tests.pdf` 
+- Status (`VET-15`)
+- Reminders (`VET-38`)
+- Comments (`VET-24` and `VET-45`)
+- Photos (`VET-25` and `VET-46`)

@@ -9,8 +9,8 @@ import java.util.UUID;
  * Reminder associated with an animal
  *
  * @author Jimmy Zhu
- * @version 1.0
- * @since November 15, 2021
+ * @version 2.0
+ * @since November 30, 2021
  */
 @Getter
 public class Reminder {
@@ -18,12 +18,12 @@ public class Reminder {
 	/**
 	 * ID number of an animal
 	 */
-	private final UUID id;
+	private final int id;
 
 	/**
 	 * ID number of the reminder
 	 */
-	private final String reminderId;
+	private final int reminderId;
 
 	/**
 	 * Status of the reminder
@@ -39,11 +39,20 @@ public class Reminder {
 	 * Date the reminder was created
 	 */
 	private final String datePerformed;
+	
+	/**
+	 * ID number of the author
+	 */
+	private final int authorID;
 
 	/**
-	 * Information included in the remidner
+	 * Information included in the reminder
 	 */
 	private final String note;
+	
+	private final String firstName;
+	private final String lastName;
+	private final String userType;
 
 	/**
 	 * Constructor that initializes the Reminder
@@ -54,34 +63,41 @@ public class Reminder {
 	 * @param datePerformed date that the reminder was created
 	 * @param note information to be included in reminder
 	 */
-	public Reminder(@JsonProperty("id") UUID id, @JsonProperty("reminderId") String reminderId, 
+	public Reminder(@JsonProperty("id") int id, @JsonProperty("reminderId") int reminderId, 
 			@JsonProperty("status") String status, @JsonProperty("dateDue") String dateDue, 
-			@JsonProperty("datePerformed") String datePerformed, @JsonProperty("note") String note) {
+			@JsonProperty("datePerformed") String datePerformed, @JsonProperty("authorID") int authorID, 
+			@JsonProperty("note") String note, @JsonProperty("firstName") String firstName, 
+			@JsonProperty("lastName") String lastName, @JsonProperty("userType") String userType) {
 		this.id = id;
 		this.reminderId = reminderId;
 		this.status = status;
 		this.dateDue = dateDue;
 		this.datePerformed = datePerformed;
+		this.authorID = authorID;
 		this.note = note;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userType = userType;
 	}
 
 	/**
-	 * Checks if any data members aside from the ID is null
-	 * @return boolean confirming if any data members (other than id) are null
+	 * Checks if any data members is null
+	 * @return boolean confirming if any data members are null
 	 */
 	public boolean anyNulls() {
-		if (reminderId == null) {
-			return true;
-		} else if (status == null) {
-			return true;
-		} else if (dateDue == null) {
-			return true;
-		} else if (datePerformed == null) {
-			return true;
-		} else if (note == null) {
+		if (id == 0 || reminderId == 0 || status == null || dateDue == null || datePerformed == null 
+				|| authorID ==0 || note == null) {
 			return true;
 		}
 		
 		return false;
 	}
+	
+	@Override 
+	public String toString() {
+		String newString = "{ id: " + id + ", reminderId: " + reminderId + ", status: " + status + ", dateDue: " 
+				+ dateDue + ", datePerformed: " + datePerformed + ", authorID: " + authorID + ", note: " + note + "}";
+	 return newString;
+	}
+	
 }

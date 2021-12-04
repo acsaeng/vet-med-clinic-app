@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller that handles Reminder requests
  *
  * @author Jimmy Zhu
- * @version 1.0
- * @since November 15, 2021
+ * @version 2.0
+ * @since November 30, 2021
  */
 @RequestMapping("app/reminders/animal")
 @RestController
@@ -43,9 +43,10 @@ public class RemindersController {
 	/**
 	 * 'POST' mapping that adds a reminder to the database
 	 * @param reminder RequestBody JSON object to be passed to the Reminder class where the JSON keys are already mapped to specific data members
+	 * @throws Exception when there is an SQL Exception
 	 */
 	@PostMapping
-	public void addReminder(@RequestBody Reminder reminder) {
+	public void addReminder(@RequestBody Reminder reminder) throws Exception{
 		if (reminder.anyNulls()) {
 			throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
 		}
@@ -55,42 +56,40 @@ public class RemindersController {
 	/**
 	 * 'GET' mapping that retrieves all remoders from the database
 	 * @return List<Reminder> object containing the Reminders of all animals by calling method from the repository
+	 * @throws Exception when there is an SQL Exception
 	 */
 	@GetMapping
-	public List<Reminder> selectAllReminders() {
+	public List<Reminder> selectAllReminders() throws Exception {
 		return remindersService.selectAllReminders();
 	}
 
 	/**
 	 * 'GET' mapping that selects a photo by ID number from the database
-	 * @param idStr = UUID path variable obtained by path denoted inside the GetMapping annotation
+	 * @param idStr = String path variable obtained by path denoted inside the GetMapping annotation
 	 * @return Reminder object or throw exception
 	 */
 	@GetMapping(path="{id}") 
-	public Reminder selectReminderById(@PathVariable("id") String idStr) {
+	public List<Reminder> selectRemindersById(@PathVariable("id") String idStr) {
 		try {
-			UUID id = UUID.fromString(idStr);
-
-			// Throw exception if UUID is valid but does not exist in database
-			return remindersService.selectReminderById(id).orElseThrow(ApiExceptions.invalidIdException());
-		} catch (java.lang.IllegalArgumentException e) {
-			// Catch if id_str is not a valid UUID
+			//id of animal
+			int id = Integer.valueOf(idStr);
+			return remindersService.selectRemindersById(id);
+		} catch (Exception e) {
+			// Catch if id is not a valid Animal ID from Database
 			throw new InvalidIdException();
 		}
 	}
 
 	/**
 	 * 'DELETE' mapping that deletes a reminder by ID number from the database
-	 * @param idStr UUID path variable obtained by path denoted inside the DeleteMapping annotation
+	 * @param idStr String path variable obtained by path denoted inside the DeleteMapping annotation
 	 */
 	@DeleteMapping(path = "{id}")
-	public void deleteReminderById(@PathVariable("id") String idStr) {
-		try {
-			UUID id = UUID.fromString(idStr);
-			remindersService.deletRemindersById(id);
-		} catch(java.lang.IllegalArgumentException e) {
-			throw new InvalidIdException();
-		}
+	public void deleteReminderById(@PathVariable("id") String reminderID) throws Exception{
+		//id of a comment
+		int id = Integer.valueOf(reminderID);
+		int numRowsAffected = remindersService.deleteReminderById(id);
+		if (numRowsAffected == 0) {throw new InvalidIdException();}
 	}
 
 	/**
@@ -99,17 +98,13 @@ public class RemindersController {
 	 * @param reminderToUpdate response body from HTTP request which should contain keys for necessary data members
 	 */
 	@PutMapping(path = "{id}")
-	public void updateReminderById(@PathVariable("id") String idStr, @RequestBody Reminder reminderToUpdate) {
-		try {
-			UUID id = UUID.fromString(idStr);
-
-			if (reminderToUpdate.anyNulls()) {
-				throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
-			}
-
-			remindersService.updateReminderById(id, reminderToUpdate);
-		} catch(java.lang.IllegalArgumentException e) {
-			throw new InvalidIdException();
-		}
+	public void updateReminderById(@PathVariable("id") String reminderID, @RequestBody Reminder reminderToUpdate) throws Exception{
+		//id of a comment
+				int id = Integer.valueOf(reminderID);
+				if (reminderToUpdate.anyNulls()) {
+					throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
+				}
+				int numRowsAffected = remindersService.updateReminderById(id, reminderToUpdate);	
+				if (numRowsAffected == 0) {throw new InvalidIdException();}
 	}
 }

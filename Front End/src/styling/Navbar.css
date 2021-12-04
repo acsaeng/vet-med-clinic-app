@@ -1,0 +1,20 @@
+.navbar {
+  background-color: #cfd8dc;
+}
+
+.navbar div:last-of-type {
+  margin-top: auto;
+  margin-left: auto;
+}
+
+.species-text {
+  font-style: italic;
+}
+
+.status-text {
+  background-color: lightgreen;
+}
+
+.admin-text {
+    font-style: italic;
+}

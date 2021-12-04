@@ -2,7 +2,7 @@ package group825.vetapp.database;
 import java.sql.*;
 import java.util.ArrayList;
 
-import group825.vetapp.animal2.DictionaryLetter;
+import group825.vetapp.animal.DictionaryLetter;
 
 public class Application_DbConnection {
 	

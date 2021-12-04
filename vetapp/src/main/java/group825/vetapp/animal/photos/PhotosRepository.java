@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
-import group825.vetapp.animal2.Search;
+import group825.vetapp.animal.Search;
 import group825.vetapp.database.Application_DbConnection;
 
 /**

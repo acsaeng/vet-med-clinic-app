@@ -10,9 +10,9 @@ import java.util.UUID;
 /**
  * User of representing an admin or veterinary staff member
  *
- * @author Aron Saengchan
- * @version 1.0
- * @since November 15, 2021
+ * @author Aron Saengchan, Jimmy Zhu
+ * @version 2.0
+ * @since December 02, 2021
  */
 @Getter
 @Setter
@@ -21,32 +21,43 @@ public class User {
     /**
      * ID number of the user
      */
-    private UUID id;
+    private int id;
 
     /**
-     * Full name of the user
+     * first name of the user
      */
-    private String name;
+    private String firstName;
+    
+    private String lastName;
 
+    private String userType;
+    
+    private String userName;
+    
+    
     /**
      * Email address of the user
      */
     private String email;
+    
+    private String phoneNum;
 
     /**
      * Password of the user's account
      */
     private String password;
 
-    /**
-     * Account status of the user
-     */
-    private boolean isActive;
+    
 
     /**
      * Date the user account was activated
      */
-    private LocalDate activationDate;
+    private String startDate;
+    
+    private String userStatus;
+    
+    
+    
 
     /**
      * Constructor that initializes the User
@@ -55,14 +66,20 @@ public class User {
      * @param email user's email address
      * @param password user's account password
      */
-    public User(@JsonProperty("id") UUID id, @JsonProperty("name") String name,
-                @JsonProperty("email") String email, @JsonProperty("password") String password) {
+    public User(@JsonProperty("id") int id, @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName,
+    		 @JsonProperty("userType") String userType, @JsonProperty("userName") String userName, @JsonProperty("email") String email, 
+    		 @JsonProperty("phoneNum") String phoneNum,   @JsonProperty("password") String password,
+                @JsonProperty("startDate") String startDate, @JsonProperty("userStatus") String userStatus) {
         this.id = id;
-        this.name = name;
+        this.firstName =firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.userType = userType;
         this.email = email;
+        this.phoneNum = phoneNum;
         this.password = password;
-        this.isActive = true;
-        this.activationDate = LocalDate.now();
+        this.startDate = startDate;
+        this.userStatus = userStatus;
     }
 
     /**
@@ -70,6 +87,15 @@ public class User {
      * @return true if id, name, email, or password is null, false otherwise
      */
     public boolean anyNulls() {
-        return this.id == null || this.name == null || this.email == null || this.password == null;
+        return this.id == 0 || this.firstName == null || this.firstName == null || this.lastName == null || this.userType == null 
+        		|| this.email == null || this.phoneNum == null || this.password == null || this.startDate == null || this.userStatus ==null;
+    }
+    
+    
+    @Override 
+    public String toString() {
+    	String newString = "{ id: " + id + ", firstName: " + firstName + ", lastName: " + lastName + ", userName: " + userName + ", userType: " + userType 
+    			+ ", email: " + email + ", phoneNum: " + phoneNum + ", password: " + password + ", startDate: " + startDate + ", userStatus: " + userStatus + "}";
+     return newString;
     }
 }

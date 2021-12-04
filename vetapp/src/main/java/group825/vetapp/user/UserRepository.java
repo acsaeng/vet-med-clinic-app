@@ -2,6 +2,8 @@ package group825.vetapp.user;
 
 import org.springframework.stereotype.Repository;
 
+import group825.vetapp.database.Application_DbConnection;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -10,13 +12,23 @@ import java.util.UUID;
 /**
  * Repository that stores User information
  *
- * @author Aron Saengchan
- * @version 1.0
- * @since November 15, 2021
+ * @author Aron Saengchan, Jimmy Zhu
+ * @version 2.0
+ * @since December 02, 2021
  */
 @Repository("tempUserRepo")
 public class UserRepository {
+	String table_name = "USERS";
+	Application_DbConnection dao;
+	String query;
+	int Latest_user_id;
 
+	public UserRepository() throws Exception {
+		dao = new Application_DbConnection();
+		getLatestCommentId();
+	}
+	
+	
     /**
      * Database that stores all the users
      */
@@ -28,14 +40,20 @@ public class UserRepository {
      * @param password user's password
      * @return 1 if login was successful, 0 otherwise
      */
-     public int loginUser(String email, String password) {
-        for (User user : database) {
-            if (email.equals(user.getEmail()) && password.equals(user.getPassword())) {
-                return 1;
-            }
-        }
+//     public int loginUser(String userName, String password) throws Exception{
+    	public ArrayList<String>  loginUser(String userName, String password) throws Exception{	 
+    	 query = "SELECT * FROM USERS AS U WHERE U.UserName='"+userName+"' AND U.User_Password='"+ password +"'";
+ 		ArrayList<String> results = dao.getResponseArrayList(query);
+ 		if (results.size() == 1) {
+ 			return results;
+ 		}  	 
+//        for (User user : database) {
+//            if (email.equals(user.getEmail()) && password.equals(user.getPassword())) {
+//                return 1;
+//            }
+//        }
 
-        return 0;
+        return results;
     }
 
     /**
@@ -95,8 +113,8 @@ public class UserRepository {
             int accountIdx = database.indexOf(user);
 
             if (accountIdx >= 0) {
-                database.get(accountIdx).setName(name);
-                database.get(accountIdx).setEmail(email);
+//                database.get(accountIdx).setName(name);
+//                database.get(accountIdx).setEmail(email);
                 return 1;
             }
 
@@ -114,7 +132,7 @@ public class UserRepository {
             int accountIdx = database.indexOf(user);
 
             if (accountIdx >= 0) {
-                database.get(accountIdx).setActive(false);
+//                database.get(accountIdx).setActive(false);
                 return 1;
             }
 
@@ -127,6 +145,25 @@ public class UserRepository {
      * @return user associated with a specified ID
      */
     private Optional<User> selectUserById(UUID id) {
-        return database.stream().filter(user -> user.getId().equals(id)).findFirst();
+    	return Optional.empty();
+//        return database.stream().filter(user -> user.getId().equals(id)).findFirst();
     }
+    
+    
+    /**
+	 * get the latest Id for the primary key for Comment object from database
+	 * @throws Exception when there is an SQL Exception
+	 */
+	private void getLatestCommentId() throws Exception{
+		String queryMaxId = "SELECT MAX(U.User_ID) FROM USERS AS U ";
+//		System.out.println(queryMaxId);
+		String latestId = dao.getRows(queryMaxId).replaceAll("\\s+","");
+		System.out.println("latestId ='"+latestId+"'");
+		this.Latest_user_id = Integer.valueOf(latestId);
+	}
+	
+	public String getSplitPlaceholder() {
+		return dao.getSplitPlaceholder();
+	}
+    
 }

@@ -1,9 +1,14 @@
 package group825.vetapp.user;
 
+import group825.vetapp.animal.comments.Comment;
 import group825.vetapp.exceptions.ApiRequestException;
 import group825.vetapp.exceptions.InvalidIdException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonObjectSerializer;
+import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.google.gson.Gson;
 
 import java.util.List;
 import java.util.UUID;
@@ -34,21 +39,40 @@ public class UserController {
     }
 
     /**
-     * 'POST' request that verifies email and password inputs
+     * 'GET' request that verifies email and password inputs
      */
-    @PostMapping(path = "/login")
-    public void loginUser() {
-        // User inputs this information
-        String inputtedEmail = "test@example.com";
-        String inputtedPassword = "password123";
+    @GetMapping(path = "/login")
+    @ResponseBody
+    public List<User> loginUser(HttpEntity<String> httpEntity) throws Exception{
+    	//@RequestParam String inputtedEmail, @RequestParam String inputtedPassword
+    	String jsonString = httpEntity.getBody();
+    	Gson g = new Gson();  
+    	User u = g.fromJson(jsonString, User.class);
+    	
+    	System.out.println("User u = "+u);
+    	  	
+    	System.out.println("within loginUser in UserController, httpEntity.body = ");
+    	System.out.println("username = "+u.getUserName());
+    	System.out.println("password = "+u.getPassword());
+    	String inputtedEmail = u.getUserName();
+    	String inputtedPassword = u.getPassword();
+//    	System.out.println(json);
+//    	String userName = json.replace("{", "").replace("}", "").replace("\"", "").replace("//s+", "");
+//    	System.out.println("'"+userName+"'");
+    	
+    	//        // User inputs this information
+//        String inputtedEmail = "test@example.com";
+//        String inputtedPassword = "password123";
 
         if (inputtedEmail.equals("") || inputtedPassword.equals("")) {
             throw new ApiRequestException("Input fields are empty");
-        } else {
-            if (this.userService.loginUser(inputtedEmail, inputtedPassword) == 0) {
-                throw new ApiRequestException("Incorrect email or password.");
-            }
-        }
+        } 
+//        else {
+//            if (this.userService.loginUser(inputtedEmail, inputtedPassword).size() == 0) {
+//                throw new ApiRequestException("Incorrect email or password.");
+//            }
+//        }
+        return this.userService.loginUser(inputtedEmail, inputtedPassword);
     }
 
     /**

@@ -56,13 +56,17 @@ The following Postman collection files includes the API request test to the foll
 
 These were setup where each object generates a random UUID pertaining to a specific animal that is created whenever the object is created. As a result, the Postman requests that involve using a specific animal UUID in the path (`GET`, `PUT`, and `DELETE` requests where the UUID is included) do not work for new executions of the requests.
 
-The procedure must be followed where a GET request is sent to get all objects for all animals. Select one UUID from the JSON response of all objects, then use the new UUID in place of the current UUID at the end of the URL path.
+The procedure must be followed where a `GET` request is sent to get all objects for all animals. Select one UUID from the JSON response of all objects, then use the new UUID in place of the current UUID at the end of the URL path.
 
 Note that requests that check if a valid ID was passed in the URL were tested by deleting many characters from the UUID in the path.
 
+There was a noticeable bug with the UUID library where a UUID is successfully created when only a few characters from the UUID is deleted in the path. If half of the characters of the UUID is deleted in the path, (an invalid id is passed) the UUID will not be created and the custom exception response will be returned.
+
+Another bug with the endpoints are the `DELETE` request can be sent multiple times with the same UUID. This is because the ArrayList() has removed the object the first time and the subsequent requests are received successfully. All subsequent requests just delete nothing.
+
 ### Example Tests
 
-Some example API endpoint tests that walk through the following user stories can be can be viewed in `testing/example_tests.pdf` 
+Some example API endpoint tests that walk through the following user stories can be can be viewed in `testing/example_tests.pdf`. 
 - Status (`VET-15`)
 - Reminders (`VET-38`)
 - Comments (`VET-24` and `VET-45`)

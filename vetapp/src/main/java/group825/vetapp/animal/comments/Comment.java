@@ -3,14 +3,16 @@ package group825.vetapp.animal.comments;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
  * Comment that displays a message for an animal
  *
  * @author Jimmy Zhu
- * @version 1.0
- * @since November 15, 2021
+ * @version 2.0
+ * @since November 28, 2021
  */
 @Getter
 public class Comment {
@@ -18,17 +20,17 @@ public class Comment {
 	/**
 	 * ID number of the associated animal
 	 */
-	private final UUID id;
+	private final int id;
 
 	/**
 	 * ID number of the comment
 	 */
-	private final String commentId;
+	private final int commentId;
 
 	/**
 	 * ID number of the comment author
 	 */
-	private final String authorId;
+	private final int authorId;
 
 	/**
 	 * Timestamp of the comment
@@ -39,40 +41,54 @@ public class Comment {
 	 * Message of the comment
 	 */
 	private final String message;
+	
+	private final String firstName;
+	private final String lastName;
+	private final String userType;
+	
+	
 
 	/**
 	 * Constructor that initializes the Comment
-	 * @param id UUID of a particular animal
+	 * @param id int id of a particular animal
 	 * @param commentId ID number for comment
 	 * @param authorId  ID number for user that made the comment
 	 * @param timestamp timestamp for when the comment was created
 	 * @param message message from the user
 	 */
-	public Comment(@JsonProperty("id") UUID id, @JsonProperty("commentId") String commentId,
-				   @JsonProperty("authorId") String authorId, @JsonProperty("timestamp") String timestamp,
-				   @JsonProperty("message") String message) {
+	public Comment(@JsonProperty("id") int id, @JsonProperty("commentId") int commentId,
+				   @JsonProperty("authorId") int authorId, @JsonProperty("timestamp") String timestamp,
+				   @JsonProperty("message") String message, @JsonProperty("firstName") String firstName,
+				   @JsonProperty("lastName") String lastName, @JsonProperty("userType") String userType) {
 		this.id = id;
 		this.commentId = commentId;
 		this.authorId = authorId;
 		this.timestamp = timestamp;
 		this.message = message;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userType = userType;
 	}
 
 	/**
-	 * Checks if any data members aside from the ID is null
-	 * @return boolean confirming if any data members (other than id) are null
+	 * Checks if any data members is null
+	 * @return boolean confirming if any data members are null
 	 */
 	public boolean anyNulls() {
-		if (commentId == null) {
-			return true;
-		} else if (authorId == null) {
-			return true;
-		} else if (timestamp == null) {
-			return true;
-		} else if (message == null) {
+		if (commentId==0 || authorId == 0 || timestamp == null || message == null || firstName ==null || lastName==null ||userType==null) {
 			return true;
 		}
 		
 		return  false;
 	}
+	
+	 @Override
+	    public String toString() {
+		 String newString = "{ id: " + id + ", commentId: " + commentId + ", authorId: " + authorId + 
+				 ", timestamp: " + timestamp + ", message: " + message + ", firstName: " + firstName 
+				 + ", lastName: " + lastName + ", userType: " + userType + "}";	    	
+		 return newString;
+	    }
+	 
+	
 }

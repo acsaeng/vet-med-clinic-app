@@ -12,31 +12,6 @@ const Login = () => {
     
     let navigate = useNavigate();
 
-    const dummyData = [{
-        userId: 10,
-        firstName: "Hacker",
-        lastName: "One",
-        username: "Instructor_1",
-        password: "pt@123",
-        userType: "Teaching Technician"
-    },
-    {
-        userId: 11,
-        firstName: "Hacker",
-        lastName: "Two",
-        username: "Admin_1",
-        password: "pa",
-        userType: "Admin"
-    },
-    {
-        userId: 12,
-        firstName: "Hacker",
-        lastName: "Three",
-        username: "Technician",
-        password: "pe",
-        userType: "Animal Health Technician"
-    }]
-
     function handleSubmit(event) {
         event.preventDefault();
 
@@ -50,7 +25,7 @@ const Login = () => {
                 // console.log(user[0].firstName)
                 if (user[0].firstName === null){ //if null
                     alert("Invalid username and/or password");
-                }else{
+                } else{
                     localStorage.setItem("userID", user[0].id)
                     localStorage.setItem("userFirstName", user[0].firstName)
                     localStorage.setItem("userLastName", user[0].lastName)
@@ -61,20 +36,8 @@ const Login = () => {
                     navigate(`/home`)
                     // navigate(`/home?requesterID=${user[0].id}&requesterFirstName=${user[0].firstName}&requesterLastName=${user[0].lastName}&userType=${user[0].userType.replace(" ", "%20")}`)
                 }
-                
-
-              } )
+            })
         // window.location.reload()
-
-
-        // for (let i = 0; i < dummyData.length; i++) {
-        //     if (usernameEntered === dummyData[i].username && passwordEntered === dummyData[i].password) {
-        //         navigate(`/home`);
-        //         return;
-        //     }
-        // }
-
-        // alert("Invalid username and/or password");
     }
 
 

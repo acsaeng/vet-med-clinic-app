@@ -5,6 +5,8 @@ import Home from "./pages/app-portal/Home";
 import ManageAnimals from "./pages/app-portal/ManageAnimals";
 import RequestAnimal from "./pages/animal/RequestAnimal";
 import ViewRequests from './pages/animal/ViewRequests';
+import Comments from './pages/animal/Comments';
+import Reminders from './pages/animal/Reminders';
 
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
                 <Route path='/manage-animal' element={<ManageAnimals/>}/>
                 <Route path='/request-animal' element={<RequestAnimal/>}/>
                 <Route path='/view-requests' element={<ViewRequests/>}/>
+                <Route path='/animal-comments' element={<Comments/>}/> 
+                <Route path='/animal-reminders' element={<Reminders/>}/> 
             </Routes>
         </Router>
     );

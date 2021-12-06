@@ -1,14 +1,20 @@
 package group825.vetapp2.diagnosis;
 
 import java.util.List;
-import java.util.UUID;
-
 import group825.vetapp2.exceptions.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Service that performs Diagnosis requests
+ *
+ * @author Timothy Mok, Jimmy Zhu
+ * @version 2.0
+ * @since December 6, 2021
+ */
 @CrossOrigin
-@RequestMapping("app/treatment/diagnosis")
+@RequestMapping("app/diagnosis/diagnosis")
 @RestController
 public class DiagnosisController {
 	
@@ -34,30 +40,37 @@ public class DiagnosisController {
 		}
 		diagnosisService.addDiagnosis(diagnosis);
 	}
-
-	/**
-	 * Displays all the diagnosis associated with an animal
-	 * @return a list of all the diagnosis
-	 */
-	@GetMapping
-	public List<Diagnosis> selectAllDiagnosis() {
-		return diagnosisService.selectAllDiagnosis();
-	}
 	
 	/**
 	 * Requests a specific diagnosis and checks that the ID is valid
 	 * @param diagnosisID the ID of the requested diagnosis
 	 * @return the requested diagnosis
 	 */
-	@GetMapping(path = "{diagnosisID}") 
-	public List<Diagnosis> selectDiagnosisByAnimalId(@PathVariable("diagnosisID") String diagnosisID) throws Exception {
+	@GetMapping(path = "/animalID={animalID}") 
+	public List<Diagnosis> selectDiagnosisByAnimalId(@PathVariable("animalID") String animalID) throws Exception {
 		try {
 			//id of animal
-			int id = Integer.valueOf(diagnosisID);
-			System.out.println(diagnosisService.selectDiagnosisById(id));
-			return diagnosisService.selectDiagnosisById(id);
-//            UUID id = UUID.fromString(strId);
-//            return diagnosisService.selectDiagnosisById(id).orElseThrow(ApiExceptions.invalidIdException());
+			int id = Integer.valueOf(animalID);
+			System.out.println(diagnosisService.selectDiagnosisByAnimalID(id));
+			return diagnosisService.selectDiagnosisByAnimalID(id);
+        } catch (java.lang.IllegalArgumentException e) {
+            throw new InvalidIdException();
+        }
+	}
+	
+	/**
+	 * Gets a specific diagnosis associated with an animal
+	 * @param animalID the ID of the requested animal
+	 * @param diagnosisID the ID of the requested diagnosis
+	 * @return the requested diagnosis
+	 * @throws Exception when there is an SQL Exception
+	 */
+	@GetMapping(path = "/diagnosisID={diagnosisID}") 
+	public Diagnosis selectDiagnosisByDiagnosisID(@PathVariable("diagnosisID") String diagnosisID) throws Exception {
+		try {
+			int tID = Integer.valueOf(diagnosisID);
+			System.out.println(diagnosisService.selectDiagnosisByDiagnosisID(tID));
+			return diagnosisService.selectDiagnosisByDiagnosisID(tID);
         } catch (java.lang.IllegalArgumentException e) {
             throw new InvalidIdException();
         }
@@ -67,10 +80,9 @@ public class DiagnosisController {
 	 * Delete an existing diagnosis in the database and checks that the diagnosis ID is valid
 	 * @param diagnosisID the ID of the diagnosis to be deleted
 	 */
-	@DeleteMapping(path = "{id}")
-	public void deleteDiagnosisById(@PathVariable("id") String diagnosisID) throws Exception{
+	@DeleteMapping(path = "/diagnosisID={diagnosisID}")
+	public void deleteDiagnosisByID(@PathVariable("diagnosisID") String diagnosisID) throws Exception{
 		try {
-//            UUID id = UUID.fromString(strId);
 			int id = Integer.valueOf(diagnosisID);
             diagnosisService.deleteDiagnosisById(id);
         } catch(java.lang.IllegalArgumentException e) {
@@ -83,11 +95,10 @@ public class DiagnosisController {
 	 * @param diagnosisId the ID of the diagnosis to be updated
 	 * @param diagnosisToUpdate diagnosis object with updated information
 	 */
-	@PutMapping(path = "{id}")
-	public void updateDiagnosisById(@PathVariable("id") String diagnosisId, @RequestBody Diagnosis diagnosisToUpdate) throws Exception{	
+	@PutMapping(path = "/diagnosisID={diagnosisID}")
+	public void updateDiagnosisById(@PathVariable("diagnosisID") String diagnosisID, @RequestBody Diagnosis diagnosisToUpdate) throws Exception{	
 		try {
-//            UUID id = UUID.fromString(strId);
-			int id = Integer.valueOf(diagnosisId);
+			int id = Integer.valueOf(diagnosisID);
             if (diagnosisToUpdate.anyNulls()) {
     			throw new ApiRequestException("At least one diagnosis field is null");
     		}

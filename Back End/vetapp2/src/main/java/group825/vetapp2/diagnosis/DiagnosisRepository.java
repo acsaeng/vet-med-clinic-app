@@ -2,8 +2,6 @@ package group825.vetapp2.diagnosis;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
@@ -42,7 +40,7 @@ public class DiagnosisRepository {
 	public int addDiagnosis(Diagnosis diagnosis) throws Exception{
 		String queryBegin = "INSERT INTO DIAGNOSIS (Diagnosis_ID, DiagnosisDate, Diagnosis, DiagnosisDescription, Diagnosis_Status, User_ID, Animal_ID) VALUES";
 		query = queryBegin + "('" + diagnosis.getDiagnosisID() + "', '" + diagnosis.getDiagnosisDate() + "', '" +  diagnosis.getDiagnosis()  
-		+ "', '" + diagnosis.getDescription() + "', '" +diagnosis.getDiangosisStatus()  + "', '" + diagnosis.getUserID() + "', '" + diagnosis.getAnimalID()+"');";
+		+ "', '" + diagnosis.getDescription() + "', '" +diagnosis.getDiagnosisStatus()  + "', '" + diagnosis.getUserID() + "', '" + diagnosis.getAnimalID()+"');";
 		System.out.println(query);
 		try {
 			int responseCheck = dao.manipulateRows(query);
@@ -50,24 +48,11 @@ public class DiagnosisRepository {
 			this.getLatestDiagnosisId();
 			
 			query = queryBegin + "('" + (this.latestID+1) + "', '" + diagnosis.getDiagnosisDate() + "', '" +  diagnosis.getDiagnosis()  
-			+ "', '" + diagnosis.getDescription() + "', '" +diagnosis.getDiangosisStatus()  + "', '" + diagnosis.getUserID() + "', '" + diagnosis.getAnimalID()+"');";
+			+ "', '" + diagnosis.getDescription() + "', '" +diagnosis.getDiagnosisStatus()  + "', '" + diagnosis.getUserID() + "', '" + diagnosis.getAnimalID()+"');";
 			System.out.println(query);
 			int responseCheck = dao.manipulateRows(query);
 		}
 		return 1;
-		
-	
-//		UUID id = UUID.randomUUID();
-//		dbDiagnosis.add(new Diagnosis(id, diagnosis.getAnimalName(), diagnosis.getDiagnosis(), diagnosis.getDescription()));
-//		return 1;
-	}
-	
-	/**
-	 * Returns all diagnoses in the system associated with this animal
-	 * @return all associated diagnoses
-	 */
-	public List<Diagnosis> selectAllDiagnosis(){
-		return dbDiagnosis;
 	}
 	
 	/**
@@ -75,13 +60,24 @@ public class DiagnosisRepository {
 	 * @param id the id of the selected diagnosis
 	 * @return the diagnosis with the requested id
 	 */
-	public ArrayList<String> selectDiagnosisById(int diagnosisID) throws Exception{
-		query = "SELECT * FROM DIAGNOSIS WHERE Animal_ID='" + diagnosisID +"';";
+	public ArrayList<String> selectDiagnosisByAnimalID(int animalID) throws Exception{
+		query = "SELECT * FROM DIAGNOSIS WHERE Animal_ID='" + animalID +"';";
 		System.out.println("query = "+query);
 		ArrayList<String> results = dao.getResponseArrayList(query);
 		return results;
-//	public Optional<Diagnosis> selectDiagnosisById(UUID id) {
-//		return dbDiagnosis.stream().filter(diagnosis -> diagnosis.getId().equals(id)).findFirst();
+	}
+	
+	/**
+	 * Find a specific diagnosis selected by ID
+	 * @param animalID the id of the selected animal
+	 * @param diagnosisID the ID of the diagnosis requested
+	 * @return the specific diagnosis for an animal
+	 * @throws Exception when there is an SQL Exception
+	 */
+	public ArrayList<String> selectDiagnosisByDiagnosisID(int diagnosisID) throws Exception {
+		query = "SELECT FROM DIAGNOSIS WHERE Diagnosis_ID='" + diagnosisID + "';";
+		ArrayList<String> result = dao.getResponseArrayList(query);
+		return result;
 	}
 	
 	/**
@@ -94,15 +90,6 @@ public class DiagnosisRepository {
 		System.out.println("query for delete: "+query);
 		int responseCheck = dao.manipulateRows(query);
 		return responseCheck;
-		
-		
-//		Optional<Diagnosis> diagnosisMaybe = selectDiagnosisById(id);
-//
-//		if(diagnosisMaybe.isEmpty()) { 
-//			return 0;
-//		}
-//
-//		dbDiagnosis.remove(diagnosisMaybe.get());
 	}
 	
 	/**
@@ -114,7 +101,7 @@ public class DiagnosisRepository {
 	public int updateDiagnosisById(int diagnosisID, Diagnosis update) throws Exception{
 		 String query = "UPDATE " + table_name + " AS D SET Diagnosis_ID='" + update.getDiagnosisID() 
 		 + "', DiagnosisDate='" + update.getDiagnosisDate() +"', Diagnosis='" + update.getDiagnosis() 
-		 +"', DiagnosisDescription='" + update.getDescription() +"', Diagnosis_Status='" + update.getDiangosisStatus() 
+		 +"', DiagnosisDescription='" + update.getDescription() +"', Diagnosis_Status='" + update.getDiagnosisStatus() 
 		 + "', User_ID='" + update.getUserID() + "', Animal_ID='" + update.getAnimalID() +
 		 "' WHERE D.Diagnosis_ID='"+diagnosisID+"';";
 		 System.out.println("query = "+query);

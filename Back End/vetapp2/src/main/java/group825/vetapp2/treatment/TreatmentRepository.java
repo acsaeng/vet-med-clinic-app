@@ -38,11 +38,6 @@ public class TreatmentRepository {
 	 */
 	private int latestID;
 	
-	/**
-	 * Database that stores all the diagnoses
-	 */
-	private static final List<Treatment> dbTreatment = new ArrayList<>();
-	
 	
 	/**
 	 * Constructor for the TreatmentRepository that connects to the database
@@ -97,8 +92,8 @@ public class TreatmentRepository {
 	 * @return the specific treatment for an animal
 	 * @throws Exception when there is an SQL Exception
 	 */
-	public ArrayList<String> selectTreatmentByTreatmentId(int animalID, int treatmentID) throws Exception {
-		query = "SELECT FROM TREATMENT WHERE Animal_ID='" + animalID +" AND Treatment_ID='" + treatmentID + "';";
+	public ArrayList<String> selectTreatmentByTreatmentId(int treatmentID) throws Exception {
+		query = "SELECT FROM TREATMENT WHERE Treatment_ID='" + treatmentID + "';";
 		ArrayList<String> result = dao.getResponseArrayList(query);
 		return result;
 	}
@@ -110,7 +105,7 @@ public class TreatmentRepository {
 	 * @throws Exception when there is an SQL Exception
 	 */
 	public int deleteTreatmentById(int treatmentID) throws Exception{
-		String query = "DELETE FROM "+ tableName + " AS D WHERE D.Treatment_ID='"+treatmentID+"';";
+		String query = "DELETE FROM "+ tableName + " AS T WHERE T.Treatment_ID='"+treatmentID+"';";
 		System.out.println("query for delete: "+query);
 		int responseCheck = dao.manipulateRows(query);
 		return responseCheck;

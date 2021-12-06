@@ -1,7 +1,6 @@
 package group825.vetapp2.diagnosis;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -44,7 +43,7 @@ public class Diagnosis {
 	/**
 	 * Status of the diagnosis
 	 */
-	private String diangosisStatus;
+	private String diagnosisStatus;
 	
 	/**
 	 * ID number of the user who made the diagnosis
@@ -63,13 +62,13 @@ public class Diagnosis {
 	 */
 	public Diagnosis(@JsonProperty("diagnosisID") int diagnosisID, @JsonProperty("animalID") int animalID, @JsonProperty("diagnosis") String diagnosis, 
 			@JsonProperty("description") String description, @JsonProperty("diagnosisDate") String diagnosisDate, 
-			@JsonProperty("diangosisStatus") String diangosisStatus, @JsonProperty("userID") int userID	) {
+			@JsonProperty("diagnosisStatus") String diagnosisStatus, @JsonProperty("userID") int userID	) {
 		this.animalID = animalID;
 		this.diagnosisID = diagnosisID;
 		this.diagnosis = diagnosis;
 		this.description = description;
 		this.diagnosisDate = diagnosisDate;
-		this.diangosisStatus = diangosisStatus;
+		this.diagnosisStatus = diagnosisStatus;
 		this.userID = userID;
 	}
 
@@ -78,7 +77,7 @@ public class Diagnosis {
 	 * @return true if any of the fields are left empty, false otherwise
 	 */
 	public boolean anyNulls() {
-		return diagnosis == null || description == null || diagnosisID==0 || diagnosisDate==null || userID ==0 || animalID==0 || diangosisStatus==null;
+		return diagnosis == null || description == null || diagnosisID==0 || diagnosisDate==null || userID ==0 || animalID==0 || diagnosisStatus==null;
 	}
 	
 	

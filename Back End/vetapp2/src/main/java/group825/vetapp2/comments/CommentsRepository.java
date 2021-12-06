@@ -142,6 +142,9 @@ public class CommentsRepository {
 		this.latestID = Integer.valueOf(latestID);
 	}
 	
+	/**
+     * @return the Split placeholder saved in the "DatabaseConnection.java"
+     */
 	public String getSplitPlaceholder() {
 		return dao.getSplitPlaceholder();
 	}

@@ -152,8 +152,8 @@ public class AnimalRepository {
 		this.latestID = Integer.valueOf(latestId);
 	}
 	
-    /**
-     * @return the Split placeholder saved in the "Application_DbConnection.java"
+	/**
+     * @return the Split placeholder saved in the "DatabaseConnection.java"
      */
     public String getSplitPlaceholder() {
     	return dao.getSplitPlaceholder();

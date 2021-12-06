@@ -4,11 +4,11 @@ USE VETAPP;
 
 DROP TABLE IF EXISTS COMMENT; 
 CREATE TABLE COMMENT ( 
-     Animal_ID			integer not null,
+     Animal_ID			 integer not null,
      Comment_ID			integer not null,
-     Upload_Time		varchar (50) not null,
-     User_ID			integer not null,
-     Message			varchar (50) not null,
+     Upload_Time			 varchar (50) not null,
+     User_ID			 integer not null,
+     Message			 varchar (50) not null,
      primary key (Comment_ID)
 );
 
@@ -163,7 +163,24 @@ VALUES
 ('9', '2021-10-12 00:00:00', 'Flu', 'Feeling better, still needs to stay separated from rest of cows. Medication once a day', 'Ongoing', '3', '103');
 
 
+DROP TABLE IF EXISTS TREATMENT; 
+CREATE TABLE TREATMENT ( 
+     Treatment_ID			int not null,
+     User_ID			 varchar (50) not null,
+     Treatment_Date			 varchar (50) not null,
+     Treatment_Protocol			 varchar (50) not null,
+     Treatment_Description			 varchar (500) not null,
+     Animal_ID			 varchar (50) not null,
+     primary key (Treatment_ID)
+);
 
+
+INSERT INTO TREATMENT (Treatment_ID, User_ID, Treatment_Date, Treatment_Protocol, Treatment_Description, Animal_ID)
+VALUES
+('4', '3', '2021-04-13 00:00:00', 'Cast', 'Keep cast on until hooves are fully healed.', '102'),
+('5', '3', '2021-09-25 00:00:00', 'Bandaging ', 'Replace bandage daily after cleaning.', '102'),
+('8', '3', '2021-10-05 00:00:00', 'Flu medicine', 'Twice daily, once in AM, once in PM. 8 hours apart.', '103'),
+('9', '3', '2021-10-12 00:00:00', 'Flu medicine', 'Once daily after morning meal.', '103');
 
 
 

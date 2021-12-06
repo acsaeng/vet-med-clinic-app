@@ -5,36 +5,28 @@ import AnimalNavbar from '../../components/AnimalNavbar';
 // Requires npm install axios --save
 import axios from 'axios';
 import React, {useState} from 'react'
-import {useLocation, useNavigate} from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
+// import {useNavigate} from 'react-router-dom'
 
 function ManageDiagnosis() {
-    const [Authenticated, setAuth] = useState(localStorage.getItem("Authenticated"))
+    const Authenticated = useState(localStorage.getItem("Authenticated"))
     // window.location.reload()
-    const [diagnosis, setDiagnosis] = useState(diagnosis);
-    const [description, setDescription] = useState(description);
+    const [diagnosis, setDiagnosis] = useState(localStorage.getItem("diagnosis"))
+    const [description, setDescription] = useState(localStorage.getItem("diagnosisDescription"))
     const diagnosisStatus = "Ongoing";
     
-    // const animalID = urlParams.get("animalID")
-    // let userID = ""
-    // let animalName = ""
-    // let animalSpecies = ""
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
     const animalName = localStorage.getItem("animalName")
     const animalSpecies = localStorage.getItem("animalSpecies")
     const diagnosisID = localStorage.getItem("diagnosisID")
-    // const diagnosis = localStorage.getItem("diagnosis")
-    // const description = localStorage.getItem("description")
 
-    axios.get('http://localhost:8080/app/animal/'+animalID+'/'+diagnosisID).then(
+    axios.get('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID).then(
         res => {
             console.log(res);
-            userID = res.data[0].userID
-            localStorage.setItem("userID", userID)
-            animalName = res.data[0].name
-            localStorage.setItem("animalName", animalName)
-            animalSpecies = res.data[0].species
-            localStorage.setItem("animalSpecies", animalSpecies)
+            localStorage.setItem("userID", res.data[0].userID)
+            localStorage.setItem("animalName", res.data[0].name)
+            localStorage.setItem("animalSpecies", res.data[0].species)
             localStorage.setItem("animalStatus", res.data[0].status)
             localStorage.setItem("diagnosisID", res.data[0].diagnosisID)
             localStorage.setItem("diagnosis", res.data[0].diagnosis)
@@ -48,9 +40,6 @@ function ManageDiagnosis() {
         event.preventDefault();
         window.location.reload()
     }
-
-    let navigate = useNavigate();
-    let currLocation = useLocation();
 
     console.log(useLocation())
 
@@ -83,7 +72,7 @@ function ManageDiagnosis() {
         document.getElementById("diagnosisInput").value = ""
         console.log("From Clicking the complete button: " + diagnosis)
 
-        axios.put('http://localhost:8080/app/diagnosis/animal/'+diagnosisID, {
+        axios.put('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID, {
             animalID: parseInt(animalID),
             diagnosisID: parseInt(diagnosisID), 
             Date: diagnosisDate,
@@ -111,7 +100,7 @@ function ManageDiagnosis() {
         var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
         var diagnosisDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
 
-        axios.put('http://localhost:8080/app/diagnosis/animal/'+diagnosisID, {
+        axios.put('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID, {
             animalID: parseInt(animalID),
             diagnosisID: parseInt(diagnosisID), 
             Date: diagnosisDate,

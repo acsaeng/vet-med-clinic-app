@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 /**
  * Service that performs Request animal requests
  *
- * @author Timothy Mok
- * @version 1.0
- * @since November 15, 2021
+ * @author Timothy Mok, Jimmy Zhu
+ * @version 2.0
+ * @since Dec 5, 2021
  */
 @Service
 public class RequestService {
@@ -36,7 +36,7 @@ public class RequestService {
 
 	/**
 	 * Service for adding a request to the system
-	 * @param request request to be added
+	 * @param request = request to be added
 	 * @return whether the request was successfully added to the Repository
 	 */
 	public int addRequest(Request request) throws Exception {
@@ -56,11 +56,11 @@ public class RequestService {
 	
 	/**
 	 * Search for a specific request in the Repository
-	 * @param id ID number of the requested request
-	 * @return the request from the repository
+	 * @param userID = ID number of user whose requests are being returned
+	 * @return the list of requests from the repository
 	 */
-	public List<Request> selectRequestsById(int id) throws Exception{
-		ArrayList<String> results =  repo.selectRequestsById(id);
+	public List<Request> selectRequestsById(int userID) throws Exception{
+		ArrayList<String> results =  repo.selectRequestsById(userID);
 		List<Request> listResults = createListRequest(results);
 		return listResults;
 //		return repo.selectRequestById(id);
@@ -68,40 +68,41 @@ public class RequestService {
 	
 	/**
 	 * Delete a request from the Repository
-	 * @param id request to be deleted
+	 * @param requestID = ID of request to be deleted
 	 * @return whether the request was successfully deleted from the Repository
 	 */
-	public int deleteRequestById(UUID id) {
-		return repo.deleteRequestById(id);
+	public int deleteRequestById(int requestID) throws Exception{
+		return repo.deleteRequestById(requestID);
 	}
 	
 	/**
 	 * Update an existing request in the Repository
-	 * @param id request to be updated
-	 * @param request request object containing new information
+	 * @param requestID = id of request to be updated
+	 * @param request = request object containing new information
 	 * @return whether the request was successfully updated the Repository
 	 */
-	public int updateRequestById(int id, Request request) throws Exception{
-		return repo.updateRequestById(id, request);
+	public int updateRequestById(int requestID, Request request) throws Exception{
+		return repo.updateRequestById(requestID, request);
 	}
 	
 	 /**
 	  * Create a list of Request objects from ArrayList<String> returned from database query
 	 * @param foundResults = ArrayList<String> preprocessed response from database of all returned tuples as an ArrayList of Strings
-	 * @return ArrayList<Comment> where each object was created from the data in each String from the ArrayList input
+	 * @return ArrayList<Request> where each object was created from the data in each String from the ArrayList input
 	 */
 	public List<Request> createListRequest(ArrayList<String> foundResults){
 		List<Request> listResults = new ArrayList<Request>(); 
 		//review against Database setup
-		int idx_animalID=0, idx_requestID=1, idx_requesterID=2, idx_requestDate=3, idx_checkoutDate=4, idx_returnDate=5, 
-				idx_reason=6, idx_requestStatus=7, idx_requesterFirstName=8, idx_requesterLastName=9, idx_animalName=10, idx_animalSpecies=11;
+		int idxAnimalID=0, idxRequestID=1, idxRequesterID=2, idxRequestDate=3, idxCheckoutDate=4, idxReturnDate=5, 
+				idxReason=6, idxRequestStatus=7, idxRequesterFirstName=8, idxRequesterLastName=9, idxAnimalName=10, idxAnimalSpecies=11;
 		for (String result: foundResults) {
 			String[] resultSplit = result.split(repo.getSplitPlaceholder());
-		Request temp =  new Request( Integer.valueOf(resultSplit[idx_animalID]), Integer.valueOf(resultSplit[idx_requestID]), Integer.valueOf(resultSplit[idx_requesterID]), 
-				resultSplit[idx_requestDate], resultSplit[idx_checkoutDate], resultSplit[idx_returnDate], resultSplit[idx_reason], 
-				resultSplit[idx_requestStatus], resultSplit[idx_requesterFirstName], resultSplit[idx_requesterLastName], 
-				resultSplit[idx_animalName], resultSplit[idx_animalSpecies]);
+		Request temp =  new Request( Integer.valueOf(resultSplit[idxAnimalID]), Integer.valueOf(resultSplit[idxRequestID]), Integer.valueOf(resultSplit[idxRequesterID]), 
+				resultSplit[idxRequestDate], resultSplit[idxCheckoutDate], resultSplit[idxReturnDate], resultSplit[idxReason], 
+				resultSplit[idxRequestStatus], resultSplit[idxRequesterFirstName], resultSplit[idxRequesterLastName], 
+				resultSplit[idxAnimalName], resultSplit[idxAnimalSpecies]);
 		listResults.add(temp);
+
 	}
 	System.out.println("\nPrepared List to send as json response to API endpoint:");
 	System.out.println(listResults);

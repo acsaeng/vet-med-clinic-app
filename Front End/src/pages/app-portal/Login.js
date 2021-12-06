@@ -37,6 +37,7 @@ const Login = () => {
                     // navigate(`/home?requesterID=${user[0].id}&requesterFirstName=${user[0].firstName}&requesterLastName=${user[0].lastName}&userType=${user[0].userType.replace(" ", "%20")}`)
                 }
             })
+
         // window.location.reload()
     }
 

@@ -13,10 +13,12 @@
 
 .species-text {
   font-style: italic;
+  margin-top: -5px;
 }
 
 .status-text {
   background-color: lightgreen;
+  margin-top: -10px;
 }
 
 .admin-text {

@@ -18,12 +18,12 @@ public class Reminder {
 	/**
 	 * ID number of an animal
 	 */
-	private final int id;
+	private final int animalID;
 
 	/**
 	 * ID number of the reminder
 	 */
-	private final int reminderId;
+	private final int reminderID;
 
 	/**
 	 * Status of the reminder
@@ -50,26 +50,40 @@ public class Reminder {
 	 */
 	private final String note;
 	
+	/**
+	 * First name of the user who made the reminder
+	 */
 	private final String firstName;
+	
+	/**
+	 * Last name of the user who made the reminder
+	 */
 	private final String lastName;
+	
+	/**
+	 * Type of the user who made the reminder
+	 */
 	private final String userType;
 
 	/**
 	 * Constructor that initializes the Reminder
-	 * @param id UUID of particular animal
-	 * @param reminderId ID number for specific reminder belong to a particular animal
-	 * @param status status recorded in the reminder
-	 * @param dateDue date by which reminder should be completed
-	 * @param datePerformed date that the reminder was created
-	 * @param note information to be included in reminder
+	 * @param animalID = ID of particular animal
+	 * @param reminderID = ID number for specific reminder belong to a particular animal
+	 * @param status = status recorded in the reminder
+	 * @param dateDue = date by which reminder should be completed
+	 * @param datePerformed = date that the reminder was created
+	 * @param note = information to be included in reminder
+	 * @param firstName = first name of the user who made the reminder
+	 * @param lastName = last name of the user who made the reminder
+	 * @param userType = type of the user who made the reminder
 	 */
-	public Reminder(@JsonProperty("id") int id, @JsonProperty("reminderId") int reminderId, 
+	public Reminder(@JsonProperty("animalID") int animalID, @JsonProperty("reminderID") int reminderID, 
 			@JsonProperty("status") String status, @JsonProperty("dateDue") String dateDue, 
 			@JsonProperty("datePerformed") String datePerformed, @JsonProperty("authorID") int authorID, 
 			@JsonProperty("note") String note, @JsonProperty("firstName") String firstName, 
 			@JsonProperty("lastName") String lastName, @JsonProperty("userType") String userType) {
-		this.id = id;
-		this.reminderId = reminderId;
+		this.animalID = animalID;
+		this.reminderID = reminderID;
 		this.status = status;
 		this.dateDue = dateDue;
 		this.datePerformed = datePerformed;
@@ -85,7 +99,7 @@ public class Reminder {
 	 * @return boolean confirming if any data members are null
 	 */
 	public boolean anyNulls() {
-		if (id == 0 || reminderId == 0 || status == null || dateDue == null || datePerformed == null 
+		if (animalID == 0 || reminderID == 0 || status == null || dateDue == null || datePerformed == null 
 				|| authorID ==0 || note == null) {
 			return true;
 		}
@@ -95,7 +109,7 @@ public class Reminder {
 	
 	@Override 
 	public String toString() {
-		String newString = "{ id: " + id + ", reminderId: " + reminderId + ", status: " + status + ", dateDue: " 
+		String newString = "{ animalID: " + animalID + ", reminderID: " + reminderID + ", status: " + status + ", dateDue: " 
 				+ dateDue + ", datePerformed: " + datePerformed + ", authorID: " + authorID + ", note: " + note + "}";
 	 return newString;
 	}

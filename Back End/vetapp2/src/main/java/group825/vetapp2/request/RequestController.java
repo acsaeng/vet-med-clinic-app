@@ -35,8 +35,8 @@ public class RequestController {
 	}
 	
 	/**
-	 * Send request to add a request for an animal and checks that all necessary fields are filled out
-	 * @param request the request
+	 * Add a request for an animal and checks that all necessary fields are filled out
+	 * @param request = the new request to be added to the database
 	 */
 	@PostMapping
 	public void addRequest(@RequestBody Request request) throws Exception{
@@ -47,7 +47,7 @@ public class RequestController {
 	}
 
 	/**
-	 * Displays all the requests associated with an animal
+	 * Displays all the requests for all animals
 	 * @return a list of all the requests
 	 */
 	@GetMapping
@@ -56,19 +56,15 @@ public class RequestController {
 	}
 	
 	/**
-	 * Requests a specific request and checks that the ID is valid
-//	 * @param strId the ID number of the requested request
-	 * @param strId is the ID number of the users whose requests we are returning
-	 * @return the requested request
+	 * Get all requests made by one user
+	 * @param userID = the ID number of the user whose requests are being returning
+	 * @return list of all requests made by one user
 	 */
-	@GetMapping(path = "{id}") 
-	public List<Request> selectRequestById(@PathVariable("id") String strId) throws Exception{
+	@GetMapping(path = "{userID}") 
+	public List<Request> selectRequestById(@PathVariable("userID") String userID) throws Exception{
 		try {
-//            UUID id = UUID.fromString(strId);
-			int id = Integer.valueOf(strId);
-//			System.out.println(requestService.selectRequestsById(id));
+			int id = Integer.valueOf(userID);
 			return requestService.selectRequestsById(id);
-//            return requestService.selectRequestById(id).orElseThrow(ApiExceptions.invalidIdException());
         } catch (java.lang.IllegalArgumentException e) {
             throw new InvalidIdException();
         }
@@ -76,13 +72,13 @@ public class RequestController {
 	
 	/**
 	 * Delete an existing request in the database and checks that the request ID is valid
-	 * @param strId the ID of the request to be deleted
+	 * @param requestID = the ID of the request to be deleted
 	 */
-	@DeleteMapping(path = "{id}")
-	public void deleteRequestById(@PathVariable("id") String strId) {
+	@DeleteMapping(path = "{requestID}")
+	public void deleteRequestById(@PathVariable("requestID") String requestID) throws Exception{
 		try {
-            UUID id = UUID.fromString(strId);
-            requestService.deleteRequestById(id);
+            int id = Integer.valueOf(requestID);
+			requestService.deleteRequestById(id);
         } catch (java.lang.IllegalArgumentException e) {
             throw new InvalidIdException();
         }
@@ -90,14 +86,13 @@ public class RequestController {
 	
 	/**
 	 * Update an existing request in the database and checks that the request ID is valid
-	 * @param strId the ID of the request to be updated
-	 * @param requestToUpdate request object with updated information
+	 * @param requestID = the ID of the request to be updated
+	 * @param requestToUpdate = request object with updated information
 	 */
-	@PutMapping(path = "{id}")
-	public void updateRequestById(@PathVariable("id") String strId, @RequestBody Request requestToUpdate) throws Exception {	
+	@PutMapping(path = "{requestID}")
+	public void updateRequestById(@PathVariable("requestID") String requestID, @RequestBody Request requestToUpdate) throws Exception {	
 		try {
-//            UUID id = UUID.fromString(strId);
-			int id = Integer.valueOf(strId);
+			int id = Integer.valueOf(requestID);
 
             if (requestToUpdate.anyNulls()) {
     			throw new ApiRequestException("At least one request field is null");

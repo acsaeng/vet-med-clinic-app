@@ -2,7 +2,7 @@ package group825.vetapp2.users;
 
 import org.springframework.stereotype.Repository;
 
-import group825.vetapp2.database.Application_DbConnection;
+import group825.vetapp2.database.DatabaseConnection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,27 +12,41 @@ import java.util.UUID;
 /**
  * Repository that stores User information
  *
- * @author Aron Saengchan, Jimmy Zhu
+ * @author Aron Saengchan, Jimmy Zhu, Timothy Mok
  * @version 2.0
- * @since December 02, 2021
+ * @since December 6, 2021
  */
 @Repository("tempUserRepo")
 public class UserRepository {
-	String table_name = "USERS";
-	Application_DbConnection dao;
-	String query;
-	int Latest_user_id;
+	
+	/**
+	 * Table name in SQL database
+	 */
+	private String tableName = "USERS";
+	
+	/**
+	 * Connection to the SQL database
+	 */
+	private DatabaseConnection dao;
+	
+	/**
+	 * SQL query
+	 */
+	private String query;
+	
+	/**
+	 * The latest user ID in the database to update new user's with
+	 */
+	int latestUserID;
 
+	/**
+	 * Constructor for the UserRepository
+	 * @throws Exception
+	 */
 	public UserRepository() throws Exception {
-		dao = new Application_DbConnection();
-		getLatestCommentId();
+		dao = new DatabaseConnection();
+		getLatestUserId();
 	}
-	
-	
-    /**
-     * Database that stores all the users
-     */
-    private static final List<User> database = new ArrayList<>();
 
     /**
      * Verifies a user's email and password information
@@ -40,117 +54,83 @@ public class UserRepository {
      * @param password user's password
      * @return 1 if login was successful, 0 otherwise
      */
-//     public int loginUser(String userName, String password) throws Exception{
-    	public ArrayList<String>  loginUser(String userName, String password) throws Exception{	 
-    	 query = "SELECT * FROM USERS AS U WHERE U.UserName='"+userName+"' AND U.User_Password='"+ password +"'";
- 		ArrayList<String> results = dao.getResponseArrayList(query);
- 		if (results.size() == 1) {
- 			return results;
- 		}  	 
-//        for (User user : database) {
-//            if (email.equals(user.getEmail()) && password.equals(user.getPassword())) {
-//                return 1;
-//            }
-//        }
-
-        return results;
-    }
-
-    /**
-     * Changes a user's password
-     * @param email user's email
-     * @param newPassword user's new password
-     * @return 1 if password change was successful, 0 otherwise
-     */
-    public int changeUserPassword(String email, String newPassword) {
-    	return 0;
-//        return selectUserByEmail(email).map(user -> {
-//            int accountIdx = database.indexOf(user);
-//
-//            if (accountIdx >= 0) {
-//                database.get(accountIdx).setPassword(newPassword);
-//                return 1;
-//            }
-//
-//            return 0;
-//        }).orElse(0);
-    }
-
-    /**
-     * Finds a user in the database by email
-     * @return user associated with a specified email
-     */
-    private Optional<User> selectUserByEmail(String email) {
-    	return Optional.empty();
-//        return database.stream().filter(user -> user.getEmail().equals(email)).findFirst();
+	public ArrayList<String>  loginUser(String userName, String password) throws Exception{	 
+		query = "SELECT * FROM USERS AS U WHERE U.UserName='"+userName+"' AND U.User_Password='"+ password +"'";
+		ArrayList<String> results = dao.getResponseArrayList(query);
+		if (results.size() == 1) {
+			return results;
+		}  	 
+		return results;
     }
 
     /**
      * Retrieves all stored users from the database
      * @return a list of all stored users
+     * @throws Exception when there is an SQL Exception
      */
-    public List<User> selectAllUsers() {
-        return database;
+    public ArrayList<String> selectAllUsers() throws Exception {
+    	query = "SELECT * FROM USERS;";
+		ArrayList<String> results = dao.getResponseArrayList(query);
+		return results;
     }
 
     /**
      * Adds a user to the database
      * @param user user to be added
      * @return 1 if registration was successful, 0 otherwise
+     * @throws Exception when there is an SQL Exception
      */
-    public int addUser(User user) {
-        database.add(user);
-        return 1;
+    public int addUser(User user) throws Exception {
+    	String query_begin = "INSERT INTO USERS (User_ID, First_Name, Last_Name, User_Type, UserName,  "
+    		+ "Email, Phone_Number, User_Password, Start_Date, User_Status) VALUES";
+		query = query_begin + "( '"+user.getId() +"', '" + user.getFirstName()+"', '" +  user.getLastName() 
+			+ "', '" + user.getUserType() +"', '" + user.getUserName() + "', '" + user.getEmail() + "', '" 
+			+ user.getPhoneNum() +"', '" + user.getPassword() + "', '" + user.getStartDate() 
+			+ "', '" + user.getUserStatus() + "');";
+		System.out.println(query);
+		try {
+			int responseCheck = dao.manipulateRows(query);
+		}catch(Exception e) {
+			getLatestUserId();
+			query = query_begin + "( '"+user.getId() +"', '" + user.getFirstName()+"', '" +  user.getLastName() 
+				+ "', '" + user.getUserType() +"', '" + user.getUserName() + "', '" + user.getEmail() + "', '" 
+				+ user.getPhoneNum() +"', '" + user.getPassword() + "', '" + user.getStartDate() 
+				+ "', '" + user.getUserStatus() + "');";
+			int responseCheck = dao.manipulateRows(query);	
+		}
+		return 1;
     }
 
     /**
      * Updates a user's information
      * @param id user's existing ID
-     * @param name user's new or existing name
-     * @param email user's new or existing email
+     * @param user the User object with new information
      * @return 1 if updates were successful, 0 otherwise
+     * @throws Exception when there is an SQL Exception
      */
-    public int editUser(UUID id, String name, String email) {
-    	return 0;
-//        return selectUserById(id).map(user -> {
-//            int accountIdx = database.indexOf(user);
-//
-//            if (accountIdx >= 0) {
-////                database.get(accountIdx).setName(name);
-////                database.get(accountIdx).setEmail(email);
-//                return 1;
-//            }
-//
-//            return 0;
-//        }).orElse(0);
-    }
-
-    /**
-     * Blocks a user in the system
-     * @param id user's ID
-     * @return 1 if block was successful, 0 otherwise
-     */
-    public int blockUser(UUID id) {
-    	return 0;
-//        return selectUserById(id).map(user -> {
-//            int accountIdx = database.indexOf(user);
-//
-//            if (accountIdx >= 0) {
-////                database.get(accountIdx).setActive(false);
-//                return 1;
-//            }
-//
-//            return 0;
-//        }).orElse(0);
+    public int editUser(int id, User update) throws Exception {
+    	String query = "UPDATE " + tableName + " AS U SET User_ID='" + update.getId() 
+    		+ "', First_Name='" + update.getFirstName() +"', Last_Name='" + update.getLastName() 
+    		+"', User_Type='" + update.getUserType() +"', UserName='" + update.getUserName() 
+    		+ "', Email='" + update.getEmail() + "', Phone_Number='" + update.getPhoneNum() +
+    		"', User_Password='" + update.getPassword() +"', Start_Date='" + update.getStartDate() +
+    		"User_Status='" + update.getStartDate() + "' WHERE U.User_ID='"+ id +"';";
+		 System.out.println("query = "+query);
+		 int responseCheck = dao.manipulateRows(query);
+		 return responseCheck;
     }
 
     /**
      * Finds a user in the database by ID
+     * @param id a specific user's ID
      * @return user associated with a specified ID
+     * @throws Exception when there is an SQL Exception
      */
-    private Optional<User> selectUserById(UUID id) {
-    	return Optional.empty();
-//        return database.stream().filter(user -> user.getId().equals(id)).findFirst();
+    public ArrayList<String> selectUserById(int id) throws Exception {
+    	query = "SELECT * FROM "+ this.tableName +" AS U WHERE U.User_ID='"+id+"';";
+		System.out.println("query = "+query);
+		ArrayList<String> results = dao.getResponseArrayList(query);
+		return results;
     }
     
     
@@ -158,14 +138,16 @@ public class UserRepository {
 	 * get the latest Id for the primary key for Comment object from database
 	 * @throws Exception when there is an SQL Exception
 	 */
-	private void getLatestCommentId() throws Exception{
+	private void getLatestUserId() throws Exception {
 		String queryMaxId = "SELECT MAX(U.User_ID) FROM USERS AS U ";
-//		System.out.println(queryMaxId);
 		String latestId = dao.getRows(queryMaxId).replaceAll("\\s+","");
 		System.out.println("latestId ='"+latestId+"'");
-		this.Latest_user_id = Integer.valueOf(latestId);
+		this.latestUserID = Integer.valueOf(latestId);
 	}
 	
+	/**
+	 * @return a String from the dao split
+	 */
 	public String getSplitPlaceholder() {
 		return dao.getSplitPlaceholder();
 	}

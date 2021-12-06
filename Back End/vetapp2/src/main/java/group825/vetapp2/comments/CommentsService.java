@@ -2,14 +2,11 @@ package group825.vetapp2.comments;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import group825.vetapp2.animal.Animal;
 
 /**
  * Service that performs Comment requests
@@ -24,7 +21,7 @@ public class CommentsService {
 	/**
 	 * Comment repository that accesses the database
 	 */
-	private final CommentsRepository dB_Comments;
+	private final CommentsRepository repo;
 	
 	/**
 	 * Constructor that initializes the CommentsService
@@ -32,62 +29,62 @@ public class CommentsService {
 	 */
 	@Autowired
 	public CommentsService(@Qualifier("tempCommentsRepo") CommentsRepository dbComments) {
-		this.dB_Comments = dbComments;
+		this.repo = dbComments;
 	}
 
 	/**
 	 * Inserts a comment in the database
-	 * @param comment new comment to be added
+	 * @param comment = new comment to be added
 	 * @return integer verifying successful code execution
 	 * @throws Exception when there is an SQL Exception
 	 */
 	public int insertComment(Comment comment ) throws Exception {
-		return dB_Comments.insertComment(comment);
+		return repo.insertComment(comment);
 	}
 
 	/**
-	 * Selects all comment in the database
+	 * Selects all comments in the database for all animals
 	 * @return list of all Comment Objects
 	 * @throws Exception when there is an SQL Exception
 	 */
 	public List<Comment> selectAllComments() throws Exception{
-		ArrayList<String> results = dB_Comments.selectAllComments();
+		ArrayList<String> results = repo.selectAllComments();
 		List<Comment> listResults = createListComment(results);
     	return listResults;
 	}
 	
 	/**
-	 * Selects a comment from the database by ID number
-	 * @param id UID pertaining to a specific animal
-	 * @return List<Comment> either containing the Comment object for particular animal or is empty
+	 * Selects a comment from the database by animal ID number
+	 * @param animalID = int id pertaining to a specific animal
+	 * @return List<Comment> either containing the Comment objects for particular animal or is empty
 	 * @throws Exception when there is an SQL Exception
 	 */
-	public List<Comment> selectCommentsById(int id) throws Exception{
-		ArrayList<String> results =  dB_Comments.selectCommentsById(id);
+	public List<Comment> selectCommentsByID(int animalID) throws Exception{
+		ArrayList<String> results =  repo.selectCommentsByID(animalID);
 		List<Comment> listResults = createListComment(results);
 		return listResults;
 	}
 	
 
 	/**
-	 * Deletes a comment from the database by ID number
-	 * @param id int pertaining to a specific animal
+	 * Deletes a comment from the database by comment ID number
+	 * @param commentID = int id pertaining for one specific comment
 	 * @return integer verifying successful code execution
 	 * @throws Exception when there is an SQL Exception
 	 */
-	public int deleteCommentsById(int id) throws Exception {
-		return dB_Comments.deleteCommentsById(id);
+	public int deleteCommentsByID(int commentID) throws Exception {
+		return repo.deleteCommentsByID(commentID);
 	}
 	
 	/**
-	 * Updates a comment from the database by ID number
-	 * @param id int pertaining to specific animal
-	 * @param comment Comment object with updated data members
+	 * Updates a comment from the database by comment ID number
+	 * @param id = int id pertaining to specific comment
+	 * @param comment = Comment object with updated data members
 	 * @return integer verifying successful code execution
 	 * @throws Exception when there is an SQL Exception
 	 */
-	public int updateCommentById(int id, Comment comment) throws Exception{
-		return dB_Comments.updateCommentById(id, comment);
+	public int updateCommentByID(int commentID, Comment comment) throws Exception{
+		return repo.updateCommentByID(commentID, comment);
 	}
 	
 	 /**
@@ -99,17 +96,18 @@ public class CommentsService {
 //		System.out.println("foundResults: ");
 //		System.out.println(foundResults);
 			List<Comment> listResults = new ArrayList<Comment>(); 
-			//review against Database setup
-			int idx_id=0, idx_commentId=1, idx_authorId=3, idx_timestamp=2, idx_message=4, idx_firstName=5, idx_lastName=6, idx_userType=7;
-			for (String result: foundResults) {
-				String[] resultSplit = result.split(dB_Comments.getSplitPlaceholder());
+			
+			//review against Database setup	
+			int idxID=0, idxCommentID=1, idxAuthorID=3, idxTimestamp=2, idxMessage=4, idxFirstName=5, idxLastName=6, idxUserType=7;			
+			for (String result: foundResults) {				
+				String[] resultSplit = result.split(repo.getSplitPlaceholder());
 //				System.out.println("resultSplit:");
-//				for (String resultIn: resultSplit) {System.out.println(resultIn);}
-				
-			Comment temp =  new Comment( Integer.valueOf(resultSplit[idx_id]), Integer.valueOf(resultSplit[idx_commentId]), 
-					Integer.valueOf(resultSplit[idx_authorId]), resultSplit[idx_timestamp], resultSplit[idx_message], 
-					resultSplit[idx_firstName], resultSplit[idx_lastName], resultSplit[idx_userType]);
+//				for (String resultIn: resultSplit) {System.out.println(resultIn);}							
+			Comment temp =  new Comment( Integer.valueOf(resultSplit[idxID]), Integer.valueOf(resultSplit[idxCommentID]),
+					Integer.valueOf(resultSplit[idxAuthorID]), resultSplit[idxTimestamp], resultSplit[idxMessage], 	
+					resultSplit[idxFirstName], resultSplit[idxLastName], resultSplit[idxUserType]);			
 			listResults.add(temp);
+			
 		}
 //		System.out.println("\nPrepared List to send as json response to API endpoint:");
 //		System.out.println(listResults);

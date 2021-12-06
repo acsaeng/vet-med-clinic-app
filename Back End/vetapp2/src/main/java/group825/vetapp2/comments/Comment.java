@@ -20,17 +20,17 @@ public class Comment {
 	/**
 	 * ID number of the associated animal
 	 */
-	private final int id;
+	private final int animalID;
 
 	/**
 	 * ID number of the comment
 	 */
-	private final int commentId;
+	private final int commentID;
 
 	/**
 	 * ID number of the comment author
 	 */
-	private final int authorId;
+	private final int authorID;
 
 	/**
 	 * Timestamp of the comment
@@ -42,27 +42,41 @@ public class Comment {
 	 */
 	private final String message;
 	
+	/**
+	 * First name of the user who made the comment
+	 */
 	private final String firstName;
+	
+	/**
+	 * Last name of the user who made the comment
+	 */
 	private final String lastName;
+	
+	/**
+	 * The type of user who made the comment
+	 */
 	private final String userType;
 	
 	
 
 	/**
 	 * Constructor that initializes the Comment
-	 * @param id int id of a particular animal
-	 * @param commentId ID number for comment
-	 * @param authorId  ID number for user that made the comment
-	 * @param timestamp timestamp for when the comment was created
-	 * @param message message from the user
+	 * @param animalID = int id of a particular animal
+	 * @param commentID = id number for comment
+	 * @param authorID = id number for user that made the comment
+	 * @param timestamp = timestamp for when the comment was created
+	 * @param message = message from the user
+	 * @param firstName = first name of the user
+	 * @param lastName = last name of the user
+	 * @param userType = account type of the user
 	 */
-	public Comment(@JsonProperty("id") int id, @JsonProperty("commentId") int commentId,
-				   @JsonProperty("authorId") int authorId, @JsonProperty("timestamp") String timestamp,
+	public Comment(@JsonProperty("animalID") int animalID, @JsonProperty("commentID") int commentID,
+				   @JsonProperty("authorID") int authorID, @JsonProperty("timestamp") String timestamp,
 				   @JsonProperty("message") String message, @JsonProperty("firstName") String firstName,
 				   @JsonProperty("lastName") String lastName, @JsonProperty("userType") String userType) {
-		this.id = id;
-		this.commentId = commentId;
-		this.authorId = authorId;
+		this.animalID = animalID;
+		this.commentID = commentID;
+		this.authorID = authorID;
 		this.timestamp = timestamp;
 		this.message = message;
 		this.firstName = firstName;
@@ -71,11 +85,11 @@ public class Comment {
 	}
 
 	/**
-	 * Checks if any data members is null
+	 * Checks if any required data members is null
 	 * @return boolean confirming if any data members are null
 	 */
 	public boolean anyNulls() {
-		if (commentId==0 || authorId == 0 || timestamp == null || message == null || firstName ==null || lastName==null ||userType==null) {
+		if (commentID==0 || authorID == 0 || timestamp == null || message == null || firstName ==null || lastName==null ||userType==null) {
 			return true;
 		}
 		
@@ -84,7 +98,7 @@ public class Comment {
 	
 	 @Override
 	    public String toString() {
-		 String newString = "{ id: " + id + ", commentId: " + commentId + ", authorId: " + authorId + 
+		 String newString = "{ animalID: " + animalID + ", commentID: " + commentID + ", authorID: " + authorID + 
 				 ", timestamp: " + timestamp + ", message: " + message + ", firstName: " + firstName 
 				 + ", lastName: " + lastName + ", userType: " + userType + "}";	    	
 		 return newString;

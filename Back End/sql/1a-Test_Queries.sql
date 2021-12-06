@@ -22,4 +22,4 @@ SELECT R2.Animal_ID, R2.Request_ID, R2.Requester_ID, R2.Request_Date, R2.Checkou
 R2.Reason, R2.Request_Status, U.First_Name, U.Last_Name,
 A.Animal_Name, A.Species  FROM REQUEST AS R2, Users as U, ANIMAL AS A  WHERE R2.Requester_ID = U.User_ID AND R2.Animal_ID=A.Animal_ID;
 
-
+SELECT * FROM DIAGNOSIS WHERE Animal_ID='102';

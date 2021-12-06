@@ -141,6 +141,28 @@ VALUES
 
 
 
+DROP TABLE IF EXISTS DIAGNOSIS; 
+CREATE TABLE DIAGNOSIS ( 
+     Diagnosis_ID			int not null,
+     DiagnosisDate			 varchar (50) not null,
+     Diagnosis			 varchar (50) not null,
+     DiagnosisDescription			 varchar (500) not null,
+     Diagnosis_Status			 varchar (50) not null,
+     User_ID			 varchar (50) not null,
+     Animal_ID			 varchar (50) not null,
+     primary key (Diagnosis_ID)
+);
+
+
+INSERT INTO DIAGNOSIS (Diagnosis_ID, DiagnosisDate, Diagnosis, DiagnosisDescription, Diagnosis_Status, User_ID, Animal_ID)
+VALUES
+('1', '2020-03-08 00:00:00', 'Twisted ankle', 'Dog in pain. Will be out minimum one week. Will heal naturally. ', 'Complete', '7', '101'),
+('4', '2021-04-13 00:00:00', 'Chipped hoof', 'Chip in the two front hooves. Keep casts on until fully healed', 'Ongoing', '3', '102'),
+('5', '2021-09-25 00:00:00', 'Sprained ankle', 'Serious sprain in right hind ankle. Will be out minimum two weeks.', 'Ongoing', '9', '102'),
+('8', '2021-10-05 00:00:00', 'Flu', 'Keep in separate barn until fully healed. Medication prescribed in treatments.', 'Ongoing', '8', '103'),
+('9', '2021-10-12 00:00:00', 'Flu', 'Feeling better, still needs to stay separated from rest of cows. Medication once a day', 'Ongoing', '3', '103');
+
+
 
 
 

@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "localhost:8080/app/request/animal/",
+			"name": "localhost:8080/app/request/user/10",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -39,7 +39,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/app/request/animal/1",
+			"name": "localhost:8080/app/request/1",
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -69,13 +69,13 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/app/request/animal/",
+			"name": "localhost:8080/app/request/",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"requestID\": 1,\r\n        \"requesterID\": 4,\r\n        \"requestDate\": \"2021-09-21 00:00:00\",\r\n        \"checkoutDate\": \"2021-10-01 00:00:00\",\r\n        \"returnDate\": \"2021-10-03 00:00:00\",\r\n        \"reason\": \"Teaching class 101\",\r\n        \"requestStatus\": \"Cancelled\",\r\n        \"requesterFirstName\": \"Georgina\",\r\n        \"requesterLastName\": \"Hill\",\r\n        \"animalName\": \"Bobby\",\r\n        \"animalSpecies\": \"Dog\",\r\n        \"animalID\": 101\r\n    },\r\n",
+					"raw": "{\r\n        \"requestID\": 1,\r\n        \"requesterID\": 10,\r\n        \"requestDate\": \"2021-09-21 00:00:00\",\r\n        \"checkoutDate\": \"2021-10-01 00:00:00\",\r\n        \"returnDate\": \"2021-10-03 00:00:00\",\r\n        \"reason\": \"updated from the PUT\",\r\n        \"requestStatus\": \"Cancelled\",\r\n        \"requesterFirstName\": \"Georgina\",\r\n        \"requesterLastName\": \"Hill\",\r\n        \"animalName\": \"Bobby\",\r\n        \"animalSpecies\": \"Dog\",\r\n        \"animalID\": 102\r\n    }\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -83,7 +83,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/app/request/animal/",
+					"raw": "localhost:8080/app/request/",
 					"host": [
 						"localhost"
 					],
@@ -91,7 +91,6 @@
 					"path": [
 						"app",
 						"request",
-						"animal",
 						""
 					]
 				}

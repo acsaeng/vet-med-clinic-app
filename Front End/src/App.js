@@ -6,6 +6,9 @@ import ManageAnimals from "./pages/app-portal/ManageAnimals";
 import RequestAnimal from "./pages/animal/RequestAnimal";
 import ViewRequests from './pages/animal/ViewRequests';
 import AddAnimal from "./pages/app-portal/AddAnimal";
+import AddUser from "./pages/user/AddUser";
+import EditUser from "./pages/user/EditUser";
+import BlockUser from "./pages/user/BlockUser";
 
 
 function App() {
@@ -18,6 +21,9 @@ function App() {
                 <Route path='/manage-animal' element={<ManageAnimals/>}/>
                 <Route path='/request-animal' element={<RequestAnimal/>}/>
                 <Route path='/view-requests' element={<ViewRequests/>}/>
+                <Route path='/add-user' element={<AddUser/>}/>
+                <Route path='/edit-user' element={<EditUser/>}/>
+                <Route path='/block-user' element={<BlockUser/>}/>
             </Routes>
         </Router>
     );

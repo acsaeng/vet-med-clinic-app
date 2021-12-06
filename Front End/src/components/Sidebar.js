@@ -42,7 +42,7 @@ function Sidebar() {
             </MenuItem>
             <MenuItem icon={<FaUser />}>
                 Manage Users
-                <Link to="/manage-users" />
+                <Link to="/add-user" />
             </MenuItem>
             <MenuItem icon={<IoLogOut />}>
                 Sign Out

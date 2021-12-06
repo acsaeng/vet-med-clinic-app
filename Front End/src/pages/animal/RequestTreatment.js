@@ -16,7 +16,7 @@ function RequestTreatment() {
     // const urlParams = new URLSearchParams(useLocation().search)
     
     const requestTreatmentID = 1 //dummy, backend assigns a new requestID
-    const animalID = urlParams.get("animalID")
+    // const animalID = urlParams.get("animalID")
     let animalName = ""
     let animalSpecies = ""
     // const animalName = urlParams.get("animalName")
@@ -24,6 +24,7 @@ function RequestTreatment() {
     // const requesterID = urlParams.get("requesterID")
     // const requesterFirstName = urlParams.get("requesterFirstName")
     // const requesterLastName = urlParams.get("requesterLastName")
+    const animalID = localStorage.getItem("animalID")
     const requesterID = localStorage.getItem("userID")
     const requesterFirstName = localStorage.getItem("userFirstName")
     const requesterLastName = localStorage.getItem("userLastName")
@@ -50,6 +51,10 @@ function RequestTreatment() {
     let currLocation = useLocation();
 
     console.log(useLocation())
+
+    function getRequestFor(requestFor){
+        setRequestFor(requestFor.target.value)
+    }
         
     function getMessage(message){
         setMessage(message.target.value)
@@ -112,24 +117,23 @@ function RequestTreatment() {
               <h1>Request Treatment</h1>
             </div>
 
-            <div>
-                <h6> Requested by {requesterFirstName} {requesterLastName} </h6> 
+            <div className="d-flex mt-3 mx-3">
+                <h6> This request will be sent from {requesterFirstName} {requesterLastName}. </h6> 
             </div>
             
             <div className="px-3 py-2">
-                <DropdownButton id="dropdown-basic-button" title="Dropdown button" variant="dark">
-                    <Dropdown.Item href="#/action-1">Animal Health Technician</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                </DropdownButton>
+                <label> Animal Health Technician Requested: </label> <br/>
+                    <textarea id="requestForInput" onChange={getRequestFor} cols='100' rows='1' 
+                    placeholder="Please enter the animal health technician you would like to send a request to.">
+                </textarea>
             </div> 
 
-            <div class="custom-field mt-4 mb-3 mx-5">
+            <div class="custom-field mt-4 mb-3 mx-3">
                 <label> Message: </label> <br/>
                 <textarea id="messageInput" onChange={getMessage} cols='100' rows='5' placeholder="Please enter the message for your request.">
                 </textarea>
             </div>
-            <div class="button mx-5">
+            <div class="button mx-3">
                 <button onClick={clickButton}>Submit</button>
             </div>
             </div>

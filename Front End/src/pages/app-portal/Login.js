@@ -15,28 +15,29 @@ const Login = () => {
     function handleSubmit(event) {
         event.preventDefault();
 
-        axios.get('http://localhost:8080/app/login/', {params: { 
-            userName: usernameEntered,
-            password: passwordEntered
-            }}).then(
-              res => {
-                  console.log(res.data);
-                let user = res.data
-                // console.log(user[0].firstName)
-                if (user[0].firstName === null){ //if null
-                    alert("Invalid username and/or password");
-                } else{
-                    localStorage.setItem("userID", user[0].id)
-                    localStorage.setItem("userFirstName", user[0].firstName)
-                    localStorage.setItem("userLastName", user[0].lastName)
-                    localStorage.setItem("userType", user[0].userType)
-                    localStorage.setItem("email", user[0].email)
-                    localStorage.setItem("phoneNum", user[0].phoneNum)
-                    localStorage.setItem("Authenticated", "isAuthenticated")
-                    navigate(`/home`)
-                    // navigate(`/home?requesterID=${user[0].id}&requesterFirstName=${user[0].firstName}&requesterLastName=${user[0].lastName}&userType=${user[0].userType.replace(" ", "%20")}`)
-                }
-            })
+        // axios.get('http://localhost:8080/app/login/', {params: { 
+        //     userName: usernameEntered,
+        //     password: passwordEntered
+        //     }}).then(
+        //       res => {
+        //           console.log(res.data);
+        //         let user = res.data
+        //         // console.log(user[0].firstName)
+        //         if (user[0].firstName === null){ //if null
+        //             alert("Invalid username and/or password");
+        //         } else{
+        //             localStorage.setItem("userID", user[0].id)
+        //             localStorage.setItem("userFirstName", user[0].firstName)
+        //             localStorage.setItem("userLastName", user[0].lastName)
+        //             localStorage.setItem("userType", user[0].userType)
+        //             localStorage.setItem("email", user[0].email)
+        //             localStorage.setItem("phoneNum", user[0].phoneNum)
+        //             localStorage.setItem("Authenticated", "isAuthenticated")
+        //             // navigate(`/home?requesterID=${user[0].id}&requesterFirstName=${user[0].firstName}&requesterLastName=${user[0].lastName}&userType=${user[0].userType.replace(" ", "%20")}`)
+        //         }
+        //     })
+
+        navigate(`/home`)
 
         // window.location.reload()
     }

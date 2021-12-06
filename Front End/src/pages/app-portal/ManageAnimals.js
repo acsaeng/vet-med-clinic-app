@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import '../../styling/main.css';
 import Sidebar from '../../components/Sidebar';
-import AnimalNavbar from '../../components/AnimalNavbar';
+import ManageAnimalNavbar from '../../components/ManageAnimalNavbar';
 import Search_AvailableAnimals from '../../components/SearchAvailableAnimals';
 import {useLocation, useNavigate} from 'react-router-dom'
 
@@ -29,13 +29,19 @@ function ManageAnimal() {
 
     return (
         <div className="main-container d-flex flex-column flex-grow-1">
-            { Authenticated ==="isAuthenticated" ? 
-            
             <div className="d-flex w-100 h-100">    
-                <Sidebar />
-                {/* <AnimalNavbar /> */}
-                {userType ==="Teaching Technician"?
+            <div className="sidebar">
+                    <Sidebar />
+                </div>
+                <div className="placeholder">
+                    <Sidebar />
+                </div>
+
                 <div class="d-flex flex-column align-items-center mt-5">
+
+                    <div>
+                        <ManageAnimalNavbar />
+                    </div>
                 
                     <form class="d-flex flex-row" onSubmit={(e) => reloadSearches(e)}>
                         <input type="text" className="form-control me-2" size="100" placeholder="Search an animal..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
@@ -46,8 +52,8 @@ function ManageAnimal() {
                             null:<Search_AvailableAnimals query={searchQuery}/>   
                         }
                     </div>
-                </div>:<p>Only Teaching Technicians can request animals</p>}
-            </div>  : <a href="/">You are not authorized to view this page. Return to Login</a>}         
+                </div>
+            </div> 
         </div>  
 
                 
@@ -58,3 +64,22 @@ function ManageAnimal() {
     }
 
 export default ManageAnimal;
+
+// { Authenticated ==="isAuthenticated" ? 
+// <div className="d-flex w-100 h-100">    
+//     <Sidebar />
+//     {/* <AnimalNavbar /> */}
+//     {userType ==="Teaching Technician"?
+//     <div class="d-flex flex-column align-items-center mt-5">
+    
+//         <form class="d-flex flex-row" onSubmit={(e) => reloadSearches(e)}>
+//             <input type="text" className="form-control me-2" size="100" placeholder="Search an animal..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+//             <button className="btn btn-secondary" type="submit">Search</button>
+//         </form> 
+//         <div class="ex1 mt-3 mx-3">
+//             {searchQuery === ""?
+//                 null:<Search_AvailableAnimals query={searchQuery}/>   
+//             }
+//         </div>
+//     </div>:<p>Only Teaching Technicians can request animals</p>}
+// </div>  : <a href="/">You are not authorized to view this page. Return to Login</a>}         

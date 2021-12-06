@@ -99,7 +99,6 @@ function RequestTreatment() {
   return (
       
         <div className="main-container d-flex flex-column flex-grow-1">
-            { Authenticated ==="isAuthenticated" ? 
             <div className="d-flex w-100 h-100">
                 {(event) => singleRefresh(event)}
                 <div className="sidebar">
@@ -138,7 +137,47 @@ function RequestTreatment() {
             </div>
             </div>
             </div>
-            : <a href="/">You are not authorized to view this page. Return to Login</a>}
+            
+            {/* { Authenticated ==="isAuthenticated" ? 
+            <div className="d-flex w-100 h-100">
+                {(event) => singleRefresh(event)}
+                <div className="sidebar">
+                    <Sidebar />
+                </div>
+
+                <div className="placeholder">
+                    <Sidebar />
+                </div>
+            <div className= "d-flex flex-column">
+            <div>
+                <AnimalNavbar />
+            </div>
+            <div className="d-flex mx-3">
+              <h1>Request Treatment</h1>
+            </div>
+
+            <div className="d-flex mt-3 mx-3">
+                <h6> This request will be sent from {requesterFirstName} {requesterLastName}. </h6> 
+            </div>
+            
+            <div className="px-3 py-2">
+                <label> Animal Health Technician Requested: </label> <br/>
+                    <textarea id="requestForInput" onChange={getRequestFor} cols='100' rows='1' 
+                    placeholder="Please enter the animal health technician you would like to send a request to.">
+                </textarea>
+            </div> 
+
+            <div class="custom-field mt-4 mb-3 mx-3">
+                <label> Message: </label> <br/>
+                <textarea id="messageInput" onChange={getMessage} cols='100' rows='5' placeholder="Please enter the message for your request.">
+                </textarea>
+            </div>
+            <div class="button mx-3">
+                <button onClick={clickButton}>Submit</button>
+            </div>
+            </div>
+            </div>
+            : <a href="/">You are not authorized to view this page. Return to Login</a>} */}
         </div>
         
     );

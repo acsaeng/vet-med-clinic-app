@@ -25,14 +25,14 @@ const AnimalNavbar = () => {
             </div>
 
             <div className="px-4 py-2">
-                <DropdownButton id="dropdown-basic-button" title="Animal Information" variant="dark">
-                    <Dropdown.Item href="/">Animal Information</Dropdown.Item>
-                    <Dropdown.Item href="/">Health Records</Dropdown.Item>
-                    <Dropdown.Item href="/">Reminders</Dropdown.Item>
-                    <Dropdown.Item href="/">Comments</Dropdown.Item>
-                    <Dropdown.Item href="/">Photos</Dropdown.Item>
-                    <Dropdown.Item href="/">Weight History</Dropdown.Item>
-                    <Dropdown.Item href="/">Request Treatment</Dropdown.Item>
+                <DropdownButton id="dropdown-basic-button" title="Select an option..." variant="dark">
+                    <Dropdown.Item href="/animal-info">Animal Information</Dropdown.Item>
+                    <Dropdown.Item href="/health-records">Health Records</Dropdown.Item>
+                    <Dropdown.Item href="/reminders">Reminders</Dropdown.Item>
+                    <Dropdown.Item href="/comments">Comments</Dropdown.Item>
+                    <Dropdown.Item href="/photos">Photos</Dropdown.Item>
+                    <Dropdown.Item href="/weight-history">Weight History</Dropdown.Item>
+                    <Dropdown.Item href="/request-treatment">Request Treatment</Dropdown.Item>
                     <Dropdown.Item href="/request-animal">Request Animal</Dropdown.Item>
                 </DropdownButton>
             </div>

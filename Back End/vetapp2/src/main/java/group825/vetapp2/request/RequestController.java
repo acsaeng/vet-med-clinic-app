@@ -16,7 +16,7 @@ import group825.vetapp2.exceptions.*;
  * @since Dec 2, 2021
  */
 @CrossOrigin
-@RequestMapping("app/request/animal")
+@RequestMapping("app/request/")
 @RestController
 public class RequestController {
 
@@ -60,7 +60,7 @@ public class RequestController {
 	 * @param userID = the ID number of the user whose requests are being returning
 	 * @return list of all requests made by one user
 	 */
-	@GetMapping(path = "{userID}") 
+	@GetMapping(path = "user/{userID}") 
 	public List<Request> selectRequestById(@PathVariable("userID") String userID) throws Exception{
 		try {
 			int id = Integer.valueOf(userID);

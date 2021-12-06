@@ -16,6 +16,7 @@ SELECT * FROM REMINDERS AS R;
 SELECT R.Animal_ID, R.Reminder_ID, R.Reminder_Status, R.Due_Date, R.Date_Performed, R.Author_ID, R.Notes, 
 U.First_Name, U.Last_Name, U.User_Type FROM REMINDERS AS R, USERS AS U WHERE R.Author_ID = U.User_ID AND R.Animal_ID='101';
 
+SELECT * FROM REQUEST;
 SELECT * FROM REQUEST AS R2;
 SELECT * FROM REQUEST AS R2, Users as U WHERE R2.Requester_ID = U.User_ID;
 SELECT R2.Animal_ID, R2.Request_ID, R2.Requester_ID, R2.Request_Date, R2.Checkout_Date, R2.Return_Date, 

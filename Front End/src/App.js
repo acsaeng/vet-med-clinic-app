@@ -5,6 +5,9 @@ import Home from "./pages/app-portal/Home";
 import ManageAnimals from "./pages/app-portal/ManageAnimals";
 import RequestAnimal from "./pages/animal/RequestAnimal";
 import ViewRequests from './pages/animal/ViewRequests';
+
+import AddAnimal from "./pages/app-portal/AddAnimal";
+
 import Comments from './pages/animal/Comments';
 import Reminders from './pages/animal/Reminders';
 import HealthRecords from './pages/animal/HealthRecords';
@@ -23,6 +26,7 @@ function App() {
             <Routes>
                 <Route path='/' element={<Login/>}/>
                 <Route path='/home' element={<Home />}/>
+                <Route path='/add-animal' element={<AddAnimal/>}/>
                 <Route path='/manage-animal' element={<ManageAnimals/>}/>
                 <Route path='/request-animal' element={<RequestAnimal/>}/>
                 <Route path='/view-requests' element={<ViewRequests/>}/>

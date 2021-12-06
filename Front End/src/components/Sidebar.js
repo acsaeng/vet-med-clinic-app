@@ -1,8 +1,9 @@
 import "../styling/Sidebar.css";
 import { Link } from "react-router-dom";
 import { ProSidebar, Menu, MenuItem, SidebarHeader, SidebarContent, SidebarFooter } from "react-pro-sidebar";
-import { FaHome, FaDog, FaHeart } from "react-icons/fa";
+import { FaHome, FaDog, FaHeart, FaUser } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
+import { AiFillPlusCircle, AiFillFolder } from "react-icons/ai";
 import ucvmLogo from "../images/ucvm-logo-sm.png";
 
 function Sidebar() {
@@ -27,20 +28,37 @@ function Sidebar() {
                 Home
                 <Link to="/home" />
             </MenuItem>
+            <MenuItem icon={<AiFillPlusCircle />}>
+                Add Animal
+                <Link to="/add-animal" />
+            </MenuItem>
+            <MenuItem icon={<AiFillFolder />}>
+                Add Treatment
+                <Link to="/add-treatment" />
+            </MenuItem>
             <MenuItem icon={<FaDog />}>
                 Manage Animals
                 <Link to="/manage-animal" />
             </MenuItem>
-            <MenuItem icon={<FaDog />}>
-                View Requests
-                <Link to="/view-requests" />
+            <MenuItem icon={<FaUser />}>
+                Manage Users
+                <Link to="/manage-users" />
             </MenuItem>
-
-
             <MenuItem icon={<IoLogOut />}>
                 Sign Out
                 <Link to="/" />
             </MenuItem>
+
+
+
+
+
+            {/* <MenuItem icon={<FaDog />}>
+                View Requests
+                <Link to="/view-requests" />
+            </MenuItem> */}
+
+
 
             </Menu>
         </SidebarContent>

@@ -4,11 +4,11 @@ USE VETAPP;
 
 DROP TABLE IF EXISTS COMMENT; 
 CREATE TABLE COMMENT ( 
-     Animal_ID			 integer not null,
+     Animal_ID			integer not null,
      Comment_ID			integer not null,
-     Upload_Time			 varchar (50) not null,
-     User_ID			 integer not null,
-     Message			 varchar (50) not null,
+     Upload_Time		varchar (50) not null,
+     User_ID			integer not null,
+     Message			varchar (50) not null,
      primary key (Comment_ID)
 );
 

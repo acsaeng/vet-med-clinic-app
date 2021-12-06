@@ -46,7 +46,7 @@ public class DiagnosisController {
 	
 	/**
 	 * Requests a specific diagnosis and checks that the ID is valid
-	 * @param strId the ID of the requested diagnosis
+	 * @param diagnosisID the ID of the requested diagnosis
 	 * @return the requested diagnosis
 	 */
 	@GetMapping(path = "{diagnosisID}") 
@@ -65,7 +65,7 @@ public class DiagnosisController {
 	
 	/**
 	 * Delete an existing diagnosis in the database and checks that the diagnosis ID is valid
-	 * @param strId the ID of the diagnosis to be deleted
+	 * @param diagnosisID the ID of the diagnosis to be deleted
 	 */
 	@DeleteMapping(path = "{id}")
 	public void deleteDiagnosisById(@PathVariable("id") String diagnosisID) throws Exception{

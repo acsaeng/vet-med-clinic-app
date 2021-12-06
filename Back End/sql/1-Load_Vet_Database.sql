@@ -211,6 +211,7 @@ VALUES
 
 
 
+
 INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattooo, Birth_Date, Sex, RFID, Microchip, Animal_Status, Colour, Weight, Additional_Information, Length_Name, SearchKey_Name)
 VALUES
 ('101.0', 'Bobby', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15 00:00:00', 'M', '197839178371.0', '176387613813.0', 'Unavailable', 'Black and white', '10.1', 'nan', '5.0', 'a0-b3-c0-d0-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o1-p0-q0-r0-s0-t0-u0-v0-w0-x0-y1-z0'),

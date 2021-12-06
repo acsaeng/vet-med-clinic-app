@@ -162,6 +162,32 @@ VALUES
 ('8', '2021-10-05 00:00:00', 'Flu', 'Keep in separate barn until fully healed. Medication prescribed in treatments.', 'Ongoing', '8', '103'),
 ('9', '2021-10-12 00:00:00', 'Flu', 'Feeling better, still needs to stay separated from rest of cows. Medication once a day', 'Ongoing', '3', '103');
 
+DROP TABLE IF EXISTS WEIGHT_HISTORY; 
+CREATE TABLE WEIGHT_HISTORY ( 
+     Animal_ID		int not null,
+     Date_Recorded	varchar (50) not null,
+     Weight			double not null,
+     primary key (Animal_ID, Date_Recorded)
+);
+
+
+INSERT INTO WEIGHT_HISTORY (Animal_ID, Date_Recorded, Weight)
+VALUES
+(103, "10/1/2020", 800),
+(103, "11/1/2020", 805),
+(103, "12/1/2020", 810),
+(103, "1/1/2021", 805),
+(103, "2/1/2021", 820),
+(103, "3/1/2021", 805),
+(103, "4/1/2021", 800),
+(102, "10/1/2020", 400),
+(102, "11/1/2020", 409),
+(102, "12/1/2020", 420),
+(102, "1/1/2021", 415),
+(102, "2/1/2021", 410),
+(102, "3/1/2021", 406),
+(102, "4/1/2021", 402);
+
 
 DROP TABLE IF EXISTS TREATMENT; 
 CREATE TABLE TREATMENT ( 

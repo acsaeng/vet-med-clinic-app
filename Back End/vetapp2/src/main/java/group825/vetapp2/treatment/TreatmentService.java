@@ -59,8 +59,8 @@ public class TreatmentService {
 	 * @return the single treatment from the repository
 	 * @throws Exception when there is an SQL Exception
 	 */
-	public Treatment selectTreatmentByTreatmentId(int animalID, int treatmentID) throws Exception {
-		ArrayList<String> results = repo.selectTreatmentByTreatmentId(animalID, treatmentID);
+	public Treatment selectTreatmentByTreatmentId(int treatmentID) throws Exception {
+		ArrayList<String> results = repo.selectTreatmentByTreatmentId(treatmentID);
 		int idxTreatmentID=0, idxTreatmentDate=1, idxTreatment=2, idxDescription=3, 
 				idxTreatmentStatus=4, idxUserID=5, idxAnimalID=6;
 		String result = "";

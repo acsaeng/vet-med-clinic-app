@@ -4,13 +4,13 @@ import profilePhoto from "../images/profile.png";
 
 const AnimalNavbar = () => {
     
-    window.onload = function() {
+    // window.onload = function() {
         
-        if(!window.location.hash) {
-            window.location = window.location + '#';
-            window.location.reload();
-        }
-    }
+    //     if(!window.location.hash) {
+    //         window.location = window.location + '#';
+    //         window.location.reload();
+    //     }
+    // }
 
     return (
         <div className="navbar d-flex justify-content-start">

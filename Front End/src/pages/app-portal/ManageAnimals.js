@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import '../../styling/main.css';
 import Sidebar from '../../components/Sidebar';
-import ManageAnimalNavbar from '../../components/ManageAnimalNavbar';
-import Search_AvailableAnimals from '../../components/SearchAvailableAnimals';
+import ManageAnimalsNavbar from '../../components/ManageAnimalsNavbar';
+import SearchAvailableAnimals from '../../components/SearchAvailableAnimals';
 import {useLocation, useNavigate} from 'react-router-dom'
+
 
 function ManageAnimal() {
     const urlParams = new URLSearchParams(useLocation().search)
@@ -28,33 +29,34 @@ function ManageAnimal() {
 
 
     return (
+        <div className="d-flex w-100 h-100">
+        <div className="sidebar">
+            <Sidebar />
+        </div>
+
+        <div className="placeholder">
+            <Sidebar />
+        </div>
+
         <div className="main-container d-flex flex-column flex-grow-1">
-            <div className="d-flex w-100 h-100">    
-            <div className="sidebar">
-                    <Sidebar />
-                </div>
-                <div className="placeholder">
-                    <Sidebar />
-                </div>
+            <ManageAnimalsNavbar />
 
-                <div class="d-flex flex-column align-items-center mt-5">
+            <h1 className="mt-5 mb-4 ms-5">Search Animal</h1>
 
-                    <div>
-                        <ManageAnimalNavbar />
-                    </div>
-                
-                    <form class="d-flex flex-row" onSubmit={(e) => reloadSearches(e)}>
-                        <input type="text" className="form-control me-2" size="100" placeholder="Search an animal..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
-                        <button className="btn btn-secondary" type="submit">Search</button>
-                    </form> 
-                    <div class="ex1 mt-3 mx-3">
-                        {searchQuery === ""?
-                            null:<Search_AvailableAnimals query={searchQuery}/>   
-                        }
-                    </div>
-                </div>
-            </div> 
-        </div>  
+            <form class="d-flex flex-row mx-5 w-75" onSubmit={(e) => reloadSearches(e)}>
+                <input type="text" className="form-control me-2" size="100" placeholder="Search an animal..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+                <button className="btn btn-secondary" type="submit">Search</button>
+            </form> 
+            <div class="ex1 mt-3 mx-5 w-75">
+                {searchQuery === ""?
+                    null:<SearchAvailableAnimals query={searchQuery}/>   
+                }
+            </div>
+
+
+        </div>
+    
+    </div>
 
                 
             

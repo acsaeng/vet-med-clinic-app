@@ -155,8 +155,8 @@ function Comments() {
         <div>
             <AnimalNavbar /> 
         </div> 
-        <div className="d-flex my-5 mx-5">
-              <h1>Comments for Animal</h1>
+        <div className="d-flex mt-5 mb-4 mx-5">
+              <h1>Comments</h1>
               <div className="d-flex align-items-right mx-5">
                 {showStudents === true ?
                 <input type="checkbox" id="toggleStudents" onChange={toggle} />:
@@ -165,16 +165,16 @@ function Comments() {
               </div>
         </div>      
         
-        <div className="d-flex flex-column  align-items-left mt-5 mx-5">
+        <div className="d-flex flex-column flex-grow-1 align-items-left mx-5">
             <div class="ex1">
             <CommentsList animalID={animalID} toggleStudent={showStudents} />
               {/* {showStudents === true ?
                 <CommentsList animalID={animalID} toggleStudent={showStudents} />:
                 null} */}
             </div>
-            <label class="custom-field">
-                <input id="commentInput" type="text" required onChange={getData} onKeyDown={handleKeyDown} size="100" placeholder="Enter a message" />
-                <button onClick={clickButton}>Submit</button>
+            <label className="d-flex flex-row custom-field">
+                <input className="form-control" id="commentInput" type="text" required onChange={getData} onKeyDown={handleKeyDown} size="100" placeholder="Enter a message" />
+                <button className="btn btn-secondary ms-2" onClick={clickButton}>Submit</button>
             </label>
         </div>
         </div>

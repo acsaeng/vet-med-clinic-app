@@ -36,7 +36,7 @@ function App() {
 
                 <Route path='/add-animal' element={<AddAnimal/>}/>
                 <Route path='/add-treatment' element={<AddTreatment/>}/> 
-                <Route path='/manage-animal' element={<ManageAnimals/>}/>
+                <Route path='/manage-animals' element={<ManageAnimals/>}/>
 
                 <Route path='/add-user' element={<AddUser/>}/>
                 <Route path='/edit-user' element={<EditUser/>}/>
@@ -48,6 +48,7 @@ function App() {
                 <Route path='/comments' element={<Comments/>}/> 
                 <Route path='/photos' element={<Photos/>}/>
                 <Route path='/weight-history' element={<WeightHistory/>}/> 
+                {/* Send Alert */}
 
                 <Route path='/request-treatment' element={<RequestTreatment/>}/> 
                 <Route path='/request-animal' element={<RequestAnimal/>}/>

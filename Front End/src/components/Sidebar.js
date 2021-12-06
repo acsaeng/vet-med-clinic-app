@@ -32,13 +32,9 @@ function Sidebar() {
                 Add Animal
                 <Link to="/add-animal" />
             </MenuItem>
-            <MenuItem icon={<AiFillFolder />}>
-                Add Treatment
-                <Link to="/add-treatment" />
-            </MenuItem>
             <MenuItem icon={<FaDog />}>
                 Manage Animals
-                <Link to="/manage-animal" />
+                <Link to="/manage-animals" />
             </MenuItem>
             <MenuItem icon={<FaUser />}>
                 Manage Users

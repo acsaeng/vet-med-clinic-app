@@ -3,7 +3,7 @@ import React, {Component} from "react"
 import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default class Search_AvailableAnimals extends Component{
+export default class SearchAvailableAnimals extends Component{
     // navigate = useNavigate();
 
     state = {

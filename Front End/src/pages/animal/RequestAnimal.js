@@ -116,41 +116,38 @@ function RequestAnimal() {
 
   return (
       
-        <div className="main-container d-flex flex-column flex-grow-1">
-            <div className="d-flex w-100 h-100">
-                {(event) => singleRefresh(event)}
-                <div className="sidebar">
-                    <Sidebar />
-                </div>
-
-                <div className="placeholder">
-                    <Sidebar />
-                </div>
-            <div className= "d-flex flex-column">
+    <div className="main-container d-flex flex-column flex-grow-1">
+    <div className="d-flex w-100 h-100">
+        <div className="sidebar">
+            <Sidebar />
+        </div>
+        <div className="placeholder">
+            <Sidebar />
+        </div>
+        <div className= "d-flex flex-column w-100">
             <div>
                 <AnimalNavbar />
             </div>
-            <div className="d-flex mx-3">
-              <h1>Request Animal</h1>
-            </div>
-            
+            <h1 className="ms-5 mt-5 mb-4">Request Animal</h1>
             <div class="mt-3 mx-5">
-                <label> Checkout Date: </label> 
-                <DatePicker selected={checkoutDate} onChange={(date) => setCheckoutDate(date)} /> <br/>
-                <br/>
-                <label> Return Date: </label> 
-                <DatePicker minDate = {checkoutDate} selected={returnDate} onChange={(date) => setReturnDate(date)} />
-            </div> 
+            <label className="mb-2"> Checkout Date: </label> 
+            <DatePicker className="form-control w-25" selected={checkoutDate} onChange={(date) => setCheckoutDate(date)} /> <br/>
+            <br/>
+            <label className="mb-2"> Return Date: </label> 
+            <DatePicker className="form-control w-25" minDate = {checkoutDate} selected={returnDate} onChange={(date) => setReturnDate(date)} />
+        </div> 
 
-            <div class="custom-field mt-4 mb-3 mx-5">
-                <label> Reason For Request: </label> <br/>
-                <textarea id="reasonInput" onChange={getReason} cols='100' rows='5' placeholder="Please enter the reason for your request.">
-                </textarea>
-                {/* <input id="reasonInput" type="text" required onChange={getReason}  placeholder="Please enter the reason for your request." /> */}
-            </div>
-            <div class="button mx-5">
-                <button onClick={clickButton}>Submit</button>
-            </div>
+        <div class="custom-field mt-4 mb-3 mx-5">
+            <label className="mb-2"> Reason For Request: </label> <br/>
+            <textarea className="form-control w-50"  id="reasonInput" onChange={getReason} cols='100' rows='5' placeholder="Please enter the reason for your request.">
+            </textarea>
+            {/* <input id="reasonInput" type="text" required onChange={getReason}  placeholder="Please enter the reason for your request." /> */}
+        </div>
+        <div class="button mx-5 mt-3">
+            <button className="btn btn-secondary" onClick={clickButton}>Submit</button>
+        </div>
+
+
             </div>
             </div>
         </div>

@@ -1,11 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from '../../components/Sidebar';
-import NavbarNoDropdown from '../../components/NavbarNoDropdown';
+import AnimalNavbar from '../../components/AnimalNavbar';
 
 // Requires npm install axios --save
 import axios from 'axios';
 import React, {useState} from 'react'
-import {useLocation, useNavigate} from 'react-router-dom'
+import {useLocation, useNavigate} from 'react-router-dom';
 
 function AddTreatment() {
     const [Authenticated, setAuth] = useState(localStorage.getItem("Authenticated"))
@@ -131,36 +131,34 @@ function AddTreatment() {
             </div>
             : <a href="/">You are not authorized to view this page. Return to Login</a>} */}
 
-        <div className="d-flex w-100 h-100">
-                {(event) => singleRefresh(event)}
-                <div className="sidebar">
-                    <Sidebar />
-                </div>
-
-                <div className="placeholder">
-                    <Sidebar />
-                </div>
-            <div className= "d-flex flex-column">
+    <div className="main-container d-flex flex-column flex-grow-1">
+    <div className="d-flex w-100 h-100">
+        <div className="sidebar">
+            <Sidebar />
+        </div>
+        <div className="placeholder">
+            <Sidebar />
+        </div>
+        <div className= "d-flex flex-column w-100">
             <div>
-                <NavbarNoDropdown />
+                <AnimalNavbar />
             </div>
-            <div className="d-flex mx-3">
-              <h1>Add Treatment Protocol</h1>
-            </div>
+            <h1 className="ms-5 mt-5">Add Treatment</h1>
 
             <div class="custom-field mt-4 mb-3 mx-5">
-                <label> Treatment Protocol: </label> <br/>
-                <textarea id="treatmentInput" onChange={getTreatment} cols='100' rows='1' placeholder="Please enter the treatment protocol.">
+                <label className="mb-2"> Treatment Protocol: </label> <br/>
+                <textarea className="form-control w-25" id="treatmentInput" onChange={getTreatment} cols='100' rows='1' placeholder="Please enter the treatment protocol.">
                 </textarea>
             </div>
 
             <div class="custom-field mt-4 mb-3 mx-5">
-                <label> Description: </label> <br/>
-                <textarea id="descriptionInput" onChange={getDescription} cols='100' rows='5' placeholder="Please enter the description of the treatment protocol.">
+                <label className="mb-2"> Description: </label> <br/>
+                <textarea className="form-control w-50" id="descriptionInput" onChange={getDescription} cols='100' rows='5' placeholder="Please enter the description of the treatment protocol.">
                 </textarea>
             </div>
             <div class="button mx-5">
-                <button onClick={clickButton}>Submit</button>
+                <button class="mt-4 btn btn-secondary" onClick={clickButton}>Submit</button>
+            </div>
             </div>
             </div>
             </div>

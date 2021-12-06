@@ -92,46 +92,82 @@ function AddDiagnosis() {
 
 
   return (
-      
-        <div className="main-container d-flex flex-column flex-grow-1">
-            { Authenticated ==="isAuthenticated" ? 
-            <div className="d-flex w-100 h-100">
-                {(event) => singleRefresh(event)}
-                <div className="sidebar">
-                    <Sidebar />
-                </div>
-
-                <div className="placeholder">
-                    <Sidebar />
-                </div>
-            <div className= "d-flex flex-column">
+    <div className="main-container d-flex flex-column flex-grow-1">
+    <div className="d-flex w-100 h-100">
+        <div className="sidebar">
+            <Sidebar />
+        </div>
+        <div className="placeholder">
+            <Sidebar />
+        </div>
+        <div className= "d-flex flex-column w-100">
             <div>
                 <AnimalNavbar />
             </div>
-            <div className="d-flex mx-3">
-              <h1>Add Diagnosis</h1>
-            </div>
+            <h1 className="ms-5 mt-5">Add Diagnosis</h1>
 
             <div class="custom-field mt-4 mb-3 mx-5">
-                <label> Diagnosis: </label> <br/>
-                <textarea id="diagnosisInput" onChange={getDiagnosis} cols='100' rows='1' placeholder="Please enter the diagnosis.">
+                <label className="mb-2"> Diagnosis: </label> <br/>
+                <textarea className="form-control w-25" id="diagnosisInput" onChange={getDiagnosis} cols='100' rows='1' placeholder="Please enter the diagnosis.">
                 </textarea>
             </div>
 
             <div class="custom-field mt-4 mb-3 mx-5">
-                <label> Description: </label> <br/>
-                <textarea id="descriptionInput" onChange={getDescription} cols='100' rows='5' placeholder="Please enter the description of the diagnosis.">
+                <label className="mb-2"> Description: </label> <br/>
+                <textarea className="form-control w-50" id="descriptionInput" onChange={getDescription} cols='100' rows='5' placeholder="Please enter the description of the diagnosis.">
                 </textarea>
-            </div>
-            <div class="button mx-5">
-                <button onClick={clickButton}>Submit</button>
+                <button className="mt-4 btn btn-secondary" onClick={clickButton}>Submit</button>
             </div>
             </div>
             </div>
-            : <a href="/">You are not authorized to view this page. Return to Login</a>}
         </div>
+
+
+
+            
+    
+
+
         
     );
 }
 
 export default AddDiagnosis;
+
+{/* <div className="main-container d-flex flex-column flex-grow-1">
+{ Authenticated ==="isAuthenticated" ? 
+<div className="d-flex w-100 h-100">
+    {(event) => singleRefresh(event)}
+    <div className="sidebar">
+        <Sidebar />
+    </div>
+
+    <div className="placeholder">
+        <Sidebar />
+    </div>
+<div className= "d-flex flex-column">
+<div>
+    <AnimalNavbar />
+</div>
+<div className="d-flex mx-3">
+  <h1>Add Diagnosis</h1>
+</div>
+
+<div class="custom-field mt-4 mb-3 mx-5">
+    <label> Diagnosis: </label> <br/>
+    <textarea id="diagnosisInput" onChange={getDiagnosis} cols='100' rows='1' placeholder="Please enter the diagnosis.">
+    </textarea>
+</div>
+
+<div class="custom-field mt-4 mb-3 mx-5">
+    <label> Description: </label> <br/>
+    <textarea id="descriptionInput" onChange={getDescription} cols='100' rows='5' placeholder="Please enter the description of the diagnosis.">
+    </textarea>
+</div>
+<div class="button mx-5">
+    <button onClick={clickButton}>Submit</button>
+</div>
+</div>
+</div>
+: <a href="/">You are not authorized to view this page. Return to Login</a>}
+</div> */}

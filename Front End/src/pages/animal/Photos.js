@@ -26,16 +26,14 @@ function Photos() {
                     <div>
                         <AnimalNavbar />
                     </div>
-                    <h1 className="m-3">Photos</h1>
-                    <div className="d-flex w-80 m-3 mx-5 justify-content-start">  
-                        <div className= "d-flex w-80 mx-5 ">
-                            <button className=" p-2 mx-3"> Upload Photo</button>
-                            <button className=" p-2 mx-3"> Edit Photo Info</button>
-                            <button className=" p-2 mx-3"> Delete Photo</button>
-                        </div>
+                    <h1 className="ms-5 mt-5">Photos</h1>
+                    <div className="d-flex flex-row w-75 mb-3 justify-content-end">  
+                        <button className="btn btn-secondary p-2 ms-3">Upload Photo</button>
+                        <button className="btn btn-secondary p-2 ms-3">Edit Photo Info</button>
+                        <button className="btn btn-secondary p-2 ms-3">Delete Photo</button>
                     </div>
 
-                    <div class="ex2 mx-5 ">
+                    <div class="ex2 mx-5 w-75">
                     <div class="d-flex flex-wrap mx-3 my-5">
                         <div class = "mx-3">
                             <img src={shiba1a} alt=""></img>

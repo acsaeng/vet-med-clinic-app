@@ -134,7 +134,6 @@ function ManageDiagnosis() {
   return (
       
         <div className="main-container d-flex flex-column flex-grow-1">
-            { Authenticated ==="isAuthenticated" ? 
             <div className="d-flex w-100 h-100">
                 {(event) => singleRefresh(event)}
                 <div className="sidebar">
@@ -169,10 +168,49 @@ function ManageDiagnosis() {
             </div>
             </div>
             </div>
-            : <a href="/">You are not authorized to view this page. Return to Login</a>}
         </div>
         
     );
 }
 
 export default ManageDiagnosis;
+
+
+{/* <div className="main-container d-flex flex-column flex-grow-1">
+{ Authenticated ==="isAuthenticated" ? 
+<div className="d-flex w-100 h-100">
+    {(event) => singleRefresh(event)}
+    <div className="sidebar">
+        <Sidebar />
+    </div>
+
+    <div className="placeholder">
+        <Sidebar />
+    </div>
+<div className= "d-flex flex-column">
+<div>
+    <AnimalNavbar />
+</div>
+<div className="d-flex mx-3">
+  <h1>Update Diagnosis</h1>
+</div>
+
+<div class="custom-field mt-4 mb-3 mx-5">
+    <label> Diagnosis: </label> <br/>
+    <textarea id="diagnosisInput" onChange={getDiagnosis} cols='100' rows='1'>
+    </textarea>
+</div>
+
+<div class="custom-field mt-4 mb-3 mx-5">
+    <label> Description: </label> <br/>
+    <textarea id="descriptionInput" onChange={getDescription} cols='100' rows='5'>
+    </textarea>
+</div>
+<div class="button mx-5">
+    <button onClick={clickUpdateButton}>Update</button>
+    <button onClick={clickCompleteButton}>Complete</button>
+</div>
+</div>
+</div>
+: <a href="/">You are not authorized to view this page. Return to Login</a>}
+</div> */}

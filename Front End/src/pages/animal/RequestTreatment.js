@@ -97,46 +97,50 @@ function RequestTreatment() {
 
 
   return (
-      
-        <div className="main-container d-flex flex-column flex-grow-1">
-            <div className="d-flex w-100 h-100">
-                {(event) => singleRefresh(event)}
-                <div className="sidebar">
-                    <Sidebar />
-                </div>
 
-                <div className="placeholder">
-                    <Sidebar />
-                </div>
-            <div className= "d-flex flex-column">
+    <div className="main-container d-flex flex-column flex-grow-1">
+    <div className="d-flex w-100 h-100">
+        <div className="sidebar">
+            <Sidebar />
+        </div>
+        <div className="placeholder">
+            <Sidebar />
+        </div>
+        <div className= "d-flex flex-column w-100">
             <div>
                 <AnimalNavbar />
             </div>
-            <div className="d-flex mx-3">
-              <h1>Request Treatment</h1>
-            </div>
+            <h1 className="ms-5 mt-5">Request Treatment</h1>
 
-            <div className="d-flex mt-3 mx-3">
-                <h6> This request will be sent from {requesterFirstName} {requesterLastName}. </h6> 
-            </div>
+            <div className="mt-4 ms-5">
+             <div className="d-flex">
+                 <h6>This request will be sent from {requesterFirstName} {requesterLastName}. </h6> 
+             </div>
             
-            <div className="px-3 py-2">
-                <label> Animal Health Technician Requested: </label> <br/>
-                    <textarea id="requestForInput" onChange={getRequestFor} cols='100' rows='1' 
-                    placeholder="Please enter the animal health technician you would like to send a request to.">
+             <div className="mt-3 py-2">
+                <label className="mb-2">Animal Health Technician Requested:</label> <br/>
+                <textarea className="form-control w-25" id="requestForInput" onChange={getRequestFor} cols='100' rows='1' 
+                    placeholder="Please enter an animal health technician...">
                 </textarea>
             </div> 
 
-            <div class="custom-field mt-4 mb-3 mx-3">
-                <label> Message: </label> <br/>
-                <textarea id="messageInput" onChange={getMessage} cols='100' rows='5' placeholder="Please enter the message for your request.">
+            <div class="custom-field mt-4 mb-3">
+                <label className="mb-2"> Message: </label> <br/>
+                <textarea className="form-control w-50" id="messageInput" onChange={getMessage} cols='100' rows='5' placeholder="Please enter a message">
                 </textarea>
             </div>
-            <div class="button mx-3">
-                <button onClick={clickButton}>Submit</button>
+            <div className="mt-4 button">
+                <button className="btn btn-secondary" onClick={clickButton}>Submit</button>
             </div>
             </div>
             </div>
+            </div>
+        </div>
+    );
+}
+
+export default RequestTreatment;
+
             
             {/* { Authenticated ==="isAuthenticated" ? 
             <div className="d-flex w-100 h-100">
@@ -178,9 +182,3 @@ function RequestTreatment() {
             </div>
             </div>
             : <a href="/">You are not authorized to view this page. Return to Login</a>} */}
-        </div>
-        
-    );
-}
-
-export default RequestTreatment;

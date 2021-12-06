@@ -7,12 +7,13 @@ import '../../styling/Comments.css';
 import CommentsList from '../../components/CommentsList'
 import React, {useState} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
-import ConditionssList from '../../components/ConditionsList';
+import ConditionsList from '../../components/ConditionsList';
 import TreatmentsList from '../../components/TreatmentsList';
 
 function HealthRecords() {
-    const urlParams = new URLSearchParams(useLocation().search)
-    const animalID = urlParams.get("animalID")
+    const urlParams = new URLSearchParams(useLocation().search);
+    const animalID = urlParams.get("animalID");
+    let navigate = useNavigate();
     // const authorID = urlParams.get("authorID")
     // const firstName = urlParams.get("firstName").replace("%20"," ")
     // const lastName = urlParams.get("lastName").replace("%20"," ")
@@ -64,25 +65,25 @@ return (
                 <div>
                     <AnimalNavbar />
                 </div>
-                <h1 className="m-3">Health Records</h1>
+                <h1 className="mt-5 mb-4 ms-5">Health Records</h1>
                 <div className="d-flex mx-3">  
                     <div className= "d-flex flex-column w-80 mx-5">
                         {/* LEFT HAND SIDE */}
-                        <h2>Conditions </h2>
-                        <div className="d-flex justify-content-end my-3">
-                            <button className="p-2 mx-5" > Add Condition</button>
+                        <h2>Conditions</h2>
+                        <div className="d-flex justify-content-end mb-3">
+                            <button className="p-2 ms-5 btn btn-secondary" onClick={() => {navigate(`/add-diagnosis`)}}>Add Diagnosis</button>
                              
                         </div>  
                         <div class="ex1">
-                            <ConditionssList animalID={animalID}/>
+                            <ConditionsList animalID={animalID}/>
                         </div> 
                     </div>
-                    <div className= "d-flex flex-column w-80 mx-5">
+                    <div className= "d-flex flex-column mx-5">
                         {/* RIGHT HAND SIDE */}
-                        <h2>Treatments </h2>
-                        <div className="d-flex justify-content-end my-3">      
-                            <button > Add Treatment</button>
-                            <button className=" p-2 mx-3"> Request Treatment</button>
+                        <h2>Treatments</h2>
+                        <div className="d-flex flex-row justify-content-end mb-3">      
+                            <button className="me-3  btn btn-secondary" onClick={() => {navigate(`/add-treatment`)}}>Add Treatment</button>
+                            <button className="p-2 btn btn-secondary" onClick={() => {navigate(`/request-treatment`)}}>Request Treatment</button>
 
                             
                             {/* <div className="d-flex justify-content-end">

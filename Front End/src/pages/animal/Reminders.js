@@ -106,16 +106,16 @@ function Reminders() {
             <div>
                 <AnimalNavbar /> 
             </div> 
-            <div className="d-flex my-5 mx-5">
-                <h1>Reminders for Animal</h1>
+            <div className="d-flex mt-5 mb-4 mx-5">
+                <h1>Reminders</h1>
             </div> 
-            <div className="d-flex flex-column flex-grow-1 align-items-left mx-5 mt-5">
-                <div class="ex1">
+            <div className="d-flex flex-column flex-grow-1 align-items-left mx-5">
+                <div className="ex1">
                 <RemindersList animalID={animalID} />
                 </div>
-                <label class="custom-field">
-                    <input id="reminderInput" type="text" required onChange={getData} onKeyDown={handleKeyDown} size="100" placeholder="Enter a message" />
-                    <button onClick={clickButton}>Submit</button>
+                <label className="d-flex flex-row custom-field">
+                    <input className="form-control w-100" id="reminderInput" type="text" required onChange={getData} onKeyDown={handleKeyDown} size="100" placeholder="Enter a message" />
+                    <button className="btn btn-secondary ms-2" onClick={clickButton}>Submit</button>
                 </label>
             </div>
         </div>

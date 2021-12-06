@@ -32,8 +32,8 @@ const AnimalNavbar = () => {
                     <Dropdown.Item href="/comments">Comments</Dropdown.Item>
                     <Dropdown.Item href="/photos">Photos</Dropdown.Item>
                     <Dropdown.Item href="/weight-history">Weight History</Dropdown.Item>
-                    <Dropdown.Item href="/request-treatment">Request Treatment</Dropdown.Item>
                     <Dropdown.Item href="/request-animal">Request Animal</Dropdown.Item>
+                    <Dropdown.Item href="/send-alert">Send Alert</Dropdown.Item>
                 </DropdownButton>
             </div>
         </div>

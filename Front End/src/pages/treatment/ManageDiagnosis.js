@@ -14,16 +14,17 @@ function ManageDiagnosis() {
     const [description, setDescription] = useState(description);
     const diagnosisStatus = "Ongoing";
     
-    const animalID = urlParams.get("animalID")
-    let userID = ""
-    let animalName = ""
-    let animalSpecies = ""
+    // const animalID = urlParams.get("animalID")
+    // let userID = ""
+    // let animalName = ""
+    // let animalSpecies = ""
+    const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
     const animalName = localStorage.getItem("animalName")
     const animalSpecies = localStorage.getItem("animalSpecies")
     const diagnosisID = localStorage.getItem("diagnosisID")
-    const diagnosis = localStorage.getItem("diagnosis")
-    const description = localStorage.getItem("description")
+    // const diagnosis = localStorage.getItem("diagnosis")
+    // const description = localStorage.getItem("description")
 
     axios.get('http://localhost:8080/app/animal/'+animalID+'/'+diagnosisID).then(
         res => {

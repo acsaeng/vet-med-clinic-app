@@ -14,10 +14,11 @@ function AddTreatment() {
     const [description, setDescription] = useState(null);
     const treatmentStatus = "Ongoing";
     
-    const animalID = urlParams.get("animalID")
-    let userID = ""
-    let animalName = ""
-    let animalSpecies = ""
+    // const animalID = urlParams.get("animalID")
+    // let userID = ""
+    // let animalName = ""
+    // let animalSpecies = ""
+    const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
     const animalName = localStorage.getItem("animalName")
     const animalSpecies = localStorage.getItem("animalSpecies")

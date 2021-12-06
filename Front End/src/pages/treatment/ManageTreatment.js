@@ -14,26 +14,30 @@ function ManageTreatment() {
     const [description, setDescription] = useState(description);
     const treatmentStatus = "Ongoing";
     
-    const animalID = urlParams.get("animalID")
-    let userID = ""
-    let animalName = ""
-    let animalSpecies = ""
+    // const animalID = urlParams.get("animalID")
+    // let userID = ""
+    // let animalName = ""
+    // let animalSpecies = ""
+    const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
     const animalName = localStorage.getItem("animalName")
     const animalSpecies = localStorage.getItem("animalSpecies")
     const treatmentID = localStorage.getItem("treatmentID")
-    const treatment = localStorage.getItem("treatment")
-    const description = localStorage.getItem("description")
+    // const treatment = localStorage.getItem("treatment")
+    // const description = localStorage.getItem("description")
 
     axios.get('http://localhost:8080/app/animal/'+animalID+'/'+treatmentID).then(
         res => {
             console.log(res);
-            userID = res.data[0].userID
-            localStorage.setItem("userID", userID)
-            animalName = res.data[0].name
-            localStorage.setItem("animalName", animalName)
-            animalSpecies = res.data[0].species
-            localStorage.setItem("animalSpecies", animalSpecies)
+            // userID = res.data[0].userID
+            // localStorage.setItem("userID", userID)
+            // animalName = res.data[0].name
+            // localStorage.setItem("animalName", animalName)
+            // animalSpecies = res.data[0].species
+            // localStorage.setItem("animalSpecies", animalSpecies)
+            localStorage.setItem("userID", res.data[0].userID)
+            localStorage.setItem("animalName", res.data[0].animalName)
+            localStorage.setItem("animalSpecies", res.data[0].animalSpecies)
             localStorage.setItem("animalStatus", res.data[0].status)
             localStorage.setItem("treatmentID", res.data[0].treatmentID)
             localStorage.setItem("treatment", res.data[0].treatment)

@@ -4,11 +4,11 @@ USE VETAPP;
 
 DROP TABLE IF EXISTS COMMENT; 
 CREATE TABLE COMMENT ( 
-     Animal_ID			integer not null,
+     Animal_ID			 integer not null,
      Comment_ID			integer not null,
-     Upload_Time		varchar (50) not null,
-     User_ID			integer not null,
-     Message			varchar (50) not null,
+     Upload_Time			 varchar (50) not null,
+     User_ID			 integer not null,
+     Message			 varchar (50) not null,
      primary key (Comment_ID)
 );
 
@@ -170,6 +170,7 @@ CREATE TABLE WEIGHT_HISTORY (
      primary key (Animal_ID, Date_Recorded)
 );
 
+<<<<<<< HEAD
 INSERT INTO WEIGHT_HISTORY (Animal_ID, Date_Recorded, Weight)
 VALUES
 (103, "10/1/2020", 800),
@@ -187,6 +188,8 @@ VALUES
 (102, "3/1/2021", 406),
 (102, "4/1/2021", 402);
 
+=======
+>>>>>>> Combined-YongJunZhu
 DROP TABLE IF EXISTS TREATMENT; 
 CREATE TABLE TREATMENT ( 
      Treatment_ID			int not null,
@@ -197,6 +200,10 @@ CREATE TABLE TREATMENT (
      Animal_ID			 varchar (50) not null,
      primary key (Treatment_ID)
 );
+<<<<<<< HEAD
+=======
+
+>>>>>>> Combined-YongJunZhu
 
 INSERT INTO TREATMENT (Treatment_ID, User_ID, Treatment_Date, Treatment_Protocol, Treatment_Description, Animal_ID)
 VALUES
@@ -204,6 +211,10 @@ VALUES
 ('5', '3', '2021-09-25 00:00:00', 'Bandaging ', 'Replace bandage daily after cleaning.', '102'),
 ('8', '3', '2021-10-05 00:00:00', 'Flu medicine', 'Twice daily, once in AM, once in PM. 8 hours apart.', '103'),
 ('9', '3', '2021-10-12 00:00:00', 'Flu medicine', 'Once daily after morning meal.', '103');
+<<<<<<< HEAD
+=======
+
+>>>>>>> Combined-YongJunZhu
 
 
 

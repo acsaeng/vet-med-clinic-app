@@ -48,7 +48,7 @@ public class AnimalController {
 	 * @param idStr String path variable obtained by path denoted inside the GetMapping annotation
 	 * @return comment object or throw exception
 	 */
-	@GetMapping(path="{id}") 
+	@GetMapping(path="{animalID}") 
 	public List<Animal> selectAnimalById(@PathVariable("animalID") String animalID) {
 		try {
 			//id of animal

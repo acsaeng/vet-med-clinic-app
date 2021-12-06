@@ -2,7 +2,7 @@ import "../styling/Navbar.css";
 import profilePhoto from "../images/profile.png";
 
 
-const Navbar = () => {
+const AnimalNavbar = () => {
     
     // window.onload = function() {
         
@@ -27,4 +27,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default AnimalNavbar

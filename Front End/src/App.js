@@ -7,6 +7,9 @@ import RequestAnimal from "./pages/animal/RequestAnimal";
 import ViewRequests from './pages/animal/ViewRequests';
 
 import AddAnimal from "./pages/app-portal/AddAnimal";
+import AddUser from "./pages/user/AddUser";
+import EditUser from "./pages/user/EditUser";
+import BlockUser from "./pages/user/BlockUser";
 
 import Comments from './pages/animal/Comments';
 import Reminders from './pages/animal/Reminders';
@@ -30,6 +33,9 @@ function App() {
                 <Route path='/manage-animal' element={<ManageAnimals/>}/>
                 <Route path='/request-animal' element={<RequestAnimal/>}/>
                 <Route path='/view-requests' element={<ViewRequests/>}/>
+                <Route path='/add-user' element={<AddUser/>}/>
+                <Route path='/edit-user' element={<EditUser/>}/>
+                <Route path='/block-user' element={<BlockUser/>}/>
                 <Route path='/animal-comments' element={<Comments/>}/> 
                 <Route path='/animal-reminders' element={<Reminders/>}/> 
                 <Route path='/animal-health-records' element={<HealthRecords/>}/> 
@@ -39,7 +45,6 @@ function App() {
                 <Route path='/manage-diagnosis' element={<ManageDiagnosis/>}/> 
                 <Route path='/add-treatment' element={<AddTreatment/>}/> 
                 <Route path='/manage-treatment' element={<ManageTreatment/>}/> 
-
             </Routes>
         </Router>
     );

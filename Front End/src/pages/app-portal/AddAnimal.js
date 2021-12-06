@@ -1,6 +1,6 @@
 import '../../styling/main.css';
 import Sidebar from '../../components/Sidebar';
-import NavbarNoDropdown from '../../components/NavbarNoDropdown';
+import AddAnimalNavbar from '../../components/AddAnimalNavbar';
 
 function AddAnimal() {
 
@@ -20,7 +20,7 @@ function AddAnimal() {
                 </div>
 
                 <div className="d-flex flex-column flex-grow-1">
-                    <NavbarNoDropdown />
+                    <AddAnimalNavbar />
 
                     <h1 className="mt-5 ms-5">Add Animal</h1>
                         <form className="d-flex flex-column  align-items-start mt-5" onSubmit={handleSubmit}>

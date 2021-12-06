@@ -77,29 +77,30 @@ public class TreatmentRepository {
 		return 1;
 	}
 	
-//	/**
-//	 * Returns all diagnoses in the system associated with this animal
-//	 * @return all associated diagnoses
-//	 */
-//	public List<Treatment> selectAllTreatment(){
-//		return dbTreatment;
-//	}
-	
-	// SELECT TREATMENT BY TREATMENT ID?
-	
 	/**
-	 * View a specific treatment selected by id
-	 * @param id the id of the selected treatment
-	 * @return the treatment with the requested id
+	 * View all treatments selected for an animal
+	 * @param animalID the id of the selected animal
+	 * @return the treatments for the animal with the requested id
 	 * @throws Exception when there is an SQL Exception
 	 */
-	public ArrayList<String> selectTreatmentByAnimalId(int treatmentID) throws Exception{
-		query = "SELECT * FROM TREATMENT WHERE Animal_ID='" + treatmentID +"';";
+	public ArrayList<String> selectTreatmentByAnimalId(int animalID) throws Exception{
+		query = "SELECT * FROM TREATMENT WHERE Animal_ID='" + animalID +"';";
 		System.out.println("query = "+query);
 		ArrayList<String> results = dao.getResponseArrayList(query);
 		return results;
-//	public Optional<Treatment> selectTreatmentById(UUID id) {
-//		return dbTreatment.stream().filter(treatment -> treatment.getId().equals(id)).findFirst();
+	}
+	
+	/**
+	 * Find a specific treatment selected by ID
+	 * @param animalID the id of the selected animal
+	 * @param treatmentID the ID of the treatment requested
+	 * @return the specific treatment for an animal
+	 * @throws Exception when there is an SQL Exception
+	 */
+	public ArrayList<String> selectTreatmentByTreatmentId(int animalID, int treatmentID) throws Exception {
+		query = "SELECT FROM TREATMENT WHERE Animal_ID='" + animalID +" AND Treatment_ID='" + treatmentID + "';";
+		ArrayList<String> result = dao.getResponseArrayList(query);
+		return result;
 	}
 	
 	/**
@@ -148,9 +149,6 @@ public class TreatmentRepository {
 	public String getSplitPlaceholder() {
 		return dao.getSplitPlaceholder();
 	}
-	
-	
-	
 }
 
 

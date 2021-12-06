@@ -45,22 +45,11 @@ public class TreatmentController {
 		}
 		treatmentService.addTreatment(treatment);
 	}
-
-//	/**
-//	 * Displays all the treatment associated with an animal
-//	 * @return a list of all the treatments
-//	 */
-//	@GetMapping
-//	public List<Treatment> selectAllTreatment() {
-//		return treatmentService.selectAllTreatment();
-//	}
-	
-	// DISPLAY TREATMENT BASED ON TREATMENT ID?
 	
 	/**
 	 * Displays all the treatment associated with an animal
-	 * @param treatmentID the ID of the requested treatment
-	 * @return the requested treatment
+	 * @param animalID the ID of the requested animal
+	 * @return the requested animal
 	 * @throws Exception when there is an SQL Exception
 	 */
 	@GetMapping(path = "{animalID}") 
@@ -76,12 +65,34 @@ public class TreatmentController {
 	}
 	
 	/**
+	 * Gets a specific treatment associated with an animal
+	 * @param animalID the ID of the requested animal
+	 * @param treatmentID the ID of the requested treatment
+	 * @return the requested treatment
+	 * @throws Exception when there is an SQL Exception
+	 */
+	@GetMapping(path = "{animalID}/{treatmentID}") 
+	public Treatment selectTreatmentByTreatmentId(@PathVariable("animalID") String animalID,
+			@PathVariable("treatmentID") String treatmentID) throws Exception {
+		try {
+			int aID = Integer.valueOf(animalID);
+			int tID = Integer.valueOf(treatmentID);
+			System.out.println(treatmentService.selectTreatmentByTreatmentId(aID, tID));
+			return treatmentService.selectTreatmentByTreatmentId(aID, tID);
+        } catch (java.lang.IllegalArgumentException e) {
+            throw new InvalidIdException();
+        }
+	}
+	
+	/**
 	 * Delete an existing treatment in the database and checks that the treatment ID is valid
+	 * @param animalID is the ID of the animal with this treatment
 	 * @param treatmentID the ID of the treatment to be deleted
 	 * @throws Exception when there is an SQL Exception
 	 */
-	@DeleteMapping(path = "{treatmentID}")
-	public void deleteTreatmentById(@PathVariable("treatmentID") String treatmentID) throws Exception{
+	@DeleteMapping(path = "{animalID}/{treatmentID}")
+	public void deleteTreatmentById(@PathVariable("animalID") String animalID,
+			@PathVariable("treatmentID") String treatmentID) throws Exception{
 		try {
 			int id = Integer.valueOf(treatmentID);
             treatmentService.deleteTreatmentById(id);
@@ -92,12 +103,15 @@ public class TreatmentController {
 	
 	/**
 	 * Update an existing treatment in the database and checks that the treatment ID is valid
+	 * @param animalID is the ID of the animal with this treatment
 	 * @param treatmentId the ID of the treatment to be updated
 	 * @param treatmentToUpdate treatment object with updated information
 	 * @throws Exception when there is an SQL Exception
 	 */
-	@PutMapping(path = "{treatmentID}")
-	public void updateTreatmentById(@PathVariable("treatmentID") String treatmentId, @RequestBody Treatment treatmentToUpdate) throws Exception{	
+	@PutMapping(path = "{animalID}/{treatmentID}")
+	public void updateTreatmentById(@PathVariable("animalID") String animalID, 
+			@PathVariable("treatmentID") String treatmentId, 
+			@RequestBody Treatment treatmentToUpdate) throws Exception{	
 		try {
 			int id = Integer.valueOf(treatmentId);
             if (treatmentToUpdate.anyNulls()) {

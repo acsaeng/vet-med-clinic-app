@@ -40,16 +40,6 @@ public class TreatmentService {
 		return repo.addTreatment(treatment);
 	}
 	
-//	/**
-//	 * List all diagnoses in the system
-//	 * @return a list of all diagnoses associated with an animal
-//	 */
-//	public List<Treatment> selectAllTreatment(){
-//		return repo.selectAllTreatment();
-//	}
-	
-	// TREATMENT BY TREATMENT ID?
-	
 	/**
 	 * Search for treatments for a specific animal in the Repository
 	 * @param animalID id of the animal
@@ -60,6 +50,29 @@ public class TreatmentService {
 		ArrayList<String> results =  repo.selectTreatmentByAnimalId(animalID);
 		List<Treatment> listResults = createListTreatment(results);
 		return listResults;
+	}
+	
+	/**
+	 * Search for a specific for a specific animal in the Repository
+	 * @param animalID id of the animal
+	 * @param treatmentID the treatment ID requested
+	 * @return the single treatment from the repository
+	 * @throws Exception when there is an SQL Exception
+	 */
+	public Treatment selectTreatmentByTreatmentId(int animalID, int treatmentID) throws Exception {
+		ArrayList<String> results = repo.selectTreatmentByTreatmentId(animalID, treatmentID);
+		int idxTreatmentID=0, idxTreatmentDate=1, idxTreatment=2, idxDescription=3, 
+				idxTreatmentStatus=4, idxUserID=5, idxAnimalID=6;
+		String result = "";
+		if(!results.isEmpty()) {
+			result += results.get(0);
+		}
+		String[] resultSplit = result.split(repo.getSplitPlaceholder());
+		Treatment theTreatment =  new Treatment(Integer.valueOf(resultSplit[idxTreatmentID]), 
+				resultSplit[idxTreatmentDate], resultSplit[idxTreatment], 
+				resultSplit[idxDescription], resultSplit[idxTreatmentStatus], 
+				Integer.valueOf(resultSplit[idxUserID]), Integer.valueOf(resultSplit[idxAnimalID]));
+		return theTreatment;
 	}
 	
 	/**
@@ -83,8 +96,6 @@ public class TreatmentService {
 		return repo.updateTreatmentById(treatmentID, treatment);
 	}
 	
-	
-	
 	 /**
 	  * Create a list of Treatment objects from ArrayList<String> returned from database query
 	 * @param foundResults = ArrayList<String> preprocessed response from database of all returned tuples as an ArrayList of Strings
@@ -106,7 +117,4 @@ public class TreatmentService {
 
 	return listResults;
 	}
-	
-	
-	
 }

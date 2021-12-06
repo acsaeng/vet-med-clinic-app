@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Repository;
 
 import group825.vetapp2.animal.Search;
-import group825.vetapp2.database.Application_DbConnection;
+import group825.vetapp2.database.DatabaseConnection;
 
 /**
  * Repository that stores Comment information
@@ -20,12 +20,12 @@ import group825.vetapp2.database.Application_DbConnection;
 @Repository("tempCommentsRepo")
 public class CommentsRepository {
 	String table_name = "COMMENT";
-	Application_DbConnection dao;
+	DatabaseConnection dao;
 	String query;
 	int Latest_comment_id;
 	
 	public CommentsRepository() throws Exception {
-		dao = new Application_DbConnection();
+		dao = new DatabaseConnection();
 		getLatestCommentId();
 	}
 	

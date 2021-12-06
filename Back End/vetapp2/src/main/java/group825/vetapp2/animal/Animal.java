@@ -19,9 +19,9 @@ import java.util.UUID;
 public class Animal {
 
     /**
-     * ID number of the animal
+     * ID number of the animal for the database
      */
-    private int id;
+    private int animalID;
 
     /**
      * Name of the animal
@@ -48,44 +48,90 @@ public class Animal {
      */
     private double weight;
     
+    /**
+     * Tattoo on animal
+     */
     private String tattoo;
+    
+    /**
+     * Tattoo on animal assigned by the city
+     */
     private String cityTattoo;
+    
+    /**
+     * Birthday of the animal
+     */
     private String dob;
+    
+    /**
+     * RFID for the Animal
+     */
     private String rfid;
+    
+    /**
+     * Microchip information on animal
+     */
     private String microchip;
+    
+    /**
+     * Status of animal 
+     */
     private String status;
+    
+    /**
+     * Color of animal 
+     */
     private String color;
+    
+    /**
+     * More information recorded to visually idnetify the animal
+     */
     private String moreInfo;
+    
+    /**
+     * Length of the animal's name 
+     */
     private int nameLength;
-    private String searchKey_Name;
+    
+    /**
+     * Search Key for the name used in search algorithm
+     */
+    private String searchKeyName;
 
 
     /**
      * Constructor that initializes the Animal
-     * @param id animal's ID number
-     * @param name animal's name
-     * @param type animal's type
-     * @param species animal's species
-     * @param sex animal's sex
-     * @param weight animal's weight
-     * .......FILLIN THE REST...........................
+     * @param animalID = animal's ID number
+     * @param name = animal's name
+     * @param species =  animal's species
+     * @param breed =  animal's breed
+     * @param sex =  animal's sex
+     * @param weight =  animal's current weight
+     * @param tattoo =  describes a tattoo on the animal
+     * @param cityTattoo =  describes a tattoo on the animal given by the city
+     * @param dob =  animal's date of birth
+     * @param rfid =  animal's rfid
+     * @param microchip =  animal's microchip number
+     * @param status =  animal's current status
+     * @param color =  animal's skin/fur/hair color
+     * @param moreInfo =  gives more details identifying the animal
+     * @param nameLength =  the length of the animal's name
+     * @param searchKeyName = search key for the animal's name used in the search algorithm 
      */
-    public Animal(@JsonProperty("id") int id, @JsonProperty("name") String name,
+    public Animal(@JsonProperty("animalID") int animalID, @JsonProperty("name") String name,
     		 	  @JsonProperty("species") String species, @JsonProperty("type") String breed,
                   @JsonProperty("sex") String sex, @JsonProperty("weight") double weight,
                   @JsonProperty("tattoo") String tattoo, @JsonProperty("cityTattoo") String cityTattoo,
                   @JsonProperty("dob") String dob, @JsonProperty("rfid") String rfid,
                   @JsonProperty("microchip") String microchip, @JsonProperty("status") String status,
                   @JsonProperty("color") String color, @JsonProperty("moreInfo") String moreInfo,
-                  @JsonProperty("nameLength") int nameLength, @JsonProperty("searchKey_Name") String searchKey_Name) {
-        this.id = id;
+                  @JsonProperty("nameLength") int nameLength, @JsonProperty("searchKeyName") String searchKeyName) {
+        this.animalID = animalID;
         this.name = name;
         this.breed = breed;
         this.species = species;
         this.sex = sex;
         this.weight = weight;
-
-        
         this.tattoo = tattoo;
         this.cityTattoo = cityTattoo;
         this.dob = dob;
@@ -95,7 +141,7 @@ public class Animal {
         this.color = color;
         this.moreInfo = moreInfo;
         this.nameLength = nameLength;
-        this.searchKey_Name = searchKey_Name;
+        this.searchKeyName = searchKeyName;
         
         updateSearchKey();
     }
@@ -105,23 +151,23 @@ public class Animal {
      * @return true if at least one attribute is null, false otherwise
      */
     public boolean anyNulls() {
-        return (this.id == 0 || this.name == null || this.species == null || this.breed == null || this.sex == null || this.weight == 0.0 ||
+        return (this.animalID == 0 || this.name == null || this.species == null || this.breed == null || this.sex == null || this.weight == 0.0 ||
         		this.tattoo == null || this.cityTattoo == null || this.dob == null || this.rfid == null || this.microchip == null || 
         		this.status == null || this.color == null );
     }
     
     @Override 
     public String toString() {
-    	String newString = "{ id: " + id + ", name: " + name + ", breed: " + breed + ", species: " + species + ", sex: " + sex + ", weight: " 
+    	String newString = "{ animalID: " + animalID + ", name: " + name + ", breed: " + breed + ", species: " + species + ", sex: " + sex + ", weight: " 
     + weight + ", tattoo: " + tattoo + ", cityTattoo: " + cityTattoo + ", dob: " + dob 
     + ", rfid: " + rfid + ", microchip: " + microchip + ", status: " + status + ", color: " + color + ", moreInfo: " + moreInfo 
-    + ", nameLength: " + nameLength + ", searchKey_Name: " + searchKey_Name + "}";
+    + ", nameLength: " + nameLength + ", searchKeyName: " + searchKeyName + "}";
      return newString;
     }
     
     private void updateSearchKey() {
     	if (this.nameLength == 0) {this.nameLength = this.name.length();}
-    	if (this.searchKey_Name == null) {this.searchKey_Name = SearchKey.generateSearchKey(this.name); }
+    	if (this.searchKeyName == null) {this.searchKeyName = SearchKey.generateSearchKey(this.name); }
     }
     
     

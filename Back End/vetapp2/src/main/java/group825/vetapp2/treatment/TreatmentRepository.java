@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import group825.vetapp2.database.Application_DbConnection;
+import group825.vetapp2.database.DatabaseConnection;
 
 /**
  * Repository that stores Treatment information
@@ -26,7 +26,7 @@ public class TreatmentRepository {
 	/**
 	 * Connector to the database
 	 */
-	private Application_DbConnection dao;
+	private DatabaseConnection dao;
 	
 	/**
 	 * The query run in the database
@@ -49,7 +49,7 @@ public class TreatmentRepository {
 	 * @throws Exception when there is an SQL Exception
 	 */
 	public TreatmentRepository() throws Exception {
-		dao = new Application_DbConnection();
+		dao = new DatabaseConnection();
 		getLatestTreatmentId();
 	}
 	

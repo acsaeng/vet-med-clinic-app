@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import group825.vetapp2.animal.DictionaryLetter;
 
-public class Application_DbConnection {
+public class DatabaseConnection {
 	
 	/**
 	 * url to the location of the MySQL database
@@ -32,8 +32,6 @@ public class Application_DbConnection {
 	 */
 	String splitPlaceholder = "--break-- ";
 	
-
-
 	
 	/**
 	 * @param query = SQL query to retrieve data from database 

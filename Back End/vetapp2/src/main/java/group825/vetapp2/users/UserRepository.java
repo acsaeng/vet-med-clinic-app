@@ -2,7 +2,7 @@ package group825.vetapp2.users;
 
 import org.springframework.stereotype.Repository;
 
-import group825.vetapp2.database.Application_DbConnection;
+import group825.vetapp2.database.DatabaseConnection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class UserRepository {
 	/**
 	 * Connection to the SQL database
 	 */
-	private Application_DbConnection dao;
+	private DatabaseConnection dao;
 	
 	/**
 	 * SQL query
@@ -44,7 +44,7 @@ public class UserRepository {
 	 * @throws Exception
 	 */
 	public UserRepository() throws Exception {
-		dao = new Application_DbConnection();
+		dao = new DatabaseConnection();
 		getLatestUserId();
 	}
 

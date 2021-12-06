@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
-import group825.vetapp2.database.Application_DbConnection;
+import group825.vetapp2.database.DatabaseConnection;
 
 /**
  * Repository that stores Request animal information
@@ -20,12 +20,12 @@ import group825.vetapp2.database.Application_DbConnection;
 @Repository("tempRequestRepo")
 public class RequestRepository {
 	String table_name = "REQUEST";
-	Application_DbConnection dao;
+	DatabaseConnection dao;
 	String query;
 	int Latest_request_id;
 	
 	public RequestRepository() throws Exception {
-		dao = new Application_DbConnection();
+		dao = new DatabaseConnection();
 		getLatestRequestId();
 	}
 	

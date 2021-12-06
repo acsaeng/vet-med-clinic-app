@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
-import group825.vetapp2.database.Application_DbConnection;
+import group825.vetapp2.database.DatabaseConnection;
 
 /**
  * Repository that stores Diagnosis information
@@ -20,12 +20,12 @@ import group825.vetapp2.database.Application_DbConnection;
 @Repository("tempDiagnosisRepo")
 public class DiagnosisRepository {
 	String table_name = "DIAGNOSIS";
-	Application_DbConnection dao;
+	DatabaseConnection dao;
 	String query;
 	int latestID;
 	
 	public DiagnosisRepository() throws Exception {
-		dao = new Application_DbConnection();
+		dao = new DatabaseConnection();
 		getLatestDiagnosisId();
 	}
 	

@@ -15,6 +15,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Diagnosis {
+	
+	/**
+	 * ID number of the diagnosis
+	 */
 	private int diagnosisID;
 	
 	/**
@@ -32,11 +36,19 @@ public class Diagnosis {
 	 */
 	private String description;
 	
+	/**
+	 * Date of the diagnosis
+	 */
 	private String diagnosisDate;
 	
-	
+	/**
+	 * Status of the diagnosis
+	 */
 	private String diangosisStatus;
 	
+	/**
+	 * ID number of the user who made the diagnosis
+	 */
 	private int userID;
 	
 

@@ -44,7 +44,7 @@ public class AnimalService {
 
     /**
      * Adds an animal to the database
-     * @param animal animal to be added
+     * @param animal = animal to be added
      * @return 1 if addition was successful, 0 otherwise
      */
     public int addAnimal(Animal animal) throws Exception{
@@ -53,24 +53,19 @@ public class AnimalService {
 
     /**
      * Updates an animal's information
-     * @param id animal's new or existing ID number
-     * @param name animal's new or existing name
-     * @param type animal's new or existing type
-     * @param species animal's new or existing species
-     * @param sex animal's new or existing sex
-     * @param weight animal's new or existing weight
+     * @param animalID = animal's ID number
+     * @param animal = Animal object with all the updated animal information
      * @return 1 if the update was successful, 0 otherwise
      */
-    public int updateAnimalById(int id, Animal animal) throws Exception{
-		return this.repo.updateAnimalById(id, animal);
+    public int updateAnimalById(int animalID, Animal animal) throws Exception{
+		return this.repo.updateAnimalById(animalID, animal);
 	}
-//    public int editAnimal(UUID id, String name, String type, String species, char sex, double weight) {
-//        return this.repo.editAnimal(id, name, type, species, sex, weight);
-//    }
 
     /**
      * Searches for an animal by name in the database
-     * @param name animal's name
+     * @param name = animal's name
+     * @species = species of animal
+     * @param onlyAvailableAnimals = whether to check for only available animals or for all animals
      * @return specified animal if found, null otherwise
      */
     public List<Animal> searchAnimalByName(String name, String species, boolean onlyAvailableAnimals) throws Exception{
@@ -81,41 +76,42 @@ public class AnimalService {
 
     /**
      * Searches for an animal by ID number in the database
-     * @param id animal's ID number
+     * @param animalID = animal's ID number
      * @return specified animal if found, null otherwise
      * @throws Exception when there is an SQL Exception
      */
-    public List<Animal> searchAnimalById(int id) throws Exception {
-//        return this.repo.searchAnimalById(id);
-    	ArrayList<String> results =  this.repo.searchAnimalById(id);
+    public List<Animal> searchAnimalById(int animalID) throws Exception {
+    	ArrayList<String> results =  this.repo.searchAnimalById(animalID);
 		List<Animal> listResults = createListAnimal(results);
 		return listResults;
     }
     
     /**
 	  * Create a list of Animal objects from ArrayList<String> returned from database query
-	 * @param foundResults = ArrayList<String> preprocessed response from database of all returned tuples as an ArrayList of Strings
+	 * @param foundResults = ArrayList<String> of preprocessed response from database of all returned tuples as an ArrayList of Strings
 	 * @return ArrayList<Animal> where each object was created from the data in each String from the ArrayList input
 	 */
     public List<Animal> createListAnimal(ArrayList<String> foundResults){
     	List<Animal> listResults = new ArrayList<Animal>(); 
     	//review against Database setup
-    	int idx_id=0, idx_name=1, idx_breed=3, idx_species=2, idx_sex=7, idx_weight=12, idx_tattoo=4, idx_cityTattoo=5, 
-    			idx_dob=6, idx_rfid=8, idx_microchip=9, idx_status=10, idx_color=11, idx_moreInfo=13, 
-    			idx_nameLength=14, idx_searchKey_Name=15;
+    	int idxAnimalID=0, idxName=1, idxBreed=3, idxSpecies=2, idxSex=7, idxWeight=12, idxTattoo=4, idxCityTattoo=5, 
+    			idxDob=6, idxRfid=8, idxMicrochip=9, idxStatus=10, idxColor=11, idxMoreInfo=13, 
+    			idxNameLength=14, idxSearchKeyName=15;
+    	
     	for (String result: foundResults) {
     		String[] resultSplit = result.split( repo.getSplitPlaceholder());
 //    		for (int count=0; count <resultSplit.length; count++) {
 //    			System.out.println(count + " - "+ resultSplit[count]);
 //    		}
-//    		System.out.println(Double.valueOf(resultSplit[idx_weight]));
-    	Animal temp =  new Animal( Integer.valueOf(resultSplit[idx_id]), resultSplit[idx_name], resultSplit[idx_species], resultSplit[idx_breed], 
-    			resultSplit[idx_sex], Double.valueOf(resultSplit[idx_weight]), resultSplit[idx_tattoo], resultSplit[idx_cityTattoo], 
-    			resultSplit[idx_dob], resultSplit[idx_rfid], resultSplit[idx_microchip], resultSplit[idx_status], 
-    			resultSplit[idx_color], resultSplit[idx_moreInfo], Integer.valueOf(resultSplit[idx_nameLength]), 
-    			resultSplit[idx_searchKey_Name]);
+//    		System.out.println(Double.valueOf(resultSplit[idxWeight]));
+    	Animal temp =  new Animal( Integer.valueOf(resultSplit[idxAnimalID]), resultSplit[idxName], resultSplit[idxSpecies], resultSplit[idxBreed], 
+    			resultSplit[idxSex], Double.valueOf(resultSplit[idxWeight]), resultSplit[idxTattoo], resultSplit[idxCityTattoo], 
+    			resultSplit[idxDob], resultSplit[idxRfid], resultSplit[idxMicrochip], resultSplit[idxStatus], 
+    			resultSplit[idxColor], resultSplit[idxMoreInfo], Integer.valueOf(resultSplit[idxNameLength]), 
+    			resultSplit[idxSearchKeyName]);
     	listResults.add(temp);
     }
+    	
     System.out.println("\nPrepared List to send as json response to API endpoint:");
     System.out.println(listResults);
 

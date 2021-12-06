@@ -34,25 +34,6 @@ public class AnimalController {
         this.animalService = animalService;
     }
     
-    
-    /**
-     * 'GET' request that searches for an animal in the database
-     * @param name animal's name
-     * @param strId animal's ID number
-     * @return specified animal if found, null otherwise
-     */
-    @GetMapping(path = "/searchAvailable")
-    public List<Animal> searchAnimalAvailable(@RequestParam(required = false) String name,@RequestParam(name = "species", required = false) String species, @RequestParam(name = "id", required = false) String strId) throws Exception{
-        if (name != null) {
-        	boolean onlyAvailableAnimals = true;
-            return this.animalService.searchAnimalByName(name, species, onlyAvailableAnimals);
-        } 
-        return null;
-    }
-    
-    
-
-
     /**
      * 'GET' request that retrieves all animals from the database
      * @return a list of all stored animals
@@ -63,30 +44,70 @@ public class AnimalController {
     }
     
     /**
-	 * 'GET' mapping that searches for one animal in the database
+	 * 'GET' mapping that retrieves one animal in the database
 	 * @param idStr String path variable obtained by path denoted inside the GetMapping annotation
 	 * @return comment object or throw exception
 	 */
 	@GetMapping(path="{id}") 
-	public List<Animal> selectAnimalById(@PathVariable("id") String idStr) {
+	public List<Animal> selectAnimalById(@PathVariable("animalID") String animalID) {
 		try {
 			//id of animal
-			int id = Integer.valueOf(idStr);
+			int id = Integer.valueOf(animalID);
 			return animalService.searchAnimalById(id);
 		} catch(Exception e) {
 			// Catch if id is not a valid Animal ID from Database
 			throw new InvalidIdException();
 		}
 	}
+    
+	
+    /**
+     * 'GET' request that searches for animals from the database based on the name and/or species
+     * @param name = animal's name
+     * @param animalID = animal's ID number
+     * @return List of Animal objects which have names similar to the name parameter
+     */
+    @GetMapping(path = "/searchAvailable")
+    public List<Animal> searchAnimalAvailable(@RequestParam(required = true) String name, @RequestParam(name = "species", required = false) String species) throws Exception{
+        if (name != null) {
+        	boolean onlyAvailableAnimals = true;
+            return this.animalService.searchAnimalByName(name, species, onlyAvailableAnimals);
+        } 
+        return null;
+    }
+ 
+    
+    /**
+     * 'GET' request that searches for animals from the database based on animalID or based on the name with/without species
+     * @param name = animal's name
+     * @param species = animal's species
+     * @param animalID = animal's ID number
+     * @return List<Animal> where the Animal match by animalID, similarity by name, or similarity by name and species
+     */
+    @GetMapping(path = "/search")
+    public List<Animal> searchAnimal(@RequestParam(required = false) String name, @RequestParam(name = "species", required = false) String species, 
+    		@RequestParam(name = "animalID", required = false) String animalID) throws Exception{
+        //return list of single animal or none identified by unique animal id
+    	if (animalID != null) {
+        	int id = Integer.valueOf(animalID);
+        	return this.animalService.searchAnimalById(id);
+        }
+    	//return list of multiple animals based on similarity by name or by name and species
+        else if (name != null) {
+            return this.animalService.searchAnimalByName(name, species, false);
+        } 
+        return null;
+    }
+    
 
     /**
      * 'POST' request that adds an animal to the database
-     * @param animal animal to be added
+     * @param animal = Animal to be added
      */
     @PostMapping
     public void addAnimal(@RequestBody Animal animal) throws Exception{
         int status;
-
+        
         // Checks if animal fields are 'null'
         if (animal.anyNulls()) {
             throw new ApiRequestException("Fields cannot be blank");
@@ -94,7 +115,6 @@ public class AnimalController {
         
         status = this.animalService.addAnimal(animal);
         
-
         // Check if ID already exists
         if (status == 0) {
             throw new InvalidIdException();
@@ -103,49 +123,19 @@ public class AnimalController {
 
     /**
      * 'PUT' request that updates an animal's information
-     * @param strId animal's ID number
+     * @param animalID = animal's ID number
+     * @param animalToUpdate = Animal object with the updated information
      */
     @PutMapping(path = "/{id}")
     public void editAnimal(@PathVariable("id") String animalID, @RequestBody Animal animalToUpdate) throws Exception{
-    	//id of a animal
 		int id = Integer.valueOf(animalID);
 		if (animalToUpdate.anyNulls()) {
 			throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
 		}
 		int numRowsAffected = animalService.updateAnimalById(id, animalToUpdate);	
 		if (numRowsAffected == 0) {throw new InvalidIdException();}
-    	
-    	
-//        // User inputs this information
-//        String newName = "Richard Parker";
-//        String newType = "Tiger";
-//        String newSpecies = "Bengal";
-//        char newSex = 'M';
-//        double newWeight = 12.4;
-//
-//        UUID id;
-//
-//        // Check if ID is a valid UUID
-//        try {
-//            id = UUID.fromString(strId);
-//            animalService.editAnimal(id, newName, newType, newSpecies, newSex, newWeight);
-//        } catch(java.lang.IllegalArgumentException e) {
-//            throw new InvalidIdException();
-//        }
     }
 
-    /**
-     * 'GET' request that searches for an animal in the database
-     * @param name animal's name
-     * @param strId animal's ID number
-     * @return specified animal if found, null otherwise
-     */
-    @GetMapping(path = "/search")
-    public List<Animal> searchAnimal(@RequestParam(required = false) String name,@RequestParam(name = "species", required = false) String species, @RequestParam(name = "id", required = false) String strId) throws Exception{
-        if (name != null) {
-            return this.animalService.searchAnimalByName(name, species, false);
-        } 
-        return null;
-    }
+
 
 }

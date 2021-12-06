@@ -70,12 +70,12 @@ public class RemindersController {
 	 * @param idStr = String path variable obtained by path denoted inside the GetMapping annotation
 	 * @return Reminder object or throw exception
 	 */
-	@GetMapping(path="{id}") 
-	public List<Reminder> selectRemindersById(@PathVariable("id") String idStr) {
+	@GetMapping(path="{animalID}") 
+	public List<Reminder> selectRemindersById(@PathVariable("animalID") String animalID) {
 		try {
 			//id of animal
-			int id = Integer.valueOf(idStr);
-			return remindersService.selectRemindersById(id);
+			int id = Integer.valueOf(animalID);
+			return remindersService.selectRemindersByID(id);
 		} catch (Exception e) {
 			// Catch if id is not a valid Animal ID from Database
 			throw new InvalidIdException();
@@ -84,29 +84,29 @@ public class RemindersController {
 
 	/**
 	 * 'DELETE' mapping that deletes a reminder by ID number from the database
-	 * @param idStr String path variable obtained by path denoted inside the DeleteMapping annotation
+	 * @param reminderID = String path variable obtained by path denoted inside the DeleteMapping annotation
 	 */
-	@DeleteMapping(path = "{id}")
-	public void deleteReminderById(@PathVariable("id") String reminderID) throws Exception{
-		//id of a comment
+	@DeleteMapping(path = "{reminderID}")
+	public void deleteReminderById(@PathVariable("reminderID") String reminderID) throws Exception{
+		//id of a reminder
 		int id = Integer.valueOf(reminderID);
-		int numRowsAffected = remindersService.deleteReminderById(id);
+		int numRowsAffected = remindersService.deleteReminderByID(id);
 		if (numRowsAffected == 0) {throw new InvalidIdException();}
 	}
 
 	/**
 	 * 'PUT' mapping that updates a reminder's information
-	 * @param idStr UUID path variable obtained by path denoted inside the PutMapping annotation
-	 * @param reminderToUpdate response body from HTTP request which should contain keys for necessary data members
+	 * @param reminderID = path variable obtained by path denoted inside the PutMapping annotation
+	 * @param reminderToUpdate = Reminder object with the updated data members
 	 */
-	@PutMapping(path = "{id}")
-	public void updateReminderById(@PathVariable("id") String reminderID, @RequestBody Reminder reminderToUpdate) throws Exception{
-		//id of a comment
-				int id = Integer.valueOf(reminderID);
-				if (reminderToUpdate.anyNulls()) {
-					throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
-				}
-				int numRowsAffected = remindersService.updateReminderById(id, reminderToUpdate);	
-				if (numRowsAffected == 0) {throw new InvalidIdException();}
+	@PutMapping(path = "{reminderID}")
+	public void updateReminderById(@PathVariable("reminderID") String reminderID, @RequestBody Reminder reminderToUpdate) throws Exception{
+		//id of a reminder
+		int id = Integer.valueOf(reminderID);
+		if (reminderToUpdate.anyNulls()) {
+			throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
+		}
+		int numRowsAffected = remindersService.updateReminderByID(id, reminderToUpdate);	
+		if (numRowsAffected == 0) {throw new InvalidIdException();}
 	}
 }

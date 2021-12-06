@@ -4,7 +4,6 @@ import Login from "./pages/app-portal/Login";
 import Home from "./pages/app-portal/Home";
 
 import AddAnimal from "./pages/app-portal/AddAnimal";
-import AddTreatment from './pages/treatment/AddTreatment';
 import ManageAnimals from "./pages/app-portal/ManageAnimals";
 
 import AddUser from "./pages/user/AddUser";
@@ -17,15 +16,18 @@ import Reminders from './pages/animal/Reminders';
 import Comments from './pages/animal/Comments';
 import Photos from './pages/animal/Photos';
 import WeightHistory from './pages/animal/WeightHistory';
+import SendAlert from './pages/treatment/SendAlert';
+
 import RequestTreatment from './pages/animal/RequestTreatment';
 import RequestAnimal from "./pages/animal/RequestAnimal";
-// import ViewRequests from './pages/animal/ViewRequests';
 import ManageTreatment from './pages/treatment/ManageTreatment';
 import AddDiagnosis from './pages/treatment/AddDiagnosis';
 import ManageDiagnosis from './pages/treatment/ManageDiagnosis';
+import AddTreatment from './pages/treatment/AddTreatment';
 
 
 
+// import ViewRequests from './pages/animal/ViewRequests';
 
 function App() {
   return (
@@ -48,6 +50,7 @@ function App() {
                 <Route path='/comments' element={<Comments/>}/> 
                 <Route path='/photos' element={<Photos/>}/>
                 <Route path='/weight-history' element={<WeightHistory/>}/> 
+                <Route path='/send-alert' element={<SendAlert/>}/> 
                 {/* Send Alert */}
 
                 <Route path='/request-treatment' element={<RequestTreatment/>}/> 

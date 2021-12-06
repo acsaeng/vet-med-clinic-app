@@ -147,7 +147,7 @@ public class Animal {
     }
 
     /**
-     * Checks if any attributes are null
+     * Checks if any required attributes are null
      * @return true if at least one attribute is null, false otherwise
      */
     public boolean anyNulls() {

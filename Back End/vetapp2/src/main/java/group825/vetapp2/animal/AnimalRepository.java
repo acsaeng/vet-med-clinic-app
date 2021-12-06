@@ -16,11 +16,34 @@ import java.util.ArrayList;
  */
 @Repository("tempAnimalRepo")
 public class AnimalRepository {
+	/**
+	 * Table name from database
+	 */
 	String tableName = "ANIMAL";
+	
+	/**
+	 * Desired number of search results
+	 */
 	int desiredNumberOfResults = 4;
+	
+	/**
+	 * Database connection boundary class
+	 */
 	DatabaseConnection dao;
+	
+	/**
+	 * Any query that is sent to the database
+	 */
 	String query;
+	
+	/**
+	 * Search object with methods to perform animal searches
+	 */
 	Search search;
+	
+	/**
+	 * Max Animal ID currently recorded on the database
+	 */
 	int latestID;
 	
 	/**
@@ -79,7 +102,7 @@ public class AnimalRepository {
      * @return 1 if the update was successful, 0 otherwise
      */
     public int updateAnimalById(int animalID, Animal update) throws Exception{
-   	 String query = "UPDATE " + tableName + " AS C SET Animal_ID='" + update.getAnimalID() + "', Animal_Name='" + update.getName() 
+   	 String query = "UPDATE " + tableName + " AS C SET Animal_ID='" + animalID + "', Animal_Name='" + update.getName() 
 	   	 + "', Species='" + update.getSpecies() +"', Breed='" + update.getBreed() +"', Tattoo_Num='" + update.getTattoo()
 	   	 + "', City_Tattooo='" + update.getCityTattoo() + "', Birth_Date='" + update.getDob()+ "', Sex='" + update.getSex() 
 	   	 +"', RFID='" + update.getRfid() +"', Microchip='" + update.getMicrochip() +"', Animal_Status='" + update.getStatus() 

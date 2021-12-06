@@ -43,8 +43,8 @@ public class CommentsController {
 	}
 
 	/**
-	 * 'POST' mapping that adds a comment to an animal profile
-	 * @param comment RequestBody JSON object to be passed to the Comments class where the JSON keys are already mapped to specific data members
+	 * 'POST' mapping that adds a comment
+	 * @param comment = RequestBody JSON object to be passed to the Comments class where the JSON keys are already mapped to specific data members
 	 * @throws Exception when there is an SQL Exception
 	 */
 	@PostMapping
@@ -52,13 +52,12 @@ public class CommentsController {
 		if (comment.anyNulls()) {
 			throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
 		}
-
 		commentsService.insertComment(comment);
 	}
 
 	/**
 	 * 'GET' mapping that retrieves all comments from the database
-	 * @return List<Comment> object containing the Comments of all animals by calling method from the repository
+	 * @return List<Comment> object containing the Comments of all animals
 	 * @throws Exception when there is an SQL Exception
 	 */
 	@GetMapping
@@ -67,17 +66,17 @@ public class CommentsController {
 	}
 
 	/**
-	 * 'GET' mapping that searches for a comment by ID number in the database
-	 * @param idStr String path variable obtained by path denoted inside the GetMapping annotation
+	 * 'GET' mapping that searches for a comment by animal ID number in the database
+	 * @param animalID = String path variable obtained by path denoted inside the GetMapping annotation
 	 * @return comment object or throw exception
 	 */
-	@GetMapping(path="{id}") 
-	public List<Comment> selectCommentsById(@PathVariable("id") String idStr) {
+	@GetMapping(path="{animalID}") 
+	public List<Comment> selectCommentsByID(@PathVariable("animalID") String animalID) {
 		try {
 			//id of animal
-			int id = Integer.valueOf(idStr);
-			System.out.println(commentsService.selectCommentsById(id));
-			return commentsService.selectCommentsById(id);
+			int id = Integer.valueOf(animalID);
+			System.out.println(commentsService.selectCommentsByID(id));
+			return commentsService.selectCommentsByID(id);
 		} catch(Exception e) {
 			// Catch if id is not a valid Animal ID from Database
 			throw new InvalidIdException();
@@ -85,30 +84,30 @@ public class CommentsController {
 	}
 
 	/**
-	 * 'DELETE' mapping that deletes a comment by ID number
-	 * @param idStr String path variable obtained by path denoted inside the DeleteMapping annotation
+	 * 'DELETE' mapping that deletes a comment by comment ID number
+	 * @param commentID = String path variable obtained by path denoted inside the DeleteMapping annotation
 	 */
-	@DeleteMapping(path = "{id}")
-	public void deleteCommentById(@PathVariable("id") String commentID) throws Exception{
+	@DeleteMapping(path = "{commentID}")
+	public void deleteCommentByID(@PathVariable("commentID") String commentID) throws Exception{
 			//id of a comment
 			int id = Integer.valueOf(commentID);
-			int numRowsAffected = commentsService.deleteCommentsById(id);
+			int numRowsAffected = commentsService.deleteCommentsByID(id);
 			if (numRowsAffected == 0) {throw new InvalidIdException();}
 	}
 
 	/**
 	 * 'PUT' mapping that updates a comment by ID number
-	 * @param idStr UUID path variable obtained by path denoted inside the PutMapping annotation
-	 * @param commentToUpdate response body from HTTP request which should contain keys for necessary data members
+	 * @param commentID = path variable obtained by path denoted inside the PutMapping annotation
+	 * @param commentToUpdate = Comment object with all the updated data members
 	 */
-	@PutMapping(path = "{id}")
-	public void updateCommentById(@PathVariable("id") String commentID, @RequestBody Comment commentToUpdate) throws Exception{
+	@PutMapping(path = "{commentID}")
+	public void updateCommentByID(@PathVariable("commentID") String commentID, @RequestBody Comment commentToUpdate) throws Exception{
 		//id of a comment
 		int id = Integer.valueOf(commentID);
 		if (commentToUpdate.anyNulls()) {
 			throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
 		}
-		int numRowsAffected = commentsService.updateCommentById(id, commentToUpdate);	
+		int numRowsAffected = commentsService.updateCommentByID(id, commentToUpdate);	
 		if (numRowsAffected == 0) {throw new InvalidIdException();}
 	}
 }

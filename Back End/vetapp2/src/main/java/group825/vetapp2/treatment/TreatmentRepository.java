@@ -93,7 +93,7 @@ public class TreatmentRepository {
 	 * @throws Exception when there is an SQL Exception
 	 */
 	public ArrayList<String> selectTreatmentByTreatmentId(int treatmentID) throws Exception {
-		query = "SELECT FROM TREATMENT WHERE Treatment_ID='" + treatmentID + "';";
+		query = "SELECT * FROM TREATMENT WHERE Treatment_ID='" + treatmentID + "';";
 		ArrayList<String> result = dao.getResponseArrayList(query);
 		return result;
 	}
@@ -110,7 +110,6 @@ public class TreatmentRepository {
 		int responseCheck = dao.manipulateRows(query);
 		return responseCheck;
 	}
-	
 	
 	/**
 	 * Update an existing treatment
@@ -141,6 +140,10 @@ public class TreatmentRepository {
 		this.latestID = Integer.valueOf(latestId);
 	}
 	
+	/**
+	 * Splits the dao placeholder
+	 * @return the split string
+	 */
 	public String getSplitPlaceholder() {
 		return dao.getSplitPlaceholder();
 	}

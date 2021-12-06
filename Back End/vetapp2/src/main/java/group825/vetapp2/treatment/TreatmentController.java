@@ -66,13 +66,12 @@ public class TreatmentController {
 	
 	/**
 	 * Gets a specific treatment associated with an animal
-	 * @param animalID the ID of the requested animal
 	 * @param treatmentID the ID of the requested treatment
 	 * @return the requested treatment
 	 * @throws Exception when there is an SQL Exception
 	 */
 	@GetMapping(path = "/treatmentID={treatmentID}") 
-	public Treatment selectTreatmentByTreatmentId(@PathVariable("treatmentID") String treatmentID) throws Exception {
+	public List<Treatment> selectTreatmentByTreatmentId(@PathVariable("treatmentID") String treatmentID) throws Exception {
 		try {
 			int tID = Integer.valueOf(treatmentID);
 			System.out.println(treatmentService.selectTreatmentByTreatmentId(tID));
@@ -84,7 +83,6 @@ public class TreatmentController {
 	
 	/**
 	 * Delete an existing treatment in the database and checks that the treatment ID is valid
-	 * @param animalID is the ID of the animal with this treatment
 	 * @param treatmentID the ID of the treatment to be deleted
 	 * @throws Exception when there is an SQL Exception
 	 */
@@ -100,7 +98,6 @@ public class TreatmentController {
 	
 	/**
 	 * Update an existing treatment in the database and checks that the treatment ID is valid
-	 * @param animalID is the ID of the animal with this treatment
 	 * @param treatmentId the ID of the treatment to be updated
 	 * @param treatmentToUpdate treatment object with updated information
 	 * @throws Exception when there is an SQL Exception

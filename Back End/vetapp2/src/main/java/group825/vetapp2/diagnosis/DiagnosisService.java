@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 /**
  * Service that performs Diagnosis requests
  *
- * @author Timothy Mok
- * @version 1.0
- * @since November 15, 2021
+ * @author Timothy Mok, Jimmy Zhu
+ * @version 2.0
+ * @since December 6, 2021
  */
 @Service
 public class DiagnosisService {
@@ -34,6 +34,7 @@ public class DiagnosisService {
 	 * Service for adding a diagnosis to the system
 	 * @param diagnosis diagnosis to be added
 	 * @return whether the diagnosis was successfully added to the Repository
+	 * @throws Exception when there is an SQL Exception
 	 */
 	public int addDiagnosis(Diagnosis diagnosis) throws Exception{
 		return repo.addDiagnosis(diagnosis);
@@ -43,6 +44,7 @@ public class DiagnosisService {
 	 * Search for diagnoses for a specific animal in the Repository
 	 * @param animalID id of the animal
 	 * @return the diagnoses from the repository
+	 * @throws Exception when there is an SQL Exception
 	 */
 	public List<Diagnosis> selectDiagnosisByAnimalID(int animalID) throws Exception {
 		ArrayList<String> results =  repo.selectDiagnosisByAnimalID(animalID);
@@ -57,26 +59,17 @@ public class DiagnosisService {
 	 * @return the single diagnosis from the repository
 	 * @throws Exception when there is an SQL Exception
 	 */
-	public Diagnosis selectDiagnosisByDiagnosisID(int diagnosisID) throws Exception {
-		ArrayList<String> results = repo.selectDiagnosisByDiagnosisID(diagnosisID);
-		int idxDiagnosisID=0, idxDiagnosisDate=1, idxDiagnosis=2, idxDescription=3, 
-				idxDiagnosisStatus=4, idxUserID=5, idxAnimalID=6;
-		String result = "";
-		if(!results.isEmpty()) {
-			result += results.get(0);
-		}
-		String[] resultSplit = result.split(repo.getSplitPlaceholder());
-		Diagnosis theDiagnosis =  new Diagnosis(Integer.valueOf(resultSplit[idxDiagnosisID]), 
-				Integer.valueOf(resultSplit[idxAnimalID]), resultSplit[idxDiagnosis], 
-				resultSplit[idxDescription], resultSplit[idxDiagnosisDate],
-				resultSplit[idxDiagnosisStatus], Integer.valueOf(resultSplit[idxUserID]));
-		return theDiagnosis;
+	public List<Diagnosis> selectDiagnosisByDiagnosisID(int diagnosisID) throws Exception {
+		ArrayList<String> results =  repo.selectDiagnosisByDiagnosisID(diagnosisID);
+		List<Diagnosis> listResults = createListDiagnosis(results);
+		return listResults;
 	}
 	
 	/**
 	 * Delete a diagnosis from the Repository
 	 * @param id diagnosis to be deleted
 	 * @return whether the diagnosis was successfully deleted from the Repository
+	 * @throws Exception when there is an SQL Exception
 	 */
 	public int deleteDiagnosisById(int id) throws Exception{
 		return repo.deleteDiagnosisById(id);
@@ -87,12 +80,11 @@ public class DiagnosisService {
 	 * @param id diagnosis to be updated
 	 * @param diagnosis diagnosis object containing new information
 	 * @return whether the diagnosis was successfully updated the Repository
+	 * @throws Exception when there is an SQL Exception
 	 */
 	public int updateDiagnosisById(int id, Diagnosis diagnosis) throws Exception{
 		return repo.updateDiagnosisById(id, diagnosis);
 	}
-	
-	
 	
 	 /**
 	  * Create a list of Diagnosis objects from ArrayList<String> returned from database query
@@ -101,20 +93,16 @@ public class DiagnosisService {
 	 */
 	public List<Diagnosis> createListDiagnosis(ArrayList<String> foundResults){
 		List<Diagnosis> listResults = new ArrayList<Diagnosis>(); 
-		//review against Database setup
 		int idxAnimalID=6, idxDiagnosisID=0, idxDiagnosis=2, idxDescription=3, idxDiagnosisDate=1, idxDiagnosisStatus=4, idxUserID=5;
 		for (String result: foundResults) {
 			String[] resultSplit = result.split(repo.getSplitPlaceholder());
-		Diagnosis temp =  new Diagnosis( Integer.valueOf(resultSplit[idxDiagnosisID]), Integer.valueOf(resultSplit[idxAnimalID]), resultSplit[idxDiagnosis], 
+			Diagnosis temp =  new Diagnosis( Integer.valueOf(resultSplit[idxDiagnosisID]), Integer.valueOf(resultSplit[idxAnimalID]), resultSplit[idxDiagnosis], 
 				resultSplit[idxDescription], resultSplit[idxDiagnosisDate], resultSplit[idxDiagnosisStatus], Integer.valueOf(resultSplit[idxUserID]));
-		listResults.add(temp);
+			listResults.add(temp);
+		}
+		System.out.println("\nPrepared List to send as json response to API endpoint:");
+		System.out.println(listResults);
+	
+		return listResults;
 	}
-	System.out.println("\nPrepared List to send as json response to API endpoint:");
-	System.out.println(listResults);
-
-	return listResults;
-	}
-	
-	
-	
 }

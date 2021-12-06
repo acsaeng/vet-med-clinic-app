@@ -190,20 +190,23 @@ VALUES
 DROP TABLE IF EXISTS TREATMENT; 
 CREATE TABLE TREATMENT ( 
      Treatment_ID			int not null,
+     TreatmentDate			 varchar (50) not null,
+     Treatment			 varchar (50) not null,
+     TreatmentDescription			 varchar (500) not null,
+     Treatment_Status			 varchar (50) not null,
      User_ID			 varchar (50) not null,
-     Treatment_Date			 varchar (50) not null,
-     Treatment_Protocol			 varchar (50) not null,
-     Treatment_Description			 varchar (500) not null,
      Animal_ID			 varchar (50) not null,
      primary key (Treatment_ID)
 );
 
-INSERT INTO TREATMENT (Treatment_ID, User_ID, Treatment_Date, Treatment_Protocol, Treatment_Description, Animal_ID)
+
+INSERT INTO TREATMENT (Treatment_ID, TreatmentDate, Treatment, TreatmentDescription, Treatment_Status, User_ID, Animal_ID)
 VALUES
-('4', '3', '2021-04-13 00:00:00', 'Cast', 'Keep cast on until hooves are fully healed.', '102'),
-('5', '3', '2021-09-25 00:00:00', 'Bandaging ', 'Replace bandage daily after cleaning.', '102'),
-('8', '3', '2021-10-05 00:00:00', 'Flu medicine', 'Twice daily, once in AM, once in PM. 8 hours apart.', '103'),
-('9', '3', '2021-10-12 00:00:00', 'Flu medicine', 'Once daily after morning meal.', '103');
+('1', '2020-03-08 00:00:00', 'Cone', 'Keep cone on until fleas are completely gone.', 'Complete', '7', '101'),
+('4', '2021-04-13 00:00:00', 'Cast', 'Keep cast on until hooves are fully healed.', 'Ongoing', '3', '102'),
+('5', '2021-09-25 00:00:00', 'Bandaging', 'Replace bandage daily after cleaning.', 'Ongoing', '9', '102'),
+('8', '2021-10-05 00:00:00', 'Flu medicine', 'Twice daily, once in AM, once in PM. 8 hours apart.', 'Ongoing', '8', '103'),
+('9', '2021-10-12 00:00:00', 'Flu medicine', 'Once daily after morning meal.', 'Ongoing', '3', '103');
 
 
 

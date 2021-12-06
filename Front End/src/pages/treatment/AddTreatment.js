@@ -5,19 +5,16 @@ import AnimalNavbar from '../../components/AnimalNavbar';
 // Requires npm install axios --save
 import axios from 'axios';
 import React, {useState} from 'react'
-import {useLocation, useNavigate} from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
+// import {useNavigate} from 'react-router-dom'
 
 function AddTreatment() {
-    const [Authenticated, setAuth] = useState(localStorage.getItem("Authenticated"))
+    const Authenticated = useState(localStorage.getItem("Authenticated"))
     // window.location.reload()
     const [treatment, setTreatment] = useState(null);
     const [description, setDescription] = useState(null);
     const treatmentStatus = "Ongoing";
     
-    // const animalID = urlParams.get("animalID")
-    // let userID = ""
-    // let animalName = ""
-    // let animalSpecies = ""
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
     const animalName = localStorage.getItem("animalName")
@@ -26,12 +23,9 @@ function AddTreatment() {
     axios.get('http://localhost:8080/app/animal/'+animalID).then(
         res => {
             console.log(res);
-            userID = res.data[0].userID
-            localStorage.setItem("userID", userID)
-            animalName = res.data[0].name
-            localStorage.setItem("animalName", animalName)
-            animalSpecies = res.data[0].species
-            localStorage.setItem("animalSpecies", animalSpecies)
+            localStorage.setItem("userID", res.data[0].userID)
+            localStorage.setItem("animalName", res.data[0].name)
+            localStorage.setItem("animalSpecies", res.data[0].species)
             localStorage.setItem("animalStatus", res.data[0].status)
             // window.location.reload()
         }
@@ -41,9 +35,6 @@ function AddTreatment() {
         event.preventDefault();
         window.location.reload()
     }
-
-    let navigate = useNavigate();
-    let currLocation = useLocation();
 
     console.log(useLocation())
 
@@ -71,7 +62,7 @@ function AddTreatment() {
         var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
         var treatmentDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
 
-        axios.post('http://localhost:8080/app/treatment/animal/', {
+        axios.post('http://localhost:8080/app/treatment/protocol/', {
             animalID: parseInt(animalID),
             treatmentID: 1, //dummy, backend assigns a new requestID
             Date: treatmentDate,

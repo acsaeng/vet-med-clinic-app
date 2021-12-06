@@ -59,20 +59,10 @@ public class TreatmentService {
 	 * @return the single treatment from the repository
 	 * @throws Exception when there is an SQL Exception
 	 */
-	public Treatment selectTreatmentByTreatmentId(int treatmentID) throws Exception {
-		ArrayList<String> results = repo.selectTreatmentByTreatmentId(treatmentID);
-		int idxTreatmentID=0, idxTreatmentDate=1, idxTreatment=2, idxDescription=3, 
-				idxTreatmentStatus=4, idxUserID=5, idxAnimalID=6;
-		String result = "";
-		if(!results.isEmpty()) {
-			result += results.get(0);
-		}
-		String[] resultSplit = result.split(repo.getSplitPlaceholder());
-		Treatment theTreatment =  new Treatment(Integer.valueOf(resultSplit[idxTreatmentID]), 
-				resultSplit[idxTreatmentDate], resultSplit[idxTreatment], 
-				resultSplit[idxDescription], resultSplit[idxTreatmentStatus], 
-				Integer.valueOf(resultSplit[idxUserID]), Integer.valueOf(resultSplit[idxAnimalID]));
-		return theTreatment;
+	public List<Treatment> selectTreatmentByTreatmentId(int treatmentID) throws Exception {
+		ArrayList<String> results =  repo.selectTreatmentByTreatmentId(treatmentID);
+		List<Treatment> listResults = createListTreatment(results);
+		return listResults;
 	}
 	
 	/**
@@ -103,18 +93,16 @@ public class TreatmentService {
 	 */
 	public List<Treatment> createListTreatment(ArrayList<String> foundResults){
 		List<Treatment> listResults = new ArrayList<Treatment>(); 
-		//review against Database setup
 		int idxTreatmentID=0, idxTreatmentDate=1, idxTreatment=2, idxDescription=3, idxTreatmentStatus=4, idxUserID=5, idxAnimalID=6;
 		for (String result: foundResults) {
 			String[] resultSplit = result.split(repo.getSplitPlaceholder());
-		Treatment temp =  new Treatment(Integer.valueOf(resultSplit[idxTreatmentID]), resultSplit[idxTreatmentDate], resultSplit[idxTreatment], 
+			Treatment temp =  new Treatment(Integer.valueOf(resultSplit[idxTreatmentID]), resultSplit[idxTreatmentDate], resultSplit[idxTreatment], 
 				resultSplit[idxDescription], resultSplit[idxTreatmentStatus], Integer.valueOf(resultSplit[idxUserID]), Integer.valueOf(resultSplit[idxAnimalID]));
-		listResults.add(temp);
-	}
+			listResults.add(temp);
+		}
+		System.out.println("\nPrepared List to send as json response to API endpoint:");
+		System.out.println(listResults);
 	
-	System.out.println("\nPrepared List to send as json response to API endpoint:");
-	System.out.println(listResults);
-
-	return listResults;
+		return listResults;
 	}
 }

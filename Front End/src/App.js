@@ -20,6 +20,7 @@ import AddDiagnosis from './pages/treatment/AddDiagnosis';
 import ManageDiagnosis from './pages/treatment/ManageDiagnosis';
 import AddTreatment from './pages/treatment/AddTreatment';
 import ManageTreatment from './pages/treatment/ManageTreatment';
+import SendAlert from './pages/treatment/SendAlert';
 
 
 
@@ -45,6 +46,7 @@ function App() {
                 <Route path='/manage-diagnosis' element={<ManageDiagnosis/>}/> 
                 <Route path='/add-treatment' element={<AddTreatment/>}/> 
                 <Route path='/manage-treatment' element={<ManageTreatment/>}/> 
+                <Route path='/send-alert' element={<SendAlert/>}/> 
             </Routes>
         </Router>
     );

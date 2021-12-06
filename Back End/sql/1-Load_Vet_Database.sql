@@ -172,9 +172,13 @@ CREATE TABLE WEIGHT_HISTORY (
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> fc29cabc80c4ebee1d6a1072749551b511d3c15b
+=======
+
+>>>>>>> ec4bfacd7f46a8cf91d23a70cbd41b691775e06d
 INSERT INTO WEIGHT_HISTORY (Animal_ID, Date_Recorded, Weight)
 VALUES
 (103, "10/1/2020", 800),
@@ -193,11 +197,15 @@ VALUES
 (102, "4/1/2021", 402);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Combined-YongJunZhu
 =======
 
 >>>>>>> fc29cabc80c4ebee1d6a1072749551b511d3c15b
+=======
+
+>>>>>>> ec4bfacd7f46a8cf91d23a70cbd41b691775e06d
 DROP TABLE IF EXISTS TREATMENT; 
 CREATE TABLE TREATMENT ( 
      Treatment_ID			int not null,
@@ -210,12 +218,16 @@ CREATE TABLE TREATMENT (
 );
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> Combined-YongJunZhu
 =======
 
 >>>>>>> fc29cabc80c4ebee1d6a1072749551b511d3c15b
+=======
+
+>>>>>>> ec4bfacd7f46a8cf91d23a70cbd41b691775e06d
 
 INSERT INTO TREATMENT (Treatment_ID, User_ID, Treatment_Date, Treatment_Protocol, Treatment_Description, Animal_ID)
 VALUES
@@ -225,12 +237,17 @@ VALUES
 ('9', '3', '2021-10-12 00:00:00', 'Flu medicine', 'Once daily after morning meal.', '103');
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> Combined-YongJunZhu
 =======
 
 >>>>>>> fc29cabc80c4ebee1d6a1072749551b511d3c15b
+=======
+
+
+>>>>>>> ec4bfacd7f46a8cf91d23a70cbd41b691775e06d
 
 
 

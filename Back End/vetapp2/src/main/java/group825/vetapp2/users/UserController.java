@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 
 import group825.vetapp2.exceptions.ApiRequestException;
 import group825.vetapp2.exceptions.InvalidIdException;
+import group825.vetapp2.treatment.Treatment;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,9 +18,9 @@ import java.util.UUID;
 /**
  * Controller that handles User requests
  *
- * @author Aron Saengchan, Jimmy Zhu
+ * @author Aron Saengchan, Jimmy Zhu, Timothy Mok
  * @version 2.0
- * @since December 02, 2021
+ * @since December 6, 2021
  */
 @CrossOrigin
 @RestController
@@ -42,124 +43,84 @@ public class UserController {
 
     /**
      * 'Post' request that verifies email and password inputs received from the front end
+     * @param userName the entered username
+     * @param password the entered password
+     * @return a list of users if login successful
+     * @throws Exception when there is an SQL Exception
      */
     @GetMapping(path = "/login")
     @ResponseBody
     public List<User> loginUser(@RequestParam String userName, @RequestParam String password) throws Exception{
-//    public List<User> loginUser(@RequestBody UserLogin userlogin) throws Exception{
-//    public List<User> loginUser(@JsonProperty("userName") String userName, @JsonProperty("password") String password) throws Exception{
-    	//@RequestParam String inputtedEmail, @RequestParam String inputtedPassword
-//    	String jsonString = httpEntity.getBody();
-//    	Gson g = new Gson();  
-//    	User u = g.fromJson(jsonString, User.class);
-//    	
-//    	System.out.println("UserLogin u = "+userlogin);
-//    	
-//    	  	
-//    	System.out.println("within loginUser in UserController, httpEntity.body = ");
-//    	System.out.println("username = "+userName);
-//    	System.out.println("password = "+password);
-//    	String inputtedEmail = userlogin.getUserName();
-//    	String inputtedPassword = userlogin.getPassword();
-//    	System.out.println(json);
-//    	String userName = json.replace("{", "").replace("}", "").replace("\"", "").replace("//s+", "");
-//    	System.out.println("'"+userName+"'");
-    	
-    	//        // User inputs this information
-//        String inputtedEmail = "test@example.com";
-//        String inputtedPassword = "password123";
-
-//        if (inputtedEmail.equals("") || inputtedPassword.equals("")) {
-//            throw new ApiRequestException("Input fields are empty");
-//        } 
-//        else {
-//            if (this.userService.loginUser(inputtedEmail, inputtedPassword).size() == 0) {
-//                throw new ApiRequestException("Incorrect email or password.");
-//            }
-//        }
         return this.userService.loginUser(userName, password);
-    }
-
-    /**
-     * 'PUT' request that changes a user's password
-     * @param email user's email
-     */
-    @PutMapping(path = "/password-recovery/{email}")
-    public void changeUserPassword(@PathVariable("email") String email) {
-        // User inputs this information
-        String newPassword = "new_password456";
-
-        this.userService.changeUserPassword(email, newPassword);
     }
 
     /**
      * 'GET' request that retrieves all the stored users from the database
      * @return list of all stored users
+     * @throws Exception when there is an SQL Exception
      */
     @GetMapping(path = "/admin/users")
-    public List<User> selectAllUsers() {
+    public List<User> selectAllUsers() throws Exception {
         return this.userService.selectAllUsers();
     }
 
     /**
      * 'POST' request that adds a new user to the database
      * @param user user to be added
+     * @throws Exception when there is an SQL Exception
      */
     @PostMapping(path = "/admin/add-user")
-    public void addUser(@RequestBody User user) {
+    public void addUser(@RequestBody User user) throws Exception {
         // Checks if any user fields are 'null'
         if (user.anyNulls()) {
             throw new ApiRequestException("At least one user field is null");
         }
-
         this.userService.addUser(user);
     }
 
     /**
      * 'PUT' request that updates an users's information
      * @param strId user's id
+     * @throws Exception when there is an SQL Exception
      */
-    @PutMapping(path = "/admin/edit-user/{id}")
-    public void editUser(@PathVariable("id") String strId) {
-        // User inputs this information
-        String newName = "New Name";
-        String newEmail = "new.test@example.com";
+    @PutMapping(path = "/admin/edit-user/{userID}")
+    public void editUser(@PathVariable("userID") String userID, @RequestBody User userToUpdate) throws Exception {
 
-        UUID id;
-
-        // Check if ID is a valid UUID
         try {
-            id = UUID.fromString(strId);
-            userService.editUser(id, newName, newEmail);
+        	int id = Integer.valueOf(userID);
+        	if (userToUpdate.anyNulls()) {
+    			throw new ApiRequestException("At least one user field is null");
+    		}
+            userService.editUser(id, userToUpdate);
         } catch(java.lang.IllegalArgumentException e) {
             throw new InvalidIdException();
         }
-
-        // Check if ID exists
-        if (this.userService.editUser(id, newName, newEmail) == 0) {
-            throw new InvalidIdException();
-        }
+//        // Check if ID exists
+//        if (this.userService.editUser(id, newName, newEmail) == 0) {
+//            throw new InvalidIdException();
+//        }
     }
 
     /**
      * 'PUT' request that blocks a user
      * @param strId user's id
+     * @throws Exception when there is an SQL Exception
      */
-    @PutMapping(path = "/admin/block-user/{id}")
-    public void blockUser(@PathVariable("id") String strId) {
-        UUID id;
-
-        // Check if ID is a valid UUID
+    @PutMapping(path = "/admin/block-user/{userID}")
+    public void blockUser(@PathVariable("userID") String strId, @RequestBody User userToBlock) throws Exception{
         try {
-            id = UUID.fromString(strId);
-            userService.blockUser(id);
+        	int id = Integer.valueOf(strId);
+        	if (userToBlock.anyNulls()) {
+    			throw new ApiRequestException("At least one user field is null");
+    		}
+            userService.editUser(id, userToBlock);
         } catch(java.lang.IllegalArgumentException e) {
             throw new InvalidIdException();
         }
 
-        // Check if ID exists
-        if(this.userService.blockUser(id) == 0) {
-            throw new InvalidIdException();
-        }
+//        // Check if ID exists
+//        if(this.userService.blockUser(id) == 0) {
+//            throw new InvalidIdException();
+//        }
     }
 }

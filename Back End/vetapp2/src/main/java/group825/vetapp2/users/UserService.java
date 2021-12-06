@@ -3,6 +3,8 @@ package group825.vetapp2.users;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import group825.vetapp2.treatment.Treatment;
+
 //import group825.vetapp.animal.comments.Comment;
 
 import java.util.ArrayList;
@@ -12,9 +14,9 @@ import java.util.UUID;
 /**
  * Service that performs User requests
  *
- * @author Aron Saengchan, Jimmy Zhu
+ * @author Aron Saengchan, Jimmy Zhu, Timothy Mok
  * @version 2.0
- * @since December 02, 2021
+ * @since December 6, 2021
  */
 @Service
 public class UserService {
@@ -37,8 +39,8 @@ public class UserService {
      * @param email user's email
      * @param password user's password
      * @return 1 if login was successful, 0 otherwise
+     * @throws Exception when there is an SQL Exception
      */
-//    public int loginUser(String email, String password) throws Exception{
     public List<User> loginUser(String email, String password) throws Exception{
     	ArrayList<String> results =  this.repo.loginUser(email, password);
 		List<User> listResults = createListUser(results);
@@ -47,52 +49,35 @@ public class UserService {
     }
 
     /**
-     * Changes a user's password
-     * @param email user's email
-     * @param newPassword user's new password
-     * @return 1 if password change was successful, 0 otherwise
-     */
-    public int changeUserPassword(String email, String newPassword) {
-        return this.repo.changeUserPassword(email, newPassword);
-    }
-
-    /**
      * Retrieves all stored users from the database
      * @return a list of all stored users
+     * @throws Exception when there is an SQL Exception
      */
-    public List<User> selectAllUsers() {
-        return this.repo.selectAllUsers();
+    public List<User> selectAllUsers() throws Exception {
+    	ArrayList<String> results =  repo.selectAllUsers();
+		List<User> listResults = createListUser(results);
+		return listResults;
     }
 
     /**
      * Adds a user to the database
      * @param user user to be added
      * @return 1 if registration was successful, 0 otherwise
+     * @throws Exception when there is an SQL Exception
      */
-    public int addUser(User user) {
+    public int addUser(User user) throws Exception {
         return this.repo.addUser(user);
     }
 
     /**
      * Updates a user's information
      * @param id user's existing ID
-     * @param name user's new or existing name
-     * @param email user's new or existing email
-     * @return 1 if updates were successful, 0 otherwise
+     * @param user User object with new information
+     * @throws Exception when there is an SQL Exception
      */
-    public int editUser(UUID id, String name, String email) {
-        return this.repo.editUser(id, name, email);
+    public int editUser(int id, User user) throws Exception {
+        return this.repo.editUser(id, user);
     }
-
-    /**
-     * Block a user in the system
-     * @param id user's ID
-     * @return 1 if block was successful, 0 otherwise
-     */
-    public int blockUser(UUID id) {
-        return this.repo.blockUser(id);
-    }
-    
     
     /**
 	  * Create a list of User objects from ArrayList<String> returned from database query

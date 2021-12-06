@@ -132,7 +132,7 @@ public class TreatmentRepository {
 		 "' WHERE T.Treatment_ID='"+treatmentID+"';";
 		 System.out.println("query = "+query);
 		 int responseCheck = dao.manipulateRows(query);
-	return responseCheck;
+		 return responseCheck;
 	}
 	
 	/**

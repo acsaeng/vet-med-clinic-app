@@ -10,9 +10,9 @@ import java.util.UUID;
 /**
  * User of representing an admin or veterinary staff member
  *
- * @author Aron Saengchan, Jimmy Zhu
+ * @author Aron Saengchan, Jimmy Zhu, Timothy Mok
  * @version 2.0
- * @since December 02, 2021
+ * @since December 6, 2021
  */
 @Getter
 @Setter
@@ -24,22 +24,33 @@ public class User {
     private int id;
 
     /**
-     * first name of the user
+     * First name of the user
      */
     private String firstName;
     
+    /**
+     * Last name of the user
+     */
     private String lastName;
 
+    /**
+     * The role of the user at the vet
+     */
     private String userType;
     
+    /**
+     * The username of the user
+     */
     private String userName;
-    
     
     /**
      * Email address of the user
      */
     private String email;
     
+    /**
+     * The user's phone number
+     */
     private String phoneNum;
 
     /**
@@ -47,24 +58,29 @@ public class User {
      */
     private String password;
 
-    
-
     /**
      * Date the user account was activated
      */
     private String startDate;
     
-    private String userStatus;
+    /**
+     * The user's status - whether they are active or blocked
+     */
+    private String userStatus; 
     
-    
-    
-
     /**
      * Constructor that initializes the User
-     * @param id user's ID
-     * @param name user's name
-     * @param email user's email address
-     * @param password user's account password
+     * 
+     * @param the user's ID
+     * @param firstName user's first name
+     * @param lastName user's last name
+     * @param userType user's role at the vet clinic
+     * @param userName user's username
+     * @param email user's email
+     * @param phoneNum user's phone number
+     * @param password user's password
+     * @param startDate user's start date
+     * @param userStatus whether user is active or blocked
      */
     public User(@JsonProperty("id") int id, @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName,
     		 @JsonProperty("userType") String userType, @JsonProperty("userName") String userName, @JsonProperty("email") String email, 
@@ -92,6 +108,9 @@ public class User {
     }
     
     
+    /**
+     * Creates a string of all the user's information
+     */
     @Override 
     public String toString() {
     	String newString = "{ id: " + id + ", firstName: " + firstName + ", lastName: " + lastName + ", userName: " + userName + ", userType: " + userType 

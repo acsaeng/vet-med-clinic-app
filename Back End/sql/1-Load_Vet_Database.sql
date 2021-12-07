@@ -78,7 +78,7 @@ CREATE TABLE ANIMAL (
      Species			 varchar (50) not null,
      Breed			 varchar (50) not null,
      Tattoo_Num			 varchar (50) not null,
-     City_Tattooo			 varchar (50) not null,
+     City_Tattoo			 varchar (50) not null,
      Birth_Date			 varchar (50) not null,
      Sex			 varchar (50) not null,
      RFID			 varchar (50) not null,
@@ -176,11 +176,8 @@ CREATE TABLE TREATMENT (
 );
 
 
-<<<<<<< HEAD
+
 INSERT INTO TREATMENT (Treatment_ID, TreatmentDate, Treatment, TreatmentDescription, Treatment_Status, User_ID, Animal_ID)
-=======
-INSERT INTO TREATMENT (Treatment_ID, User_ID, Treatment_Date, Treatment_Protocol, Treatment_Description, Animal_ID)
->>>>>>> a1cb56256a36fb1e3ab45e857cd104d380cf663d
 VALUES
 ('1', '2020-03-08 00:00:00', 'Cone', 'Keep cone on until fleas are completely gone.', 'Complete', '7', '101'),
 ('4', '2021-04-13 00:00:00', 'Cast', 'Keep cast on until hooves are fully healed.', 'Ongoing', '3', '102'),
@@ -191,7 +188,7 @@ VALUES
 
 
 
-INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattooo, Birth_Date, Sex, RFID, Microchip, Animal_Status, Colour, Weight, Additional_Information, Length_Name, SearchKey_Name)
+INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattoo, Birth_Date, Sex, RFID, Microchip, Animal_Status, Colour, Weight, Additional_Information, Length_Name, SearchKey_Name)
 VALUES
 ('101.0', 'Bobby', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15 00:00:00', 'M', '197839178371.0', '176387613813.0', 'Unavailable', 'Black and white', '10.1', 'nan', '5.0', 'a0-b3-c0-d0-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o1-p0-q0-r0-s0-t0-u0-v0-w0-x0-y1-z0'),
 ('102.0', 'Daniel', 'Horse', 'Vanners', '564543', 'ABC Paris', '2018-08-31 00:00:00', 'F', '8987498179390.0', '5671876189197.0', 'Injured', 'Brown', '11.1', 'Sprained right hind leg. Out for 2 weeks', '6.0', 'a1-b0-c0-d1-e1-f0-g0-h0-i1-j0-k0-l1-m0-n1-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),

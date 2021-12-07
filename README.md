@@ -74,7 +74,7 @@ Some example API endpoint tests that walk through the following user stories can
 - Photos (`VET-25` and `VET-46`)
 
 
-## Frontend and Backend
+## Frontend & Backend
 
 ### Frontend
 The pages for the front end were completed using the React framework. A page for each user story was developed as required. All pages were routed to their respective paths and some functionalities were added to assist with the general navigation of the application. All the files dedicated to the frontend portion of this project are located in `Front End/`. 

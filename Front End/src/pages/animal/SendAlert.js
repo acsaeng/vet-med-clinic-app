@@ -37,7 +37,7 @@ function SendAlert() {
 
     const data = []
 
-    const disagnosisList = [
+    const diagnosisList = [
         { _id: 1, label: 'Diagnosis 1' },
         { _id: 2, label: 'Diagnosis 2' },
         { _id: 3, label: 'Diagnosis 3' },];
@@ -100,9 +100,72 @@ function SendAlert() {
 
 
   return (
-      
-        <div className="main-container d-flex flex-column flex-grow-1">
-            { Authenticated ==="isAuthenticated" ? 
+
+    <div className="main-container d-flex flex-column flex-grow-1">
+    <div className="d-flex w-100 h-100">
+        <div className="sidebar">
+            <Sidebar />
+        </div>
+        <div className="placeholder">
+            <Sidebar />
+        </div>
+        <div className= "d-flex flex-column w-100">
+            <div>
+                <AnimalNavbar />
+            </div>
+            <h1 className="ms-5 mt-5 mb-5">Send Alert</h1>
+
+            <div className="d-flex mx-5">
+                        <div className="align-items-left mx-5 mb-">
+                            <h5>Diagnosis List:</h5>
+                            <div className="align-items-left mx-1 mt-3">
+                                {diagnosisList.map((v, i) => (<div key={i}>
+                                <input type="checkbox" data-key={v._id} onChange={handleCheck} checked={checkedItems.has(v._id)}/> 
+                                <label>{v.label}</label>
+                                </div>))}
+                            </div>
+                        </div>
+
+                        <div className="align-items-left mx-5">
+                            <h5>Treatment List:</h5>
+                            <div className="align-items-left mx-1 mt-3">
+                                {treatmentList.map((v, i) => (<div key={i}>
+                                    <input type="checkbox" data-key={v._id} onChange={handleCheck} checked={checkedItems.has(v._id)}/>
+                                    <label>{v.label}</label>
+                                </div>))}
+                            </div>
+                        </div>
+
+                        <div className="align-items-left mx-5">
+                            <h5>Staff List:</h5>
+                            <div className="align-items-left mx-1 mt-3">
+                                {staffList.map((v, i) => (<div key={i}>
+                                    <input type="checkbox" data-key={v._id} onChange={handleCheck} checked={checkedItems.has(v._id)}/>
+                                    <label>{v.label}</label>
+                                </div>))}
+                            </div>
+                        </div>
+                    </div> 
+
+                    <div class="custom-field mt-5 mb-3 mx-5">
+                        <label> Message For Alert: </label> <br/>
+                        <textarea className="form-control w-50" id="messageInput" onChange={getMessage} cols='100' rows='5' 
+                        placeholder="Please enter the message you would like to send with this alert"> </textarea>
+                    </div>
+                    <div class="button mx-5">
+                        <button className="btn btn-secondary mt-3" onClick={clickButton}>Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    );
+}
+
+export default SendAlert;
+
+
+{/* <div className="main-container d-flex flex-column flex-grow-1">
             <div className="d-flex w-100 h-100">
                 {(event) => singleRefresh(event)}
                 <div className="sidebar">
@@ -161,10 +224,5 @@ function SendAlert() {
                         <button onClick={clickButton}>Submit</button>
                     </div>
                 </div>
-            </div>: <a href="/">You are not authorized to view this page. Return to Login</a>}
-        </div>
-        
-    );
-}
-
-export default SendAlert;
+                </div>
+        </div> */}

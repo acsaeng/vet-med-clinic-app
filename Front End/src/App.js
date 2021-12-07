@@ -16,7 +16,7 @@ import Reminders from './pages/animal/Reminders';
 import Comments from './pages/animal/Comments';
 import Photos from './pages/animal/Photos';
 import WeightHistory from './pages/animal/WeightHistory';
-import SendAlert from './pages/treatment/SendAlert';
+import SendAlert from './pages/animal/SendAlert';
 
 import RequestTreatment from './pages/animal/RequestTreatment';
 import RequestAnimal from "./pages/animal/RequestAnimal";

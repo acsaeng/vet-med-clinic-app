@@ -86,7 +86,7 @@ function AddAnimal() {
 
                             <div className="d-flex my-3 w-50">
                                 <h4 className=" w-100">Additional Information:</h4>
-                                <input className="form-control"/>
+                                <textarea className="form-control"/>
                             </div>
                             
                             <div className="align-items-center mt-3 mb-5 w-50">

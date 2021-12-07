@@ -77,7 +77,7 @@ Some example API endpoint tests that walk through the following user stories can
 ## Frontend and Backend
 
 ### Frontend
-The pages for the front end were completed using the React framework. A page for each user story was developed as required. All pages were routed to their respective paths and some functionalities were added to assist with the general navigation of the application. All these files dedicated to the frontend portion of this project are located in `Front End/`. 
+The pages for the front end were completed using the React framework. A page for each user story was developed as required. All pages were routed to their respective paths and some functionalities were added to assist with the general navigation of the application. All the files dedicated to the frontend portion of this project are located in `Front End/`. 
 
 ### Backend
-The backend of this application was completed by connecting the API endpoints established in the previous sprint to a corresponding query for accessing information in the database. All user stories were addressed in this way and each endpoint was tested once again using Postman. The files for the backend portion of this project can be found in `Back End/`. 
+The backend of this application was completed by connecting the API endpoints established in the previous sprint to a corresponding query for accessing information in the database. All user stories were addressed in this way and each endpoint call was tested once again using Postman. The files for the backend portion of this project can be found in `Back End/`. 

@@ -65,13 +65,13 @@ export default class SearchAvailableAnimals extends Component{
             // <div>placeholder</div>
             <div className="overflow-auto">
                 {this.state.allAvailableAnimals.map(animal =>
-                    <a href = {"/request-animal?animalID="+animal.id} >
+                    <a href = {"/request-animal?animalID="+animal.animalID} >
                     {/* // <a href = "/request-animal" onClick={this.storeSelectedAnimalInfo(animal)}>  */}
-                    <div class="card text-black bg-light mx-5 my-3" key={animal.id} style={{width: "50rem"}}>
+                    <div class="card text-black bg-light mx-5 my-3" key={animal.animalID} style={{width: "50rem"}}>
                         
                         <div class="card-header" >
                             {/* <h6> Request {request.requestID} by {request.requesterFirstName} {request.requesterLastName} </h6>  */}
-                            <h6> Animal #{animal.id}: {animal.name}, {animal.breed} {animal.species} </h6>
+                            <h6> Animal #{animal.animalID}: {animal.name}, {animal.breed} {animal.species} </h6>
                             {/* <Link to="/request-animal"/> */}
                         </div>
                         <div class="card-body"  >

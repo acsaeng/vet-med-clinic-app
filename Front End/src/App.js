@@ -20,9 +20,9 @@ import SendAlert from './pages/animal/SendAlert';
 
 import RequestTreatment from './pages/animal/RequestTreatment';
 import RequestAnimal from "./pages/animal/RequestAnimal";
-import ManageTreatment from './pages/treatment/ManageTreatment';
+import UpdateTreatment from './pages/treatment/UpdateTreatment';
 import AddDiagnosis from './pages/treatment/AddDiagnosis';
-import ManageDiagnosis from './pages/treatment/ManageDiagnosis';
+import UpdateDiagnosis from './pages/treatment/UpdateDiagnosis';
 import AddTreatment from './pages/treatment/AddTreatment';
 
 
@@ -57,9 +57,9 @@ function App() {
                 <Route path='/request-animal' element={<RequestAnimal/>}/>
                 {/* <Route path='/view-requests' element={<ViewRequests/>}/> */}
                 <Route path='/add-treatment' element={<AddTreatment/>}/> 
-                <Route path='/manage-treatment' element={<ManageTreatment/>}/> 
+                <Route path='/update-treatment' element={<UpdateTreatment/>}/> 
                 <Route path='/add-diagnosis' element={<AddDiagnosis/>}/> 
-                <Route path='/manage-diagnosis' element={<ManageDiagnosis/>}/> 
+                <Route path='/update-diagnosis' element={<UpdateDiagnosis/>}/> 
             </Routes>
         </Router>
     );

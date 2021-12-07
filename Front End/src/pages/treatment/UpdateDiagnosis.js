@@ -122,38 +122,34 @@ function ManageDiagnosis() {
 
   return (
       
-        <div className="main-container d-flex flex-column flex-grow-1">
-            <div className="d-flex w-100 h-100">
-                {(event) => singleRefresh(event)}
-                <div className="sidebar">
-                    <Sidebar />
-                </div>
-
-                <div className="placeholder">
-                    <Sidebar />
-                </div>
-            <div className= "d-flex flex-column">
+    <div className="main-container d-flex flex-column flex-grow-1">
+    <div className="d-flex w-100 h-100">
+        <div className="sidebar">
+            <Sidebar />
+        </div>
+        <div className="placeholder">
+            <Sidebar />
+        </div>
+        <div className= "d-flex flex-column w-100">
             <div>
                 <AnimalNavbar />
             </div>
-            <div className="d-flex mx-3">
-              <h1>Update Diagnosis</h1>
-            </div>
+            <h1 className="ms-5 mt-5">Update Diagnosis</h1>
 
             <div class="custom-field mt-4 mb-3 mx-5">
-                <label> Diagnosis: </label> <br/>
-                <textarea id="diagnosisInput" onChange={getDiagnosis} cols='100' rows='1'>
+                <label className="mb-2"> Diagnosis: </label> <br/>
+                <textarea className="form-control w-25" id="diagnosisInput" onChange={getDiagnosis} cols='100' rows='1'>
                 </textarea>
             </div>
 
             <div class="custom-field mt-4 mb-3 mx-5">
-                <label> Description: </label> <br/>
-                <textarea id="descriptionInput" onChange={getDescription} cols='100' rows='5'>
+                <label className="mb-2"> Description: </label> <br/>
+                <textarea className="form-control w-50" id="descriptionInput" onChange={getDescription} cols='100' rows='5'>
                 </textarea>
             </div>
-            <div class="button mx-5">
-                <button onClick={clickUpdateButton}>Update</button>
-                <button onClick={clickCompleteButton}>Complete</button>
+            <div class="button mx-5 mt-3">
+                <button className="btn btn-secondary me-3" onClick={clickUpdateButton}>Update</button>
+                <button className="btn btn-secondary" onClick={clickCompleteButton}>Complete</button>
             </div>
             </div>
             </div>

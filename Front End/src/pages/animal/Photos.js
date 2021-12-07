@@ -29,7 +29,6 @@ function Photos() {
                     <h1 className="ms-5 mt-5">Photos</h1>
                     <div className="d-flex flex-row w-75 mb-3 justify-content-end">  
                         <button className="btn btn-secondary p-2 ms-3">Upload Photo</button>
-                        <button className="btn btn-secondary p-2 ms-3">Edit Photo Info</button>
                         <button className="btn btn-secondary p-2 ms-3">Delete Photo</button>
                     </div>
 

@@ -13,11 +13,12 @@
 In collaboration with the Veterinary School of Medicine, the objective of this project is to create a full stack web application to use in the daily operations of their department. It serves to address three important areas - user management, animal management, add treatment process. This application will be primarily used by administrators and staff that service the animals. As such, an interface that meets the requirements of being both functional and user-friendly needs to be developed.
 
 ### Process
-The first three out of five sprint for this project have been completed:
+The first four out of five sprint for this project have been completed:
 
 1. [Developing epics and user stories](https://uofeng607825.atlassian.net/jira/software/projects/VET/boards/1/roadmap)
 2. [Designing wireframes](https://www.figma.com/file/xP4gjKlYZXzneQGNvUFXYK/ENSF-607---Term-Project-Wireframes?node-id=0%3A1)
 3. Designing the API
+4. Frontend and Backend
 
 The contents of this repository address the deliverables completed in the third sprint and are described in the following sections.
 
@@ -71,3 +72,12 @@ Some example API endpoint tests that walk through the following user stories can
 - Reminders (`VET-38`)
 - Comments (`VET-24` and `VET-45`)
 - Photos (`VET-25` and `VET-46`)
+
+
+## Frontend and Backend
+
+### Frontend
+The pages for the front end were completed using the React framework. A page for each user story was developed as required. All pages were routed to their respective paths and some functionalities were added to assist with the general navigation of the application. All these files dedicated to the frontend portion of this project are located in `Front End/`. 
+
+### Backend
+The backend of this application was completed by connecting the API endpoints established in the previous sprint to a corresponding query for accessing information in the database. All user stories were addressed in this way and each endpoint was tested once again using Postman. The files for the backend portion of this project can be found in `Back End/`. 

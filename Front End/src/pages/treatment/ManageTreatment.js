@@ -5,36 +5,25 @@ import AnimalNavbar from '../../components/AnimalNavbar';
 // Requires npm install axios --save
 import axios from 'axios';
 import React, {useState} from 'react'
-import {useLocation, useNavigate} from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
+// import {useNavigate} from 'react-router-dom'
 
 function ManageTreatment() {
-    const [Authenticated, setAuth] = useState(localStorage.getItem("Authenticated"))
+    const Authenticated = useState(localStorage.getItem("Authenticated"))
     // window.location.reload()
-    const [treatment, setTreatment] = useState(treatment);
-    const [description, setDescription] = useState(description);
+    const [treatment, setTreatment] = useState(localStorage.getItem("treatment"));
+    const [description, setDescription] = useState(localStorage.getItem("treatmentDescription"));
     const treatmentStatus = "Ongoing";
     
-    // const animalID = urlParams.get("animalID")
-    // let userID = ""
-    // let animalName = ""
-    // let animalSpecies = ""
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
     const animalName = localStorage.getItem("animalName")
     const animalSpecies = localStorage.getItem("animalSpecies")
     const treatmentID = localStorage.getItem("treatmentID")
-    // const treatment = localStorage.getItem("treatment")
-    // const description = localStorage.getItem("description")
 
-    axios.get('http://localhost:8080/app/animal/'+animalID+'/'+treatmentID).then(
+    axios.get('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID).then(
         res => {
             console.log(res);
-            // userID = res.data[0].userID
-            // localStorage.setItem("userID", userID)
-            // animalName = res.data[0].name
-            // localStorage.setItem("animalName", animalName)
-            // animalSpecies = res.data[0].species
-            // localStorage.setItem("animalSpecies", animalSpecies)
             localStorage.setItem("userID", res.data[0].userID)
             localStorage.setItem("animalName", res.data[0].animalName)
             localStorage.setItem("animalSpecies", res.data[0].animalSpecies)
@@ -51,9 +40,6 @@ function ManageTreatment() {
         event.preventDefault();
         window.location.reload()
     }
-
-    let navigate = useNavigate();
-    let currLocation = useLocation();
 
     console.log(useLocation())
 
@@ -86,7 +72,7 @@ function ManageTreatment() {
         document.getElementById("treatmentInput").value = ""
         console.log("From Clicking the complete button: " + treatment)
 
-        axios.put('http://localhost:8080/app/treatment/animal/'+treatmentID, {
+        axios.put('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID, {
             animalID: parseInt(animalID),
             treatmentID: parseInt(treatmentID), 
             Date: treatmentDate,
@@ -114,7 +100,7 @@ function ManageTreatment() {
         var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
         var treatmentDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
 
-        axios.put('http://localhost:8080/app/treatment/animal/'+treatmentID, {
+        axios.put('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID, {
             animalID: parseInt(animalID),
             treatmentID: parseInt(treatmentID), 
             Date: treatmentDate,

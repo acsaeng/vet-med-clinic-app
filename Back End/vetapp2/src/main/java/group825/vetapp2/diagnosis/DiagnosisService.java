@@ -2,8 +2,6 @@ package group825.vetapp2.diagnosis;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -12,9 +10,9 @@ import org.springframework.stereotype.Service;
 /**
  * Service that performs Diagnosis requests
  *
- * @author Timothy Mok
- * @version 1.0
- * @since November 15, 2021
+ * @author Timothy Mok, Jimmy Zhu
+ * @version 2.0
+ * @since December 6, 2021
  */
 @Service
 public class DiagnosisService {
@@ -29,7 +27,6 @@ public class DiagnosisService {
 	 * @param repo the DiagnosisRepository
 	 */
 	public DiagnosisService(@Qualifier("tempDiagnosisRepo") DiagnosisRepository repo) {
-		// UPDATE WITH DATABASE AS NEEDED
 		this.repo = repo;
 	}
 
@@ -37,35 +34,42 @@ public class DiagnosisService {
 	 * Service for adding a diagnosis to the system
 	 * @param diagnosis diagnosis to be added
 	 * @return whether the diagnosis was successfully added to the Repository
+	 * @throws Exception when there is an SQL Exception
 	 */
 	public int addDiagnosis(Diagnosis diagnosis) throws Exception{
 		return repo.addDiagnosis(diagnosis);
 	}
 	
 	/**
-	 * List all diagnoses in the system
-	 * @return a list of all diagnoses associated with an animal
+	 * Search for diagnoses for a specific animal in the Repository
+	 * @param animalID id of the animal
+	 * @return the diagnoses from the repository
+	 * @throws Exception when there is an SQL Exception
 	 */
-	public List<Diagnosis> selectAllDiagnosis(){
-		return repo.selectAllDiagnosis();
+	public List<Diagnosis> selectDiagnosisByAnimalID(int animalID) throws Exception {
+		ArrayList<String> results =  repo.selectDiagnosisByAnimalID(animalID);
+		List<Diagnosis> listResults = createListDiagnosis(results);
+		return listResults;
 	}
 	
 	/**
-	 * Search for diagnoses for a specific animal in the Repository
-	 * @param id id of the animal
-	 * @return the diagnoses from the repository
+	 * Search for a specific for a specific animal in the Repository
+	 * @param animalID id of the animal
+	 * @param diagnosisID the diagnosis ID requested
+	 * @return the single diagnosis from the repository
+	 * @throws Exception when there is an SQL Exception
 	 */
-	public List<Diagnosis> selectDiagnosisById(int id) throws Exception {
-		ArrayList<String> results =  repo.selectDiagnosisById(id);
+	public List<Diagnosis> selectDiagnosisByDiagnosisID(int diagnosisID) throws Exception {
+		ArrayList<String> results =  repo.selectDiagnosisByDiagnosisID(diagnosisID);
 		List<Diagnosis> listResults = createListDiagnosis(results);
 		return listResults;
-//		return repo.selectDiagnosisById(id);
 	}
 	
 	/**
 	 * Delete a diagnosis from the Repository
 	 * @param id diagnosis to be deleted
 	 * @return whether the diagnosis was successfully deleted from the Repository
+	 * @throws Exception when there is an SQL Exception
 	 */
 	public int deleteDiagnosisById(int id) throws Exception{
 		return repo.deleteDiagnosisById(id);
@@ -76,12 +80,11 @@ public class DiagnosisService {
 	 * @param id diagnosis to be updated
 	 * @param diagnosis diagnosis object containing new information
 	 * @return whether the diagnosis was successfully updated the Repository
+	 * @throws Exception when there is an SQL Exception
 	 */
 	public int updateDiagnosisById(int id, Diagnosis diagnosis) throws Exception{
 		return repo.updateDiagnosisById(id, diagnosis);
 	}
-	
-	
 	
 	 /**
 	  * Create a list of Diagnosis objects from ArrayList<String> returned from database query
@@ -90,20 +93,16 @@ public class DiagnosisService {
 	 */
 	public List<Diagnosis> createListDiagnosis(ArrayList<String> foundResults){
 		List<Diagnosis> listResults = new ArrayList<Diagnosis>(); 
-		//review against Database setup
-		int idxAnimalID=6, idxDiagnosisID=0, idxDiagnosis=2, idxDescription=3, idxDiagnosisDate=1, idxDiangosisStatus=4, idxUserID=5;
+		int idxAnimalID=6, idxDiagnosisID=0, idxDiagnosis=2, idxDescription=3, idxDiagnosisDate=1, idxDiagnosisStatus=4, idxUserID=5;
 		for (String result: foundResults) {
 			String[] resultSplit = result.split(repo.getSplitPlaceholder());
-		Diagnosis temp =  new Diagnosis( Integer.valueOf(resultSplit[idxDiagnosisID]), Integer.valueOf(resultSplit[idxAnimalID]), resultSplit[idxDiagnosis], 
-				resultSplit[idxDescription], resultSplit[idxDiagnosisDate], resultSplit[idxDiangosisStatus], Integer.valueOf(resultSplit[idxUserID]));
-		listResults.add(temp);
+			Diagnosis temp =  new Diagnosis( Integer.valueOf(resultSplit[idxDiagnosisID]), Integer.valueOf(resultSplit[idxAnimalID]), resultSplit[idxDiagnosis], 
+				resultSplit[idxDescription], resultSplit[idxDiagnosisDate], resultSplit[idxDiagnosisStatus], Integer.valueOf(resultSplit[idxUserID]));
+			listResults.add(temp);
+		}
+		System.out.println("\nPrepared List to send as json response to API endpoint:");
+		System.out.println(listResults);
+	
+		return listResults;
 	}
-	System.out.println("\nPrepared List to send as json response to API endpoint:");
-	System.out.println(listResults);
-
-	return listResults;
-	}
-	
-	
-	
 }

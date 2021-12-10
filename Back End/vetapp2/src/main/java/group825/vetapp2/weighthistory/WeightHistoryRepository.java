@@ -53,7 +53,7 @@ public class WeightHistoryRepository {
 
         try {
             // Execute SQL query
-            PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM WEIGHT_HISTORY WHERE Animal_ID = ?");
+            PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM WEIGHT_HISTORY WHERE Animal_ID = ?;");
             statement.setInt(1, animalID);
             results = statement.executeQuery();
 
@@ -71,49 +71,44 @@ public class WeightHistoryRepository {
         return weightHistory;
     }
 
+    /**
+     * Adds a weight entry to the database
+     * @param weight animal's weight entry
+     */
+    public void addWeight(Weight weight) {
+        try {
+            // Execute SQL query
+            PreparedStatement statement = this.dao.prepareStatement("INSERT INTO WEIGHT_HISTORY (Animal_ID, Date_Recorded, Weight) VALUE (?, ?, ?);");
+            statement.setInt(1, weight.getAnimalId());
+            statement.setString(2, weight.getDate());
+            statement.setDouble(3, weight.getWeight());
+            statement.executeUpdate();
 
+            statement.close();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    /**
+     * Deletes an animal's weight entry
+     * @param weight animal's weight entry
+     * @throws Exception error when accessing the database
+     */
+    public void deleteWeight(Weight weight) {
+        try {
+            // Execute SQL query
+            PreparedStatement statement = this.dao.prepareStatement("DELETE FROM WEIGHT_HISTORY WHERE Animal_ID = ? AND Date_Recorded = ? AND Weight = ?;");
+            statement.setInt(1, weight.getAnimalId());
+            statement.setString(2, weight.getDate());
+            statement.setDouble(3, weight.getWeight());
+            statement.executeUpdate();
 
+            statement.close();
 
-
-
-
-
-
-//    public ArrayList<Weight> selectWeightHistoryByID(int animalID) throws SQLException {
-//        String query = "SELECT * FROM WEIGHT_HISTORY WHERE Animal_ID = '" + animalID + "';";
-//        return dao.getResponseArrayList(query);
-//    }
-//
-//    /**
-//     * Adds a weight entry to the database
-//     * @param weight animal's weight entry
-//     * @throws Exception error when accessing the database
-//     */
-//    public void addWeight(Weight weight) throws Exception {
-//        String query = "INSERT INTO WEIGHT_HISTORY VALUES (" + weight.getAnimalId() + ", '" + weight.getDate() + "', " +
-//                weight.getWeight() + ");";
-//        dao.manipulateRows(query);
-//    }
-
-//    /**
-//     * Deletes an animal's weight entry
-//     * @param weight animal's weight entry
-//     * @throws Exception error when accessing the database
-//     */
-//    public void deleteWeight(Weight weight) throws Exception {
-//        String query = "DELETE FROM WEIGHT_HISTORY WHERE Animal_ID = '" + weight.getAnimalId() +
-//                "' AND Date_Recorded = '" + weight.getDate() + "';";
-//
-//        dao.manipulateRows(query);
-//    }
-//
-//    /**
-//     * Stores the placeholder to split an incoming string
-//     * @return a split placeholder
-//     */
-//    public String getSplitPlaceholder() {
-//        return dao.getSplitPlaceholder();
-//    }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

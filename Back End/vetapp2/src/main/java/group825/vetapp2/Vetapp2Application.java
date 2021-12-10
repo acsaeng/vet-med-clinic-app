@@ -10,7 +10,7 @@ public class Vetapp2Application {
 	public static void main(String[] args) {
 		DatabaseConnection.initialize();
 		SpringApplication.run(Vetapp2Application.class, args);
-		DatabaseConnection.close();
+//		DatabaseConnection.close();
 	}
 
 }

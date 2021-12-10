@@ -34,22 +34,20 @@ public class WeightHistoryService {
         return this.repo.selectWeightHistoryByID(animalID);
     }
 
-//    /**
-//     * Adds a weight entry to the database
-//     * @param weight animal's weight entry
-//     * @return 1 if addition was successful, 0 otherwise
-//     * @throws Exception error when accessing the database
-//     */
-//    public void addWeight(Weight weight) throws Exception {
-//        this.repo.addWeight(weight);
-//    }
-//
-//    /**
-//     * Deletes an animal's weight entry
-//     * @param weight animal's weight entry
-//     * @throws Exception error when accessing the database
-//     */
-//    public void deleteWeight(Weight weight) throws Exception {
-//        this.repo.deleteWeight(weight);
-//    }
+    /**
+     * Adds a weight entry to the database
+     * @param weight animal's weight entry
+     */
+    public void addWeight(Weight weight) {
+        this.repo.addWeight(weight);
+    }
+
+    /**
+     * Deletes an animal's weight entry
+     * @param weight animal's weight entry
+     * @throws Exception error when accessing the database
+     */
+    public void deleteWeight(Weight weight) {
+        this.repo.deleteWeight(weight);
+    }
 }

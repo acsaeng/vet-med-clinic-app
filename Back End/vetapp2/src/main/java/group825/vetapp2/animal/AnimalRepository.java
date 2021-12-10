@@ -2,7 +2,7 @@ package group825.vetapp2.animal;
 
 import org.springframework.stereotype.Repository;
 
-import group825.vetapp2.database.DatabaseConnection;
+import group825.vetapp2.database.OldDatabaseConnection;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class AnimalRepository {
 	/**
 	 * Database connection boundary class
 	 */
-	DatabaseConnection dao;
+	OldDatabaseConnection dao;
 	
 	/**
 	 * Any query that is sent to the database
@@ -52,7 +52,7 @@ public class AnimalRepository {
      * instantiate the Search class holding the methods to query the database to search for animals
      */
 	public AnimalRepository() throws Exception {
-		dao = new DatabaseConnection();
+		dao = new OldDatabaseConnection();
 		search = new Search(dao, tableName, desiredNumberOfResults);
 		getLatestAnimalId();
 	}

@@ -34,37 +34,36 @@ public class WeightHistoryController {
     }
 
     /**
-     * 'GET' request that retrieves all weight histories from the database
-     * @return a list of weight histories for all animals
-     * @throws Exception error when accessing the database
+     * 'GET' request that retrieves the weight history of a specified animal
+     * @return weight hisotry of an animal
      */
     @GetMapping(path = "/{animalID}")
-    public ArrayList<Weight> selectWeight(@PathVariable("animalID") int animalID) throws Exception {
+    public ArrayList<Weight> selectWeight(@PathVariable("animalID") int animalID) {
         return this.weightHistoryService.selectWeightHistoryByID(animalID);
     }
 
-    /**
-     * 'POST' request that adds a weight entry to the database
-     * @param weight weight entry to be added
-     * @throws Exception error when accessing the database
-     */
-    @PostMapping
-    public void addWeight(@RequestBody Weight weight) throws Exception {
-        // Checks if any user fields are 'null'
-        if (weight.anyNulls()) {
-            throw new ApiRequestException("Fields cannot be null");
-        }
-
-        this.weightHistoryService.addWeight(weight);
-    }
-
-    /**
-     * 'DELETE' request that deletes a weight entry
-     * @param weight an animal's weight entry
-     * @throws Exception error when accessing the database
-     */
-    @DeleteMapping()
-    public void deleteWeight(@RequestBody Weight weight) throws Exception {
-        this.weightHistoryService.deleteWeight(weight);
-    }
+//    /**
+//     * 'POST' request that adds a weight entry to the database
+//     * @param weight weight entry to be added
+//     * @throws Exception error when accessing the database
+//     */
+//    @PostMapping
+//    public void addWeight(@RequestBody Weight weight) throws Exception {
+//        // Checks if any user fields are 'null'
+//        if (weight.anyNulls()) {
+//            throw new ApiRequestException("Fields cannot be null");
+//        }
+//
+//        this.weightHistoryService.addWeight(weight);
+//    }
+//
+//    /**
+//     * 'DELETE' request that deletes a weight entry
+//     * @param weight an animal's weight entry
+//     * @throws Exception error when accessing the database
+//     */
+//    @DeleteMapping()
+//    public void deleteWeight(@RequestBody Weight weight) throws Exception {
+//        this.weightHistoryService.deleteWeight(weight);
+//    }
 }

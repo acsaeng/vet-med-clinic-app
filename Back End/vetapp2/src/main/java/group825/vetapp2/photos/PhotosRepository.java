@@ -1,13 +1,10 @@
 package group825.vetapp2.photos;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
-import group825.vetapp2.database.DatabaseConnection;
+import group825.vetapp2.database.OldDatabaseConnection;
 
 /**
  * Repository that stores Photo information
@@ -26,7 +23,7 @@ public class PhotosRepository {
 	/**
 	 * Database connection boundary class
 	 */
-	DatabaseConnection dao;
+	OldDatabaseConnection dao;
 	
 	/**
 	 * Any query that is sent to the database
@@ -43,7 +40,7 @@ public class PhotosRepository {
      * Update the latestID data member holding the max photo ID from the database
      */
 	public PhotosRepository() throws Exception {
-		dao = new DatabaseConnection();
+		dao = new OldDatabaseConnection();
 	}
 	
 	

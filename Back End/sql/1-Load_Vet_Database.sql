@@ -215,3 +215,30 @@ VALUES
 #-- include one more Dog whose name is longer 
 #-- ('3001', 'Bibbies', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15 00:00:00', 'MN', '197839178371', '176387613813', 'Available', 'Black and white', 'nan', '7', '4', '2-1-0-1-0-0-0-0-0-0', 'a0-b3-c0-d0-e1-f0-g0-h0-i2-j0-k0-l0-m0-n0-o0-p0-q0-r0-s1-t0-u0-v0-w0-x0-y0-z0');
 
+DROP TABLE IF EXISTS WEIGHT_HISTORY; 
+CREATE TABLE WEIGHT_HISTORY ( 
+     Animal_ID			int not null,
+     Date_Recorded		date,
+     Weight				double,
+     primary key (Animal_ID, Date_Recorded)
+);
+
+INSERT INTO WEIGHT_HISTORY(Animal_ID, Date_Recorded, Weight)
+VALUES
+(103, DATE(20201001), 800),
+(103, DATE(20201101), 805),
+(103, DATE(20201201), 810),
+(103, DATE(20210101), 805),
+(103, DATE(20210201), 820),
+(103, DATE(20210301), 805),
+(103, DATE(20210401), 800),
+(102, DATE(20201001), 400),
+(102, DATE(20201101), 409),
+(102, DATE(20201201), 420),
+(102, DATE(20210101), 415),
+(102, DATE(20210201), 410),
+(102, DATE(20210301), 406),
+(102, DATE(20210401), 402);
+
+SELECT * FROM weight_history;
+

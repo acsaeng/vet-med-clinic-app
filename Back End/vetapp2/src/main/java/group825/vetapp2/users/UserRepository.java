@@ -55,6 +55,38 @@ public class UserRepository {
 		return false;
     }
 
+	/**
+	 * Finds a user in the database by ID
+	 * @param userID a specific user's ID
+	 * @return user if found, 'null' otherwise
+	 */
+	public User selectUserById(int userID) {
+		User user = null;
+
+		try {
+			// Execute SQL query to retrieve specified user
+			PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM USERS WHERE User_ID = ?");
+
+			statement.setInt(1, userID);
+			ResultSet results = statement.executeQuery();
+
+			// Extract the user's information
+			while (results.next()) {
+				user = new User(results.getInt("User_ID"), results.getString("First_Name"), results.getString("Last_Name"),
+						results.getString("User_Type"), results.getString("Username"), results.getString("Email"),
+						results.getString("Phone_Number"), results.getString("User_Password"),
+						LocalDate.parse(results.getString("Start_Date")), results.getBoolean("User_Status"));
+			}
+
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return user;
+	}
+
     /**
      * Adds a user to the database
      * @param user user to be added
@@ -84,38 +116,6 @@ public class UserRepository {
 			e.printStackTrace();
 		}
     }
-
-	/**
-	 * Finds a user in the database by ID
-	 * @param userID a specific user's ID
-	 * @return user if found, 'null' otherwise
-	 */
-	public User selectUserById(int userID) {
-		User user = null;
-
-		try {
-			// Execute SQL query to retrive specified user
-			PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM USERS WHERE User_ID = ?");
-
-			statement.setInt(1, userID);
-			ResultSet results = statement.executeQuery();
-
-			// Extract the user's information
-			while (results.next()) {
-				user = new User(results.getInt("User_ID"), results.getString("First_Name"), results.getString("Last_Name"),
-						results.getString("User_Type"), results.getString("Username"), results.getString("Email"),
-						results.getString("Phone_Number"), results.getString("User_Password"),
-						LocalDate.parse(results.getString("Start_Date")), results.getBoolean("User_Status"));
-			}
-
-			statement.close();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return user;
-	}
 
     /**
      * Updates a user's information

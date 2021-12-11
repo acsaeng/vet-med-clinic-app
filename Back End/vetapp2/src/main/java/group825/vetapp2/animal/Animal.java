@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import java.time.LocalDate;
 
 /**
  * Animal registered in the veterinary department
@@ -29,121 +28,118 @@ public class Animal {
     private String name;
 
     /**
-     * Breed of animal
-     */
-    private String breed;
-
-    /**
      * Species of the animal
      */
     private String species;
 
     /**
-     * Sex of the animal
+     * Breed of animal
      */
-    private String sex;
+    private String breed;
 
     /**
-     * Weight of the animal
+     * Tattoo of the animal
      */
-    private double weight;
-    
+    private int tattoo;
+
     /**
-     * Tattoo on animal
-     */
-    private String tattoo;
-    
-    /**
-     * Tattoo on animal assigned by the city
+     * City tattoo of the animal
      */
     private String cityTattoo;
-    
+
     /**
-     * Birthday of the animal
+     * Date of birth of the animal
      */
-    private String dob;
+    private LocalDate dob;
+
+    /**
+     * Sex of the animal
+     */
+    private char sex;
     
     /**
-     * RFID for the Animal
+     * RFID of the Animal
      */
     private String rfid;
     
     /**
-     * Microchip information on animal
+     * Microchip number of the animal
      */
     private String microchip;
     
     /**
-     * Status of animal 
+     * Health status of animal
      */
-    private String status;
+    private String healthStatus;
+
+    /**
+     * Availability status of animal
+     */
+    private boolean availabilityStatus;
     
     /**
-     * Color of animal 
+     * Colour of  the animal
      */
-    private String color;
+    private String colour;
     
     /**
-     * More information recorded to visually idnetify the animal
+     * Additional information on the animal
      */
-    private String moreInfo;
+    private String additionalInfo;
     
-    /**
-     * Length of the animal's name 
-     */
-    private int nameLength;
-    
-    /**
-     * Search Key for the name used in search algorithm
-     */
-    private String searchKeyName;
+//    /**
+//     * Length of the animal's name
+//     */
+//    private int nameLength;
+//
+//    /**
+//     * Search Key for the name used in search algorithm
+//     */
+//    private String searchKeyName;
 
 
     /**
      * Constructor that initializes the Animal
-     * @param animalID = animal's ID number
-     * @param name = animal's name
-     * @param species =  animal's species
-     * @param breed =  animal's breed
-     * @param sex =  animal's sex
-     * @param weight =  animal's current weight
-     * @param tattoo =  describes a tattoo on the animal
-     * @param cityTattoo =  describes a tattoo on the animal given by the city
-     * @param dob =  animal's date of birth
-     * @param rfid =  animal's rfid
-     * @param microchip =  animal's microchip number
-     * @param status =  animal's current status
-     * @param color =  animal's skin/fur/hair color
-     * @param moreInfo =  gives more details identifying the animal
-     * @param nameLength =  the length of the animal's name
-     * @param searchKeyName = search key for the animal's name used in the search algorithm 
+     * @param animalID animal's ID number
+     * @param name animal's name
+     * @param species animal's species
+     * @param breed animal's breed
+     * @param tattoo animal's tattoo
+     * @param cityTattoo animal's city tattoo
+     * @param sex animal's sex
+     * @param dob animal's date of birth
+     * @param rfid animal's RFID
+     * @param microchip animal's microchip number
+     * @param healthStatus animal's health status
+     * @param availabilityStatus animal's availability status
+     * @param colour animal's colour
+     * @param additionalInfo additional information on the animal
      */
     public Animal(@JsonProperty("animalID") int animalID, @JsonProperty("name") String name,
-    		 	  @JsonProperty("species") String species, @JsonProperty("type") String breed,
-                  @JsonProperty("sex") String sex, @JsonProperty("weight") double weight,
-                  @JsonProperty("tattoo") String tattoo, @JsonProperty("cityTattoo") String cityTattoo,
-                  @JsonProperty("dob") String dob, @JsonProperty("rfid") String rfid,
-                  @JsonProperty("microchip") String microchip, @JsonProperty("status") String status,
-                  @JsonProperty("color") String color, @JsonProperty("moreInfo") String moreInfo,
-                  @JsonProperty("nameLength") int nameLength, @JsonProperty("searchKeyName") String searchKeyName) {
+    		 	  @JsonProperty("species") String species, @JsonProperty("breed") String breed,
+                  @JsonProperty("tattoo") int tattoo, @JsonProperty("cityTattoo") String cityTattoo,
+                  @JsonProperty("dob") LocalDate dob, @JsonProperty("sex") char sex,
+                  @JsonProperty("rfid") String rfid, @JsonProperty("microchip") String microchip,
+                  @JsonProperty("healthStatus") String healthStatus, @JsonProperty("availabilityStatus") boolean availabilityStatus,
+                  @JsonProperty("colour") String colour, @JsonProperty("additionalInfo") String additionalInfo) {
         this.animalID = animalID;
         this.name = name;
-        this.breed = breed;
         this.species = species;
-        this.sex = sex;
-        this.weight = weight;
+        this.breed = breed;
         this.tattoo = tattoo;
         this.cityTattoo = cityTattoo;
         this.dob = dob;
+        this.sex = sex;
         this.rfid = rfid;
         this.microchip = microchip;
-        this.status = status;
-        this.color = color;
-        this.moreInfo = moreInfo;
-        this.nameLength = nameLength;
-        this.searchKeyName = searchKeyName;
+        this.healthStatus = healthStatus;
+        this.availabilityStatus = availabilityStatus;
+        this.colour = colour;
+        this.additionalInfo = additionalInfo;
+//        this.nameLength = nameLength;
+//        this.searchKeyName = searchKeyName;
         
-        updateSearchKey();
+//        updateSearchKey();
     }
 
     /**
@@ -151,25 +147,12 @@ public class Animal {
      * @return true if at least one attribute is null, false otherwise
      */
     public boolean anyNulls() {
-        return (this.animalID == 0 || this.name == null || this.species == null || this.breed == null || this.sex == null || this.weight == 0.0 ||
-        		this.tattoo == null || this.cityTattoo == null || this.dob == null || this.rfid == null || this.microchip == null || 
-        		this.status == null || this.color == null );
+        return (this.animalID == 0 || this.name == null || this.species == null || this.breed == null || this.tattoo == 0 ||
+                this.cityTattoo == null || this.dob == null || this.rfid == "" || this.microchip == "" || this.colour == null);
     }
     
-    @Override 
-    public String toString() {
-    	String newString = "{ animalID: " + animalID + ", name: " + name + ", breed: " + breed + ", species: " + species + ", sex: " + sex + ", weight: " 
-    + weight + ", tattoo: " + tattoo + ", cityTattoo: " + cityTattoo + ", dob: " + dob 
-    + ", rfid: " + rfid + ", microchip: " + microchip + ", status: " + status + ", color: " + color + ", moreInfo: " + moreInfo 
-    + ", nameLength: " + nameLength + ", searchKeyName: " + searchKeyName + "}";
-     return newString;
-    }
-    
-    private void updateSearchKey() {
-    	if (this.nameLength == 0) {this.nameLength = this.name.length();}
-    	if (this.searchKeyName == null) {this.searchKeyName = SearchKey.generateSearchKey(this.name); }
-    }
-    
-    
-    
+//    private void updateSearchKey() {
+//    	if (this.nameLength == 0) {this.nameLength = this.name.length();}
+//    	if (this.searchKeyName == null) {this.searchKeyName = SearchKey.generateSearchKey(this.name); }
+//    }
 }

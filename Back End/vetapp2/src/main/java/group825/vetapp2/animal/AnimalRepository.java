@@ -1,11 +1,15 @@
 package group825.vetapp2.animal;
 
+import group825.vetapp2.database.DatabaseConnection;
+import group825.vetapp2.users.User;
 import org.springframework.stereotype.Repository;
 
-import group825.vetapp2.database.OldDatabaseConnection;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
-
 
 /**
  * Repository that stores Animal information
@@ -14,149 +18,145 @@ import java.util.ArrayList;
  * @version 2.0
  * @since November 30, 2021
  */
-@Repository("tempAnimalRepo")
+@Repository("animalRepo")
 public class AnimalRepository {
+
 	/**
-	 * Table name from database
+	 * Connector to the database
 	 */
-	String tableName = "ANIMAL";
-	
-	/**
-	 * Desired number of search results
-	 */
-	int desiredNumberOfResults = 4;
-	
-	/**
-	 * Database connection boundary class
-	 */
-	OldDatabaseConnection dao;
-	
-	/**
-	 * Any query that is sent to the database
-	 */
-	String query;
-	
-	/**
-	 * Search object with methods to perform animal searches
-	 */
-	Search search;
-	
-	/**
-	 * Max Animal ID currently recorded on the database
-	 */
-	int latestID;
-	
+	Connection dao;
+
+//	/**
+//	 * Search object with methods to perform animal searches
+//	 */
+//	Search search;
+//
+//	/**
+//	 * Desired number of search results
+//	 */
+//	int desiredNumberOfResults = 4;
+
 	/**
      * Constructor that initializes the AnimalRepository
-     * Update the latestID data member holding the max animal ID from the database
-     * instantiate the Search class holding the methods to query the database to search for animals
      */
-	public AnimalRepository() throws Exception {
-		dao = new OldDatabaseConnection();
-		search = new Search(dao, tableName, desiredNumberOfResults);
-		getLatestAnimalId();
+	public AnimalRepository() {
+		dao = DatabaseConnection.getConnection();
+//		search = new Search(dao, tableName, desiredNumberOfResults);
+	}
+
+	/**
+	 * Searches for an animal by ID number in the database
+	 * @param animalID = animal's ID number
+	 * @return animal if found, 'null' otherwise
+	 */
+	public Animal searchAnimalById(int animalID) {
+		Animal animal = null;
+
+		try {
+			// Execute SQL query to retrieve specified animal
+			PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM ANIMAL WHERE Animal_ID = ?");
+
+			statement.setInt(1, animalID);
+			ResultSet results = statement.executeQuery();
+
+			// Extract the animal's information
+			while (results.next()) {
+				animal = new Animal(results.getInt("Animal_ID"), results.getString("Animal_Name"),
+						results.getString("Species"), results.getString("Breed"), results.getInt("Tattoo_Num"),
+						results.getString("City_Tattoo"), LocalDate.parse(results.getString("Birth_Date")),
+						results.getString("Sex").charAt(0), results.getString("RFID"), results.getString("Microchip"),
+						results.getString("Health_Status"), results.getBoolean("Availability_Status"),
+						results.getString("Colour"), results.getString("Additional_Info"));
+			}
+
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return animal;
 	}
 
     /**
-     * Retrieves all animals from the database
-     * @return ArrayList<String> where each String holds all the information for one animal
-     */
-    public ArrayList<String> selectAllAnimals() throws Exception{
-    	query = "SELECT * FROM "+this.tableName;
-		ArrayList<String> results = dao.getResponseArrayList(query);
-		return results;
-    }
-
-    /**
      * Adds an animal to the database
-     * @param animal = animal to be added
-     * @return Integer verifying successful code execution
-	 * @throws Exception when there is an SQL Exception
+     * @param animal animal to be added
      */
-    public int addAnimal(Animal animal) throws Exception{
-    	String queryBegin = "INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattooo, Birth_Date, Sex, "
-    			+"RFID, Microchip, Animal_Status, Colour, Weight, Additional_Information, Length_Name, SearchKey_Name)\r\n"
-    			+ "VALUES";
-		query = queryBegin + "( '"+animal.getAnimalID()+"', '" + animal.getName()+"', '" + animal.getSpecies()+"', '" + animal.getBreed() +"', '" + animal.getTattoo() +"', '" 
-    			+ animal.getCityTattoo() +"', '" + animal.getDob()+"', '" + animal.getSex() +"', '" + animal.getRfid()+"', '" + animal.getMicrochip()
-    			+"', '" + animal.getStatus()+"', '" + animal.getColor() +"', '" + animal.getWeight()+"', '" + animal.getMoreInfo() 
-    			+"', '" + animal.getNameLength() +"', '" + animal.getSearchKeyName()+"');";
-		System.out.println(query);
+    public void addAnimal(Animal animal) {
 		try {
-			int responseCheck = dao.manipulateRows(query);
-		}catch(Exception e) {
-			getLatestAnimalId();
-			query = queryBegin + "( '"+(this.latestID+1)+"', '" + animal.getName()+"', '" + animal.getSpecies()+"', '" + animal.getBreed() +"', '" + animal.getTattoo() +"', '" 
-	    			+ animal.getCityTattoo() +"', '" + animal.getDob()+"', '" + animal.getSex() +"', '" + animal.getRfid()+"', '" + animal.getMicrochip()
-	    			+"', '" + animal.getStatus()+"', '" + animal.getColor() +"', '" + animal.getWeight()+"', '" + animal.getMoreInfo() 
-	    			+"', '" + animal.getNameLength() +"', '" + animal.getSearchKeyName()+"');";
-			int responseCheck = dao.manipulateRows(query);
+			// Execute SQL query to add new animal
+			PreparedStatement statement = this.dao.prepareStatement("INSERT INTO ANIMAL (Animal_ID, Animal_Name, " +
+					"Species, Breed, Tattoo_Num, City_Tattoo, Birth_Date, Sex, RFID, Microchip, Health_Status, " +
+					"Availability_Status, Colour, Additional_Info) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+			statement.setInt(1, animal.getAnimalID());
+			statement.setString(2, animal.getName());
+			statement.setString(3, animal.getSpecies());
+			statement.setString(4, animal.getBreed());
+			statement.setInt(5, animal.getTattoo());
+			statement.setString(6, animal.getCityTattoo());
+			statement.setString(7, animal.getDob().toString());
+			statement.setString(8, "" + animal.getSex());
+			statement.setString(9, animal.getRfid());
+			statement.setString(10, animal.getMicrochip());
+			statement.setString(11, animal.getHealthStatus());
+			statement.setBoolean(12, animal.isAvailabilityStatus());
+			statement.setString(13, animal.getColour());
+			statement.setString(14, animal.getAdditionalInfo());
+
+			statement.executeUpdate();
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		return 1;
     }
 
     /**
      * Updates an animal's information
-     * @param animalID = animal's ID number
-     * @param update = Animal object containing the updated animal information
-     * @return 1 if the update was successful, 0 otherwise
+	 * @param animalID animal's ID number
+	 * @param updatedInfo animal's updated information
      */
-    public int updateAnimalById(int animalID, Animal update) throws Exception{
-   	 String query = "UPDATE " + tableName + " AS C SET Animal_ID='" + animalID + "', Animal_Name='" + update.getName() 
-	   	 + "', Species='" + update.getSpecies() +"', Breed='" + update.getBreed() +"', Tattoo_Num='" + update.getTattoo()
-	   	 + "', City_Tattooo='" + update.getCityTattoo() + "', Birth_Date='" + update.getDob()+ "', Sex='" + update.getSex() 
-	   	 +"', RFID='" + update.getRfid() +"', Microchip='" + update.getMicrochip() +"', Animal_Status='" + update.getStatus() 
-	   	 +"', Colour='" + update.getColor() +"', Weight='" + update.getWeight() +"', Additional_Information='" + update.getMoreInfo()  
-	   	 + "', Length_Name='" + update.getNameLength() + "', SearchKey_Name='" + update.getSearchKeyName() 
-	   	 + "' WHERE C.Animal_ID='"+ animalID +"';";
-   	 
-   	 System.out.println("query = "+query);
-	   int responseCheck = dao.manipulateRows(query);
-	   return responseCheck;
-	   }
-    
+    public void updateAnimal(int animalID, Animal updatedInfo) {
+		try {
+			// Execute SQL query to update the user's information
+			PreparedStatement statement = this.dao.prepareStatement("UPDATE ANIMAL SET Animal_ID = ?, Animal_Name = ?, " +
+					" Species = ?, Breed = ?, Tattoo_Num = ?, City_Tattoo = ?, Birth_Date = ?, Sex = ?, RFID = ?, Microchip = ?, " +
+					"Health_Status = ?, Availability_Status = ?, Colour = ?, Additional_Info = ? WHERE ANIMAL_ID = ?");
 
-    /**
-     * Searches for an animal by name in the database
-     * @param name = animal's name
-     * @param species =  animal's species
-     * @param onlyAvailableAnimals = boolean deciding whether to return all animals or only available animals
-     * @return specified animal if found, null otherwise
-     */
-    public ArrayList<String> searchAnimalByName(String name, String species, boolean onlyAvailableAnimals) throws Exception{
-    	ArrayList<String> foundResults = search.searchForName(name, species, onlyAvailableAnimals);
-    	return foundResults;
-    }
+			statement.setInt(1, updatedInfo.getAnimalID());
+			statement.setString(2, updatedInfo.getName());
+			statement.setString(3, updatedInfo.getSpecies());
+			statement.setString(4, updatedInfo.getBreed());
+			statement.setInt(5, updatedInfo.getTattoo());
+			statement.setString(6, updatedInfo.getCityTattoo());
+			statement.setString(7, updatedInfo.getDob().toString());
+			statement.setString(8, "" + updatedInfo.getSex());
+			statement.setString(9, updatedInfo.getRfid());
+			statement.setString(10, updatedInfo.getMicrochip());
+			statement.setString(11, updatedInfo.getHealthStatus());
+			statement.setBoolean(12, updatedInfo.isAvailabilityStatus());
+			statement.setString(13, updatedInfo.getColour());
+			statement.setString(14, updatedInfo.getAdditionalInfo());
+			statement.setInt(15, animalID);
 
-    /**
-     * Searches for an animal by ID number in the database
-     * @param animalID = animal's ID number
-     * @return ArrayList<String> which should contains one String holding the information for one particular animal or the String is empty
-     * @throws Exception when there is an SQL Exception
-     */
-    public ArrayList<String> searchAnimalById(int animalID) throws Exception{
-    	query = "SELECT * FROM "+this.tableName +" AS C WHERE C.Animal_ID='"+animalID+"';";
-		ArrayList<String> results = dao.getResponseArrayList(query);
-		return results;
-    }
-    
-    /**
-	 * get the latest Animal Id for the primary key for Animal objects from database
-	 * @throws Exception when there is an SQL Exception
-	 */
-	private void getLatestAnimalId() throws Exception{
-		String queryMaxId = "SELECT MAX(A.Animal_ID) FROM ANIMAL AS A ";
-//		System.out.println("queryMaxId = " + queryMaxId );
-		String latestId = dao.getRows(queryMaxId).replaceAll("\\s+","");
-		System.out.println("latestId ='"+latestId+"'");
-		this.latestID = Integer.valueOf(latestId);
+			statement.executeUpdate();
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-	
-	/**
-     * @return the Split placeholder saved in the "DatabaseConnection.java"
-     */
-    public String getSplitPlaceholder() {
-    	return dao.getSplitPlaceholder();
-    }
-    
+
+//    /**
+//     * Searches for an animal by name in the database
+//     * @param name = animal's name
+//     * @param species =  animal's species
+//     * @param onlyAvailableAnimals = boolean deciding whether to return all animals or only available animals
+//     * @return specified animal if found, null otherwise
+//     */
+//    public ArrayList<String> searchAnimalByName(String name, String species, boolean onlyAvailableAnimals) throws Exception{
+//    	ArrayList<String> foundResults = search.searchForName(name, species, onlyAvailableAnimals);
+//    	return foundResults;
+//    }
 }

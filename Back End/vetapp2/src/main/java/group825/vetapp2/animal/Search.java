@@ -9,7 +9,7 @@ import group825.vetapp2.database.*;
 import java.lang.*;
 
 public class Search {
-	DatabaseConnection dao;
+	OldDatabaseConnection dao;
 	ArrayList<String> list_species;
 	String query, table_name;
 	int desiredNumberOfResults;
@@ -19,7 +19,7 @@ public class Search {
 	int idx_names = 1;
 	
 	
-	public Search(DatabaseConnection dao, String table_name, int desiredNumberOfResults) throws Exception{
+	public Search(OldDatabaseConnection dao, String table_name, int desiredNumberOfResults) throws Exception{
 		this.dao = dao;
 		this.table_name = table_name;
 		get_all_species();

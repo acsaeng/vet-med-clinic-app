@@ -2,14 +2,13 @@ package group825.vetapp2.request;
 
 import java.sql.DriverManager;
 import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.sql.*;
+
 
 import org.springframework.stereotype.Repository;
 
-import group825.vetapp2.database.DatabaseConnection;
+import group825.vetapp2.database.OldDatabaseConnection;
 
 /**
  * Repository that stores Request animal information
@@ -29,7 +28,7 @@ public class RequestRepository {
 	/**
 	 * Database connection boundary class
 	 */
-	DatabaseConnection dao;
+	OldDatabaseConnection dao;
 	
 	/**
 	 * Any query that is sent to the database
@@ -50,11 +49,8 @@ public class RequestRepository {
      * Update the latestID data member holding the max Request ID from the database
      */
 	public RequestRepository() throws Exception {
-		dao = new DatabaseConnection();
-		
-		
-//		Class.forName("com.mysql.cj.jdbc.Driver");
-		con = DriverManager.getConnection(DatabaseConnection.getUrl2(), DatabaseConnection.getUname2(), DatabaseConnection.getPass2());
+		dao = new OldDatabaseConnection();
+
 		getLatestRequestId();
 	}
 	

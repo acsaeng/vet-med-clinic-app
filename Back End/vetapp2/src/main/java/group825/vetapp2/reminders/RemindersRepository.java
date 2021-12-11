@@ -1,13 +1,10 @@
 package group825.vetapp2.reminders;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
-import group825.vetapp2.database.DatabaseConnection;
+import group825.vetapp2.database.OldDatabaseConnection;
 
 /**
  * Repository that stores Reminder information
@@ -26,7 +23,7 @@ public class RemindersRepository {
 	/**
 	 * Database connection boundary class
 	 */
-	DatabaseConnection dao;
+	OldDatabaseConnection dao;
 	
 	/**
 	 * Any query that is sent to the database
@@ -39,7 +36,7 @@ public class RemindersRepository {
 	int latestID;
 	
 	public RemindersRepository() throws Exception {
-		dao = new DatabaseConnection();
+		dao = new OldDatabaseConnection();
 		getLatestReminderID();
 	}
 	

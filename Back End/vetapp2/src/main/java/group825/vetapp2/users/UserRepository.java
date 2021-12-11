@@ -2,12 +2,9 @@ package group825.vetapp2.users;
 
 import org.springframework.stereotype.Repository;
 
-import group825.vetapp2.database.DatabaseConnection;
+import group825.vetapp2.database.OldDatabaseConnection;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Repository that stores User information
@@ -27,7 +24,7 @@ public class UserRepository {
 	/**
 	 * Connection to the SQL database
 	 */
-	private DatabaseConnection dao;
+	private OldDatabaseConnection dao;
 	
 	/**
 	 * SQL query
@@ -44,7 +41,7 @@ public class UserRepository {
 	 * @throws Exception
 	 */
 	public UserRepository() throws Exception {
-		dao = new DatabaseConnection();
+		dao = new OldDatabaseConnection();
 		getLatestUserId();
 	}
 

@@ -5,7 +5,7 @@
 **Group 825**
 - Timothy Mok
 - Aron Saengchan
-- Yong Jun Zhu
+- Yong Jun (Jimmy) Zhu
 
 ## Project Information
 

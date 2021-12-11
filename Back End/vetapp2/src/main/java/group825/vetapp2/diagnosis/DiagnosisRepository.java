@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import group825.vetapp2.database.DatabaseConnection;
+import group825.vetapp2.database.OldDatabaseConnection;
 
 /**
  * Repository that stores Diagnosis information
@@ -26,7 +26,7 @@ public class DiagnosisRepository {
 	/**
 	 * Connection to SQL database
 	 */
-	private DatabaseConnection dao;
+	private OldDatabaseConnection dao;
 	
 	/**
 	 * SQL query to be submitted for requests
@@ -43,7 +43,7 @@ public class DiagnosisRepository {
 	 * @throws Exception
 	 */
 	public DiagnosisRepository() throws Exception {
-		dao = new DatabaseConnection();
+		dao = new OldDatabaseConnection();
 		getLatestDiagnosisId();
 	}
 	

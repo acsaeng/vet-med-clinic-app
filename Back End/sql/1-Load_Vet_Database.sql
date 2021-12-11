@@ -42,33 +42,35 @@ VALUES
 
 DROP TABLE IF EXISTS USERS; 
 CREATE TABLE USERS ( 
-     User_ID			 int not null,
-     First_Name			 varchar (50) not null,
-     Last_Name			 varchar (50) not null,
-     User_Type			 varchar (100) not null,
-     UserName 			varchar (100) not null,
-     Email			 varchar (100) not null,
-     Phone_Number			 varchar (50) not null,
-     User_Password			 varchar (50) not null,
-     Start_Date			 	varchar (100) not null,
-     User_Status			 varchar (50) not null,
+     User_ID			int not null,
+     First_Name			varchar (50) not null,
+     Last_Name			varchar (50) not null,
+     User_Type			varchar (100) not null,
+     Username 			varchar (100) not null,
+     Email			 	varchar (100) not null,
+     Phone_Number		varchar (50) not null,
+     User_Password		varchar (50) not null,
+     Start_Date			date,
+     User_Status		boolean,
      primary key (UserName)
 );
 
-INSERT INTO USERS (User_ID, First_Name, Last_Name, User_Type, UserName,  Email, Phone_Number, User_Password, Start_Date, User_Status)
+INSERT INTO USERS (User_ID, First_Name, Last_Name, User_Type, Username,  Email, Phone_Number, User_Password, Start_Date, User_Status)
 VALUES
-('1', 'Alfy', 'Boyd', 'Admin', 'alfyBoyd1', 'alfred.boyd@vet.com', '403-123-4567', 'pa', '2020-05-03 00:00:00', 'Active'),
-('2', 'Charles', 'Day', 'Animal Care Attendant', 'charlesDay1', 'charles.day@vet.com', '403-987-6543', 'WoRdPaSs231', '2020-06-30 00:00:00', 'Active'),
-('3', 'Eve', 'Fast', 'Animal Health Technician', 'evest1', 'eve.fast@vet.com', '403-546-9565', 'HeLlo!51', '2020-05-05 00:00:00', 'Active'),
-('4', 'Georgina', 'Hill', 'Teaching Technician', 'georgina2', 'georgina.hill@vet.com', '403-489-6213', 'wOrLd123!', '2020-05-06 00:00:00', 'Active'),
-('5', 'Ivan', 'Jo', 'Student', 'ivanJo1', 'ivan.jo@vet.com', '403-651-8416', 'iVanIsCoOl9!', '2020-05-07 00:00:00', 'Blocked'),
-('6', 'Krity', 'Lou', 'Student', 'krityLou1', 'kristy.lou@vet.com', '403-498-6596', 'kRISTYYYY1!1', '2020-05-08 00:00:00', 'Active'),
-('7', 'Alfred', 'Boyd', 'Animal Health Technician', 'alfredBoyd1', 'alfred.boyd2@vet.com', '403-111-1111', 'HeLlo!52', '2020-09-05 00:00:00', 'Active'),
-('8', 'Marles', 'No', 'Animal Health Technician', 'marlesNo1', 'marles.no@vet.com', '403-222-2222', 'marles111', '2020-10-05 00:00:00', 'Active'),
-('9', 'Olivia', 'Phan', 'Animal Health Technician', 'oliviaPhan1', 'olivia.phan@vet.com', '403-333-3333', 'oLIVIA456', '2020-11-05 00:00:00', 'Blocked'),
-('10', 'Hacker', 'One', 'Teaching Technician', 'Instructor_1', 'hacker1@vet.com', '403-444-4444', 'pt@123', '2020-05-12 00:00:00', 'Active'),
-('11', 'Hacker', 'Two', 'Admin', 'Admin_1', 'hacket2@vet.com', '403-555-5555', 'pa', '2020-05-13 00:00:00', 'Active'),
-('12', 'Hacker', 'Three', 'Animal Health Technician', 'Technician', 'hacker3@vet.com', '403-666-6666', 'pe', '2020-05-14 00:00:00', 'Active');
+('1', 'Alfy', 'Boyd', 'Admin', 'alfyBoyd1', 'alfred.boyd@vet.com', '403-123-4567', 'pa', '2020-05-03 00:00:00', true),
+('2', 'Charles', 'Day', 'Animal Care Attendant', 'charlesDay1', 'charles.day@vet.com', '403-987-6543', 'WoRdPaSs231', '2020-06-30', true),
+('3', 'Eve', 'Fast', 'Animal Health Technician', 'evest1', 'eve.fast@vet.com', '403-546-9565', 'HeLlo!51', '2020-05-05', true),
+('4', 'Georgina', 'Hill', 'Teaching Technician', 'georgina2', 'georgina.hill@vet.com', '403-489-6213', 'wOrLd123!', '2020-05-06', true),
+('5', 'Ivan', 'Jo', 'Student', 'ivanJo1', 'ivan.jo@vet.com', '403-651-8416', 'iVanIsCoOl9!', '2020-05-07', false),
+('6', 'Krity', 'Lou', 'Student', 'krityLou1', 'kristy.lou@vet.com', '403-498-6596', 'kRISTYYYY1!1', '2020-05-08', true),
+('7', 'Alfred', 'Boyd', 'Animal Health Technician', 'alfredBoyd1', 'alfred.boyd2@vet.com', '403-111-1111', 'HeLlo!52', '2020-09-05', true),
+('8', 'Marles', 'No', 'Animal Health Technician', 'marlesNo1', 'marles.no@vet.com', '403-222-2222', 'marles111', '2020-10-05', true),
+('9', 'Olivia', 'Phan', 'Animal Health Technician', 'oliviaPhan1', 'olivia.phan@vet.com', '403-333-3333', 'oLIVIA456', '2020-11-05', false),
+('10', 'Hacker', 'One', 'Teaching Technician', 'Instructor_1', 'hacker1@vet.com', '403-444-4444', 'pt@123', '2020-05-12', true),
+('11', 'Hacker', 'Two', 'Admin', 'Admin_1', 'hacket2@vet.com', '403-555-5555', 'pa', '2020-05-13', true),
+('12', 'Hacker', 'Three', 'Animal Health Technician', 'Technician', 'hacker3@vet.com', '403-666-6666', 'pe', '2020-05-14', true);
+
+select * from users;
 
 
 DROP TABLE IF EXISTS ANIMAL; 
@@ -239,6 +241,3 @@ VALUES
 (102, DATE(20210201), 410),
 (102, DATE(20210301), 406),
 (102, DATE(20210401), 402);
-
-SELECT * FROM weight_history;
-

@@ -1,10 +1,13 @@
 package group825.vetapp2.users;
 
+import group825.vetapp2.database.DatabaseConnection;
 import org.springframework.stereotype.Repository;
 
-import group825.vetapp2.database.OldDatabaseConnection;
-
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 
 /**
  * Repository that stores User information
@@ -13,140 +16,152 @@ import java.util.ArrayList;
  * @version 2.0
  * @since December 6, 2021
  */
-@Repository("tempUserRepo")
+@Repository("userRepo")
 public class UserRepository {
-	
-	/**
-	 * Table name in SQL database
-	 */
-	private String tableName = "USERS";
 	
 	/**
 	 * Connection to the SQL database
 	 */
-	private OldDatabaseConnection dao;
-	
-	/**
-	 * SQL query
-	 */
-	private String query;
-	
-	/**
-	 * The latest user ID in the database to update new user's with
-	 */
-	int latestUserID;
+	private Connection dao;
 
 	/**
-	 * Constructor for the UserRepository
-	 * @throws Exception
+	 * Constructor that initializes the UserRepository
 	 */
-	public UserRepository() throws Exception {
-		dao = new OldDatabaseConnection();
-		getLatestUserId();
+	public UserRepository() {
+		this.dao = DatabaseConnection.getConnection();
 	}
 
     /**
      * Verifies a user's email and password information
-     * @param email user's email
+     * @param username user's username
      * @param password user's password
      * @return 1 if login was successful, 0 otherwise
      */
-	public ArrayList<String>  loginUser(String userName, String password) throws Exception{	 
-		query = "SELECT * FROM USERS AS U WHERE U.UserName='"+userName+"' AND U.User_Password='"+ password +"'";
-		ArrayList<String> results = dao.getResponseArrayList(query);
-		if (results.size() == 1) {
-			return results;
-		}  	 
-		return results;
-    }
+	public boolean loginUser(String username, String password) {
+		try {
+			// Create and execute a query to verify username and password
+			PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM USERS WHERE Username = ? AND User_Password = ?");
+			statement.setString(1, username);
+			statement.setString(2, password);
 
-    /**
-     * Retrieves all stored users from the database
-     * @return a list of all stored users
-     * @throws Exception when there is an SQL Exception
-     */
-    public ArrayList<String> selectAllUsers() throws Exception {
-    	query = "SELECT * FROM USERS;";
-		ArrayList<String> results = dao.getResponseArrayList(query);
-		return results;
+			ResultSet results = statement.executeQuery();
+
+			// Checks if the result set is empty
+			return results.isBeforeFirst();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
     }
 
     /**
      * Adds a user to the database
      * @param user user to be added
-     * @return 1 if registration was successful, 0 otherwise
-     * @throws Exception when there is an SQL Exception
      */
-    public int addUser(User user) throws Exception {
-    	String query_begin = "INSERT INTO USERS (User_ID, First_Name, Last_Name, User_Type, UserName,  "
-    		+ "Email, Phone_Number, User_Password, Start_Date, User_Status) VALUES";
-		query = query_begin + "( '"+user.getId() +"', '" + user.getFirstName()+"', '" +  user.getLastName() 
-			+ "', '" + user.getUserType() +"', '" + user.getUserName() + "', '" + user.getEmail() + "', '" 
-			+ user.getPhoneNum() +"', '" + user.getPassword() + "', '" + user.getStartDate() 
-			+ "', '" + user.getUserStatus() + "');";
-		System.out.println(query);
+    public void addUser(User user) {
 		try {
-			int responseCheck = dao.manipulateRows(query);
-		}catch(Exception e) {
-			getLatestUserId();
-			query = query_begin + "( '"+user.getId() +"', '" + user.getFirstName()+"', '" +  user.getLastName() 
-				+ "', '" + user.getUserType() +"', '" + user.getUserName() + "', '" + user.getEmail() + "', '" 
-				+ user.getPhoneNum() +"', '" + user.getPassword() + "', '" + user.getStartDate() 
-				+ "', '" + user.getUserStatus() + "');";
-			int responseCheck = dao.manipulateRows(query);	
+			// Execute SQL query to add new user to the database
+			PreparedStatement statement = this.dao.prepareStatement("INSERT INTO USERS (User_ID, First_Name," +
+					"Last_Name, User_Type, Username,  Email, Phone_Number, User_Password, Start_Date, User_Status) VALUE " +
+					"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+
+			statement.setInt(1, user.getId());
+			statement.setString(2, user.getFirstName());
+			statement.setString(3, user.getLastName());
+			statement.setString(4, user.getUserType());
+			statement.setString(5, user.getUsername());
+			statement.setString(6, user.getEmail());
+			statement.setString(7, user.getPhoneNum());
+			statement.setString(8, user.getPassword());
+			statement.setString(9, user.getStartDate().toString());
+			statement.setBoolean(10, user.isActiveStatus());
+			statement.executeUpdate();
+
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		return 1;
     }
+
+	/**
+	 * Finds a user in the database by ID
+	 * @param userID a specific user's ID
+	 * @return user if found, 'null' otherwise
+	 */
+	public User selectUserById(int userID) {
+		User user = null;
+
+		try {
+			// Execute SQL query to retrive specified user
+			PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM USERS WHERE User_ID = ?");
+
+			statement.setInt(1, userID);
+			ResultSet results = statement.executeQuery();
+
+			// Extract the user's information
+			while (results.next()) {
+				user = new User(results.getInt("User_ID"), results.getString("First_Name"), results.getString("Last_Name"),
+						results.getString("User_Type"), results.getString("Username"), results.getString("Email"),
+						results.getString("Phone_Number"), results.getString("User_Password"),
+						LocalDate.parse(results.getString("Start_Date")), results.getBoolean("User_Status"));
+			}
+
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return user;
+	}
 
     /**
      * Updates a user's information
-     * @param id user's existing ID
-     * @param user the User object with new information
-     * @return 1 if updates were successful, 0 otherwise
-     * @throws Exception when there is an SQL Exception
+     * @param userID user's ID number
+     * @param updatedInfo user's updated information
      */
-    public int editUser(int id, User update) throws Exception {
-    	String query = "UPDATE " + tableName + " AS U SET User_ID='" + update.getId() 
-    		+ "', First_Name='" + update.getFirstName() +"', Last_Name='" + update.getLastName() 
-    		+"', User_Type='" + update.getUserType() +"', UserName='" + update.getUserName() 
-    		+ "', Email='" + update.getEmail() + "', Phone_Number='" + update.getPhoneNum() +
-    		"', User_Password='" + update.getPassword() +"', Start_Date='" + update.getStartDate() +
-    		"User_Status='" + update.getStartDate() + "' WHERE U.User_ID='"+ id +"';";
-		 System.out.println("query = "+query);
-		 int responseCheck = dao.manipulateRows(query);
-		 return responseCheck;
+    public void editUser(int userID, User updatedInfo) {
+		try {
+			// Execute SQL query to update the user's information
+			PreparedStatement statement = this.dao.prepareStatement("UPDATE USERS SET First_Name = ?, " +
+					"Last_Name = ?, User_Type = ?, Username = ?,  Email = ?, Phone_Number = ?, User_Password = ?, " +
+					"Start_Date = ? WHERE User_ID = ?");
+
+			statement.setString(1, updatedInfo.getFirstName());
+			statement.setString(2, updatedInfo.getLastName());
+			statement.setString(3, updatedInfo.getUserType());
+			statement.setString(4, updatedInfo.getUsername());
+			statement.setString(5, updatedInfo.getEmail());
+			statement.setString(6, updatedInfo.getPhoneNum());
+			statement.setString(7, updatedInfo.getPassword());
+			statement.setString(8, updatedInfo.getStartDate().toString());
+			statement.setInt(9, userID);
+			statement.executeUpdate();
+
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
 
-    /**
-     * Finds a user in the database by ID
-     * @param id a specific user's ID
-     * @return user associated with a specified ID
-     * @throws Exception when there is an SQL Exception
-     */
-    public ArrayList<String> selectUserById(int id) throws Exception {
-    	query = "SELECT * FROM "+ this.tableName +" AS U WHERE U.User_ID='"+id+"';";
-		System.out.println("query = "+query);
-		ArrayList<String> results = dao.getResponseArrayList(query);
-		return results;
-    }
-    
-    
-    /**
-	 * get the latest Id for the primary key for Comment object from database
-	 * @throws Exception when there is an SQL Exception
-	 */
-	private void getLatestUserId() throws Exception {
-		String queryMaxId = "SELECT MAX(U.User_ID) FROM USERS AS U ";
-		String latestId = dao.getRows(queryMaxId).replaceAll("\\s+","");
-		System.out.println("latestId ='"+latestId+"'");
-		this.latestUserID = Integer.valueOf(latestId);
-	}
-	
 	/**
-	 * @return a String from the dao split
+	 * Updates a user's information
+	 * @param userID user's ID number
 	 */
-	public String getSplitPlaceholder() {
-		return dao.getSplitPlaceholder();
+	public void blockUser(int userID) {
+		try {
+			// Execute SQL query to update the user's information
+			PreparedStatement statement = this.dao.prepareStatement("UPDATE USERS SET User_Status = false WHERE User_ID = ?");
+			statement.setInt(1, userID);
+			statement.executeUpdate();
+
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-    
 }

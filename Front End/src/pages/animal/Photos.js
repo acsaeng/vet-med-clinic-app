@@ -13,6 +13,82 @@ import shiba3a from "../../images/animal-photos/shiba3a.jpg";
 
 
 function Photos() {
+// --THIS WAS WORKING FOR LAB 6----------------------------------------------------------------------------------
+
+
+    const [currentFile, setFile] = useState(null)
+    const [animalID, setAnimalID] = useState(101) //NOT SURE WHERE THIS PAGE WILL BE LINKED TO YET
+    //have to update this useState with reading the animalID when it is passed it!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //UPDATE--------------------------------------------------------------------
+
+    function handleFile(e){
+        let file = e.target.files[0];
+        console.log(file)
+        setFile(file)
+    }
+
+    function handleUpload(e){
+        let file = currentFile;
+
+        let formdata = new FormData()
+        formdata.append('file', file)
+        formdata.append('animalID','test1')
+
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+
+        console.log(formdata)
+
+        axios({
+            method: "post",
+            url: "http://localhost:8080/app/animal/uploadphoto/"+animalID+"/", 
+            data: formdata,
+            headers: { "Content-Type": "multipart/form-data" },
+          })
+    }
+
+
+
+// return (
+      
+//         <div className="main-container d-flex flex-column flex-grow-1">
+//             { 
+//             <div className="d-flex w-100 h-100">
+//                 <div className="sidebar">
+//                     <Sidebar />
+//                 </div>
+
+//                 <div className="placeholder">
+//                     <Sidebar />
+//                 </div>
+//             <div className= "d-flex flex-column">
+//             <div>
+//                 <AnimalNavbar />
+//             </div>
+//             <div className="d-flex mx-3">
+//               <h1>Upload Photo</h1>
+//             </div>
+ 
+//             <div class="button mx-5">
+//                 <input type="file" name="image" accept="image/png, image/jpeg" onChange={(e) => handleFile(e)}/>
+//             </div>
+//             <button type="button" onClick={(e) => handleUpload(e)}> Upload </button>
+//             </div>
+//             </div>}
+//         </div>
+        
+//     );
+
+// ---- END OF CODE FROM LAB 6 --------------------------------------------------------------------------
+
+
+
+
+
+
     return (
         <div className="main-container d-flex flex-column flex-grow-1">
             <div className="d-flex w-100 h-100">

@@ -1,6 +1,14 @@
 package group825.vetapp2.request;
 
+import java.sql.DriverManager;
 import java.util.ArrayList;
+<<<<<<< HEAD
+=======
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.sql.*;
+>>>>>>> Combined-YongJunZhu
 
 import org.springframework.stereotype.Repository;
 
@@ -36,12 +44,24 @@ public class RequestRepository {
 	 */
 	int latestID;
 	
+	
+	Connection con;
+	
+	
 	/**
      * Constructor that initializes the RequestsRepository
      * Update the latestID data member holding the max Request ID from the database
      */
 	public RequestRepository() throws Exception {
+<<<<<<< HEAD
 		dao = new OldDatabaseConnection();
+=======
+		dao = new DatabaseConnection();
+		
+		
+//		Class.forName("com.mysql.cj.jdbc.Driver");
+		con = DriverManager.getConnection(DatabaseConnection.getUrl2(), DatabaseConnection.getUname2(), DatabaseConnection.getPass2());
+>>>>>>> Combined-YongJunZhu
 		getLatestRequestId();
 	}
 	
@@ -53,14 +73,40 @@ public class RequestRepository {
 	 */
 	public int addRequest(Request request) throws Exception{
 		int responseCheck = 0;
+		
 		String queryBegin = "INSERT INTO REQUEST (Animal_ID, Request_ID, Requester_ID, Request_Date, Checkout_Date, Return_Date, Reason, Request_Status) VALUES";
-		query = queryBegin + "( '"+request.getAnimalID() +"', '" + request.getRequestID()+"', '" +  request.getRequesterID()
-			+"', '" + request.getRequestDate() +"', '" +request.getCheckoutDate()+"', '" + request.getReturnDate() +"', '" +request.getReason()
-			+"', '" + request.getRequestStatus() 
-			+"');";
-		System.out.println(query);
+//		query = queryBegin + "( '"+request.getAnimalID() +"', '" + request.getRequestID()+"', '" +  request.getRequesterID()
+//			+"', '" + request.getRequestDate() +"', '" +request.getCheckoutDate()+"', '" + request.getReturnDate() +"', '" +request.getReason()
+//			+"', '" + request.getRequestStatus() 
+//			+"');";
+//		System.out.println(query);
+//		try {
+//			responseCheck = dao.manipulateRows(query);
+//		}catch(Exception e) {
+//			getLatestRequestId();
+//			query = queryBegin + "( '"+request.getAnimalID() +"', '" + (this.latestID+1) +"', '" +  request.getRequesterID()
+//				+"', '" + request.getRequestDate() +"', '" +request.getCheckoutDate()+"', '" + request.getReturnDate() +"', '" +request.getReason()
+//				+"', '" + request.getRequestStatus() +"');";
+//			responseCheck = dao.manipulateRows(query);	
+//		}
+//		return responseCheck;
+		
+		
 		try {
-			responseCheck = dao.manipulateRows(query);
+			query = "INSERT INTO " + tableName + " (Animal_ID, Request_ID, Requester_ID, Request_Date, Checkout_Date, Return_Date, Reason, Request_Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+			PreparedStatement statement = con.prepareStatement(query);
+			statement.setInt(1, request.getAnimalID());
+			statement.setInt(2, request.getRequestID());
+        	statement.setInt(3, request.getRequesterID());
+        	statement.setString(4, request.getRequestDate());
+        	statement.setString(5, request.getCheckoutDate());
+        	statement.setString(5, request.getReturnDate());
+        	statement.setString(5, request.getReason());
+        	statement.setString(5, request.getRequestStatus());
+ 	
+        	responseCheck = statement.executeUpdate();
+        	statement.close();
+//			responseCheck = dao.manipulateRows(query);
 		}catch(Exception e) {
 			getLatestRequestId();
 			query = queryBegin + "( '"+request.getAnimalID() +"', '" + (this.latestID+1) +"', '" +  request.getRequesterID()
@@ -69,6 +115,12 @@ public class RequestRepository {
 			responseCheck = dao.manipulateRows(query);	
 		}
 		return responseCheck;
+		
+		
+		
+		
+		
+		
 	}
 	
 	

@@ -27,6 +27,50 @@ public class DatabaseConnection {
 	 */
 	Connection con;
 	
+	
+	
+	
+	/**
+	 * url to the location of the MySQL database
+	 */
+	static String url2 = "jdbc:mysql://localhost:3306/vetapp";
+	
+	/**
+	 * User username with access to MySQL database 
+	 */
+	static String uname2 = "dummyRootUser";
+	
+	/**
+	 * User password 
+	 */
+	static String pass2 = "password";
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static String getUrl2() {
+		return url2;
+	}
+
+	public static String getUname2() {
+		return uname2;
+	}
+
+	public static String getPass2() {
+		return pass2;
+	}
+
+
 	/**
 	 * placeholder string which separates every value within every tuple returned from the database
 	 */

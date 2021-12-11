@@ -1,11 +1,19 @@
 package group825.vetapp2.photos;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -108,5 +116,39 @@ public class PhotosService {
 		return listResults;
 	 }
 	
+	 /**
+     * Save a photo in the respective animal's folder in the desired directory and record the photo information (including filepath) in the database
+     * @param multipartFile = holds the image
+     * @param animalID = animal ID
+     * @throws IOException when the image fails to be saved or a folder fails to be created
+     */
+    public void savePhoto(MultipartFile multipartFile, int animalID) throws IOException {
+    	
+    	//get the filename which is currently stored in a path inside the "original filename"
+    	String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+    	
+    	//desired directory location to save the photos 
+    	String savedDir = "../../Front End/src/photos/"+animalID+"/";
+    	
+    	//convert savedDir to a Path object for concatenation later
+    	Path newPath = Paths.get(savedDir);
+    	
+    	//Copy the image that was uploaded to desired file location
+    	try(InputStream inputStream = multipartFile.getInputStream()){
+    		//create the directory if the directory does not already exist (ie for one specific animal)
+    		if (!Files.exists(newPath)) {
+        		Files.createDirectories(newPath);
+        	}
+    		//concatenate the filename with the directory path
+    		Path filePath = newPath.resolve(fileName);
+    		System.out.println("New file to be saved at: "+filePath.toFile().getAbsolutePath());
+    		
+    		Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+    	}catch (IOException e) {
+    		System.out.println("Error creating new directory or copying the file");
+    		e.printStackTrace();
+    	}
+    	
+    }
 	
 }

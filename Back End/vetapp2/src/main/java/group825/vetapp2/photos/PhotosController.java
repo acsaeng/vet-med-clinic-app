@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Controller that handles Photo requests
@@ -107,4 +109,22 @@ public class PhotosController {
 			int numRowsAffected = photosService.updatePhotoByID(id, photoToUpdate);
 			if (numRowsAffected == 0) {throw new InvalidIdException();}
 	}
+	
+	
+	/**
+     * 'POST' request that saves a photo in a desired folder location and adds a row to the database 
+     * to record the file path and the information about this photo for one animal
+     * @param multipartFile = holds the image
+     * @param id = animal ID
+     * @return 1 if successful
+     * @throws IOException when the image fails to be saved or a folder fails to be created
+     */
+    @PostMapping(path = "/{id}/uploadphoto")
+    public int uploadPhoto(@RequestParam("file") MultipartFile multipartFile, @PathVariable("id") String id) throws Exception{
+        int animalID = Integer.valueOf(id);
+    	this.photosService.savePhoto(multipartFile, animalID);
+        return 1;
+    }
+	
+	
 }

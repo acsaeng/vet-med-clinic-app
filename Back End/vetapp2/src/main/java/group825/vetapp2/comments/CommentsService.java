@@ -54,15 +54,27 @@ public class CommentsService {
 	}
 	
 	/**
-	 * Selects a comment from the database by animal ID number
+	 * Selects all comments from the database for one animal ID number
 	 * @param animalID = int id pertaining to a specific animal
 	 * @return List<Comment> either containing the Comment objects for particular animal or is empty
 	 * @throws Exception when there is an SQL Exception
 	 */
 	public List<Comment> selectCommentsByID(int animalID) throws Exception{
-		ArrayList<String> results =  repo.selectCommentsByID(animalID);
-		List<Comment> listResults = createListComment(results);
-		return listResults;
+		ArrayList<Comment> results =  repo.selectCommentsByID(animalID);
+//		List<Comment> listResults = createListComment(results);
+		return results;
+	}
+	
+	/**
+	 * Selects single comment from the database 
+	 * @param commentID = int id pertaining to a specific comment
+	 * @return List<Comment> either containing the Comment object or is empty
+	 * @throws Exception when there is an SQL Exception
+	 */
+	public List<Comment> selectSingleCommentByID(int commentID) throws Exception{
+		ArrayList<Comment> results =  repo.selectSingleCommentByID(commentID);
+//		List<Comment> listResults = createListComment(results);
+		return results;
 	}
 	
 
@@ -76,16 +88,16 @@ public class CommentsService {
 		return repo.deleteCommentsByID(commentID);
 	}
 	
-	/**
-	 * Updates a comment from the database by comment ID number
-	 * @param id = int id pertaining to specific comment
-	 * @param comment = Comment object with updated data members
-	 * @return integer verifying successful code execution
-	 * @throws Exception when there is an SQL Exception
-	 */
-	public int updateCommentByID(int commentID, Comment comment) throws Exception{
-		return repo.updateCommentByID(commentID, comment);
-	}
+//	/**
+//	 * Updates a comment from the database by comment ID number
+//	 * @param id = int id pertaining to specific comment
+//	 * @param comment = Comment object with updated data members
+//	 * @return integer verifying successful code execution
+//	 * @throws Exception when there is an SQL Exception
+//	 */
+//	public int updateCommentByID(int commentID, Comment comment) throws Exception{
+//		return repo.updateCommentByID(commentID, comment);
+//	}
 	
 	 /**
 	  * Create a list of Comment objects from ArrayList<String> returned from database query

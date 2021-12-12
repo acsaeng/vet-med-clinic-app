@@ -21,14 +21,14 @@ function Comments() {
     //resource: https://www.youtube.com/watch?v=Jppuj6M1sJ4
     const urlParams = new URLSearchParams(useLocation().search)
     const commentID = 1; //dummy value, commentID is updated on the backEnd before being saved
-    const animalID = urlParams.get("animalID")
+    // const animalID = urlParams.get("animalID")
     const showStudents = urlParams.get("withStudents")==="true" ? true:false
     // const authorID = urlParams.get("authorID")
     // const firstName = urlParams.get("firstName").replace("%20"," ")
     // const lastName = urlParams.get("lastName").replace("%20"," ")
     // const activeUserType = urlParams.get("userType").replace("%20"," ")
 
-    // const animalID = localStorage.getItem("animalID")
+    const animalID = localStorage.getItem("animalID")
     const authorID = localStorage.getItem("userID")
     const firstName = localStorage.getItem("userFirstName")
     const lastName = localStorage.getItem("userLastName")
@@ -41,7 +41,7 @@ function Comments() {
     let navigate = useNavigate();
     let currLocation = useLocation();
 
-    console.log(useLocation())
+    // console.log(useLocation())
 
     function getData(val){
         setData(val.target.value)
@@ -79,23 +79,23 @@ function Comments() {
         var formattedMinutes = rightNow.getMinutes() < 10 ? "0"+rightNow.getMinutes().toString() : rightNow.getMinutes().toString()
         var dateTime = rightNow.getFullYear() + "-" + formatedMonth +"-" + formatedDay +" "+ hours12 +":"+ formattedMinutes +" "+ AMPM
 
-        const comment = {
-          id:  parseInt(animalID),
-          commentId: commentID,
-          authorId:  parseInt(authorID),
-          timestamp: dateTime,
-          message: message,
-          firstName: firstName,
-          lastName: lastName,
-          userType: activeUserType
-        }
+        // const comment = {
+        //   id:  parseInt(animalID),
+        //   commentId: commentID,
+        //   authorId:  parseInt(authorID),
+        //   timestamp: dateTime,
+        //   message: message,
+        //   firstName: firstName,
+        //   lastName: lastName,
+        //   userType: activeUserType
+        // }
 
-        console.log(JSON.stringify(comment))
+        // console.log(JSON.stringify(comment))
 
-        axios.post('http://localhost:8080/app/comments/animal/', {
-          id:  parseInt(animalID),
-          commentId: commentID,
-          authorId:  parseInt(authorID),
+        axios.post('http://localhost:8080/app/comments/', {
+          animalID:  parseInt(animalID),
+          commentID: commentID,
+          authorID:  parseInt(authorID),
           timestamp: dateTime,
           message: message,
           firstName: firstName,
@@ -110,23 +110,7 @@ function Comments() {
       }
 
       function toggle(){
-        
-        // console.log("before changing the toggle")
-        // console.log("showStudents: ")
-        // console.log(showStudents)
-
-        // if (showStudents === false){ setStudentToggle(true)}
-        // else { setStudentToggle(false)}
-        // localStorage.setItem("toggleState", showStudents)
-        // console.log("after changing the toggle")
-        // console.log(showStudents)
-        // window.location.reload()
-
         console.log("inside toggle()")
-        // console.log(window.location.href)
-        // console.log(window.location.href.replace("withStudents=true", "withStudents=false"))
-        // console.log(window.location.pathname)
-        // console.log(currLocation.search)
 
         console.log(showStudents)
         // navigate(currLocation.search.replace("withStudents=false", "withStudents=true"))

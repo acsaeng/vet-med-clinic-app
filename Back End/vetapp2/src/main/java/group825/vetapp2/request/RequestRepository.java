@@ -1,8 +1,7 @@
 package group825.vetapp2.request;
 
-import java.sql.DriverManager;
+import java.sql.*;
 import java.util.ArrayList;
-
 import java.util.List;
 
 

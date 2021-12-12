@@ -1,9 +1,13 @@
 package group825.vetapp2.photos;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
+import group825.vetapp2.database.DatabaseConnection;
 import group825.vetapp2.database.OldDatabaseConnection;
 
 /**
@@ -25,6 +29,8 @@ public class PhotosRepository {
 	 */
 	OldDatabaseConnection dao;
 	
+	Connection dao2;
+	
 	/**
 	 * Any query that is sent to the database
 	 */
@@ -36,11 +42,17 @@ public class PhotosRepository {
 	int latestID;
 	
 	/**
+     * Results of a query to the database
+     */
+    private ResultSet results;
+	
+	/**
      * Constructor that initializes the PhotosRepository
      * Update the latestID data member holding the max photo ID from the database
      */
 	public PhotosRepository() throws Exception {
 		dao = new OldDatabaseConnection();
+		dao2 = DatabaseConnection.getConnection();
 	}
 	
 	
@@ -85,9 +97,18 @@ public class PhotosRepository {
 	 * @throws Exception when there is an SQL Exception
 	 */
 	public ArrayList<String> selectPhotosByID(int animalID) throws Exception{
-		query = "SELECT * FROM "+this.tableName +" AS P WHERE P.Animal_ID='"+animalID+"';";
+		query = "SELECT * FROM "+this.tableName +" AS P WHERE P.Animal_ID='"+animalID+"' ORDER BY Upload_Date asc;";
 		ArrayList<String> results = dao.getResponseArrayList(query);
 		return results;
+	}
+	
+	
+	public String getFilePath(int photoID) throws Exception{
+		PreparedStatement statement = this.dao2.prepareStatement("SELECT * FROM "+ tableName+" WHERE Photo_ID = ?;");
+        statement.setInt(1, photoID);
+        results = statement.executeQuery();
+        results.next();
+        return results.getString("File_Path");
 	}
 	
 	/** Deletes a photo from the database by photo ID number

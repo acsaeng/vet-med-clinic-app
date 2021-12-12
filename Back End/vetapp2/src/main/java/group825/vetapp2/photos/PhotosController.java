@@ -5,6 +5,7 @@ import java.util.List;
 import group825.vetapp2.exceptions.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
  * @version 2.0
  * @since Dec 6, 2021
  */
-@RequestMapping("app/photos/animal")
+@CrossOrigin
+@RequestMapping("app/photos/")
 @RestController
 public class PhotosController {
 
@@ -70,7 +72,7 @@ public class PhotosController {
 	 * @return Photo object or throw exception
 	 * @throws Exception when there is an SQL Exception
 	 */
-	@GetMapping(path="{animalID}") 
+	@GetMapping(path="animal/{animalID}") 
 	public List<Photo> selectPhotosByID(@PathVariable("animalID") String animalID){
 		try {
 			//id of animal
@@ -119,10 +121,12 @@ public class PhotosController {
      * @return 1 if successful
      * @throws IOException when the image fails to be saved or a folder fails to be created
      */
-    @PostMapping(path = "/{id}/uploadphoto")
-    public int uploadPhoto(@RequestParam("file") MultipartFile multipartFile, @PathVariable("id") String id) throws Exception{
+    @PostMapping(path = "animal/{id}/uploadphoto")
+    public int uploadPhoto(@RequestParam("file") MultipartFile multipartFile, @RequestParam("userID") String posterID, 
+    		@PathVariable("id") String id) throws Exception{
         int animalID = Integer.valueOf(id);
-    	this.photosService.savePhoto(multipartFile, animalID);
+        int userID = Integer.valueOf(posterID);
+    	this.photosService.savePhoto(multipartFile, animalID, userID);
         return 1;
     }
 	

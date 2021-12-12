@@ -1,14 +1,9 @@
 package group825.vetapp2.request;
 
-import java.sql.DriverManager;
-import java.util.ArrayList;
-<<<<<<< HEAD
-=======
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 import java.sql.*;
->>>>>>> Combined-YongJunZhu
+import java.util.ArrayList;
+import java.util.List;
+
 
 import org.springframework.stereotype.Repository;
 
@@ -53,15 +48,8 @@ public class RequestRepository {
      * Update the latestID data member holding the max Request ID from the database
      */
 	public RequestRepository() throws Exception {
-<<<<<<< HEAD
 		dao = new OldDatabaseConnection();
-=======
-		dao = new DatabaseConnection();
-		
-		
-//		Class.forName("com.mysql.cj.jdbc.Driver");
-		con = DriverManager.getConnection(DatabaseConnection.getUrl2(), DatabaseConnection.getUname2(), DatabaseConnection.getPass2());
->>>>>>> Combined-YongJunZhu
+
 		getLatestRequestId();
 	}
 	

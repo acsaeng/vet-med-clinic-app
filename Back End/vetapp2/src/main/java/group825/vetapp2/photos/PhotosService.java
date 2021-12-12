@@ -6,7 +6,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,8 +84,17 @@ public class PhotosService {
 	 * @throws Exception when there is an SQL Exception
 	 */
 	public int deletePhotoByID(int photoID) throws Exception {
+		String pathToDelete = "../../Front End/public"+dbPhotos.getFilePath(photoID);
+		
+		System.out.println(pathToDelete);
+		Path oldPath = Paths.get(pathToDelete);
+		boolean result = Files.deleteIfExists(oldPath);
+		
 		return dbPhotos.deletePhotoByID(photoID);
 	}
+	
+	
+	
 	
 	/**
 	 * Updates a photo from the database by ID number
@@ -120,18 +132,21 @@ public class PhotosService {
      * Save a photo in the respective animal's folder in the desired directory and record the photo information (including filepath) in the database
      * @param multipartFile = holds the image
      * @param animalID = animal ID
+     * @return 1 if successful
      * @throws IOException when the image fails to be saved or a folder fails to be created
      */
-    public void savePhoto(MultipartFile multipartFile, int animalID) throws IOException {
+    public int savePhoto(MultipartFile multipartFile, int animalID, int userID) throws IOException {
     	
     	//get the filename which is currently stored in a path inside the "original filename"
     	String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
     	
     	//desired directory location to save the photos 
-    	String savedDir = "../../Front End/src/photos/"+animalID+"/";
+    	String savedDir = "../../Front End/public/photos/"+animalID+"/";
     	
     	//convert savedDir to a Path object for concatenation later
     	Path newPath = Paths.get(savedDir);
+    	
+    	int responseCheck = 0;
     	
     	//Copy the image that was uploaded to desired file location
     	try(InputStream inputStream = multipartFile.getInputStream()){
@@ -143,12 +158,48 @@ public class PhotosService {
     		Path filePath = newPath.resolve(fileName);
     		System.out.println("New file to be saved at: "+filePath.toFile().getAbsolutePath());
     		
+    		//copy the file to the desired folder
     		Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-    	}catch (IOException e) {
-    		System.out.println("Error creating new directory or copying the file");
+    		
+    		String filePathDB = "/photos/"+animalID+"/"+fileName;
+    		String currDateTime = getTimestamp();
+    		Photo newPhoto = new Photo(animalID, 1, filePathDB, userID, currDateTime, "placeholder");
+    		
+    		responseCheck = dbPhotos.insertPhoto(newPhoto);
+    		
+    	}catch (Exception e) {
+    		System.out.println("Error creating new directory or copying the file or saving the new photo object's information in the database");
     		e.printStackTrace();
     	}
     	
+    	return responseCheck;
+    }
+    
+    private String getTimestamp() {
+    	Calendar cal = Calendar.getInstance();
+
+		cal.add(Calendar.DATE, 0);
+
+		Date date = cal.getTime();             
+
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:sss");          
+
+		String currentDateTime = null;
+
+		try {
+
+			currentDateTime = format1.format(date);
+
+		    System.out.println(currentDateTime );
+
+		} catch (Exception e1) {
+
+		    // TODO Auto-generated catch block
+
+		    e1.printStackTrace();
+
+		}
+		return currentDateTime;
     }
 	
 }

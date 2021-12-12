@@ -2,6 +2,10 @@ package group825.vetapp2.request;
 
 import java.sql.*;
 import java.util.ArrayList;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6ce1f0c7a56ff15d792616be24d2bcf3fa5f2342
 import java.util.List;
 
 

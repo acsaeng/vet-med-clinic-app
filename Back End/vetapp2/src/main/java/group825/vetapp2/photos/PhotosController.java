@@ -55,67 +55,6 @@ public class PhotosController {
 		}
 		return photosService.insertPhoto(photo);
 	}
-
-	/**
-	 * 'GET' mapping that retrieves all photos from the database
-	 * @return List<Photo> object containing the Photos of all animals by calling method from the repository
-	 * @throws Exception when there is an SQL Exception
-	 */
-	@GetMapping
-	public List<Photo> selectAllPhotos() throws Exception{
-		return photosService.selectAllPhotos();
-	}
-
-	/**
-	 * 'GET' mapping that selects a photo from the database by animal ID number
-	 * @param animalID = string path variable obtained by path denoted inside the GetMapping annotation
-	 * @return Photo object or throw exception
-	 * @throws Exception when there is an SQL Exception
-	 */
-	@GetMapping(path="animal/{animalID}") 
-	public List<Photo> selectPhotosByID(@PathVariable("animalID") String animalID){
-		try {
-			//id of animal
-			int id = Integer.valueOf(animalID);
-			return photosService.selectPhotosByID(id);
-		} catch(Exception e) {
-			// Catch if id is not a valid Animal ID from Database
-			throw new InvalidIdException();
-		}
-	}
-
-	/**
-	 * 'DELETE' mapping that deletes a photo from the database by ID number
-	 * @param photoID id path variable obtained by path denoted inside the DeleteMapping annotation
-	 */
-	@DeleteMapping(path = "{photoID}")
-	public void deletePhotoByID(@PathVariable("photoID") String photoID) {
-		try {	
-		//id of a photo
-		int id = Integer.valueOf(photoID);
-		int numRowsAffected = photosService.deletePhotoByID(id);
-//		if (numRowsAffected == 0) {throw new InvalidIdException();}
-		}catch (Exception e) {
-			throw new InvalidIdException();
-		}
-	}
-	
-	/**
-	 * 'PUT' mapping that updates a photo's information
-	 * @param photoID = id path variable obtained by path denoted inside the PutMapping annotation
-	 * @param photoToUpdate response body from HTTP request which should contain keys for necessary data members
-	 */
-	@PutMapping(path = "{photoID}")
-	public void updatePhotoByID(@PathVariable("photoID") String photoID, @RequestBody Photo photoToUpdate) throws Exception {
-			//id of a photo
-			int id = Integer.valueOf(photoID);
-			if (photoToUpdate.anyNulls()) {
-				throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
-			}
-			int numRowsAffected = photosService.updatePhotoByID(id, photoToUpdate);
-			if (numRowsAffected == 0) {throw new InvalidIdException();}
-	}
-	
 	
 	/**
      * 'POST' request that saves a photo in a desired folder location and adds a row to the database 
@@ -133,6 +72,50 @@ public class PhotosController {
     	this.photosService.savePhoto(multipartFile, animalID, userID);
         return 1;
     }
+	
+
+
+	/**
+	 * 'GET' mapping that selects a photo from the database by animal ID number
+	 * @param animalID = string path variable obtained by path denoted inside the GetMapping annotation
+	 * @return Photo object or throw exception
+	 * @throws Exception when there is an SQL Exception
+	 */
+	@GetMapping(path="animal/{animalID}") 
+	public List<Photo> selectPhotosByID(@PathVariable("animalID") String animalID){
+		try {
+			//id of animal
+			int id = Integer.valueOf(animalID);
+			return photosService.selectPhotosByID(id);
+		} catch(Exception e) {
+			e.printStackTrace();
+			// Catch if id is not a valid Animal ID from Database
+			throw new InvalidIdException();
+			
+		}
+	}
+
+	/**
+	 * 'DELETE' mapping that deletes a photo from the database by ID number
+	 * @param photoID id path variable obtained by path denoted inside the DeleteMapping annotation
+	 */
+	@DeleteMapping(path = "{photoID}")
+	public void deletePhotoByID(@PathVariable("photoID") String photoID) {
+		try {	
+		//id of a photo
+		int id = Integer.valueOf(photoID);
+		int numRowsAffected = photosService.deletePhotoByID(id);
+		if (numRowsAffected == 0) {throw new InvalidIdException();}
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new InvalidIdException();
+		}
+	}
+	
+
+	
+	
+
 	
 	
 }

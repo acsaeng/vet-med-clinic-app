@@ -43,7 +43,7 @@ public class PhotosService {
 		this.dbPhotos = dbPhotos;
 	}
 
-	//can delete-------------------------------------------------------------------
+	
 	/**
 	 * Inserts a photo in the database
 	 * @param photo = new Photo object to be added
@@ -54,17 +54,6 @@ public class PhotosService {
 		return dbPhotos.insertPhoto(photo);
 	}
 	
-	//can delete-------------------------------------------------------------------
-	/**
-	 * Selects all photos in the database
-	 * @return list of all Photo Objects
-	 * @throws Exception when there is an SQL Exception
-	 */
-	public List<Photo> selectAllPhotos() throws Exception {
-		ArrayList<String> results = dbPhotos.selectAllPhotos();
-		List<Photo> listResults = createListPhoto(results);
-		return listResults;
-	}
 	
 	/**
 	 * Selects photos from the database by the animal ID number
@@ -74,7 +63,6 @@ public class PhotosService {
 	 */
 	public List<Photo> selectPhotosByID(int animalID) throws Exception {
 		ArrayList<Photo> results = dbPhotos.selectPhotosByID(animalID);
-//		List<Photo> listResults = createListPhoto(results);
 		return results;
 	}
 	
@@ -87,7 +75,7 @@ public class PhotosService {
 	public int deletePhotoByID(int photoID) throws Exception {
 		String pathToDelete = "../../Front End/public"+dbPhotos.getFilePath(photoID);
 		
-		System.out.println(pathToDelete);
+		System.out.println("pathToDelete = " + pathToDelete);
 		Path oldPath = Paths.get(pathToDelete);
 		boolean result = Files.deleteIfExists(oldPath);
 		
@@ -95,41 +83,6 @@ public class PhotosService {
 	}
 	
 	
-	
-	//can delete-------------------------------------------------------------------
-	/**
-	 * Updates a photo from the database by ID number
-	 * @param photoID = id pertaining to specific photo for an animal
-	 * @param photo = Photo object with updated data members
-	 * @return integer verifying successful code execution
-	 * @throws Exception when there is an SQL Exception
-	 */
-	public int updatePhotoByID(int photoID, Photo photo) throws Exception {
-		return dbPhotos.updatePhotoByID(photoID, photo);
-	}
-	
-	
-	//can delete-------------------------------------------------------------------
-	/**
-	  * Create a list of Photo objects from ArrayList<String> returned from database query
-	 * @param foundResults = ArrayList<String> preprocessed response from database of all returned tuples as an ArrayList of Strings
-	 * @return ArrayList<Photo> where each object was created from the data in each String from the ArrayList input
-	 */
-	public List<Photo> createListPhoto(ArrayList<String> foundResults){
-		List<Photo> listResults = new ArrayList<Photo>(); 
-		//review against Database setup
-		int idxAnimalID=0, idxPhotoID=1, idxDateUploaded=4, idxFilepath=2, idxDescription=5, idxUserID=3;
-		for (String result: foundResults) {
-			String[] resultSplit = result.split(dbPhotos.getSplitPlaceholder());
-			Photo temp =  new Photo( Integer.valueOf(resultSplit[idxAnimalID]),  Integer.valueOf(resultSplit[idxPhotoID]), resultSplit[idxFilepath],  
-							Integer.valueOf(resultSplit[idxUserID]), resultSplit[idxDateUploaded], resultSplit[idxDescription]);
-			listResults.add(temp);
-		}
-		System.out.println("\nPrepared List to send as json response to API endpoint:");
-		System.out.println(listResults);
-
-		return listResults;
-	 }
 	
 	 /**
      * Save a photo in the respective animal's folder in the desired directory and record the photo information (including filepath) in the database
@@ -168,6 +121,20 @@ public class PhotosService {
     		String currDateTime = getTimestamp();
     		Photo newPhoto = new Photo(animalID, 1, filePathDB, userID, currDateTime, "placeholder");
     		
+    		//check if this filepath already exists
+    		//if exists then update    		
+    		ArrayList<Photo> results = dbPhotos.selectPhotosByID(animalID);
+    		for (Photo aPhoto: results) {
+    			System.out.println("");
+//    			if (aPhoto.getFilepath() == filePathDB) {
+    			if (aPhoto.getFilepath().equals(filePathDB)) {
+    				System.out.println("Filepath already exists on DB. Updating existing photo's information.");
+    				responseCheck = dbPhotos.updatePhotoByID(aPhoto.getPhotoID(), newPhoto);
+    				return responseCheck;
+    			}
+    		}
+    		
+    		//If this is a new photo then add the new photo
     		responseCheck = dbPhotos.insertPhoto(newPhoto);
     		
     	}catch (Exception e) {

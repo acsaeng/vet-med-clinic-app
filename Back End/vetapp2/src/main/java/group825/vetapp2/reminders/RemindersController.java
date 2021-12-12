@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since November 30, 2021
  */
 @CrossOrigin
-@RequestMapping("app/reminders/animal")
+@RequestMapping("app/reminders")
 @RestController
 public class RemindersController {
 
@@ -70,7 +70,7 @@ public class RemindersController {
 	 * @param idStr = String path variable obtained by path denoted inside the GetMapping annotation
 	 * @return Reminder object or throw exception
 	 */
-	@GetMapping(path="{animalID}") 
+	@GetMapping(path="/animal/{animalID}") 
 	public List<Reminder> selectRemindersById(@PathVariable("animalID") String animalID) {
 		try {
 			//id of animal

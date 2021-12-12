@@ -62,9 +62,9 @@ public class RemindersService {
 	 * @throws Exception when there is an SQL Exception
 	 */
 	public List<Reminder> selectRemindersByID(int id) throws Exception {
-		ArrayList<String> results =  dbReminders.selectRemindersByID(id);
-		List<Reminder> listResults = createListReminders(results);
-		return listResults;
+		ArrayList<Reminder> results =  dbReminders.selectRemindersByID(id);
+//		List<Reminder> listResults = createListReminders(results);
+		return results;
 	}
 	
 	/** Deletes a reminder from the database by ID number

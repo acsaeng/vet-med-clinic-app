@@ -13,6 +13,7 @@ import BlockUser from "./pages/user/BlockUser";
 import AnimalInfo from "./pages/animal/AnimalInfo";
 import HealthRecords from './pages/animal/HealthRecords';
 import Reminders from './pages/animal/Reminders';
+import AddReminder from './pages/animal/AddReminder';
 import Comments from './pages/animal/Comments';
 import SingleComment from './pages/animal/SingleComment';
 import Photos from './pages/animal/Photos';
@@ -48,6 +49,7 @@ function App() {
                 <Route path='/animal-info' element={<AnimalInfo/>}/>
                 <Route path='/health-records' element={<HealthRecords/>}/>
                 <Route path='/reminders' element={<Reminders/>}/> 
+                <Route path='/reminders/add' element={<AddReminder/>}/> 
                 <Route path='/comments' element={<Comments/>}/> 
                 <Route path='/comments/single' element={<SingleComment/>}/> 
                 <Route path='/photos' element={<Photos/>}/>

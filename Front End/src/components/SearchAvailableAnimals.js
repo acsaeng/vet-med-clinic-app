@@ -65,7 +65,8 @@ export default class SearchAvailableAnimals extends Component{
             // <div>placeholder</div>
             <div className="overflow-auto">
                 {this.state.allAvailableAnimals.map(animal =>
-                    <a href = {"/request-animal?animalID="+animal.animalID} >
+                    // <a href = {"/request-animal?animalID="+animal.animalID} >
+                    <a href = {"/animal-info?animalID="+animal.animalID} >
                     {/* // <a href = "/request-animal" onClick={this.storeSelectedAnimalInfo(animal)}>  */}
                     <div class="card text-black bg-light mx-5 my-3" key={animal.animalID} style={{width: "50rem"}}>
                         

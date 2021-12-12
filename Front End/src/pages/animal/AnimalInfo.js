@@ -1,8 +1,12 @@
 import '../../styling/main.css';
 import Sidebar from '../../components/Sidebar';
 import AnimalNavbar from '../../components/AnimalNavbar';
+import {useLocation} from 'react-router-dom'
 
 function AnimalInfo() {
+    const urlParams = new URLSearchParams(useLocation().search)
+    const animalID = urlParams.get("animalID")
+    localStorage.setItem("animalID", animalID)
 
     function handleSubmit(event) {
         event.preventDefault();

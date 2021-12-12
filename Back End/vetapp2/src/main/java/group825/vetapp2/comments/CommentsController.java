@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since November 28, 2021
  */
 @CrossOrigin
-@RequestMapping("app/comments/animal")
+@RequestMapping("app/comments")
 @RestController
 public class CommentsController {
 
@@ -70,7 +70,7 @@ public class CommentsController {
 	 * @param animalID = String path variable obtained by path denoted inside the GetMapping annotation
 	 * @return comment object or throw exception
 	 */
-	@GetMapping(path="{animalID}") 
+	@GetMapping(path="/animal/{animalID}") 
 	public List<Comment> selectCommentsByID(@PathVariable("animalID") String animalID) {
 		try {
 			//id of animal
@@ -78,36 +78,68 @@ public class CommentsController {
 			System.out.println(commentsService.selectCommentsByID(id));
 			return commentsService.selectCommentsByID(id);
 		} catch(Exception e) {
+			e.printStackTrace();
 			// Catch if id is not a valid Animal ID from Database
 			throw new InvalidIdException();
 		}
 	}
+	
+	
+	/**
+	 * 'GET' mapping that searches for a comment by animal ID number in the database
+	 * @param animalID = String path variable obtained by path denoted inside the GetMapping annotation
+	 * @return comment object or throw exception
+	 */
+	@GetMapping(path="{commentID}") 
+	public List<Comment> selectSingleCommentByID(@PathVariable("commentID") String commentID) {
+		try {
+			//id of animal
+			int id = Integer.valueOf(commentID);
+			System.out.println(commentsService.selectSingleCommentByID(id));
+			return commentsService.selectSingleCommentByID(id);
+		} catch(Exception e) {
+			e.printStackTrace();
+			// Catch if id is not a valid Animal ID from Database
+			throw new InvalidIdException();
+		}
+	}
+	
 
 	/**
 	 * 'DELETE' mapping that deletes a comment by comment ID number
 	 * @param commentID = String path variable obtained by path denoted inside the DeleteMapping annotation
 	 */
 	@DeleteMapping(path = "{commentID}")
-	public void deleteCommentByID(@PathVariable("commentID") String commentID) throws Exception{
+	public void deleteCommentByID(@PathVariable("commentID") String commentID) {
 			//id of a comment
 			int id = Integer.valueOf(commentID);
-			int numRowsAffected = commentsService.deleteCommentsByID(id);
-			if (numRowsAffected == 0) {throw new InvalidIdException();}
+			try {	
+				int numRowsAffected = commentsService.deleteCommentsByID(id);
+				if (numRowsAffected == 0) {throw new InvalidIdException();}
+			}catch (Exception e) {
+				e.printStackTrace();
+				throw new InvalidIdException();
+			}
 	}
 
-	/**
-	 * 'PUT' mapping that updates a comment by ID number
-	 * @param commentID = path variable obtained by path denoted inside the PutMapping annotation
-	 * @param commentToUpdate = Comment object with all the updated data members
-	 */
-	@PutMapping(path = "{commentID}")
-	public void updateCommentByID(@PathVariable("commentID") String commentID, @RequestBody Comment commentToUpdate) throws Exception{
-		//id of a comment
-		int id = Integer.valueOf(commentID);
-		if (commentToUpdate.anyNulls()) {
-			throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
-		}
-		int numRowsAffected = commentsService.updateCommentByID(id, commentToUpdate);	
-		if (numRowsAffected == 0) {throw new InvalidIdException();}
-	}
+//	/**
+//	 * 'PUT' mapping that updates a comment by ID number
+//	 * @param commentID = path variable obtained by path denoted inside the PutMapping annotation
+//	 * @param commentToUpdate = Comment object with all the updated data members
+//	 */
+//	@PutMapping(path = "{commentID}")
+//	public void updateCommentByID(@PathVariable("commentID") String commentID, @RequestBody Comment commentToUpdate) throws Exception{
+//		//id of a comment
+//		int id = Integer.valueOf(commentID);
+//		if (commentToUpdate.anyNulls()) {
+//			throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
+//		}
+//		try {	
+//			int numRowsAffected = commentsService.updateCommentByID(id, commentToUpdate);	
+//			if (numRowsAffected == 0) {throw new InvalidIdException();}
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//			throw new InvalidIdException();
+//		}
+//	}
 }

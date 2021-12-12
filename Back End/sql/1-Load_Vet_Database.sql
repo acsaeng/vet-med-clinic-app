@@ -55,7 +55,7 @@ CREATE TABLE ANIMAL (
      primary key (Animal_ID)
 );
 
-INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattoo, Birth_Date, Sex, RFID, Microchip, Availability, Animal_Status, Colour, Additional_Information )
+INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattoo, Birth_Date, Sex, RFID, Microchip, Availability, Animal_Status, Colour, Additional_Information, Length_Name, SearchKey_Name )
 VALUES
 (101, 'Bobby', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15 00:00:00', 'M', '197839178371.0', '176387613813.0', 'Available', 'Healthy', 'Black and white', '', '5.0', 'a0-b3-c0-d0-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o1-p0-q0-r0-s0-t0-u0-v0-w0-x0-y1-z0'),
 (102, 'Daniel', 'Horse', 'Vanners', '564543', 'ABC Paris', '2018-08-31 00:00:00', 'F', '8987498179390.0', '5671876189197.0', 'Unavailable', 'Injured', 'Brown', 'Sprained right hind leg. Out for 2 weeks', '6.0', 'a1-b0-c0-d1-e1-f0-g0-h0-i1-j0-k0-l1-m0-n1-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),

@@ -22,7 +22,7 @@ public class CommentsRepository {
 	/**
 	 * Table name from database
 	 */
-	String tableName = "COMMENT";
+	String tableName = "COMMENTS";
 
 	/**
 	 * Database connection boundary class
@@ -84,7 +84,7 @@ public class CommentsRepository {
 		
 		getLatestCommentID();
 		
-		PreparedStatement statement = this.dao2.prepareStatement("INSERT INTO COMMENT (Animal_ID, Comment_ID, Upload_Time, User_ID, Message) VALUES "
+		PreparedStatement statement = this.dao2.prepareStatement("INSERT INTO COMMENTS (Animal_ID, Comment_ID, Upload_Time, User_ID, Message) VALUES "
 				+ "(?, ?, ?, ?, ?)");
 		statement.setInt(1, comment.getAnimalID());
 		statement.setInt(2, (this.latestID+1));

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import '../../styling/main.css';
 import Sidebar from '../../components/Sidebar';
 import ManageAnimalsNavbar from '../../components/ManageAnimalsNavbar';
-import SearchAvailableAnimals from '../../components/SearchAvailableAnimals';
+import SearchAnimals from '../../components/SearchAnimals';
 import {useLocation, useNavigate} from 'react-router-dom'
 
 
@@ -23,7 +23,7 @@ function ManageAnimal() {
     function reloadSearches(e){
         e.preventDefault();
         console.log("searchQuery = "+searchQuery)
-        navigate(`/manage-animal?query=`+searchQuery)
+        navigate(`/manage-animals?query=`+searchQuery)
         window.location.reload() 
     }
 
@@ -49,7 +49,7 @@ function ManageAnimal() {
             </form> 
             <div class="ex1 mt-3 mx-5 w-75">
                 {searchQuery === ""?
-                    null:<SearchAvailableAnimals query={searchQuery}/>   
+                    null:<SearchAnimals query={searchQuery}/>   
                 }
             </div>
 

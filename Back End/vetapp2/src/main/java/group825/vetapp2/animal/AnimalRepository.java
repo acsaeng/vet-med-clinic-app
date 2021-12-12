@@ -74,24 +74,24 @@ public class AnimalRepository {
 	 * @throws Exception when there is an SQL Exception
      */
     public int addAnimal(Animal animal) throws Exception{
-    	String queryBegin = "INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattooo, Birth_Date, Sex, "
-    			+"RFID, Microchip, Animal_Status, Colour, Weight, Additional_Information, Length_Name, SearchKey_Name)\r\n"
-    			+ "VALUES";
-		query = queryBegin + "( '"+animal.getAnimalID()+"', '" + animal.getName()+"', '" + animal.getSpecies()+"', '" + animal.getBreed() +"', '" + animal.getTattoo() +"', '" 
-    			+ animal.getCityTattoo() +"', '" + animal.getDob()+"', '" + animal.getSex() +"', '" + animal.getRfid()+"', '" + animal.getMicrochip()
-    			+"', '" + animal.getStatus()+"', '" + animal.getColor() +"', '" + animal.getWeight()+"', '" + animal.getMoreInfo() 
-    			+"', '" + animal.getNameLength() +"', '" + animal.getSearchKeyName()+"');";
-		System.out.println(query);
-		try {
-			int responseCheck = dao.manipulateRows(query);
-		}catch(Exception e) {
-			getLatestAnimalId();
-			query = queryBegin + "( '"+(this.latestID+1)+"', '" + animal.getName()+"', '" + animal.getSpecies()+"', '" + animal.getBreed() +"', '" + animal.getTattoo() +"', '" 
-	    			+ animal.getCityTattoo() +"', '" + animal.getDob()+"', '" + animal.getSex() +"', '" + animal.getRfid()+"', '" + animal.getMicrochip()
-	    			+"', '" + animal.getStatus()+"', '" + animal.getColor() +"', '" + animal.getWeight()+"', '" + animal.getMoreInfo() 
-	    			+"', '" + animal.getNameLength() +"', '" + animal.getSearchKeyName()+"');";
-			int responseCheck = dao.manipulateRows(query);
-		}
+//    	String queryBegin = "INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattooo, Birth_Date, Sex, "
+//    			+"RFID, Microchip, Animal_Status, Colour, Weight, Additional_Information, Length_Name, SearchKey_Name)\r\n"
+//    			+ "VALUES";
+//		query = queryBegin + "( '"+animal.getAnimalID()+"', '" + animal.getName()+"', '" + animal.getSpecies()+"', '" + animal.getBreed() +"', '" + animal.getTattoo() +"', '" 
+//    			+ animal.getCityTattoo() +"', '" + animal.getDob()+"', '" + animal.getSex() +"', '" + animal.getRfid()+"', '" + animal.getMicrochip()
+//    			+"', '" + animal.getStatus()+"', '" + animal.getColor() +"', '" + animal.getWeight()+"', '" + animal.getMoreInfo() 
+//    			+"', '" + animal.getNameLength() +"', '" + animal.getSearchKeyName()+"');";
+//		System.out.println(query);
+//		try {
+//			int responseCheck = dao.manipulateRows(query);
+//		}catch(Exception e) {
+//			getLatestAnimalId();
+//			query = queryBegin + "( '"+(this.latestID+1)+"', '" + animal.getName()+"', '" + animal.getSpecies()+"', '" + animal.getBreed() +"', '" + animal.getTattoo() +"', '" 
+//	    			+ animal.getCityTattoo() +"', '" + animal.getDob()+"', '" + animal.getSex() +"', '" + animal.getRfid()+"', '" + animal.getMicrochip()
+//	    			+"', '" + animal.getStatus()+"', '" + animal.getColor() +"', '" + animal.getWeight()+"', '" + animal.getMoreInfo() 
+//	    			+"', '" + animal.getNameLength() +"', '" + animal.getSearchKeyName()+"');";
+//			int responseCheck = dao.manipulateRows(query);
+//		}
 		return 1;
     }
 
@@ -106,7 +106,7 @@ public class AnimalRepository {
 	   	 + "', Species='" + update.getSpecies() +"', Breed='" + update.getBreed() +"', Tattoo_Num='" + update.getTattoo()
 	   	 + "', City_Tattooo='" + update.getCityTattoo() + "', Birth_Date='" + update.getDob()+ "', Sex='" + update.getSex() 
 	   	 +"', RFID='" + update.getRfid() +"', Microchip='" + update.getMicrochip() +"', Animal_Status='" + update.getStatus() 
-	   	 +"', Colour='" + update.getColor() +"', Weight='" + update.getWeight() +"', Additional_Information='" + update.getMoreInfo()  
+	   	 +"', Colour='" + update.getColor()  +"', Additional_Information='" + update.getMoreInfo()  
 	   	 + "', Length_Name='" + update.getNameLength() + "', SearchKey_Name='" + update.getSearchKeyName() 
 	   	 + "' WHERE C.Animal_ID='"+ animalID +"';";
    	 

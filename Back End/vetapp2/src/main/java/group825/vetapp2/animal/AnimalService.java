@@ -94,8 +94,8 @@ public class AnimalService {
     public List<Animal> createListAnimal(ArrayList<String> foundResults){
     	List<Animal> listResults = new ArrayList<Animal>(); 
     	//review against Database setup
-    	int idxAnimalID=0, idxName=1, idxBreed=3, idxSpecies=2, idxSex=7, idxWeight=12, idxTattoo=4, idxCityTattoo=5, 
-    			idxDob=6, idxRfid=8, idxMicrochip=9, idxStatus=10, idxColor=11, idxMoreInfo=13, 
+    	int idxAnimalID=0, idxName=1, idxBreed=3, idxSpecies=2, idxSex=7, idxAvailability=10, idxTattoo=4, idxCityTattoo=5, 
+    			idxDob=6, idxRfid=8, idxMicrochip=9, idxStatus=11, idxColor=12, idxMoreInfo=13, 
     			idxNameLength=14, idxSearchKeyName=15;
     	
     	for (String result: foundResults) {
@@ -105,8 +105,8 @@ public class AnimalService {
 //    		}
 //    		System.out.println(Double.valueOf(resultSplit[idxWeight]));
     	Animal temp =  new Animal( Integer.valueOf(resultSplit[idxAnimalID]), resultSplit[idxName], resultSplit[idxSpecies], resultSplit[idxBreed], 
-    			resultSplit[idxSex], Double.valueOf(resultSplit[idxWeight]), resultSplit[idxTattoo], resultSplit[idxCityTattoo], 
-    			resultSplit[idxDob], resultSplit[idxRfid], resultSplit[idxMicrochip], resultSplit[idxStatus], 
+    			resultSplit[idxSex], resultSplit[idxTattoo], resultSplit[idxCityTattoo], 
+    			resultSplit[idxDob], resultSplit[idxRfid], resultSplit[idxMicrochip], resultSplit[idxAvailability], resultSplit[idxStatus], 
     			resultSplit[idxColor], resultSplit[idxMoreInfo], Integer.valueOf(resultSplit[idxNameLength]), 
     			resultSplit[idxSearchKeyName]);
     	listResults.add(temp);

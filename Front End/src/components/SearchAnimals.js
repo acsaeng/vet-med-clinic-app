@@ -3,12 +3,13 @@ import React, {Component} from "react"
 import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default class SearchAvailableAnimals extends Component{
+export default class SearchAnimals extends Component{
     // navigate = useNavigate();
 
     state = {
         allAvailableAnimals:[],
-        firstQuery:this.props.query === null? "":this.props.query,
+        // firstQuery:this.props.query === null? "":this.props.query,
+        firstQuery:this.props.query,
         counter:0
     };
 
@@ -19,12 +20,21 @@ export default class SearchAvailableAnimals extends Component{
     // }
 
     getAvailableAnimals(){
-        axios.get('http://localhost:8080/app/animal/searchAvailable?name='+this.props.query).then(
-            res => {
-                console.log(res);
-                this.setState({allAvailableAnimals: res.data})
-            }
-        )
+        if (this.props.query !== null){
+            axios.get('http://localhost:8080/app/animal/search?name='+this.props.query).then(
+                res => {
+                    console.log(res);
+                    this.setState({allAvailableAnimals: res.data})
+                }
+            )
+        }else{
+            axios.get('http://localhost:8080/app/animal/').then(
+                res => {
+                    console.log(res);
+                    this.setState({allAvailableAnimals: res.data})
+                })
+        }
+        
     }
     
     componentDidMount(){
@@ -66,9 +76,9 @@ export default class SearchAvailableAnimals extends Component{
             <div className="overflow-auto">
                 {this.state.allAvailableAnimals.map(animal =>
                     // <a href = {"/request-animal?animalID="+animal.animalID} >
-                    <a href = {"/animal-info?animalID="+animal.animalID} >
+                    <a href = {"/animal-info?animalID="+animal.animalID} key={animal.animalID}>
                     {/* // <a href = "/request-animal" onClick={this.storeSelectedAnimalInfo(animal)}>  */}
-                    <div class="card text-black bg-light mx-5 my-3" key={animal.animalID} style={{width: "50rem"}}>
+                    <div class="card text-black bg-light mx-5 my-3" key={animal.animalID} style={{width: "45rem"}}>
                         
                         <div class="card-header" >
                             {/* <h6> Request {request.requestID} by {request.requesterFirstName} {request.requesterLastName} </h6>  */}

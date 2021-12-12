@@ -105,7 +105,7 @@ public class CommentsRepository {
 	 */
 	public ArrayList<String> selectAllComments() throws Exception {
 		query = "SELECT C.Animal_ID, C.Comment_ID, C.Upload_Time, C.User_ID, C.Message, U.First_Name, U.Last_Name, U.User_Type "
-		+ "FROM COMMENT AS C, USERS AS U WHERE C.User_ID = U.User_ID";
+		+ "FROM COMMENTS AS C, USERS AS U WHERE C.User_ID = U.User_ID";
 		System.out.println("query for select: "+query);
 		ArrayList<String> results = dao.getResponseArrayList(query);
 		return results;
@@ -121,7 +121,7 @@ public class CommentsRepository {
 		ArrayList<Comment> animalComments = new ArrayList<Comment>();
 		
 		PreparedStatement statement = this.dao2.prepareStatement("SELECT C.Animal_ID, C.Comment_ID, C.Upload_Time, C.User_ID, C.Message, U.First_Name, U.Last_Name, U.User_Type "
-				+ "FROM COMMENT AS C, USERS AS U WHERE C.User_ID = U.User_ID AND C.Animal_ID=?");
+				+ "FROM COMMENTS AS C, USERS AS U WHERE C.User_ID = U.User_ID AND C.Animal_ID=?");
 		statement.setInt(1, animalID);
 		results = statement.executeQuery();
 		
@@ -144,7 +144,7 @@ public class CommentsRepository {
 		ArrayList<Comment> animalComments = new ArrayList<Comment>();
 		
 		PreparedStatement statement = this.dao2.prepareStatement("SELECT C.Animal_ID, C.Comment_ID, C.Upload_Time, C.User_ID, C.Message, U.First_Name, U.Last_Name, U.User_Type "
-				+ "FROM COMMENT AS C, USERS AS U WHERE C.User_ID = U.User_ID AND C.Comment_ID=?");
+				+ "FROM COMMENTS AS C, USERS AS U WHERE C.User_ID = U.User_ID AND C.Comment_ID=?");
 		statement.setInt(1, commentID);
 		results = statement.executeQuery();
 		
@@ -217,7 +217,7 @@ public class CommentsRepository {
 //		System.out.println("latestID ='"+latestID+"'");
 //		this.latestID = Integer.valueOf(latestID);
 		
-		PreparedStatement statement = this.dao2.prepareStatement("SELECT MAX(Comment_ID) FROM COMMENT ");
+		PreparedStatement statement = this.dao2.prepareStatement("SELECT MAX(Comment_ID) FROM COMMENTS ");
 		results = statement.executeQuery();
 		results.next();
 		

@@ -43,10 +43,6 @@ public class Animal {
      */
     private String sex;
 
-    /**
-     * Weight of the animal
-     */
-    private double weight;
     
     /**
      * Tattoo on animal
@@ -77,6 +73,11 @@ public class Animal {
      * Status of animal 
      */
     private String status;
+    
+    /**
+     * Availability of animal 
+     */
+    private String availability;
     
     /**
      * Color of animal 
@@ -112,6 +113,7 @@ public class Animal {
      * @param dob =  animal's date of birth
      * @param rfid =  animal's rfid
      * @param microchip =  animal's microchip number
+     * @param availability =  animal's current availability
      * @param status =  animal's current status
      * @param color =  animal's skin/fur/hair color
      * @param moreInfo =  gives more details identifying the animal
@@ -120,10 +122,10 @@ public class Animal {
      */
     public Animal(@JsonProperty("animalID") int animalID, @JsonProperty("name") String name,
     		 	  @JsonProperty("species") String species, @JsonProperty("type") String breed,
-                  @JsonProperty("sex") String sex, @JsonProperty("weight") double weight,
+                  @JsonProperty("sex") String sex,
                   @JsonProperty("tattoo") String tattoo, @JsonProperty("cityTattoo") String cityTattoo,
                   @JsonProperty("dob") String dob, @JsonProperty("rfid") String rfid,
-                  @JsonProperty("microchip") String microchip, @JsonProperty("status") String status,
+                  @JsonProperty("microchip") String microchip, @JsonProperty("availability") String availability, @JsonProperty("status") String status,
                   @JsonProperty("color") String color, @JsonProperty("moreInfo") String moreInfo,
                   @JsonProperty("nameLength") int nameLength, @JsonProperty("searchKeyName") String searchKeyName) {
         this.animalID = animalID;
@@ -131,12 +133,12 @@ public class Animal {
         this.breed = breed;
         this.species = species;
         this.sex = sex;
-        this.weight = weight;
         this.tattoo = tattoo;
         this.cityTattoo = cityTattoo;
         this.dob = dob;
         this.rfid = rfid;
         this.microchip = microchip;
+        this.availability = availability;
         this.status = status;
         this.color = color;
         this.moreInfo = moreInfo;
@@ -151,17 +153,17 @@ public class Animal {
      * @return true if at least one attribute is null, false otherwise
      */
     public boolean anyNulls() {
-        return (this.animalID == 0 || this.name == null || this.species == null || this.breed == null || this.sex == null || this.weight == 0.0 ||
+        return (this.animalID == 0 || this.name == null || this.species == null || this.breed == null || this.sex == null || 
         		this.tattoo == null || this.cityTattoo == null || this.dob == null || this.rfid == null || this.microchip == null || 
         		this.status == null || this.color == null );
     }
     
     @Override 
     public String toString() {
-    	String newString = "{ animalID: " + animalID + ", name: " + name + ", breed: " + breed + ", species: " + species + ", sex: " + sex + ", weight: " 
-    + weight + ", tattoo: " + tattoo + ", cityTattoo: " + cityTattoo + ", dob: " + dob 
-    + ", rfid: " + rfid + ", microchip: " + microchip + ", status: " + status + ", color: " + color + ", moreInfo: " + moreInfo 
-    + ", nameLength: " + nameLength + ", searchKeyName: " + searchKeyName + "}";
+    	String newString = "{ animalID: " + animalID + ", name: " + name + ", breed: " + breed + ", species: " + species + ", sex: " + sex 
+    			+ ", tattoo: " + tattoo + ", cityTattoo: " + cityTattoo + ", dob: " + dob 
+			    + ", rfid: " + rfid + ", microchip: " + microchip + ", status: " + status + ", color: " + color + ", moreInfo: " + moreInfo 
+			    + ", nameLength: " + nameLength + ", searchKeyName: " + searchKeyName + "}";
      return newString;
     }
     

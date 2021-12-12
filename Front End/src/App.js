@@ -14,6 +14,7 @@ import AnimalInfo from "./pages/animal/AnimalInfo";
 import HealthRecords from './pages/animal/HealthRecords';
 import Reminders from './pages/animal/Reminders';
 import Comments from './pages/animal/Comments';
+import SingleComment from './pages/animal/SingleComment';
 import Photos from './pages/animal/Photos';
 import WeightHistory from './pages/animal/WeightHistory';
 import SendAlert from './pages/animal/SendAlert';
@@ -48,6 +49,7 @@ function App() {
                 <Route path='/health-records' element={<HealthRecords/>}/>
                 <Route path='/reminders' element={<Reminders/>}/> 
                 <Route path='/comments' element={<Comments/>}/> 
+                <Route path='/comments/single' element={<SingleComment/>}/> 
                 <Route path='/photos' element={<Photos/>}/>
                 <Route path='/weight-history' element={<WeightHistory/>}/> 
                 <Route path='/send-alert' element={<SendAlert/>}/> 

@@ -9,52 +9,48 @@ import {useLocation} from 'react-router-dom'
 // import {useNavigate} from 'react-router-dom'
 
 function ManageTreatment() {
-    const Authenticated = useState(localStorage.getItem("Authenticated"))
+    // const Authenticated = useState(localStorage.getItem("Authenticated"))
     // window.location.reload()
     const [treatment, setTreatment] = useState(localStorage.getItem("treatment"));
     const [description, setDescription] = useState(localStorage.getItem("treatmentDescription"));
-    const treatmentStatus = "Ongoing";
     
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
-    const animalName = localStorage.getItem("animalName")
-    const animalSpecies = localStorage.getItem("animalSpecies")
     const treatmentID = localStorage.getItem("treatmentID")
+    const treatmentStatus = localStorage.getItem("treatmentStatus")
 
     axios.get('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID).then(
         res => {
             console.log(res);
-            localStorage.setItem("userID", res.data[0].userID)
-            localStorage.setItem("animalName", res.data[0].animalName)
-            localStorage.setItem("animalSpecies", res.data[0].animalSpecies)
-            localStorage.setItem("animalStatus", res.data[0].status)
             localStorage.setItem("treatmentID", res.data[0].treatmentID)
             localStorage.setItem("treatment", res.data[0].treatment)
             localStorage.setItem("description", res.data[0].description)
             localStorage.setItem("treatmentStatus", res.data[0].treatmentStatus)
+            localStorage.setItem("animalID", res.data[0].animalID)
+            localStorage.setItem("userID", res.data[0].userID)
             // window.location.reload()
         }
     )
     
-    function singleRefresh(event){
-        event.preventDefault();
-        window.location.reload()
-    }
+    // function singleRefresh(event){
+    //     event.preventDefault();
+    //     window.location.reload()
+    // }
 
     console.log(useLocation())
 
-    function getTreatment(message){
-        setTreatment(message.target.value)
+    function getTreatment(treatment){
+        setTreatment(treatment.target.value)
     }
 
-    function getDescription(message){
-        setDescription(message.target.value)
+    function getDescription(treatmentDescription){
+        setDescription(treatmentDescription.target.value)
     }
 
     function clickUpdateButton(event){
         event.preventDefault();
-        document.getElementById("descriptionInput").value = ""
         document.getElementById("treatmentInput").value = ""
+        document.getElementById("descriptionInput").value = ""
         console.log("From Clicking the update button: " + treatment)
         sendRequest(event)
     }
@@ -73,15 +69,13 @@ function ManageTreatment() {
         console.log("From Clicking the complete button: " + treatment)
 
         axios.put('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID, {
-            animalID: parseInt(animalID),
             treatmentID: parseInt(treatmentID), 
-            Date: treatmentDate,
             treatment: treatment,
             description: description,
+            treatmentDate: treatmentDate,
             treatmentStatus: "Complete",
-            userID: userID,
-            animalName: animalName,
-            animalSpecies: animalSpecies,
+            animalID: parseInt(animalID),
+            userID: parseInt(userID)
             
         }).then(
           res => {
@@ -101,16 +95,13 @@ function ManageTreatment() {
         var treatmentDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
 
         axios.put('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID, {
-            animalID: parseInt(animalID),
             treatmentID: parseInt(treatmentID), 
-            Date: treatmentDate,
             treatment: treatment,
             description: description,
+            treatmentDate: treatmentDate,
             treatmentStatus: treatmentStatus,
-            userID: userID,
-            animalName: animalName,
-            animalSpecies: animalSpecies,
-            
+            animalID: parseInt(animalID),
+            userID: parseInt(userID)
         }).then(
           res => {
               console.log(res);

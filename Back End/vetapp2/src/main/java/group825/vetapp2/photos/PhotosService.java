@@ -43,6 +43,7 @@ public class PhotosService {
 		this.dbPhotos = dbPhotos;
 	}
 
+	//can delete-------------------------------------------------------------------
 	/**
 	 * Inserts a photo in the database
 	 * @param photo = new Photo object to be added
@@ -53,7 +54,7 @@ public class PhotosService {
 		return dbPhotos.insertPhoto(photo);
 	}
 	
-
+	//can delete-------------------------------------------------------------------
 	/**
 	 * Selects all photos in the database
 	 * @return list of all Photo Objects
@@ -72,9 +73,9 @@ public class PhotosService {
 	 * @throws Exception when there is an SQL Exception
 	 */
 	public List<Photo> selectPhotosByID(int animalID) throws Exception {
-		ArrayList<String> results = dbPhotos.selectPhotosByID(animalID);
-		List<Photo> listResults = createListPhoto(results);
-		return listResults;
+		ArrayList<Photo> results = dbPhotos.selectPhotosByID(animalID);
+//		List<Photo> listResults = createListPhoto(results);
+		return results;
 	}
 	
 	/**
@@ -95,7 +96,7 @@ public class PhotosService {
 	
 	
 	
-	
+	//can delete-------------------------------------------------------------------
 	/**
 	 * Updates a photo from the database by ID number
 	 * @param photoID = id pertaining to specific photo for an animal
@@ -107,6 +108,8 @@ public class PhotosService {
 		return dbPhotos.updatePhotoByID(photoID, photo);
 	}
 	
+	
+	//can delete-------------------------------------------------------------------
 	/**
 	  * Create a list of Photo objects from ArrayList<String> returned from database query
 	 * @param foundResults = ArrayList<String> preprocessed response from database of all returned tuples as an ArrayList of Strings
@@ -175,6 +178,10 @@ public class PhotosService {
     	return responseCheck;
     }
     
+    /**
+     * Get a time stamp of when this method is called which is the same time that the photo is uploaded
+     * @return String containing the time stamp for when the photo is uploaded
+     */
     private String getTimestamp() {
     	Calendar cal = Calendar.getInstance();
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import group825.vetapp2.database.DatabaseConnection;
 import group825.vetapp2.database.OldDatabaseConnection;
+import group825.vetapp2.weighthistory.Weight;
 
 /**
  * Repository that stores Photo information
@@ -22,7 +23,7 @@ public class PhotosRepository {
 	/**
 	 * Table name from database
 	 */
-	String tableName = "PHOTOS";
+	String tableName;
 	
 	/**
 	 * Database connection boundary class
@@ -53,6 +54,8 @@ public class PhotosRepository {
 	public PhotosRepository() throws Exception {
 		dao = new OldDatabaseConnection();
 		dao2 = DatabaseConnection.getConnection();
+		
+		tableName = "PHOTOS";
 	}
 	
 	
@@ -64,21 +67,37 @@ public class PhotosRepository {
 	 */
 	public int insertPhoto(Photo photo) throws Exception{
 		int responseCheck =0;
-		String query_begin = "INSERT INTO PHOTOS (Animal_ID, File_Path, Photo_ID, User_ID, Upload_Date, Description_Photo) VALUES";
-		query = query_begin + "( '"+photo.getAnimalID() +"', '" + photo.getFilepath() +"', '" + photo.getPhotoID()+"', '" 
-		+ photo.getUserID() +"', '" +  photo.getDateUploaded() + "', '" + photo.getDescription()+"');";
-		System.out.println(query);
-		try {
-			responseCheck = dao.manipulateRows(query);
-		}catch(Exception e) {
-			this.getLatestID();
-			query = query_begin + "( '"+photo.getAnimalID() +"', '" + photo.getFilepath() +"', '" + (this.latestID+1)+"', '" 
-			+ photo.getUserID() +"', '" +  photo.getDateUploaded() + "', '" + photo.getDescription()+"');";
-			responseCheck = dao.manipulateRows(query);
-		}
+//		String query_begin = "INSERT INTO PHOTOS (Animal_ID, File_Path, Photo_ID, User_ID, Upload_Date, Description_Photo) VALUES";
+//		query = query_begin + "( '"+photo.getAnimalID() +"', '" + photo.getFilepath() +"', '" + photo.getPhotoID()+"', '" 
+//		+ photo.getUserID() +"', '" +  photo.getDateUploaded() + "', '" + photo.getDescription()+"');";
+//		System.out.println(query);
+//		try {
+//			responseCheck = dao.manipulateRows(query);
+//		}catch(Exception e) {
+//			this.getLatestID();
+//			query = query_begin + "( '"+photo.getAnimalID() +"', '" + photo.getFilepath() +"', '" + (this.latestID+1)+"', '" 
+//			+ photo.getUserID() +"', '" +  photo.getDateUploaded() + "', '" + photo.getDescription()+"');";
+//			responseCheck = dao.manipulateRows(query);
+//		}
+		
+		getLatestID();
+		
+		PreparedStatement statement = this.dao2.prepareStatement("INSERT INTO PHOTOS (Animal_ID, File_Path, Photo_ID, User_ID, Upload_Date, Description_Photo) VALUES "
+				+ "(?, ?, ?, ?, ?, ?)");
+		statement.setInt(1, photo.getAnimalID());
+		statement.setString(2, photo.getFilepath());
+		statement.setInt(3, (this.latestID+1));
+		statement.setInt(4, photo.getUserID());
+		statement.setString(5, photo.getDateUploaded());
+		statement.setString(6, photo.getDescription());
+		
+		
+		responseCheck = statement.executeUpdate();
+		statement.close();
 		return responseCheck;
 	}
 
+	//DELETE THIS--------------------------------------------------------------------------
 	/**
 	 * Selects all photos from the database
 	 * @return ArrayList of strings for photos for all animals
@@ -96,10 +115,22 @@ public class PhotosRepository {
 	 * @return ArrayList<String> which contains the photos of particular animal or is empty
 	 * @throws Exception when there is an SQL Exception
 	 */
-	public ArrayList<String> selectPhotosByID(int animalID) throws Exception{
-		query = "SELECT * FROM "+this.tableName +" AS P WHERE P.Animal_ID='"+animalID+"' ORDER BY Upload_Date asc;";
-		ArrayList<String> results = dao.getResponseArrayList(query);
-		return results;
+	public ArrayList<Photo> selectPhotosByID(int animalID) throws Exception{
+//		query = "SELECT * FROM "+this.tableName +" AS P WHERE P.Animal_ID='"+animalID+"' ORDER BY Upload_Date asc;";
+//		ArrayList<String> results = dao.getResponseArrayList(query);
+		
+		ArrayList<Photo> animalPhotos = new ArrayList<Photo>();
+		
+		PreparedStatement statement = this.dao2.prepareStatement("SELECT * FROM "+this.tableName +" AS P WHERE P.Animal_ID=? ORDER BY Upload_Date asc;");
+		statement.setInt(1, animalID);
+		results = statement.executeQuery();
+		
+		while (results.next()) {
+			animalPhotos.add(new Photo(results.getInt("Animal_ID"), results.getInt("Photo_ID"), results.getString("File_Path"), 
+					results.getInt("User_ID"), results.getString("Upload_Date"), results.getString("Description_Photo")));
+        }
+		statement.close();
+		return animalPhotos;
 	}
 	
 	
@@ -108,7 +139,9 @@ public class PhotosRepository {
         statement.setInt(1, photoID);
         results = statement.executeQuery();
         results.next();
-        return results.getString("File_Path");
+        String filepath = results.getString("File_Path");
+        statement.close();
+        return filepath;
 	}
 	
 	/** Deletes a photo from the database by photo ID number
@@ -117,12 +150,20 @@ public class PhotosRepository {
 	 * @throws Exception when there is an SQL Exception
 	 */
 	public int deletePhotoByID(int photoID) throws Exception{
-		String query = "DELETE FROM "+ tableName + " AS P WHERE P.Photo_ID='"+photoID+"';";
-//		System.out.println("query for update: "+query);
-		int responseCheck = dao.manipulateRows(query);
+//		String query = "DELETE FROM "+ tableName + " AS P WHERE P.Photo_ID='"+photoID+"';";
+////		System.out.println("query for update: "+query);
+//		int responseCheck = dao.manipulateRows(query);
+		
+		
+		PreparedStatement statement = this.dao2.prepareStatement("DELETE FROM "+ tableName + " AS P WHERE P.Photo_ID=?;");
+		statement.setInt(1, photoID);
+		int responseCheck = statement.executeUpdate();
+		statement.close();
 		return responseCheck;
 	}
 	
+	
+	//MAYBE DELETE THIS -------------------------------------------------------------------------------------------------------
 	/**
 	 * Updates a photo from the database by photo ID number
 	 * @param photoID = id pertaining to a specific photo for an animal
@@ -145,10 +186,18 @@ public class PhotosRepository {
 	 * @throws Exception when there is an SQL Exception
 	 */
 	private void getLatestID() throws Exception{
-		String queryMaxID = "SELECT MAX(P.Photo_ID) FROM PHOTOS AS P ";
-		String latestID = dao.getRows(queryMaxID).replaceAll("\\s+","");
-		System.out.println("latestID ='"+latestID+"'");
-		this.latestID = Integer.valueOf(latestID);
+//		String queryMaxID = "SELECT MAX(P.Photo_ID) FROM PHOTOS AS P ";
+//		String latestID = dao.getRows(queryMaxID).replaceAll("\\s+","");
+//		System.out.println("latestID ='"+latestID+"'");
+//		this.latestID = Integer.valueOf(latestID);
+		
+		
+		PreparedStatement statement = this.dao2.prepareStatement("SELECT MAX(Photo_ID) FROM PHOTOS ");
+		results = statement.executeQuery();
+		results.next();
+		
+		this.latestID = results.getInt("Max(Photo_ID)");
+		statement.close();
 	}
 	
 	/**

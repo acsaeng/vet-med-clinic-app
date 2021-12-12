@@ -143,7 +143,7 @@ function Photos() {
         for (var i=0; i<Object.keys(photoIDs).length; i++){
             let currKeyName = Object.keys(photoIDs).at(i)
             if (currKeyName === selectedCheckboxName){
-                updatedCheckedState[currKeyName]=true
+                updatedCheckedState[currKeyName]=!photoIDs[currKeyName]
             }else{
                 updatedCheckedState[currKeyName]=photoIDs[currKeyName]
             }

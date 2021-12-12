@@ -89,11 +89,15 @@ public class PhotosController {
 	 * @param photoID id path variable obtained by path denoted inside the DeleteMapping annotation
 	 */
 	@DeleteMapping(path = "{photoID}")
-	public void deletePhotoByID(@PathVariable("photoID") String photoID)  throws Exception {
-			//id of a photo
-			int id = Integer.valueOf(photoID);
-			int numRowsAffected = photosService.deletePhotoByID(id);
-			if (numRowsAffected == 0) {throw new InvalidIdException();}
+	public void deletePhotoByID(@PathVariable("photoID") String photoID) {
+		try {	
+		//id of a photo
+		int id = Integer.valueOf(photoID);
+		int numRowsAffected = photosService.deletePhotoByID(id);
+//		if (numRowsAffected == 0) {throw new InvalidIdException();}
+		}catch (Exception e) {
+			throw new InvalidIdException();
+		}
 	}
 	
 	/**

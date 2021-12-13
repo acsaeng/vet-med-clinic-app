@@ -22,11 +22,6 @@ import group825.vetapp2.database.DatabaseConnection;
 public class TreatmentRepository {
 	
 	/**
-	 * Name of the table in the database
-	 */
-	private String tableName = "TREATMENT";
-	
-	/**
      * Connector to the database
      */
     private final Connection dao;

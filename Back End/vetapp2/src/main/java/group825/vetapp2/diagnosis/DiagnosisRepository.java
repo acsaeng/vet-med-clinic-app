@@ -5,13 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import group825.vetapp2.database.DatabaseConnection;
-import group825.vetapp2.database.OldDatabaseConnection;
-import group825.vetapp2.diagnosis.Diagnosis;
 
 /**
  * Repository that stores Diagnosis information
@@ -23,11 +20,6 @@ import group825.vetapp2.diagnosis.Diagnosis;
 
 @Repository("diagnosisRepo")
 public class DiagnosisRepository {
-	
-	/**
-	 * Name of table in SQL database
-	 */
-	private String tableName = "DIAGNOSIS";
 	
 	/**
 	 * Connection to SQL database
@@ -179,6 +171,8 @@ public class DiagnosisRepository {
             statement.setInt(6, update.getUserID());
             statement.setInt(7, update.getAnimalID());
             statement.setInt(8, diagnosisID);
+            
+            System.out.println(statement);
             statement.executeUpdate();
 
             statement.close();

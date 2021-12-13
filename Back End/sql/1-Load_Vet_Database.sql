@@ -109,20 +109,22 @@ CREATE TABLE PHOTOS (
      ON DELETE CASCADE
 );
 
+
 INSERT INTO PHOTOS (Animal_ID, Photo_ID, File_Path, User_ID, Upload_Date)
 VALUES
-('102', '1', 'src/resources/imag2.png', '2', '2020-12-14 00:00:00'),
-('101', '2', 'src/resources/imag16.png', '2', '2020-12-22 00:00:00'),
-('102', '3', 'src/resources/imag19.png', '2', '2021-01-20 00:00:00'),
-('101', '4', 'src/resources/imag25.png', '10', '2021-10-15 00:00:00');
+('101', '1', '/photos/101/shiba1a.jpg', '2', '2020-12-14 00:00:00'),
+('101', '2', '/photos/101/shiba2a.jpg', '2', '2020-12-22 00:00:00'),
+('102', '3', '/photos/102/horse1.jpg', '2', '2021-01-20 00:00:00'),
+('102', '4', '/photos/102/horse2.jpg', '10', '2021-10-15 00:00:00'),
+('103', '5', '/photos/103/cow1.jpg', '1', '2021-11-10 00:00:00'),
+('103', '6', '/photos/103/cow2.jpg', '2', '2021-11-11 00:00:00'),
+('103', '7', '/photos/103/cow3.jpg', '10', '2021-11-20 00:00:00');
 
 DROP TABLE IF EXISTS REMINDERS; 
 CREATE TABLE REMINDERS ( 
      Animal_ID			 integer not null,
      Reminder_ID			 integer not null,
-     Reminder_Status			 varchar (50) not null,
-     Due_Date			 varchar (50) not null,
-     Date_Performed			 varchar (50) not null,
+     Date_Created			 varchar (50) not null,
      Author_ID			 integer not null,
      Notes			 varchar (50) not null,
      primary key (Reminder_ID),
@@ -134,11 +136,12 @@ CREATE TABLE REMINDERS (
      ON DELETE CASCADE
 );
 
-INSERT INTO REMINDERS (Animal_ID, Reminder_ID, Reminder_Status, Due_Date, Date_Performed, Author_ID, Notes)
+
+INSERT INTO REMINDERS (Animal_ID, Reminder_ID, Date_Created, Author_ID, Notes)
 VALUES
-('101', '1', 'Incomplete', '2021-11-21 00:00:00', 'NaT', '1', 'Need to cut hair before end of the month'),
-('102', '2', 'Complete', '2021-10-31 00:00:00', '2021-10-28 00:00:00', '1', 'Moved to stable 2 in preparation for winter'),
-('101', '3', 'Complete', '2021-11-05 00:00:00', '2021-11-05 00:00:00', '2', 'Changing diet so no treats allowed');
+('101', '1', '2021-11-21 00:00:00', '1', 'Need to cut hair before end of the month'),
+('102', '2',  '2021-10-31 00:00:00', '1', 'Moved to stable 2 in preparation for winter'),
+('101', '3',  '2021-11-05 00:00:00', '2', 'Changing diet so no treats allowed');
 
 
 

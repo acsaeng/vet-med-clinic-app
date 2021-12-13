@@ -70,4 +70,16 @@ public class AnimalService {
 //        List<Animal> listResults = createListAnimal(foundResults);
 //        return listResults;
 //    }
+
+//    /**
+//     * Searches for an animal by ID number in the database
+//     * @param animalID = animal's ID number
+//     * @return specified animal if found, null otherwise
+//     * @throws Exception when there is an SQL Exception
+//     */
+//    public List<Animal> searchAnimalById(int animalID) throws Exception {
+//    	ArrayList<String> results =  this.repo.searchAnimalById(animalID);
+//		List<Animal> listResults = createListAnimal(results);
+//		return listResults;
+//    }
 }

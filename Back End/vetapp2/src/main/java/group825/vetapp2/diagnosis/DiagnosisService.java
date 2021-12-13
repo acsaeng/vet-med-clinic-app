@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 /**
  * Service that performs Diagnosis requests
  *
- * @author Timothy Mok, Jimmy Zhu
- * @version 2.0
- * @since December 6, 2021
+ * @author Timothy Mok, Yong Jun (Jimmy) Zhu
+ * @version 3.0
+ * @since December 12, 2021
  */
 @Service
 public class DiagnosisService {
@@ -26,7 +26,7 @@ public class DiagnosisService {
 	 * Constructor for the DiagnosisService to communicate between the Repository and Controller
 	 * @param repo the DiagnosisRepository
 	 */
-	public DiagnosisService(@Qualifier("tempDiagnosisRepo") DiagnosisRepository repo) {
+	public DiagnosisService(@Qualifier("diagnosisRepo") DiagnosisRepository repo) {
 		this.repo = repo;
 	}
 
@@ -36,8 +36,8 @@ public class DiagnosisService {
 	 * @return whether the diagnosis was successfully added to the Repository
 	 * @throws Exception when there is an SQL Exception
 	 */
-	public int addDiagnosis(Diagnosis diagnosis) throws Exception{
-		return repo.addDiagnosis(diagnosis);
+	public void addDiagnosis(Diagnosis diagnosis) throws Exception{
+		this.repo.addDiagnosis(diagnosis);
 	}
 	
 	/**
@@ -47,9 +47,7 @@ public class DiagnosisService {
 	 * @throws Exception when there is an SQL Exception
 	 */
 	public List<Diagnosis> selectDiagnosisByAnimalID(int animalID) throws Exception {
-		ArrayList<String> results =  repo.selectDiagnosisByAnimalID(animalID);
-		List<Diagnosis> listResults = createListDiagnosis(results);
-		return listResults;
+		return this.repo.selectDiagnosisByAnimalID(animalID);
 	}
 	
 	/**
@@ -60,9 +58,7 @@ public class DiagnosisService {
 	 * @throws Exception when there is an SQL Exception
 	 */
 	public List<Diagnosis> selectDiagnosisByDiagnosisID(int diagnosisID) throws Exception {
-		ArrayList<String> results =  repo.selectDiagnosisByDiagnosisID(diagnosisID);
-		List<Diagnosis> listResults = createListDiagnosis(results);
-		return listResults;
+		return this.repo.selectDiagnosisByDiagnosisID(diagnosisID);
 	}
 	
 	/**
@@ -71,8 +67,8 @@ public class DiagnosisService {
 	 * @return whether the diagnosis was successfully deleted from the Repository
 	 * @throws Exception when there is an SQL Exception
 	 */
-	public int deleteDiagnosisById(int id) throws Exception{
-		return repo.deleteDiagnosisById(id);
+	public void deleteDiagnosisById(int diagnosisID) throws Exception{
+		this.repo.deleteDiagnosisById(diagnosisID);
 	}
 	
 	/**
@@ -82,27 +78,7 @@ public class DiagnosisService {
 	 * @return whether the diagnosis was successfully updated the Repository
 	 * @throws Exception when there is an SQL Exception
 	 */
-	public int updateDiagnosisById(int id, Diagnosis diagnosis) throws Exception{
-		return repo.updateDiagnosisById(id, diagnosis);
-	}
-	
-	 /**
-	  * Create a list of Diagnosis objects from ArrayList<String> returned from database query
-	 * @param foundResults = ArrayList<String> preprocessed response from database of all returned tuples as an ArrayList of Strings
-	 * @return ArrayList<Diagnosis> where each object was created from the data in each String from the ArrayList input
-	 */
-	public List<Diagnosis> createListDiagnosis(ArrayList<String> foundResults){
-		List<Diagnosis> listResults = new ArrayList<Diagnosis>(); 
-		int idxAnimalID=6, idxDiagnosisID=0, idxDiagnosis=2, idxDescription=3, idxDiagnosisDate=1, idxDiagnosisStatus=4, idxUserID=5;
-		for (String result: foundResults) {
-			String[] resultSplit = result.split(repo.getSplitPlaceholder());
-			Diagnosis temp =  new Diagnosis( Integer.valueOf(resultSplit[idxDiagnosisID]), Integer.valueOf(resultSplit[idxAnimalID]), resultSplit[idxDiagnosis], 
-				resultSplit[idxDescription], resultSplit[idxDiagnosisDate], resultSplit[idxDiagnosisStatus], Integer.valueOf(resultSplit[idxUserID]));
-			listResults.add(temp);
-		}
-		System.out.println("\nPrepared List to send as json response to API endpoint:");
-		System.out.println(listResults);
-	
-		return listResults;
+	public void updateDiagnosisById(int diagnosisID, Diagnosis diagnosis) throws Exception{
+		this.repo.updateDiagnosisById(diagnosisID, diagnosis);
 	}
 }

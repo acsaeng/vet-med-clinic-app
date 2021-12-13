@@ -9,52 +9,48 @@ import {useLocation} from 'react-router-dom'
 // import {useNavigate} from 'react-router-dom'
 
 function ManageDiagnosis() {
-    const Authenticated = useState(localStorage.getItem("Authenticated"))
+    // const Authenticated = useState(localStorage.getItem("Authenticated"))
     // window.location.reload()
     const [diagnosis, setDiagnosis] = useState(localStorage.getItem("diagnosis"))
     const [description, setDescription] = useState(localStorage.getItem("diagnosisDescription"))
-    const diagnosisStatus = "Ongoing";
     
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
-    const animalName = localStorage.getItem("animalName")
-    const animalSpecies = localStorage.getItem("animalSpecies")
     const diagnosisID = localStorage.getItem("diagnosisID")
+    const diagnosisStatus = localStorage.getItem("diagnosisStatus")
 
     axios.get('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID).then(
         res => {
             console.log(res);
-            localStorage.setItem("userID", res.data[0].userID)
-            localStorage.setItem("animalName", res.data[0].name)
-            localStorage.setItem("animalSpecies", res.data[0].species)
-            localStorage.setItem("animalStatus", res.data[0].status)
             localStorage.setItem("diagnosisID", res.data[0].diagnosisID)
             localStorage.setItem("diagnosis", res.data[0].diagnosis)
             localStorage.setItem("description", res.data[0].description)
             localStorage.setItem("diagnosisStatus", res.data[0].diagnosisStatus)
+            localStorage.setItem("animalID", res.data[0].animalID)
+            localStorage.setItem("userID", res.data[0].userID)
             // window.location.reload()
         }
     )
     
-    function singleRefresh(event){
-        event.preventDefault();
-        window.location.reload()
-    }
+    // function singleRefresh(event){
+    //     event.preventDefault();
+    //     window.location.reload()
+    // }
 
     console.log(useLocation())
 
-    function getDiagnosis(message){
-        setDiagnosis(message.target.value)
+    function getDiagnosis(diagnosis){
+        setDiagnosis(diagnosis.target.value)
     }
 
-    function getDescription(message){
-        setDescription(message.target.value)
+    function getDescription(diagnosisDescription){
+        setDescription(diagnosisDescription.target.value)
     }
 
     function clickUpdateButton(event){
         event.preventDefault();
-        document.getElementById("descriptionInput").value = ""
         document.getElementById("diagnosisInput").value = ""
+        document.getElementById("descriptionInput").value = ""
         console.log("From Clicking the update button: " + diagnosis)
         sendRequest(event)
     }
@@ -73,15 +69,13 @@ function ManageDiagnosis() {
         console.log("From Clicking the complete button: " + diagnosis)
 
         axios.put('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID, {
-            animalID: parseInt(animalID),
-            diagnosisID: parseInt(diagnosisID), 
-            Date: diagnosisDate,
+            diagnosisID: parseInt(diagnosisID),
             diagnosis: diagnosis,
             description: description,
+            diagnosisDate: diagnosisDate,
             diagnosisStatus: "Complete",
-            userID: userID,
-            animalName: animalName,
-            animalSpecies: animalSpecies,
+            animalID: parseInt(animalID),
+            userID: parseInt(userID)
             
         }).then(
           res => {
@@ -101,15 +95,13 @@ function ManageDiagnosis() {
         var diagnosisDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
 
         axios.put('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID, {
-            animalID: parseInt(animalID),
-            diagnosisID: parseInt(diagnosisID), 
-            Date: diagnosisDate,
+            diagnosisID: parseInt(diagnosisID),
             diagnosis: diagnosis,
             description: description,
+            diagnosisDate: diagnosisDate,
             diagnosisStatus: diagnosisStatus,
-            userID: userID,
-            animalName: animalName,
-            animalSpecies: animalSpecies,
+            animalID: parseInt(animalID),
+            userID: parseInt(userID)
             
         }).then(
           res => {

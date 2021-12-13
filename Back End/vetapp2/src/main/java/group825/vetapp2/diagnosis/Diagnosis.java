@@ -21,11 +21,6 @@ public class Diagnosis {
 	private int diagnosisID;
 	
 	/**
-	 * ID number of the animal
-	 */
-	private int animalID;
-	
-	/**
 	 * Diagnosis of the animal
 	 */
 	private String diagnosis;
@@ -46,6 +41,11 @@ public class Diagnosis {
 	private String diagnosisStatus;
 	
 	/**
+	 * ID number of the animal
+	 */
+	private int animalID;
+	
+	/**
 	 * ID number of the user who made the diagnosis
 	 */
 	private int userID;
@@ -60,15 +60,15 @@ public class Diagnosis {
 	 * @param diagnosis the ailment associated with the animal
 	 * @param description describes the condition in further detail
 	 */
-	public Diagnosis(@JsonProperty("diagnosisID") int diagnosisID, @JsonProperty("animalID") int animalID, @JsonProperty("diagnosis") String diagnosis, 
+	public Diagnosis(@JsonProperty("diagnosisID") int diagnosisID, @JsonProperty("diagnosis") String diagnosis, 
 			@JsonProperty("description") String description, @JsonProperty("diagnosisDate") String diagnosisDate, 
-			@JsonProperty("diagnosisStatus") String diagnosisStatus, @JsonProperty("userID") int userID	) {
+			@JsonProperty("diagnosisStatus") String diagnosisStatus, @JsonProperty("animalID") int animalID, @JsonProperty("userID") int userID	) {
 		this.animalID = animalID;
-		this.diagnosisID = diagnosisID;
 		this.diagnosis = diagnosis;
 		this.description = description;
 		this.diagnosisDate = diagnosisDate;
 		this.diagnosisStatus = diagnosisStatus;
+		this.diagnosisID = diagnosisID;
 		this.userID = userID;
 	}
 

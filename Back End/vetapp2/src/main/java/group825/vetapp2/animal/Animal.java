@@ -73,7 +73,16 @@ public class Animal {
     private String healthStatus;
 
     /**
+<<<<<<< HEAD
      * Availability status of animal
+=======
+     * Availability of animal 
+     */
+    private String availability;
+    
+    /**
+     * Color of animal 
+>>>>>>> c9da614c547475353666d64c63c07c6c119e4abc
      */
     private boolean availabilityStatus;
     
@@ -100,6 +109,7 @@ public class Animal {
 
     /**
      * Constructor that initializes the Animal
+<<<<<<< HEAD
      * @param animalID animal's ID number
      * @param name animal's name
      * @param species animal's species

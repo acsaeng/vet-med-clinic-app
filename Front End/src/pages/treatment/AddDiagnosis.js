@@ -17,16 +17,12 @@ function AddDiagnosis() {
 
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
-    const animalName = localStorage.getItem("animalName")
-    const animalSpecies = localStorage.getItem("animalSpecies")
 
     axios.get('http://localhost:8080/app/animal/'+animalID).then(
         res => {
             console.log(res);
             localStorage.setItem("userID", res.data[0].userID)
-            localStorage.setItem("animalName", res.data[0].name)
-            localStorage.setItem("animalSpecies", res.data[0].species)
-            localStorage.setItem("animalStatus", res.data[0].status)
+            localStorage.setItem("animalID", res.data[0].animalID)
             // window.location.reload()
         }
     )
@@ -38,12 +34,12 @@ function AddDiagnosis() {
 
     console.log(useLocation())
 
-    function getDiagnosis(message){
-        setDiagnosis(message.target.value)
+    function getDiagnosis(diagnosis){
+        setDiagnosis(diagnosis.target.value)
     }
 
-    function getDescription(message){
-        setDescription(message.target.value)
+    function getDescription(diagnosisDescription){
+        setDescription(diagnosisDescription.target.value)
     }
 
     function clickButton(event){
@@ -63,16 +59,13 @@ function AddDiagnosis() {
         var diagnosisDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
 
         axios.post('http://localhost:8080/app/treatment/diagnosis/', {
-            animalID: parseInt(animalID),
-            diagnosisID: 1, //dummy, backend assigns a new requestID
-            Date: diagnosisDate,
+            diagnosisID: 1, //dummy, backend assigns a new diagnosisID
             diagnosis: diagnosis,
             description: description,
+            diagnosisDate: diagnosisDate,
             diagnosisStatus: diagnosisStatus,
-            userID: userID,
-            animalName: animalName,
-            animalSpecies: animalSpecies,
-            
+            animalID: parseInt(animalID),
+            userID: parseInt(userID)
         }).then(
           res => {
               console.log(res);

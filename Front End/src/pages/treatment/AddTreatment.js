@@ -16,16 +16,12 @@ function AddTreatment() {
     
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
-    const animalName = localStorage.getItem("animalName")
-    const animalSpecies = localStorage.getItem("animalSpecies")
 
     axios.get('http://localhost:8080/app/animal/'+animalID).then(
         res => {
             console.log(res);
             localStorage.setItem("userID", res.data[0].userID)
-            localStorage.setItem("animalName", res.data[0].name)
-            localStorage.setItem("animalSpecies", res.data[0].species)
-            localStorage.setItem("animalStatus", res.data[0].status)
+            localStorage.setItem("animalID", res.data[0].animalID)
             // window.location.reload()
         }
     )
@@ -37,18 +33,19 @@ function AddTreatment() {
 
     console.log(useLocation())
 
-    function getTreatment(message){
-        setTreatment(message.target.value)
+    function getTreatment(treatment){
+        setTreatment(treatment.target.value)
     }
 
-    function getDescription(message){
-        setDescription(message.target.value)
+    function getDescription(treatmentDescription){
+        setDescription(treatmentDescription.target.value)
     }
 
     function clickButton(event){
         event.preventDefault();
-        document.getElementById("descriptionInput").value = ""
         document.getElementById("treatmentInput").value = ""
+        document.getElementById("prescriptionInput").value = ""
+        document.getElementById("descriptionInput").value = ""
         console.log("From Clicking the button: " + treatment)
         sendRequest(event)
     }
@@ -62,16 +59,13 @@ function AddTreatment() {
         var treatmentDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
 
         axios.post('http://localhost:8080/app/treatment/protocol/', {
-            animalID: parseInt(animalID),
-            treatmentID: 1, //dummy, backend assigns a new requestID
-            Date: treatmentDate,
+            treatmentID: 1, //dummy, backend assigns a new treamentID
             treatment: treatment,
             description: description,
+            treatmentDate: treatmentDate,
             treatmentStatus: treatmentStatus,
-            userID: userID,
-            animalName: animalName,
-            animalSpecies: animalSpecies,
-            
+            animalID: parseInt(animalID),
+            userID: parseInt(userID)
         }).then(
           res => {
               console.log(res);

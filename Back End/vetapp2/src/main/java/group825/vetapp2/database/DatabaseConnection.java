@@ -2,7 +2,6 @@ package group825.vetapp2.database;
 import java.sql.*;
 
 public class DatabaseConnection {
-
     /**
      * Port address of the database
      */

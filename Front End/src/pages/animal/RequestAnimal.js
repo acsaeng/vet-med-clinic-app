@@ -25,6 +25,7 @@ function RequestAnimal() {
     
     const requestID = 1 //dummy, backend assigns a new requestID
     const animalID = urlParams.get("animalID")
+    localStorage.setItem("animalID", animalID)
     let animalName = ""
     let animalSpecies = ""
     // const animalName = urlParams.get("animalName")

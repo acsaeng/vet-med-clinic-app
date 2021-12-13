@@ -1,7 +1,6 @@
 package group825.vetapp2.animal;
 
 import group825.vetapp2.database.DatabaseConnection;
-import group825.vetapp2.users.User;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -127,6 +126,7 @@ public class AnimalRepository {
 	 * @param animalID animal's ID number
 	 * @param updatedInfo animal's updated information
      */
+
     public void updateAnimal(int animalID, Animal updatedInfo) {
 		try {
 			// Execute SQL query to update the user's information

@@ -42,7 +42,7 @@ public class WeightHistoryRepository {
 
         try {
             // Execute SQL query
-            PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM WEIGHT_HISTORY WHERE Animal_ID = ?;");
+            PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM WEIGHT_HISTORY WHERE Animal_ID = ? ORDER BY Date_Recorded DESC;");
             statement.setInt(1, animalID);
 
             ResultSet results = statement.executeQuery();

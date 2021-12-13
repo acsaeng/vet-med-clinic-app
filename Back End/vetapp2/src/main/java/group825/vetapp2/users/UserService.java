@@ -66,7 +66,7 @@ public class UserService {
      * Blocks a user
      * @param userID user's ID number
      */
-    public void blockUser(int userID) {
-        this.repo.blockUser(userID);
+    public boolean blockUser(int userID) {
+        return this.repo.blockUser(userID);
     }
 }

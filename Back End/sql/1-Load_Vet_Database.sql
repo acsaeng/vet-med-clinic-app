@@ -102,8 +102,6 @@ VALUES
 (3000, 'Ada', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', ''),
 (3001, 'Bibbies', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', '');
 
-SELECT * FROM ANIMAL;
-
 DROP TABLE IF EXISTS REMINDERS; 
 CREATE TABLE REMINDERS ( 
      Animal_ID			 integer not null,
@@ -221,3 +219,5 @@ VALUES
 (102, DATE(20210201), 410),
 (102, DATE(20210301), 406),
 (102, DATE(20210401), 402);
+
+SELECT * FROM ANIMAL;

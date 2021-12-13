@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 /**
  * Repository that stores Animal information
@@ -84,8 +83,19 @@ public class AnimalRepository {
      */
     public void addAnimal(Animal animal) {
 		try {
+			PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM ANIMAL;");
+
+			ResultSet result = statement.executeQuery();
+			int rows = 0;
+
+			while (result.next()) {
+				rows++;
+			}
+
+			animal.setAnimalID(rows);
+
 			// Execute SQL query to add new animal
-			PreparedStatement statement = this.dao.prepareStatement("INSERT INTO ANIMAL (Animal_ID, Animal_Name, " +
+			statement = this.dao.prepareStatement("INSERT INTO ANIMAL (Animal_ID, Animal_Name, " +
 					"Species, Breed, Tattoo_Num, City_Tattoo, Birth_Date, Sex, RFID, Microchip, Health_Status, " +
 					"Availability_Status, Colour, Additional_Info) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 

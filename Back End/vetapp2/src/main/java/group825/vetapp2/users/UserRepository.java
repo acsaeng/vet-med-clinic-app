@@ -127,7 +127,7 @@ public class UserRepository {
 			// Execute SQL query to update the user's information
 			PreparedStatement statement = this.dao.prepareStatement("UPDATE USERS SET First_Name = ?, " +
 					"Last_Name = ?, User_Type = ?, Username = ?,  Email = ?, Phone_Number = ?, User_Password = ?, " +
-					"Start_Date = ? WHERE User_ID = ?");
+					"Start_Date = ?, User_Status = ?  WHERE User_ID = ?");
 
 			statement.setString(1, updatedInfo.getFirstName());
 			statement.setString(2, updatedInfo.getLastName());
@@ -137,7 +137,8 @@ public class UserRepository {
 			statement.setString(6, updatedInfo.getPhoneNum());
 			statement.setString(7, updatedInfo.getPassword());
 			statement.setString(8, updatedInfo.getStartDate().toString());
-			statement.setInt(9, userID);
+			statement.setBoolean(9, updatedInfo.isActiveStatus());
+			statement.setInt(10, userID);
 			statement.executeUpdate();
 
 			statement.close();
@@ -151,17 +152,20 @@ public class UserRepository {
 	 * Updates a user's information
 	 * @param userID user's ID number
 	 */
-	public void blockUser(int userID) {
+	public boolean blockUser(int userID) {
 		try {
 			// Execute SQL query to update the user's information
 			PreparedStatement statement = this.dao.prepareStatement("UPDATE USERS SET User_Status = false WHERE User_ID = ?");
 			statement.setInt(1, userID);
 			statement.executeUpdate();
-
 			statement.close();
+
+			return true;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+		return false;
 	}
 }

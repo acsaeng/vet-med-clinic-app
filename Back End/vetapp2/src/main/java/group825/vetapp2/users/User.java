@@ -86,7 +86,7 @@ public class User {
                 @JsonProperty("phoneNum") String phoneNum, @JsonProperty("password") String password,
                 @JsonProperty("startDate") LocalDate startDate, @JsonProperty("activeStatus") boolean activeStatus) {
         this.id = id;
-        this.firstName =firstName;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.userType = userType;
@@ -102,7 +102,9 @@ public class User {
      * @return true if id, name, email, or password is null, false otherwise
      */
     public boolean anyNulls() {
-        return this.id == 0 || this.firstName == "" || this.lastName == "" || this.lastName == null || this.userType == null
+        return this.id == 0 || this.firstName == "" || this.lastName == null || this.userType == null
         		|| this.email == null || this.phoneNum == null || this.password == null || this.startDate == null;
+
+
     }
 }

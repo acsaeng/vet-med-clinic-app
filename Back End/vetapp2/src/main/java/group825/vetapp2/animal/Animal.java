@@ -147,7 +147,7 @@ public class Animal {
      * @return true if at least one attribute is null, false otherwise
      */
     public boolean anyNulls() {
-        return (this.animalID == 0 || this.name == null || this.species == null || this.breed == null || this.tattoo == 0 ||
+        return (this.name == null || this.species == null || this.breed == null || this.tattoo == 0 ||
                 this.cityTattoo == null || this.dob == null || this.rfid == "" || this.microchip == "" || this.colour == null);
     }
     

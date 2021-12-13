@@ -3,10 +3,7 @@ package group825.vetapp2.users;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import group825.vetapp2.exceptions.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 /**
  * Controller that handles User requests
@@ -49,7 +46,7 @@ public class UserController {
      * 'POST' request that adds a new user to the database
      * @param user user to be added
      */
-    @PostMapping(path = "/users/add-user")
+    @PostMapping(path = "/user/add-user")
     public void addUser(@RequestBody User user) {
         // Checks if any user fields are 'null'
         if (user.anyNulls()) {
@@ -64,7 +61,7 @@ public class UserController {
      * @param userID user's ID number
      * @return user if found, 'null' otherwise
      */
-    @GetMapping(path = "/users/edit-user/{userID}")
+    @GetMapping(path = "/user/edit-user/{userID}")
     @ResponseBody
     public User getUserById(@PathVariable("userID") int userID) {
         return this.service.selectUserById(userID);
@@ -74,7 +71,7 @@ public class UserController {
      * 'PUT' request that updates a users' information
      * @param userID user's ID number
      */
-    @PutMapping(path = "/users/edit-user/{userID}")
+    @PutMapping(path = "/user/edit-user/{userID}")
     public void editUser(@PathVariable("userID") int userID, @RequestBody User updatedInfo) {
         this.service.editUser(userID, updatedInfo);
     }
@@ -83,8 +80,8 @@ public class UserController {
      * 'PUT' request that blocks a user
      * @param userID user's ID number
      */
-    @PutMapping(path = "/users/block-user/{userID}")
-    public void blockUser(@PathVariable("userID") int userID) {
-        this.service.blockUser(userID);
+    @PutMapping(path = "/user/block-user/{userID}")
+    public boolean blockUser(@PathVariable("userID") int userID) {
+        return this.service.blockUser(userID);
     }
 }

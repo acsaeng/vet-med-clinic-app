@@ -49,7 +49,8 @@ public class WeightHistoryRepository {
 
             // Process the results set and add entries into weight history
             while (results.next()) {
-                weightHistory.add(new Weight(results.getInt("Animal_ID"), results.getString("Date_Recorded"), results.getDouble("Weight")));
+                weightHistory.add(new Weight(results.getInt("Animal_ID"), results.getString("Date_Recorded"),
+                        results.getDouble("Weight"), results.getInt("User_ID")));
             }
 
             statement.close();
@@ -68,10 +69,11 @@ public class WeightHistoryRepository {
     public void addWeight(Weight weight) {
         try {
             // Execute SQL query
-            PreparedStatement statement = this.dao.prepareStatement("INSERT INTO WEIGHT_HISTORY (Animal_ID, Date_Recorded, Weight) VALUE (?, ?, ?);");
+            PreparedStatement statement = this.dao.prepareStatement("INSERT INTO WEIGHT_HISTORY (Animal_ID, Date_Recorded, Weight, User_ID) VALUE (?, ?, ?, ?);");
             statement.setInt(1, weight.getAnimalId());
             statement.setString(2, weight.getDate());
             statement.setDouble(3, weight.getWeight());
+            statement.setInt(4, weight.getUserId());
             statement.executeUpdate();
 
             statement.close();
@@ -88,10 +90,9 @@ public class WeightHistoryRepository {
     public void deleteWeight(Weight weight) {
         try {
             // Execute SQL query
-            PreparedStatement statement = this.dao.prepareStatement("DELETE FROM WEIGHT_HISTORY WHERE Animal_ID = ? AND Date_Recorded = ? AND Weight = ?;");
+            PreparedStatement statement = this.dao.prepareStatement("DELETE FROM WEIGHT_HISTORY WHERE Animal_ID = ? AND Date_Recorded = ?;");
             statement.setInt(1, weight.getAnimalId());
             statement.setString(2, weight.getDate());
-            statement.setDouble(3, weight.getWeight());
             statement.executeUpdate();
 
             statement.close();

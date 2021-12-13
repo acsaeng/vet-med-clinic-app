@@ -73,16 +73,7 @@ public class Animal {
     private String healthStatus;
 
     /**
-<<<<<<< HEAD
      * Availability status of animal
-=======
-     * Availability of animal 
-     */
-    private String availability;
-    
-    /**
-     * Color of animal 
->>>>>>> c9da614c547475353666d64c63c07c6c119e4abc
      */
     private boolean availabilityStatus;
     
@@ -96,20 +87,58 @@ public class Animal {
      */
     private String additionalInfo;
     
-//    /**
-//     * Length of the animal's name
-//     */
-//    private int nameLength;
-//
-//    /**
-//     * Search Key for the name used in search algorithm
-//     */
-//    private String searchKeyName;
+    /**
+     * Length of the animal's name
+     */
+    private int nameLength;
 
+    /**
+     * Search Key for the name used in search algorithm
+     */
+    private String searchKeyName;
 
     /**
      * Constructor that initializes the Animal
-<<<<<<< HEAD
+     * @param animalID animal's ID number
+     * @param name animal's name
+     * @param species animal's species
+     * @param breed animal's breed
+     * @param tattoo animal's tattoo
+     * @param cityTattoo animal's city tattoo
+     * @param sex animal's sex
+     * @param dob animal's date of birth
+     * @param rfid animal's RFID
+     * @param microchip animal's microchip number
+     * @param healthStatus animal's health status
+     * @param availabilityStatus animal's availability status
+     * @param colour animal's colour
+     * @param additionalInfo additional information on the animal
+     */
+    public Animal(@JsonProperty("animalID") int animalID, @JsonProperty("name") String name,
+                  @JsonProperty("species") String species, @JsonProperty("breed") String breed,
+                  @JsonProperty("tattoo") int tattoo, @JsonProperty("cityTattoo") String cityTattoo,
+                  @JsonProperty("dob") LocalDate dob, @JsonProperty("sex") char sex,
+                  @JsonProperty("rfid") String rfid, @JsonProperty("microchip") String microchip,
+                  @JsonProperty("healthStatus") String healthStatus, @JsonProperty("availabilityStatus") boolean availabilityStatus,
+                  @JsonProperty("colour") String colour, @JsonProperty("additionalInfo") String additionalInfo) {
+        this.animalID = animalID;
+        this.name = name;
+        this.species = species;
+        this.breed = breed;
+        this.tattoo = tattoo;
+        this.cityTattoo = cityTattoo;
+        this.dob = dob;
+        this.sex = sex;
+        this.rfid = rfid;
+        this.microchip = microchip;
+        this.healthStatus = healthStatus;
+        this.availabilityStatus = availabilityStatus;
+        this.colour = colour;
+        this.additionalInfo = additionalInfo;
+    }
+
+    /**
+     * Constructor that initializes the Animal with a search key
      * @param animalID animal's ID number
      * @param name animal's name
      * @param species animal's species
@@ -131,7 +160,8 @@ public class Animal {
                   @JsonProperty("dob") LocalDate dob, @JsonProperty("sex") char sex,
                   @JsonProperty("rfid") String rfid, @JsonProperty("microchip") String microchip,
                   @JsonProperty("healthStatus") String healthStatus, @JsonProperty("availabilityStatus") boolean availabilityStatus,
-                  @JsonProperty("colour") String colour, @JsonProperty("additionalInfo") String additionalInfo) {
+                  @JsonProperty("colour") String colour, @JsonProperty("additionalInfo") String additionalInfo,
+                  @JsonProperty("nameLength") int nameLength, @JsonProperty("searchKeyName") String searchKeyName) {
         this.animalID = animalID;
         this.name = name;
         this.species = species;
@@ -146,10 +176,10 @@ public class Animal {
         this.availabilityStatus = availabilityStatus;
         this.colour = colour;
         this.additionalInfo = additionalInfo;
-//        this.nameLength = nameLength;
-//        this.searchKeyName = searchKeyName;
+        this.nameLength = nameLength;
+        this.searchKeyName = searchKeyName;
         
-//        updateSearchKey();
+        updateSearchKey();
     }
 
     /**
@@ -161,8 +191,8 @@ public class Animal {
                 this.cityTattoo == null || this.dob == null || this.rfid == "" || this.microchip == "" || this.colour == null);
     }
     
-//    private void updateSearchKey() {
-//    	if (this.nameLength == 0) {this.nameLength = this.name.length();}
-//    	if (this.searchKeyName == null) {this.searchKeyName = SearchKey.generateSearchKey(this.name); }
-//    }
+    private void updateSearchKey() {
+    	if (this.nameLength == 0) {this.nameLength = this.name.length();}
+    	if (this.searchKeyName == null) {this.searchKeyName = SearchKey.generateSearchKey(this.name); }
+    }
 }

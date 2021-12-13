@@ -31,15 +31,22 @@ public class Weight {
     private double weight;
 
     /**
+     * ID number of the user who enters the weight
+     */
+    private int userId;
+
+    /**
      * Constructor that initializes the WeightHistory
      * @param animalId animal's ID number
      * @param date date weight was logged
      * @param weight animal's weight
      */
-    public Weight(@JsonProperty("animalId") int animalId, @JsonProperty("date") String date, @JsonProperty("weight") double weight) {
+    public Weight(@JsonProperty("animalId") int animalId, @JsonProperty("date") String date,
+                  @JsonProperty("weight") double weight, @JsonProperty("userId") int userId) {
         this.animalId = animalId;
         this.date = date;
         this.weight = weight;
+        this.userId = userId;
     }
 
     /**

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import group825.vetapp2.exceptions.ApiRequestException;
 import group825.vetapp2.exceptions.InvalidIdException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,9 +33,17 @@ public class AnimalController {
         this.service = service;
     }
 
+
+    /**
+     * 'GET' mapping that retrieves all animals in the database
+     */
+    @GetMapping
+    public ArrayList<Animal> selectAllAnimals() {
+        return this.service.selectAllAnimals();
+    }
     
     /**
-	 * 'GET' mapping that retrieves one animal in the database
+	 * 'GET' mapping that retrieves an animal in the database
 	 * @param animalID animal's ID
 	 */
 	@GetMapping(path="/{animalID}")
@@ -65,41 +74,41 @@ public class AnimalController {
         }
     }
 
-//    /**
-//     * 'GET' request that searches for animals from the database based on the name and/or species
-//     * @param name = animal's name
-//     * @param animalID = animal's ID number
-//     * @return List of Animal objects which have names similar to the name parameter
-//     */
-//    @GetMapping(path = "/searchAvailable")
-//    public List<Animal> searchAnimalAvailable(@RequestParam(required = true) String name, @RequestParam(name = "species", required = false) String species) throws Exception{
-//        if (name != null) {
-//            boolean onlyAvailableAnimals = true;
-//            return this.service.searchAnimalByName(name, species, onlyAvailableAnimals);
-//        }
-//        return null;
-//    }
-//
-//
-//    /**
-//     * 'GET' request that searches for animals from the database based on animalID or based on the name with/without species
-//     * @param name = animal's name
-//     * @param species = animal's species
-//     * @param animalID = animal's ID number
-//     * @return List<Animal> where the Animal match by animalID, similarity by name, or similarity by name and species
-//     */
-//    @GetMapping(path = "/search")
-//    public List<Animal> searchAnimal(@RequestParam(required = false) String name, @RequestParam(name = "species", required = false) String species,
-//                                     @RequestParam(name = "animalID", required = false) String animalID) throws Exception{
-//        //return list of single animal or none identified by unique animal id
-//        if (animalID != null) {
-//            int id = Integer.valueOf(animalID);
-//            return this.service.searchAnimalById(id);
-//        }
-//        //return list of multiple animals based on similarity by name or by name and species
-//        else if (name != null) {
-//            return this.service.searchAnimalByName(name, species, false);
-//        }
-//        return null;
-//    }
+    /**
+     * 'GET' request that searches for animals from the database based on the name and/or species
+     * @param name = animal's name
+     * @return List of Animal objects which have names similar to the name parameter
+     */
+    @GetMapping(path = "/searchAvailable")
+    public List<Animal> searchAnimalAvailable(@RequestParam(required = true) String name, @RequestParam(name = "species", required = false) String species) throws Exception{
+        if (name != null) {
+            boolean onlyAvailableAnimals = true;
+            return this.service.searchAnimalByName(name, species, onlyAvailableAnimals);
+        }
+        return null;
+    }
+
+    /**
+     * 'GET' request that searches for animals from the database based on animalID or based on the name with/without species
+     * @param name = animal's name
+     * @param species = animal's species
+     * @param animalID = animal's ID number
+     * @return List<Animal> where the Animal match by animalID, similarity by name, or similarity by name and species
+     */
+    @GetMapping(path = "/search")
+    public List<Animal> searchAnimal(@RequestParam(required = false) String name, @RequestParam(name = "species", required = false) String species,
+                                     @RequestParam(name = "animalID", required = false) String animalID) throws Exception{
+        //return list of single animal or none identified by unique animal id
+        if (animalID != null) {
+            int id = Integer.valueOf(animalID);
+            ArrayList<Animal> animalById = new ArrayList<Animal>();
+            animalById.add(this.service.searchAnimalById(id));
+            return animalById;
+        }
+        //return list of multiple animals based on similarity by name or by name and species
+        else if (name != null) {
+            return this.service.searchAnimalByName(name, species, false);
+        }
+        return null;
+    }
 }

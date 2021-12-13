@@ -5,7 +5,6 @@ USE VETAPP;
 
 DROP TABLE IF EXISTS USERS; 
 CREATE TABLE USERS ( 
-<<<<<<< HEAD
      User_ID			int not null,
      First_Name			varchar (50) not null,
      Last_Name			varchar (50) not null,
@@ -17,24 +16,10 @@ CREATE TABLE USERS (
      Start_Date			date,
      User_Status		boolean,
      primary key (UserName)
-=======
-     User_ID			 int not null,
-     First_Name			 varchar (50) not null,
-     Last_Name			 varchar (50) not null,
-     User_Type			 varchar (100) not null,
-     Username 			varchar (100) not null,
-     Email			 varchar (100) not null,
-     Phone_Number			 varchar (50) not null,
-     User_Password			 varchar (50) not null,
-     Start_Date			 	varchar (100) not null,
-     User_Status			 varchar (50) not null,
-     primary key (User_ID)
->>>>>>> c9da614c547475353666d64c63c07c6c119e4abc
 );
 
 INSERT INTO USERS (User_ID, First_Name, Last_Name, User_Type, Username,  Email, Phone_Number, User_Password, Start_Date, User_Status)
 VALUES
-<<<<<<< HEAD
 ('1', 'Alfy', 'Boyd', 'Admin', 'alfyBoyd1', 'alfred.boyd@vet.com', '403-123-4567', 'pa', '2020-05-03 00:00:00', true),
 ('2', 'Charles', 'Day', 'Animal Care Attendant', 'charlesDay1', 'charles.day@vet.com', '403-987-6543', 'WoRdPaSs231', '2020-06-30', true),
 ('3', 'Eve', 'Fast', 'Animal Health Technician', 'evest1', 'eve.fast@vet.com', '403-546-9565', 'HeLlo!51', '2020-05-05', true),
@@ -64,68 +49,23 @@ CREATE TABLE ANIMAL (
      Availability_Status		boolean,
      Colour						varchar (50) not null,
      Additional_Info			varchar (50) not null,
+	 Length_Name			 	integer not null,
+     SearchKey_Name			 	varchar (150) not null,
 
-     primary key (Animal_ID)
-);
-
-INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattoo, Birth_Date, Sex, RFID, Microchip, Health_Status, Availability_Status, Colour, Additional_Info)
-VALUES
-(101, 'Bobby', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Sick', false, 'Black and white', ''),
-(102, 'Daniel', 'Horse', 'Vanners', 564543, 'ABC Paris', '20180831', 'F', '8987498179390', '5671876189197', 'Injured', false, 'Brown', 'Sprained right hind leg. Out for 2 weeks'),
-(103, 'Katherine', 'Cow', 'Abigar', 981733, 'CBH India', '20180228', 'M', '83612863189', '812381931998', 'Sick', false, 'Black', 'Unavilable for one week. Grass only diet'),
-(104, 'Bobby', 'Cat', 'leopard', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', ''),
-(2501, 'Satch', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', false, 'Black and white', ''),
-(1405, 'Adai', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', ''),
-(1406, 'Bibbie', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', false, 'Black and white', ''),
-(3000, 'Ada', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', ''),
-(3001, 'Bibbies', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', '');
-=======
-(1, 'Alfy', 'Boyd', 'Admin', 'alfyBoyd1', 'alfred.boyd@vet.com', '403-123-4567', 'pa', '2020-05-03 00:00:00', 'Active'),
-(2, 'Charles', 'Day', 'Animal Care Attendant', 'charlesDay1', 'charles.day@vet.com', '403-987-6543', 'WoRdPaSs231', '2020-06-30 00:00:00', 'Active'),
-(3, 'Eve', 'Fast', 'Animal Health Technician', 'evest1', 'eve.fast@vet.com', '403-546-9565', 'HeLlo!51', '2020-05-05 00:00:00', 'Active'),
-(4, 'Georgina', 'Hill', 'Teaching Technician', 'georgina2', 'georgina.hill@vet.com', '403-489-6213', 'wOrLd123!', '2020-05-06 00:00:00', 'Active'),
-(5, 'Ivan', 'Jo', 'Student', 'ivanJo1', 'ivan.jo@vet.com', '403-651-8416', 'iVanIsCoOl9!', '2020-05-07 00:00:00', 'Blocked'),
-(6, 'Krity', 'Lou', 'Student', 'krityLou1', 'kristy.lou@vet.com', '403-498-6596', 'kRISTYYYY1!1', '2020-05-08 00:00:00', 'Active'),
-(7, 'Alfred', 'Boyd', 'Animal Health Technician', 'alfredBoyd1', 'alfred.boyd2@vet.com', '403-111-1111', 'HeLlo!52', '2020-09-05 00:00:00', 'Active'),
-(8, 'Marles', 'No', 'Animal Health Technician', 'marlesNo1', 'marles.no@vet.com', '403-222-2222', 'marles111', '2020-10-05 00:00:00', 'Active'),
-(9, 'Olivia', 'Phan', 'Animal Health Technician', 'oliviaPhan1', 'olivia.phan@vet.com', '403-333-3333', 'oLIVIA456', '2020-11-05 00:00:00', 'Blocked'),
-(10, 'Hacker', 'One', 'Teaching Technician', 'Instructor_1', 'hacker1@vet.com', '403-444-4444', 'pt@123', '2020-05-12 00:00:00', 'Active'),
-(11, 'Hacker', 'Two', 'Admin', 'Admin_1', 'hacket2@vet.com', '403-555-5555', 'pa', '2020-05-13 00:00:00', 'Active'),
-(12, 'Hacker', 'Three', 'Animal Health Technician', 'Technician', 'hacker3@vet.com', '403-666-6666', 'pe', '2020-05-14 00:00:00', 'Active');
-
-
-DROP TABLE IF EXISTS ANIMAL; 
-CREATE TABLE ANIMAL ( 
-     Animal_ID			 integer not null,
-     Animal_Name			 varchar (50) not null,
-     Species			 varchar (50) not null,
-     Breed			 varchar (50) not null,
-     Tattoo_Num			 varchar (50) not null,
-     City_Tattoo			 varchar (50) not null,
-     Birth_Date			 varchar (50) not null,
-     Sex			 varchar (50) not null,
-     RFID			 varchar (50) not null,
-     Microchip			 varchar (50) not null,
-	 Availability 		varchar(50) not null,
-     Animal_Status			 varchar (50) not null, 
-     Colour			 varchar (50) not null,
-     Additional_Information			 varchar (50) not null,
-     Length_Name			 integer not null,
-     SearchKey_Name			 varchar (150) not null,
      primary key (Animal_ID)
 );
 
 INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattoo, Birth_Date, Sex, RFID, Microchip, Availability, Animal_Status, Colour, Additional_Information, Length_Name, SearchKey_Name )
 VALUES
-(101, 'Bobby', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15 00:00:00', 'M', '197839178371.0', '176387613813.0', 'Available', 'Healthy', 'Black and white', '', '5.0', 'a0-b3-c0-d0-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o1-p0-q0-r0-s0-t0-u0-v0-w0-x0-y1-z0'),
-(102, 'Daniel', 'Horse', 'Vanners', '564543', 'ABC Paris', '2018-08-31 00:00:00', 'F', '8987498179390.0', '5671876189197.0', 'Unavailable', 'Injured', 'Brown', 'Sprained right hind leg. Out for 2 weeks', '6.0', 'a1-b0-c0-d1-e1-f0-g0-h0-i1-j0-k0-l1-m0-n1-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
-(103, 'Katherine', 'Cow', 'Abigar', '981733', 'CBH India', '2018-02-29', 'M', '83612863189.0', '812381931998.0', 'Available', 'Sick', 'Black', 'Unavilable for one week. Grass only diet', '9.0', 'a1-b0-c0-d0-e2-f0-g0-h1-i1-j0-k1-l0-m0-n1-o0-p0-q0-r1-s0-t1-u0-v0-w0-x0-y0-z0'),
-(104, 'Bobby', 'Cat', 'leopard', '234234', 'HOC London', '2018-08-15 00:00:00', 'M', '197839178371.0', '176387613813.0', 'Unavailable', 'Passed', 'Black and white', '', '5.0', 'a0-b3-c0-d0-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o1-p0-q0-r0-s0-t0-u0-v0-w0-x0-y1-z0'),
-(2501, 'Satch', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15 00:00:00', 'M', '197839178371.0', '176387613813.0', 'Available', 'Healthy', 'Black and white', '', '5.0', 'a1-b0-c1-d0-e0-f0-g0-h1-i0-j0-k0-l0-m0-n0-o0-p0-q0-r0-s1-t1-u0-v0-w0-x0-y0-z0'),
-(1405, 'Adai', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15 00:00:00', 'M', '197839178371.0', '176387613813.0', 'Available', 'Healthy', 'Black and white', '', '4.0', 'a2-b0-c0-d1-e0-f0-g0-h0-i1-j0-k0-l0-m0-n0-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
-(1406, 'Bibbie', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15 00:00:00', 'M', '197839178371.0', '176387613813.0', 'Unavailable', 'Healthy', 'Black and white', '', '6.0', 'a0-b3-c0-d0-e1-f0-g0-h0-i2-j0-k0-l0-m0-n0-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
-(3000, 'Ada', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15 00:00:00', 'M', '197839178371.0', '176387613813.0', 'Available', 'Healthy', 'Black and white', '', '3.0', 'a2-b0-c0-d1-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
-(3001, 'Bibbies', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15 00:00:00', 'M', '197839178371.0', '176387613813.0', 'Unavailable', 'Healthy', 'Black and white', '', '7.0', 'a0-b3-c0-d0-e1-f0-g0-h0-i2-j0-k0-l0-m0-n0-o0-p0-q0-r0-s1-t0-u0-v0-w0-x0-y0-z0');
+(101, 'Bobby', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', '', '5.0', 'a0-b3-c0-d0-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o1-p0-q0-r0-s0-t0-u0-v0-w0-x0-y1-z0'),
+(102, 'Daniel', 'Horse', 'Vanners', '564543', 'ABC Paris', '2018-08-31', 'F', '8987498179390', '5671876189197','Injured', false, 'Brown', 'Sprained right hind leg. Out for 2 weeks', '6.0', 'a1-b0-c0-d1-e1-f0-g0-h0-i1-j0-k0-l1-m0-n1-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
+(103, 'Katherine', 'Cow', 'Abigar', '981733', 'CBH India', '2018-02-29', 'M', '83612863189', '812381931998', 'Sick', true, 'Black', 'Unavilable for one week. Grass only diet', '9.0', 'a1-b0-c0-d0-e2-f0-g0-h1-i1-j0-k1-l0-m0-n1-o0-p0-q0-r1-s0-t1-u0-v0-w0-x0-y0-z0'),
+(104, 'Bobby', 'Cat', 'leopard', '234234', 'HOC London', '2018-08-15', 'M', '197839178371', '176387613813', 'Passed', false, 'Black and white', '', '5.0', 'a0-b3-c0-d0-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o1-p0-q0-r0-s0-t0-u0-v0-w0-x0-y1-z0'),
+(2501, 'Satch', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15', 'M', '197839178371', '176387613813', 'Healthy', true 'Black and white', '', '5.0', 'a1-b0-c1-d0-e0-f0-g0-h1-i0-j0-k0-l0-m0-n0-o0-p0-q0-r0-s1-t1-u0-v0-w0-x0-y0-z0'),
+(1405, 'Adai', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', '', '4.0', 'a2-b0-c0-d1-e0-f0-g0-h0-i1-j0-k0-l0-m0-n0-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
+(1406, 'Bibbie', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15', 'M', '197839178371', '176387613813', 'Healthy', false, 'Black and white', '', '6.0', 'a0-b3-c0-d0-e1-f0-g0-h0-i2-j0-k0-l0-m0-n0-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
+(3000, 'Ada', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15', 'M', '197839178371', '176387613813','Healthy', true, 'Black and white', '', '3.0', 'a2-b0-c0-d1-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
+(3001, 'Bibbies', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15', 'M', '197839178371', '176387613813', 'Healthy', false, 'Black and white', '', '7.0', 'a0-b3-c0-d0-e1-f0-g0-h0-i2-j0-k0-l0-m0-n0-o0-p0-q0-r0-s1-t0-u0-v0-w0-x0-y0-z0');
 
 
 DROP TABLE IF EXISTS COMMENTS; 
@@ -175,7 +115,6 @@ VALUES
 ('101', '2', 'src/resources/imag16.png', '2', '2020-12-22 00:00:00'),
 ('102', '3', 'src/resources/imag19.png', '2', '2021-01-20 00:00:00'),
 ('101', '4', 'src/resources/imag25.png', '10', '2021-10-15 00:00:00');
->>>>>>> c9da614c547475353666d64c63c07c6c119e4abc
 
 DROP TABLE IF EXISTS REMINDERS; 
 CREATE TABLE REMINDERS ( 
@@ -235,9 +174,6 @@ VALUES
 ('102', '9', '4', '2021-11-20 00:00:00', '2021-11-21 00:00:00', '2021-11-23 00:00:00', 'Suspicious behavior', 'Accepted'),
 ('102', '10', '10', '2021-11-21 00:00:00', '2021-11-22 00:00:00', '2021-11-23 00:00:00', 'checking the head', 'Accepted');
 
-
-
-
 DROP TABLE IF EXISTS DIAGNOSIS; 
 CREATE TABLE DIAGNOSIS ( 
      Diagnosis_ID			int not null,
@@ -294,10 +230,6 @@ VALUES
 ('8', '2021-10-05 00:00:00', 'Flu medicine', 'Twice daily, once in AM, once in PM. 8 hours apart.', 'Ongoing', '8', '103'),
 ('9', '2021-10-12 00:00:00', 'Flu medicine', 'Once daily after morning meal.', 'Ongoing', '3', '103');
 
-<<<<<<< HEAD
-=======
-
->>>>>>> c9da614c547475353666d64c63c07c6c119e4abc
 DROP TABLE IF EXISTS WEIGHT_HISTORY; 
 CREATE TABLE WEIGHT_HISTORY ( 
      Animal_ID			int not null,
@@ -315,24 +247,6 @@ CREATE TABLE WEIGHT_HISTORY (
 
 INSERT INTO WEIGHT_HISTORY(Animal_ID, Date_Recorded, Weight, User_ID)
 VALUES
-<<<<<<< HEAD
-(103, DATE(20201001), 800),
-(103, DATE(20201101), 805),
-(103, DATE(20201201), 810),
-(103, DATE(20210101), 805),
-(103, DATE(20210201), 820),
-(103, DATE(20210301), 805),
-(103, DATE(20210401), 800),
-(102, DATE(20201001), 400),
-(102, DATE(20201101), 409),
-(102, DATE(20201201), 420),
-(102, DATE(20210101), 415),
-(102, DATE(20210201), 410),
-(102, DATE(20210301), 406),
-(102, DATE(20210401), 402);
-
-SELECT * FROM ANIMAL;
-=======
 (103, DATE(20201001), 800.2, 1),
 (103, DATE(20201101), 805.1, 1),
 (103, DATE(20201201), 810.1, 1),
@@ -347,4 +261,3 @@ SELECT * FROM ANIMAL;
 (102, DATE(20210201), 410.1, 2),
 (102, DATE(20210301), 406.0, 1),
 (102, DATE(20210401), 402.9, 2);
->>>>>>> c9da614c547475353666d64c63c07c6c119e4abc

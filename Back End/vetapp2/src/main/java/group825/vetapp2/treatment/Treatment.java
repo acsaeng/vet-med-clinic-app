@@ -80,7 +80,7 @@ public class Treatment {
 	 * @return true if any of the fields are left empty, false otherwise
 	 */
 	public boolean anyNulls() {
-		return treatment == null || description == null || treatmentID==0 || treatmentDate==null || userID ==0 || animalID==0 || treatmentStatus==null;
+		return treatment == null || description == null || treatmentDate==null || userID ==0 || animalID==0 || treatmentStatus==null;
 	}
 	
 	

@@ -1,7 +1,6 @@
 package group825.vetapp2.diagnosis;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -46,7 +45,7 @@ public class DiagnosisService {
 	 * @return the diagnoses from the repository
 	 * @throws Exception when there is an SQL Exception
 	 */
-	public List<Diagnosis> selectDiagnosisByAnimalID(int animalID) throws Exception {
+	public ArrayList<Diagnosis> selectDiagnosisByAnimalID(int animalID) throws Exception {
 		return this.repo.selectDiagnosisByAnimalID(animalID);
 	}
 	
@@ -57,7 +56,7 @@ public class DiagnosisService {
 	 * @return the single diagnosis from the repository
 	 * @throws Exception when there is an SQL Exception
 	 */
-	public List<Diagnosis> selectDiagnosisByDiagnosisID(int diagnosisID) throws Exception {
+	public ArrayList<Diagnosis> selectDiagnosisByDiagnosisID(int diagnosisID) throws Exception {
 		return this.repo.selectDiagnosisByDiagnosisID(diagnosisID);
 	}
 	

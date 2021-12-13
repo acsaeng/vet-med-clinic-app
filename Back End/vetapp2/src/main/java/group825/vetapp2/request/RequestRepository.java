@@ -2,45 +2,32 @@ package group825.vetapp2.request;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 
 import org.springframework.stereotype.Repository;
 
-import group825.vetapp2.database.OldDatabaseConnection;
+import group825.vetapp2.database.DatabaseConnection;
 
 /**
  * Repository that stores Request animal information
  *
- * @author Timothy Mok, Jimmy Zhu
- * @version 2.0
- * @since Dec 2, 2021
+ * @author Timothy Mok, Yong Jun (Jimmy) Zhu
+ * @version 3.0
+ * @since December 13, 2021
  */
 
-@Repository("tempRequestRepo")
+@Repository("requestRepo")
 public class RequestRepository {
-	/**
-	 * Table name from database
-	 */
-	String tableName = "REQUEST";
 	
 	/**
 	 * Database connection boundary class
 	 */
-	OldDatabaseConnection dao;
+	private final Connection dao;
 	
 	/**
-	 * Any query that is sent to the database
-	 */
-	String query;
-	
-	/**
-	 * Max Request ID currently recorded on the database
-	 */
-	int latestID;
-	
-	
-	Connection con;
+     * Results of a query to the database
+     */
+    private ResultSet results;
 	
 	
 	/**
@@ -48,67 +35,36 @@ public class RequestRepository {
      * Update the latestID data member holding the max Request ID from the database
      */
 	public RequestRepository() throws Exception {
-		dao = new OldDatabaseConnection();
-
-		getLatestRequestId();
+		this.dao = DatabaseConnection.getConnection();
 	}
 	
 	
 	/**
 	 * Adding a request to the database
 	 * @param request = the new request associated with an animal
-	 * @return 1 if successfully added, 0 otherwise
 	 */
-	public int addRequest(Request request) throws Exception{
-		int responseCheck = 0;
-		
-		String queryBegin = "INSERT INTO REQUEST (Animal_ID, Request_ID, Requester_ID, Request_Date, Checkout_Date, Return_Date, Reason, Request_Status) VALUES";
-//		query = queryBegin + "( '"+request.getAnimalID() +"', '" + request.getRequestID()+"', '" +  request.getRequesterID()
-//			+"', '" + request.getRequestDate() +"', '" +request.getCheckoutDate()+"', '" + request.getReturnDate() +"', '" +request.getReason()
-//			+"', '" + request.getRequestStatus() 
-//			+"');";
-//		System.out.println(query);
-//		try {
-//			responseCheck = dao.manipulateRows(query);
-//		}catch(Exception e) {
-//			getLatestRequestId();
-//			query = queryBegin + "( '"+request.getAnimalID() +"', '" + (this.latestID+1) +"', '" +  request.getRequesterID()
-//				+"', '" + request.getRequestDate() +"', '" +request.getCheckoutDate()+"', '" + request.getReturnDate() +"', '" +request.getReason()
-//				+"', '" + request.getRequestStatus() +"');";
-//			responseCheck = dao.manipulateRows(query);	
-//		}
-//		return responseCheck;
-		
-		
+	public void addRequest(Request request) throws Exception{
+
 		try {
-			query = "INSERT INTO " + tableName + " (Animal_ID, Request_ID, Requester_ID, Request_Date, Checkout_Date, Return_Date, Reason, Request_Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-			PreparedStatement statement = con.prepareStatement(query);
+			// Execute SQL query
+            PreparedStatement statement = this.dao.prepareStatement("INSERT INTO REQUEST "
+            		+ "(Animal_ID, Request_ID, Requester_ID, Request_Date, Checkout_Date, Return_Date, Reason, Request_Status) "
+            		+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
 			statement.setInt(1, request.getAnimalID());
 			statement.setInt(2, request.getRequestID());
         	statement.setInt(3, request.getRequesterID());
         	statement.setString(4, request.getRequestDate());
         	statement.setString(5, request.getCheckoutDate());
-        	statement.setString(5, request.getReturnDate());
-        	statement.setString(5, request.getReason());
-        	statement.setString(5, request.getRequestStatus());
- 	
-        	responseCheck = statement.executeUpdate();
-        	statement.close();
-//			responseCheck = dao.manipulateRows(query);
-		}catch(Exception e) {
-			getLatestRequestId();
-			query = queryBegin + "( '"+request.getAnimalID() +"', '" + (this.latestID+1) +"', '" +  request.getRequesterID()
-				+"', '" + request.getRequestDate() +"', '" +request.getCheckoutDate()+"', '" + request.getReturnDate() +"', '" +request.getReason()
-				+"', '" + request.getRequestStatus() +"');";
-			responseCheck = dao.manipulateRows(query);	
-		}
-		return responseCheck;
-		
-		
-		
-		
-		
-		
+        	statement.setString(6, request.getReturnDate());
+        	statement.setString(7, request.getReason());
+        	statement.setString(8, request.getRequestStatus());
+        	statement.executeUpdate();
+
+            statement.close();
+
+		}catch(SQLException e) {
+			 e.printStackTrace();
+		}	
 	}
 	
 	
@@ -116,15 +72,29 @@ public class RequestRepository {
 	 * Returns all requests in the system
 	 * @return all requests
 	 */
-	public ArrayList<String> selectAllRequest() throws Exception{
-		query = "SELECT R2.Animal_ID, R2.Request_ID, R2.Requester_ID, R2.Request_Date, R2.Checkout_Date, R2.Return_Date, "
-				+ "R2.Reason, R2.Request_Status, U.First_Name, U.Last_Name,"
-				+ "A.Animal_Name, A.Species  FROM REQUEST AS R2, Users as U, ANIMAL AS A "
-				+ " WHERE R2.Requester_ID = U.User_ID AND R2.Animal_ID=A.Animal_ID "
-				+" ORDER BY R2.Request_ID ASC"+" ;";
-				
-		ArrayList<String> results = dao.getResponseArrayList(query);
-		return results;
+	public ArrayList<Request> selectAllRequest() throws Exception{
+		ArrayList<Request> requests = new ArrayList<Request>();
+
+        try {
+            // Execute SQL query
+            PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM REQUEST;");
+            results = statement.executeQuery();
+
+            // Process the results set and add entries into treatment
+            while (results.next()) {
+                requests.add(new Request(results.getInt("Animal_ID"), results.getInt("Request_ID"), 
+                		results.getInt("Requester_ID"), results.getString("Request_Date"), 
+                		results.getString("Checkout_Date"), results.getString("Return_Date"), 
+                		results.getString("Reason"), results.getString("Request_Status")));
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return requests;
 	}
 	
 	
@@ -133,27 +103,49 @@ public class RequestRepository {
 	 * @param id = the id of the user ID whose requests 
 	 * @return ArrayList<String> which contains the requests from a particular user or is empty
 	 */
-	public ArrayList<String> selectRequestsById(int userID) throws Exception {
-		query = "SELECT R2.Animal_ID, R2.Request_ID, R2.Requester_ID, R2.Request_Date, R2.Checkout_Date, R2.Return_Date, "
-		+ "R2.Reason, R2.Request_Status, U.First_Name, U.Last_Name, "
-		+ "A.Animal_Name, A.Species  FROM REQUEST AS R2, Users as U, ANIMAL AS A  WHERE R2.Requester_ID = U.User_ID AND R2.Animal_ID=A.Animal_ID AND R2.Requester_ID = '"
-		+ userID + "' ORDER BY R2.Request_ID ASC;";
-		System.out.println("query = "+query);
-		ArrayList<String> results = dao.getResponseArrayList(query);
-		return results;
+	public ArrayList<Request> selectRequestsById(int userID) throws Exception {
+		ArrayList<Request> requests = new ArrayList<Request>();
+
+        try {
+            // Execute SQL query
+            PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM REQUEST WHERE Requester_ID = ?;");
+            statement.setInt(1, userID);
+            results = statement.executeQuery();
+
+            // Process the results set and add entries into treatment
+            while (results.next()) {
+                requests.add(new Request(results.getInt("Animal_ID"), results.getInt("Request_ID"), 
+                		results.getInt("Requester_ID"), results.getString("Request_Date"), 
+                		results.getString("Checkout_Date"), results.getString("Return_Date"), 
+                		results.getString("Reason"), results.getString("Request_Status")));
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return requests;
 	}
 	
 	
 	/**
 	 * Remove a specific request from the system
 	 * @param id  = id of the request to be removed
-	 * @return 1 if removed successfully, 0 otherwise
 	 */
-	public int deleteRequestById(int requestID) throws Exception{
-		String query = "DELETE FROM "+ tableName + " AS C WHERE C.Request_ID='"+requestID+"';";
-		System.out.println("query for update: "+query);
-		int responseCheck = dao.manipulateRows(query);
-		return responseCheck;
+	public void deleteRequestById(int requestID) throws Exception{
+		try {
+            // Execute SQL query
+            PreparedStatement statement = this.dao.prepareStatement("DELETE FROM REQUEST WHERE Request_ID = ?;");
+            statement.setInt(1, requestID);
+            statement.executeUpdate();
+
+            statement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	
@@ -161,38 +153,30 @@ public class RequestRepository {
 	 * Update an existing request
 	 * @param id = the id of the request to be updated
 	 * @param update = the Request object with the updated information
-	 * @return 1 if successfully updated, 0 otherwise
 	 */
-	public int updateRequestById(int requestID, Request update) throws Exception{
-		 String query = "UPDATE " + tableName + " AS R SET Animal_ID='" + update.getAnimalID() + "', Request_ID='" + requestID 
-		 + "', Requester_ID='" + update.getRequesterID() + "', Request_Date='" + update.getRequestDate() + "', Checkout_Date='" + update.getCheckoutDate() 
-		 + "', Return_Date='" + update.getReturnDate() + "', Reason='" + update.getReason() +"', Request_Status='" + update.getRequestStatus() 
-		 +  "' WHERE R.Request_ID='" + requestID +"';";
-		int responseCheck = dao.manipulateRows(query);
-		return responseCheck;
-	}
-	
-	
-	
-	/**
-	 * get the latest Id for the primary key for Request object from database
-	 * @throws Exception when there is an SQL Exception
-	 */
-	private void getLatestRequestId() throws Exception{
-		String queryMaxId = "SELECT MAX(R.Request_ID) FROM REQUEST AS R ";
-//		System.out.println(queryMaxId);
-		String latestId = dao.getRows(queryMaxId).replaceAll("\\s+","");
-		System.out.println("latestId ='"+latestId+"'");
-		this.latestID = Integer.valueOf(latestId);
-	}
-	
-	/**
-     * @return the Split placeholder saved in the "DatabaseConnection.java"
-     */
-	public String getSplitPlaceholder() {
-		return dao.getSplitPlaceholder();
-	}
-	
-	
+	public void updateRequestById(int requestID, Request update) throws Exception{
+		try {
+            // Execute SQL query
+			// (, , , , , , , )
+            PreparedStatement statement = this.dao.prepareStatement("UPDATE REQUEST SET "
+            		+ "Animal_ID=?, Request_ID=?, Requester_ID=?, Request_Date=?, Checkout_Date=?,"
+            		+ " Return_Date=?, Reason=?, Request_Status=? WHERE Request_ID=?;");
+            statement.setInt(1, update.getAnimalID());
+			statement.setInt(2, update.getRequestID());
+        	statement.setInt(3, update.getRequesterID());
+        	statement.setString(4, update.getRequestDate());
+        	statement.setString(5, update.getCheckoutDate());
+        	statement.setString(6, update.getReturnDate());
+        	statement.setString(7, update.getReason());
+        	statement.setString(8, update.getRequestStatus());
+        	statement.setInt(9, requestID);
+        	statement.executeUpdate();
+
+            statement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+	}	
 	
 }

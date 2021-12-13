@@ -1,7 +1,6 @@
 package group825.vetapp2.treatment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -46,7 +45,7 @@ public class TreatmentService {
 	 * @return the treatments from the repository
 	 * @throws Exception when there is an SQL Exception
 	 */
-	public List<Treatment> selectTreatmentByAnimalId(int animalID) throws Exception {
+	public ArrayList<Treatment> selectTreatmentByAnimalId(int animalID) throws Exception {
 		return this.repo.selectTreatmentByAnimalId(animalID);
 	}
 	
@@ -56,7 +55,7 @@ public class TreatmentService {
 	 * @return the single treatment from the repository
 	 * @throws Exception when there is an SQL Exception
 	 */
-	public List<Treatment> selectTreatmentByTreatmentId(int treatmentID) throws Exception {
+	public ArrayList<Treatment> selectTreatmentByTreatmentId(int treatmentID) throws Exception {
 		return this.repo.selectTreatmentByTreatmentId(treatmentID);
 	}
 	

@@ -1,7 +1,6 @@
 package group825.vetapp2.request;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +10,9 @@ import group825.vetapp2.exceptions.*;
 /**
  * Controller that handles Request animal requests
  *
- * @author Timothy Mok, Jimmy Zhu
- * @version 2.0
- * @since Dec 2, 2021
+ * @author Timothy Mok, Yong Jun (Jimmy) Zhu
+ * @version 3.0
+ * @since December 13 , 2021
  */
 @CrossOrigin
 @RequestMapping("app/request/")

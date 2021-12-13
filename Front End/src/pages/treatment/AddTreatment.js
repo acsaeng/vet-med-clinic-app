@@ -19,19 +19,9 @@ function AddTreatment() {
 
     axios.get('http://localhost:8080/app/animal/'+animalID).then(
         res => {
-            console.log(res);
-            localStorage.setItem("userID", res.data[0].userID)
             localStorage.setItem("animalID", res.data[0].animalID)
-            // window.location.reload()
         }
     )
-    
-    function singleRefresh(event){
-        event.preventDefault();
-        window.location.reload()
-    }
-
-    console.log(useLocation())
 
     function getTreatment(treatment){
         setTreatment(treatment.target.value)
@@ -44,7 +34,6 @@ function AddTreatment() {
     function clickButton(event){
         event.preventDefault();
         document.getElementById("treatmentInput").value = ""
-        document.getElementById("prescriptionInput").value = ""
         document.getElementById("descriptionInput").value = ""
         console.log("From Clicking the button: " + treatment)
         sendRequest(event)
@@ -56,15 +45,17 @@ function AddTreatment() {
         var rightNow = new Date();
         var formattedDay = rightNow.getDate() < 10 ? "0" + rightNow.getDate().toString() : rightNow.getDate()
         var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
-        var treatmentDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
+        var treatmentDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay + " 00:00:00"
 
-        axios.post('http://localhost:8080/app/treatment/protocol/', {
-            treatmentID: 1, //dummy, backend assigns a new treamentID
+        //axios.post('http://localhost:8080/app/treatment/protocol/animalID=' + animalID, {
+        axios.post('http://localhost:8080/app/treatment/protocol/animalID=' + 102, {
+            treatmentID: null, //dummy, backend assigns a new treamentID
+            treatmentDate: treatmentDate,
             treatment: treatment,
             description: description,
-            treatmentDate: treatmentDate,
             treatmentStatus: treatmentStatus,
-            animalID: parseInt(animalID),
+            animalID: 102,
+            // animalID: parseInt(animalID),
             userID: parseInt(userID)
         }).then(
           res => {

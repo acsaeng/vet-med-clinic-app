@@ -160,14 +160,14 @@ VALUES
 
 DROP TABLE IF EXISTS REQUEST; 
 CREATE TABLE REQUEST ( 
-     Animal_ID			 int not null,
-     Request_ID			 int not null,
-     Requester_ID			 int not null,
-     Request_Date			 varchar (50) not null,
-     Checkout_Date			 varchar (50) ,
-     Return_Date			 varchar (50) ,
-     Reason			 varchar (350) ,
-     Request_Status			 varchar (50) not null,
+     Animal_ID			 	int not null,
+     Request_ID			 	int not null auto_increment,
+     Requester_ID			int not null,
+     Request_Date			varchar (50) not null,
+     Checkout_Date			varchar (50) ,
+     Return_Date			varchar (50) ,
+     Reason			 		varchar (350) ,
+     Request_Status			varchar (50) not null,
      primary key (Request_ID),
      foreign key (Animal_ID) references ANIMAL(Animal_ID) 
      ON UPDATE CASCADE
@@ -193,13 +193,13 @@ VALUES
 
 DROP TABLE IF EXISTS DIAGNOSIS; 
 CREATE TABLE DIAGNOSIS ( 
-     Diagnosis_ID			int not null,
-     Diagnosis_Date			 varchar (50) not null,
-     Diagnosis			 varchar (50) not null,
-     Diagnosis_Description			 varchar (500) not null,
-     Diagnosis_Status			 varchar (50) not null,
-     User_ID			 int not null,
-     Animal_ID			 int not null,
+     Diagnosis_ID				int not null auto_increment,
+     Diagnosis_Date			 	varchar (50) not null,
+     Diagnosis			 		varchar (50) not null,
+     Diagnosis_Description		varchar (500) not null,
+     Diagnosis_Status			varchar (50) not null,
+     User_ID			 		int not null,
+     Animal_ID			 		int not null,
      primary key (Diagnosis_ID),
      foreign key (Animal_ID) references ANIMAL(Animal_ID) 
      ON UPDATE CASCADE
@@ -212,7 +212,7 @@ CREATE TABLE DIAGNOSIS (
 
 INSERT INTO DIAGNOSIS (Diagnosis_ID, Diagnosis_Date, Diagnosis, Diagnosis_Description, Diagnosis_Status, User_ID, Animal_ID)
 VALUES
-('1', '2020-03-08 00:00:00', 'Twisted ankle', 'Dog in pain. Will be out minimum one week. Will heal naturally. ', 'Complete', '7', '101'),
+('1', '2020-03-08 00:00:00', 'Twisted ankle', 'Dog in pain. Will be out minimum one week. Will heal naturally. ', 'Ongoing', '7', '101'),
 ('4', '2021-04-13 00:00:00', 'Chipped hoof', 'Chip in the two front hooves. Keep casts on until fully healed', 'Ongoing', '3', '102'),
 ('5', '2021-09-25 00:00:00', 'Sprained ankle', 'Serious sprain in right hind ankle. Will be out minimum two weeks.', 'Ongoing', '9', '102'),
 ('8', '2021-10-05 00:00:00', 'Flu', 'Keep in separate barn until fully healed. Medication prescribed in treatments.', 'Ongoing', '8', '103'),
@@ -221,13 +221,13 @@ VALUES
 
 DROP TABLE IF EXISTS TREATMENT; 
 CREATE TABLE TREATMENT ( 
-     Treatment_ID			int not null,
-     Treatment_Date			 varchar (50) not null,
-     Treatment			 varchar (50) not null,
-     Treatment_Description			 varchar (500) not null,
-     Treatment_Status			 varchar (50) not null,
-     User_ID			 int not null,
-     Animal_ID			 int not null,
+     Treatment_ID				int not null auto_increment,
+     Treatment_Date				varchar (50) not null,
+     Treatment			 		varchar (50) not null,
+     Treatment_Description		varchar (500) not null,
+     Treatment_Status			varchar (50) not null,
+     User_ID			 		int not null,
+     Animal_ID			 		int not null,
      primary key (Treatment_ID),
      foreign key (Animal_ID) references ANIMAL(Animal_ID) 
      ON UPDATE CASCADE

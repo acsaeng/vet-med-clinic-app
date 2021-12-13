@@ -17,26 +17,18 @@ function ManageTreatment() {
     const animalID = localStorage.getItem("animalID")
     const treatmentID = localStorage.getItem("treatmentID")
     const treatmentStatus = localStorage.getItem("treatmentStatus")
+    const userID = localStorage.getItem("userID")
 
     // axios.get('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID).then(
         axios.get('http://localhost:8080/app/treatment/protocol/treatmentID='+5).then(
         res => {
-            // console.log(res);
             localStorage.setItem("treatmentID", res.data[0].treatmentID)
             localStorage.setItem("treatment", res.data[0].treatment)
             localStorage.setItem("description", res.data[0].description)
             localStorage.setItem("treatmentStatus", res.data[0].treatmentStatus)
             localStorage.setItem("animalID", res.data[0].animalID)
-            // window.location.reload()
         }
     )
-    
-    // function singleRefresh(event){
-    //     event.preventDefault();
-    //     window.location.reload()
-    // }
-
-    console.log(useLocation())
 
     function getTreatment(treatment){
         setTreatment(treatment.target.value)
@@ -54,28 +46,27 @@ function ManageTreatment() {
         sendRequest(event)
     }
 
-    function clickCompleteButton(event){
+    function clickCancelButton(event){
 
         event.preventDefault();
         var rightNow = new Date();
         var formattedDay = rightNow.getDate() < 10 ? "0" + rightNow.getDate().toString() : rightNow.getDate()
         var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
-        var treatmentDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
+        var treatmentDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay + " 00:00:00"
 
         event.preventDefault();
         document.getElementById("descriptionInput").value = ""
         document.getElementById("treatmentInput").value = ""
-        console.log("From Clicking the complete button: " + treatment)
+        console.log("From Clicking the cancel button: " + treatment)
 
         axios.put('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID, {
             treatmentID: parseInt(treatmentID), 
             treatment: treatment,
             description: description,
             treatmentDate: treatmentDate,
-            treatmentStatus: "Complete",
+            treatmentStatus: "Cancelled",
             animalID: parseInt(animalID),
-            userID: 1
-            // userID: parseInt(userID)
+            userID: parseInt(userID)
             
         }).then(
           res => {
@@ -92,7 +83,7 @@ function ManageTreatment() {
         var rightNow = new Date();
         var formattedDay = rightNow.getDate() < 10 ? "0" + rightNow.getDate().toString() : rightNow.getDate()
         var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
-        var treatmentDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
+        var treatmentDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay + " 00:00:00"
 
         axios.put('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID, {
             treatmentID: parseInt(treatmentID), 
@@ -101,8 +92,7 @@ function ManageTreatment() {
             treatmentDate: treatmentDate,
             treatmentStatus: treatmentStatus,
             animalID: parseInt(animalID),
-            userID: 1
-            // userID: parseInt(userID)
+            userID: parseInt(userID)
         }).then(
           res => {
               console.log(res);
@@ -144,7 +134,7 @@ function ManageTreatment() {
             </div>
             <div class="button mx-5 mt-3">
                 <button className="btn btn-secondary me-3" onClick={clickUpdateButton}>Update</button>
-                <button className="btn btn-secondary" onClick={clickCompleteButton}>Complete</button>
+                <button className="btn btn-secondary" onClick={clickCancelButton}>Cancel Treatment</button>
             </div>
             </div>
             </div>
@@ -188,7 +178,7 @@ export default ManageTreatment;
 </div>
 <div class="button mx-5">
     <button onClick={clickUpdateButton}>Update</button>
-    <button onClick={clickCompleteButton}>Complete</button>
+    <button onClick={clickCancelButton}>Cancel</button>
 </div>
 </div>
 </div>

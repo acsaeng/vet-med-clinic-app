@@ -20,24 +20,15 @@ function ManageDiagnosis() {
     const diagnosisStatus = localStorage.getItem("diagnosisStatus")
 
     // axios.get('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID).then(
-    axios.get('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+1).then(
+    axios.get('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+4).then(
         res => {
-            console.log(res);
             localStorage.setItem("diagnosisID", res.data[0].diagnosisID)
             localStorage.setItem("diagnosis", res.data[0].diagnosis)
             localStorage.setItem("description", res.data[0].description)
             localStorage.setItem("diagnosisStatus", res.data[0].diagnosisStatus)
             localStorage.setItem("animalID", res.data[0].animalID)
-            // window.location.reload()
         }
     )
-    
-    // function singleRefresh(event){
-    //     event.preventDefault();
-    //     window.location.reload()
-    // }
-
-    console.log(useLocation())
 
     function getDiagnosis(diagnosis){
         setDiagnosis(diagnosis.target.value)
@@ -61,7 +52,7 @@ function ManageDiagnosis() {
         var rightNow = new Date();
         var formattedDay = rightNow.getDate() < 10 ? "0" + rightNow.getDate().toString() : rightNow.getDate()
         var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
-        var diagnosisDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
+        var diagnosisDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay + " 00:00:00"
 
         event.preventDefault();
         document.getElementById("descriptionInput").value = ""
@@ -75,8 +66,7 @@ function ManageDiagnosis() {
             diagnosisDate: diagnosisDate,
             diagnosisStatus: "Complete",
             animalID: parseInt(animalID),
-            userID: 1
-            // userID: parseInt(userID)
+            userID: parseInt(userID)
             
         }).then(
           res => {
@@ -93,7 +83,7 @@ function ManageDiagnosis() {
         var rightNow = new Date();
         var formattedDay = rightNow.getDate() < 10 ? "0" + rightNow.getDate().toString() : rightNow.getDate()
         var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
-        var diagnosisDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
+        var diagnosisDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay + " 00:00:00"
 
         axios.put('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID, {
             diagnosisID: parseInt(diagnosisID),
@@ -102,15 +92,14 @@ function ManageDiagnosis() {
             diagnosisDate: diagnosisDate,
             diagnosisStatus: diagnosisStatus,
             animalID: parseInt(animalID),
-            userID: 1
-            // userID: parseInt(userID)
+            userID: parseInt(userID)
             
         }).then(
           res => {
               console.log(res);
           }
         )
-        // window.location.reload()
+        window.location.reload()
       }
 
 

@@ -18,20 +18,12 @@ function AddDiagnosis() {
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
 
-    axios.get('http://localhost:8080/app/animal/'+animalID).then(
+    // axios.get('http://localhost:8080/app/animal/'+animalID).then(
+    axios.get('http://localhost:8080/app/animal/'+102).then(
         res => {
-            // console.log(res);
             localStorage.setItem("animalID", res.data[0].animalID)
-            // window.location.reload()
         }
     )
-    
-    function singleRefresh(event){
-        event.preventDefault();
-        window.location.reload()
-    }
-
-    // console.log(useLocation())
 
     function getDiagnosis(diagnosis){
         setDiagnosis(diagnosis.target.value)
@@ -65,15 +57,14 @@ function AddDiagnosis() {
             description: description,
             diagnosisStatus: diagnosisStatus,
             animalID: parseInt(animalID),
-            userID: 1
-            // userID: parseInt(userID)
+            userID: parseInt(userID)
         }).then(
           res => {
               console.log(res);
           }
         )
         
-        // window.location.reload()
+        window.location.reload()
       }
 
 

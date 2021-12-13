@@ -62,15 +62,15 @@ public class Diagnosis {
 	 */
 	public Diagnosis(@JsonProperty("diagnosisID") int diagnosisID, @JsonProperty("diagnosisDate") String diagnosisDate,
 			@JsonProperty("diagnosis") String diagnosis, @JsonProperty("description") String description,  
-			@JsonProperty("diagnosisStatus") String diagnosisStatus, @JsonProperty("animalID") int animalID, @JsonProperty("userID") int userID	) {
+			@JsonProperty("diagnosisStatus") String diagnosisStatus, @JsonProperty("userID") int userID, @JsonProperty("animalID") int animalID) {
 		
 		this.diagnosisID = diagnosisID;
 		this.diagnosisDate = diagnosisDate;
 		this.diagnosis = diagnosis;
 		this.description = description;
 		this.diagnosisStatus = diagnosisStatus;
-		this.animalID = animalID;
 		this.userID = userID;
+		this.animalID = animalID;
 	}
 
 	/**

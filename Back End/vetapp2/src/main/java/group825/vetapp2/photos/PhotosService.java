@@ -119,7 +119,7 @@ public class PhotosService {
     		
     		String filePathDB = "/photos/"+animalID+"/"+fileName;
     		String currDateTime = getTimestamp();
-    		Photo newPhoto = new Photo(animalID, 1, filePathDB, userID, currDateTime, "placeholder");
+    		Photo newPhoto = new Photo(animalID, 1, filePathDB, userID, currDateTime);
     		
     		//check if this filepath already exists
     		//if exists then update    		

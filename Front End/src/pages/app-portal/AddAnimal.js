@@ -118,9 +118,11 @@ function AddAnimal() {
                                 <textarea className="form-control" value={animalInfo.additionalInfo} onChange={e => setAnimalInfo({...animalInfo, additionalInfo: e.target.value})}/>
                             </div>
                             
-                            <div className="align-items-center mt-3 mb-5 w-50">
-                                <button className="btn btn-secondary px-4 py-2" type="submit">Submit</button>
+                            <div className="d-flex my-3 w-50">
+                                <div className="w-50 mx-5"></div>
+                                <button className="btn btn-secondary px-4 py-2 mx-5" type="submit">Submit</button>
                             </div>
+
 
                         </form>
 

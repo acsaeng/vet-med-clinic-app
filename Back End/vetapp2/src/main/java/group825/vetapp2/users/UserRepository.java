@@ -75,7 +75,7 @@ public class UserRepository {
 				user = new User(results.getInt("User_ID"), results.getString("First_Name"), results.getString("Last_Name"),
 						results.getString("User_Type"), results.getString("Username"), results.getString("Email"),
 						results.getString("Phone_Number"), results.getString("User_Password"),
-						LocalDate.parse(results.getString("Start_Date")), results.getBoolean("User_Status"));
+						LocalDate.parse(results.getString("Start_Date")), results.getBoolean("Is_Active"));
 			}
 
 			statement.close();
@@ -93,9 +93,21 @@ public class UserRepository {
      */
     public void addUser(User user) {
 		try {
+			PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM USERS;");
+
+			ResultSet result = statement.executeQuery();
+			int rows = 0;
+
+			while (result.next()) {
+				rows++;
+			}
+
+			user.setId(++rows);
+
+
 			// Execute SQL query to add new user to the database
-			PreparedStatement statement = this.dao.prepareStatement("INSERT INTO USERS (User_ID, First_Name," +
-					"Last_Name, User_Type, Username,  Email, Phone_Number, User_Password, Start_Date, User_Status) VALUE " +
+			statement = this.dao.prepareStatement("INSERT INTO USERS (User_ID, First_Name," +
+					"Last_Name, User_Type, Username,  Email, Phone_Number, User_Password, Start_Date, Is_Active) VALUE " +
 					"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
 			statement.setInt(1, user.getId());
@@ -107,7 +119,7 @@ public class UserRepository {
 			statement.setString(7, user.getPhoneNum());
 			statement.setString(8, user.getPassword());
 			statement.setString(9, user.getStartDate().toString());
-			statement.setBoolean(10, user.isActiveStatus());
+			statement.setBoolean(10, true);
 			statement.executeUpdate();
 
 			statement.close();
@@ -127,7 +139,7 @@ public class UserRepository {
 			// Execute SQL query to update the user's information
 			PreparedStatement statement = this.dao.prepareStatement("UPDATE USERS SET First_Name = ?, " +
 					"Last_Name = ?, User_Type = ?, Username = ?,  Email = ?, Phone_Number = ?, User_Password = ?, " +
-					"Start_Date = ?, User_Status = ?  WHERE User_ID = ?");
+					"Start_Date = ?, Is_Active = ?  WHERE User_ID = ?");
 
 			statement.setString(1, updatedInfo.getFirstName());
 			statement.setString(2, updatedInfo.getLastName());
@@ -155,7 +167,7 @@ public class UserRepository {
 	public boolean blockUser(int userID) {
 		try {
 			// Execute SQL query to update the user's information
-			PreparedStatement statement = this.dao.prepareStatement("UPDATE USERS SET User_Status = false WHERE User_ID = ?");
+			PreparedStatement statement = this.dao.prepareStatement("UPDATE USERS SET Is_Active = false WHERE User_ID = ?");
 			statement.setInt(1, userID);
 			statement.executeUpdate();
 			statement.close();

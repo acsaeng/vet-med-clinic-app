@@ -102,7 +102,7 @@ public class User {
      * @return true if id, name, email, or password is null, false otherwise
      */
     public boolean anyNulls() {
-        return this.id == 0 || this.firstName == "" || this.lastName == null || this.userType == null
+        return this.firstName == "" || this.lastName == null || this.userType == null
         		|| this.email == null || this.phoneNum == null || this.password == null || this.startDate == null;
 
 

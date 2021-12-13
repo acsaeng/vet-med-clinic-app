@@ -66,14 +66,13 @@ public class PhotosRepository {
 		int responseCheck =0;
 		getLatestID();
 		
-		PreparedStatement statement = this.dao2.prepareStatement("INSERT INTO PHOTOS (Animal_ID, File_Path, Photo_ID, User_ID, Upload_Date, Description_Photo) VALUES "
-				+ "(?, ?, ?, ?, ?, ?)");
+		PreparedStatement statement = this.dao2.prepareStatement("INSERT INTO PHOTOS (Animal_ID, File_Path, Photo_ID, User_ID, Upload_Date) VALUES "
+				+ "(?, ?, ?, ?, ?)");
 		statement.setInt(1, photo.getAnimalID());
 		statement.setString(2, photo.getFilepath());
 		statement.setInt(3, (this.latestID+1));
 		statement.setInt(4, photo.getUserID());
 		statement.setString(5, photo.getDateUploaded());
-		statement.setString(6, photo.getDescription());
 		
 		
 		responseCheck = statement.executeUpdate();
@@ -97,7 +96,7 @@ public class PhotosRepository {
 		
 		while (results.next()) {
 			animalPhotos.add(new Photo(results.getInt("Animal_ID"), results.getInt("Photo_ID"), results.getString("File_Path"), 
-					results.getInt("User_ID"), results.getString("Upload_Date"), results.getString("Description_Photo")));
+					results.getInt("User_ID"), results.getString("Upload_Date")));
         }
 		statement.close();
 		return animalPhotos;
@@ -129,12 +128,11 @@ public class PhotosRepository {
 	 */
 	public int updatePhotoByID(int photoID, Photo update) throws Exception {
 		PreparedStatement statement = this.dao2.prepareStatement("UPDATE "+ tableName + " SET File_Path=?, User_ID=?" 
-					+ ", Upload_Date=?, Description_Photo=? WHERE Photo_ID=? ;");
+					+ ", Upload_Date=?  WHERE Photo_ID=? ;");
 		statement.setString(1, update.getFilepath());
 		statement.setInt(2, update.getUserID());
 		statement.setString(3, update.getDateUploaded());
-		statement.setString(4, update.getDescription());
-		statement.setInt(5, photoID);
+		statement.setInt(4, photoID);
 		
 		int responseCheck = statement.executeUpdate();
 		statement.close();

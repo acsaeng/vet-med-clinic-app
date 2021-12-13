@@ -4,13 +4,11 @@ import AnimalNavbar from '../../components/AnimalNavbar';
 import {useNavigate} from 'react-router-dom'
 import {useState} from 'react'
 import axios from 'axios';
-import Form from "react-bootstrap/Form";
 
 function AddReminder() {
     const [animalName, setName] = useState(localStorage.getItem('animalName'));
     const [species, setSpecies] = useState(localStorage.getItem('animalSpecies'));
     const [reminderNote, setNote] = useState(null);
-    const [reminderDueDate, setReminderDueDate] = useState(null);
 
     let navigate = useNavigate();
 
@@ -18,22 +16,21 @@ function AddReminder() {
         setNote(message.target.value)
     }
 
-    function getDate(date){
-        setReminderDueDate(date.target.value)
-        // console.log("date.target.value = "+date.target.value)
-    }
 
     function handleSubmit(event) {
         event.preventDefault();
 
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+        var yyyy = today.getFullYear();
+
+        today = yyyy + '-' + mm + '-' + dd  ;
+
         axios.post('http://localhost:8080/app/reminders/', {
           animalID:  parseInt(localStorage.getItem('animalID')),
-          reminderID: 1,
-          status:"Incomplete",
-        //   dateDue: document.getElementById('calDueDate').textContent,
-          dateDue: reminderDueDate,
-        //   dateDue: 'TEMP DATE',
-          datePerformed: "PENDING",
+          reminderID: 1, //dummy value which will be updated in the backend
+          dateCreated: today.toString(),
           authorID: parseInt(localStorage.getItem("userID")),
           note: reminderNote,
           firstName: localStorage.getItem("firstName"),
@@ -75,10 +72,6 @@ function AddReminder() {
                             <input className="form-control" defaultValue={species}/>
                         </div>
 
-                        <div className="d-flex my-2 my-3 w-75">
-                            <h4 type="date" className="w-100">Due Date</h4>
-                            <Form.Control type="date" name='date_of_birth' id="calDueDate" onChange={getDate}></Form.Control>
-                        </div>
 
                         <div className="d-flex my-3 w-75">
                             <h4 className="w-100">Note</h4>

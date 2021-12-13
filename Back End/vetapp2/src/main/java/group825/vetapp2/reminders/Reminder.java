@@ -26,19 +26,9 @@ public class Reminder {
 	private final int reminderID;
 
 	/**
-	 * Status of the reminder
+	 * Date reminder was created
 	 */
-	private final String status;
-
-	/**
-	 * Due date of the reminder
-	 */
-	private final String dateDue;
-
-	/**
-	 * Date the reminder was created
-	 */
-	private final String datePerformed;
+	private final String dateCreated;
 	
 	/**
 	 * ID number of the author
@@ -78,15 +68,12 @@ public class Reminder {
 	 * @param userType = type of the user who made the reminder
 	 */
 	public Reminder(@JsonProperty("animalID") int animalID, @JsonProperty("reminderID") int reminderID, 
-			@JsonProperty("status") String status, @JsonProperty("dateDue") String dateDue, 
-			@JsonProperty("datePerformed") String datePerformed, @JsonProperty("authorID") int authorID, 
+			@JsonProperty("dateCreated") String dateCreated, @JsonProperty("authorID") int authorID, 
 			@JsonProperty("note") String note, @JsonProperty("firstName") String firstName, 
 			@JsonProperty("lastName") String lastName, @JsonProperty("userType") String userType) {
 		this.animalID = animalID;
 		this.reminderID = reminderID;
-		this.status = status;
-		this.dateDue = dateDue;
-		this.datePerformed = datePerformed;
+		this.dateCreated = dateCreated;
 		this.authorID = authorID;
 		this.note = note;
 		this.firstName = firstName;
@@ -99,7 +86,7 @@ public class Reminder {
 	 * @return boolean confirming if any data members are null
 	 */
 	public boolean anyNulls() {
-		if (animalID == 0 || reminderID == 0 || status == null || dateDue == null || datePerformed == null 
+		if (animalID == 0 || reminderID == 0 || dateCreated == null 
 				|| authorID ==0 || note == null) {
 			return true;
 		}
@@ -109,8 +96,8 @@ public class Reminder {
 	
 	@Override 
 	public String toString() {
-		String newString = "{ animalID: " + animalID + ", reminderID: " + reminderID + ", status: " + status + ", dateDue: " 
-				+ dateDue + ", datePerformed: " + datePerformed + ", authorID: " + authorID + ", note: " + note + "}";
+		String newString = "{ animalID: " + animalID + ", reminderID: " + reminderID + 
+				 ", authorID: " + authorID + ", note: " + note + "}";
 	 return newString;
 	}
 	

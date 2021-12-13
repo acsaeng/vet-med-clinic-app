@@ -159,14 +159,14 @@ VALUES
 
 DROP TABLE IF EXISTS REQUEST; 
 CREATE TABLE REQUEST ( 
-     Animal_ID			 int not null,
-     Request_ID			 int not null,
-     Requester_ID			 int not null,
-     Request_Date			 varchar (50) not null,
-     Checkout_Date			 varchar (50) ,
-     Return_Date			 varchar (50) ,
-     Reason			 varchar (350) ,
-     Request_Status			 varchar (50) not null,
+     Animal_ID			 	int not null,
+     Request_ID			 	int not null auto_increment,
+     Requester_ID			int not null,
+     Request_Date			varchar (50) not null,
+     Checkout_Date			varchar (50) ,
+     Return_Date			varchar (50) ,
+     Reason			 		varchar (350) ,
+     Request_Status			varchar (50) not null,
      primary key (Request_ID),
      foreign key (Animal_ID) references ANIMAL(Animal_ID) 
      ON UPDATE CASCADE

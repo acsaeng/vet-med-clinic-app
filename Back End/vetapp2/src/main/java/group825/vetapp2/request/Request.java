@@ -1,20 +1,16 @@
 package group825.vetapp2.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.UUID;
-
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import lombok.Getter;
 import lombok.Setter;
-import java.time.LocalDate;
 
 /**
  * Request to check out an animal
  *
- * @author Timothy Mok, Jimmy Zhu
- * @version 2.0
- * @since Dec 2, 2021
+ * @author Timothy Mok, Yong Jun (Jimmy) Zhu
+ * @version 3.0
+ * @since December 13, 2021
  */
 
 @Getter
@@ -97,6 +93,6 @@ public class Request {
 	 * @return true if any of the fields are left empty, false otherwise
 	 */
 	public boolean anyNulls() {
-		return animalID == 0 || requestID == 0 || requesterID == 0 || requestDate == null ||  requestStatus == null ;
+		return animalID == 0 || requesterID == 0 || requestDate == null ||  requestStatus == null ;
 	}
 }

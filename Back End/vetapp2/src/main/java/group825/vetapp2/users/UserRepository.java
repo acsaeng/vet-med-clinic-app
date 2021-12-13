@@ -140,11 +140,7 @@ public class UserRepository {
 
 
 			// Execute SQL query to add new user to the database
-<<<<<<< HEAD
-			PreparedStatement statement = this.dao.prepareStatement("INSERT INTO USERS (User_ID, First_Name," +
-=======
 			statement = this.dao.prepareStatement("INSERT INTO USERS (User_ID, First_Name," +
->>>>>>> 8980c1f87709340df87f8d96a1362df2e6ee0140
 					"Last_Name, User_Type, Username,  Email, Phone_Number, User_Password, Start_Date, Is_Active) VALUE " +
 					"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 

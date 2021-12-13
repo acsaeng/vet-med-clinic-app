@@ -55,16 +55,7 @@ public class RemindersController {
 		remindersService.insertReminder(reminder);
 	}
 
-	/**
-	 * 'GET' mapping that retrieves all remoders from the database
-	 * @return List<Reminder> object containing the Reminders of all animals by calling method from the repository
-	 * @throws Exception when there is an SQL Exception
-	 */
-	@GetMapping
-	public List<Reminder> selectAllReminders() throws Exception {
-		return remindersService.selectAllReminders();
-	}
-
+	
 	/**
 	 * 'GET' mapping that selects a photo by ID number from the database
 	 * @param idStr = String path variable obtained by path denoted inside the GetMapping annotation
@@ -77,6 +68,7 @@ public class RemindersController {
 			int id = Integer.valueOf(animalID);
 			return remindersService.selectRemindersByID(id);
 		} catch (Exception e) {
+			e.printStackTrace();
 			// Catch if id is not a valid Animal ID from Database
 			throw new InvalidIdException();
 		}
@@ -94,19 +86,5 @@ public class RemindersController {
 		if (numRowsAffected == 0) {throw new InvalidIdException();}
 	}
 
-	/**
-	 * 'PUT' mapping that updates a reminder's information
-	 * @param reminderID = path variable obtained by path denoted inside the PutMapping annotation
-	 * @param reminderToUpdate = Reminder object with the updated data members
-	 */
-	@PutMapping(path = "{reminderID}")
-	public void updateReminderById(@PathVariable("reminderID") String reminderID, @RequestBody Reminder reminderToUpdate) throws Exception{
-		//id of a reminder
-		int id = Integer.valueOf(reminderID);
-		if (reminderToUpdate.anyNulls()) {
-			throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
-		}
-		int numRowsAffected = remindersService.updateReminderByID(id, reminderToUpdate);	
-		if (numRowsAffected == 0) {throw new InvalidIdException();}
-	}
+
 }

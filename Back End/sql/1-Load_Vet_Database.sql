@@ -101,11 +101,19 @@ CREATE TABLE COMMENTS (
 
 INSERT INTO COMMENTS (Animal_ID, Comment_ID, Upload_Time, User_ID, Message)
 VALUES
+<<<<<<< HEAD
 ('102', '1', '2021-11-17 09:07:00', '2', 'Can someone check on this horse sometime today?'),
 ('102', '2', '2021-11-17 10:35:00', '3', 'Yes, I will be doing a checkup at 11AM.'),
 ('101', '3', '2021-11-17 10:50:00', '4', 'Kristy, please accompany me to a checkup at noon. It is vital that we perform this check today. The condition appears to be worsening.'),
 ('101', '4', '2021-11-20 15:00:00', '5', 'Looking good.'),
 ('101', '5', '2021-11-21 10:00:00', '6', 'Can someone please check on the foot?');
+=======
+(102, 1, '2021-11-17 09:07:00', 2, 'Can someone check on this horse sometime today?'),
+(102, 2, '2021-11-17 10:35:00', 3, 'Yes, I will be doing a checkup at 11AM.'),
+(101, 3, '2021-11-17 10:50:00', 4, 'Kristy, please accompany me to a checkup at noon. It is vital that we perform this check today. The condition appears to be worsening.'),
+(101, 4, '2021-11-20 15:00:00', 5, 'Looking good.'),
+(101, 5, '2021-11-21 10:00:00', 6, 'Can someone please check on the foot?');
+>>>>>>> 8603b26c67a775bf8707b40756fe2ecc914efa45
 
 
 

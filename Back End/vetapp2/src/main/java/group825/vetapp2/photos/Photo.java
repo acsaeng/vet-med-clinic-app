@@ -41,10 +41,7 @@ public class Photo {
 	private final String filepath;
 	
 	
-	/**
-	 * Description of the photo 
-	 */
-	private final String description;
+
 
 
 	/**
@@ -54,16 +51,14 @@ public class Photo {
 	 * @param userID = id of the user who uploaded the photo
 	 * @param filepath file path for where the photo is stored
 	 * @param dateUploaded = date when the photo was uploaded
-	 * @param description = short description of the photo
 	 */
 	public Photo(@JsonProperty("animalID") int animalID, @JsonProperty("photoID") int photoID,
 			@JsonProperty("filepath") String filepath, @JsonProperty("userID") int userID,
-			@JsonProperty("dateUploaded") String dateUploaded, @JsonProperty("description") String description) {
+			@JsonProperty("dateUploaded") String dateUploaded) {
 		this.animalID = animalID;
 		this.photoID = photoID;
 		this.dateUploaded = dateUploaded;
 		this.filepath = filepath;
-		this.description = description;
 		this.userID = userID;
 	}
 	
@@ -72,7 +67,7 @@ public class Photo {
 	 * @return boolean confirming if any data members are null
 	 */
 	public boolean anyNulls() {
-		if (photoID == 0 || animalID ==0 || userID==0 || dateUploaded == null || filepath == null || description ==null ) {
+		if (photoID == 0 || animalID ==0 || userID==0 || dateUploaded == null || filepath == null  ) {
 			return true;
 		} 
 		return  false;
@@ -81,7 +76,7 @@ public class Photo {
 	@Override 
 	public String toString() { 
 		String newString = "{ animalID: " + animalID + ", photoID: " + photoID + ", dateUploaded: " + dateUploaded 
-				+ ", filepath: " + filepath + ", description: " + description + ", userID: " + userID + "}";
+				+ ", filepath: " + filepath  + ", userID: " + userID + "}";
 		return newString;
 	}
 	

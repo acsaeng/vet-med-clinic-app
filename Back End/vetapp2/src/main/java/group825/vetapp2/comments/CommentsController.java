@@ -55,15 +55,6 @@ public class CommentsController {
 		commentsService.insertComment(comment);
 	}
 
-	/**
-	 * 'GET' mapping that retrieves all comments from the database
-	 * @return List<Comment> object containing the Comments of all animals
-	 * @throws Exception when there is an SQL Exception
-	 */
-	@GetMapping
-	public List<Comment> selectAllComments() throws Exception {
-		return commentsService.selectAllComments();
-	}
 
 	/**
 	 * 'GET' mapping that searches for a comment by animal ID number in the database
@@ -122,24 +113,5 @@ public class CommentsController {
 			}
 	}
 
-//	/**
-//	 * 'PUT' mapping that updates a comment by ID number
-//	 * @param commentID = path variable obtained by path denoted inside the PutMapping annotation
-//	 * @param commentToUpdate = Comment object with all the updated data members
-//	 */
-//	@PutMapping(path = "{commentID}")
-//	public void updateCommentByID(@PathVariable("commentID") String commentID, @RequestBody Comment commentToUpdate) throws Exception{
-//		//id of a comment
-//		int id = Integer.valueOf(commentID);
-//		if (commentToUpdate.anyNulls()) {
-//			throw new ApiRequestException("Data members cannot be null! Check the Request Body being sent.");
-//		}
-//		try {	
-//			int numRowsAffected = commentsService.updateCommentByID(id, commentToUpdate);	
-//			if (numRowsAffected == 0) {throw new InvalidIdException();}
-//		}catch (Exception e) {
-//			e.printStackTrace();
-//			throw new InvalidIdException();
-//		}
-//	}
+
 }

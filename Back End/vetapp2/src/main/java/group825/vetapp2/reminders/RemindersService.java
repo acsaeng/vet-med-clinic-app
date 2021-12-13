@@ -44,16 +44,6 @@ public class RemindersService {
 		return dbReminders.insertReminder(reminder);
 	}
 
-	/**
-	 * Selects all reminders in the database
-	 * @return list of all Reminder Objects
-	 * @throws Exception when there is an SQL Exception
-	 */
-	public List<Reminder> selectAllReminders() throws Exception{
-		ArrayList<String> results = dbReminders.selectAllReminders();
-		List<Reminder> listResults = createListReminders(results);
-		return listResults;
-	}
 	
 	/**
 	 * Selects a reminder in the database by ID number
@@ -63,7 +53,6 @@ public class RemindersService {
 	 */
 	public List<Reminder> selectRemindersByID(int id) throws Exception {
 		ArrayList<Reminder> results =  dbReminders.selectRemindersByID(id);
-//		List<Reminder> listResults = createListReminders(results);
 		return results;
 	}
 	
@@ -76,39 +65,8 @@ public class RemindersService {
 		return dbReminders.deleteReminderByID(id);
 	}
 	
-	/**
-	 * Updates a reminder from the database by ID number
-	 * @param id int pertaining to specific animal
-	 * @param reminder Reminder object with updated data members
-	 * @return integer verifying successful code execution
-	 * @throws Exception when there is an SQL Exception
-	 */
-	public int updateReminderByID(int id, Reminder reminder) throws Exception{
-		return dbReminders.updateReminderByID(id, reminder);
-	}
-	
-	/**
-	  * Create a list of Reminder objects from ArrayList<String> returned from database query
-	 * @param foundResults = ArrayList<String> preprocessed response from database of all returned tuples as an ArrayList of Strings
-	 * @return ArrayList<Reminder> where each object was created from the data in each String from the ArrayList input
-	 */
-	public List<Reminder> createListReminders(ArrayList<String> foundResults){
-		List<Reminder> listResults = new ArrayList<Reminder>(); 
-		//review against Database setup
-		int idxId=0, idxReminderID=1, idxStatus=2, idxDateDue=3, idxDatePerformed=4, idxAuthorID=5, idxNote=6, idxFirstName=7, idxLastName=8, idxUserType=9;
-		for (String result: foundResults) {
-			String[] resultSplit = result.split(dbReminders.getSplitPlaceholder());
-			for(String individualInfo: resultSplit) {System.out.println(individualInfo);}
-			Reminder temp =  new Reminder( Integer.valueOf(resultSplit[idxId]), Integer.valueOf(resultSplit[idxReminderID]), resultSplit[idxStatus], 
-						resultSplit[idxDateDue], resultSplit[idxDatePerformed], Integer.valueOf(resultSplit[idxAuthorID]), resultSplit[idxNote],
-						resultSplit[idxFirstName], resultSplit[idxLastName], resultSplit[idxUserType]);
-		listResults.add(temp);
-	}
-	System.out.println("\nPrepared List to send as json response to API endpoint:");
-	System.out.println(listResults);
 
-	return listResults;
-	}
+
 	
 	
 }

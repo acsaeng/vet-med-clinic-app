@@ -15,7 +15,7 @@ CREATE TABLE USERS (
      User_Password		varchar (50) not null,
      Start_Date			date,
      User_Status		boolean,
-     primary key (UserName)
+     primary key (User_ID)
 );
 
 INSERT INTO USERS (User_ID, First_Name, Last_Name, User_Type, Username,  Email, Phone_Number, User_Password, Start_Date, User_Status)
@@ -32,7 +32,7 @@ VALUES
 ('10', 'Hacker', 'One', 'Teaching Technician', 'Instructor_1', 'hacker1@vet.com', '403-444-4444', 'pt@123', '2020-05-12', true),
 ('11', 'Hacker', 'Two', 'Admin', 'Admin_1', 'hacket2@vet.com', '403-555-5555', 'pa', '2020-05-13', true),
 ('12', 'Hacker', 'Three', 'Animal Health Technician', 'Technician', 'hacker3@vet.com', '403-666-6666', 'pe', '2020-05-14', true),
-('13', 'Bill', '2nd', 'Student', 'student10', 'stduent10@vet.com', '403-616-611', 'password', '2020-05-14 00:00:00', 'Active');
+('13', 'Bill', '2nd', 'Student', 'student10', 'stduent10@vet.com', '403-616-611', 'password', '2020-05-14 00:00:00', true);
 
 DROP TABLE IF EXISTS ANIMAL; 
 CREATE TABLE ANIMAL ( 
@@ -86,7 +86,7 @@ CREATE TABLE COMMENTS (
 
 INSERT INTO COMMENTS (Animal_ID, Comment_ID, Upload_Time, User_ID, Message)
 VALUES
-(102, 1, '2021-11-17 09:07:00', 2, 'Can someone check on this horse sometime today?'),
+('102', '1', '2021-11-17 09:07:00', '2', 'Can someone check on this horse sometime today?'),
 ('102', '2', '2021-11-17 10:35:00', '3', 'Yes, I will be doing a checkup at 11AM.'),
 ('101', '3', '2021-11-17 10:50:00', '4', 'Kristy, please accompany me to a checkup at noon.'),
 ('101', '4', '2021-11-20 15:00:00', '5', 'Looking good.'),

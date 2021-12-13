@@ -94,6 +94,9 @@ public class Animal {
 
     /**
      * Search Key for the name used in search algorithm
+     * Combination of letters and numbers which is used to calculate the similarity
+     * based on the presence and quantities of the letters between the user's entered
+     * search name and the names of the animals on the database
      */
     private String searchKeyName;
 

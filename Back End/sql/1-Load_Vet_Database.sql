@@ -51,35 +51,35 @@ CREATE TABLE ANIMAL (
      Availability_Status		boolean,
      Colour						varchar (50) not null,
      Additional_Info			varchar (50) not null,
--- 	 Length_Name			 	integer not null,
---   SearchKey_Name			 	varchar (150) not null,
+	 Length_Name			 	integer not null,
+	 SearchKey_Name			 	varchar (150) not null,
 
      primary key (Animal_ID)
 );
 
--- INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattoo, Birth_Date, Sex, RFID, Microchip, Availability, Animal_Status, Colour, Additional_Information, Length_Name, SearchKey_Name )
--- VALUES
--- (101, 'Bobby', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', '', '5.0', 'a0-b3-c0-d0-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o1-p0-q0-r0-s0-t0-u0-v0-w0-x0-y1-z0'),
--- (102, 'Daniel', 'Horse', 'Vanners', '564543', 'ABC Paris', '2018-08-31', 'F', '8987498179390', '5671876189197','Injured', false, 'Brown', 'Sprained right hind leg. Out for 2 weeks', '6.0', 'a1-b0-c0-d1-e1-f0-g0-h0-i1-j0-k0-l1-m0-n1-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
--- (103, 'Katherine', 'Cow', 'Abigar', '981733', 'CBH India', '2018-02-29', 'M', '83612863189', '812381931998', 'Sick', true, 'Black', 'Unavilable for one week. Grass only diet', '9.0', 'a1-b0-c0-d0-e2-f0-g0-h1-i1-j0-k1-l0-m0-n1-o0-p0-q0-r1-s0-t1-u0-v0-w0-x0-y0-z0'),
--- (104, 'Bobby', 'Cat', 'leopard', '234234', 'HOC London', '2018-08-15', 'M', '197839178371', '176387613813', 'Passed', false, 'Black and white', '', '5.0', 'a0-b3-c0-d0-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o1-p0-q0-r0-s0-t0-u0-v0-w0-x0-y1-z0'),
--- (2501, 'Satch', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15', 'M', '197839178371', '176387613813', 'Healthy', true 'Black and white', '', '5.0', 'a1-b0-c1-d0-e0-f0-g0-h1-i0-j0-k0-l0-m0-n0-o0-p0-q0-r0-s1-t1-u0-v0-w0-x0-y0-z0'),
--- (1405, 'Adai', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', '', '4.0', 'a2-b0-c0-d1-e0-f0-g0-h0-i1-j0-k0-l0-m0-n0-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
--- (1406, 'Bibbie', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15', 'M', '197839178371', '176387613813', 'Healthy', false, 'Black and white', '', '6.0', 'a0-b3-c0-d0-e1-f0-g0-h0-i2-j0-k0-l0-m0-n0-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
--- (3000, 'Ada', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15', 'M', '197839178371', '176387613813','Healthy', true, 'Black and white', '', '3.0', 'a2-b0-c0-d1-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
--- (3001, 'Bibbies', 'Dog', 'Beagle', '234234', 'HOC London', '2018-08-15', 'M', '197839178371', '176387613813', 'Healthy', false, 'Black and white', '', '7.0', 'a0-b3-c0-d0-e1-f0-g0-h0-i2-j0-k0-l0-m0-n0-o0-p0-q0-r0-s1-t0-u0-v0-w0-x0-y0-z0');
-
-INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattoo, Birth_Date, Sex, RFID, Microchip, Health_Status, Availability_Status, Colour, Additional_Info)
+INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattoo, Birth_Date, Sex, RFID, Microchip, Health_Status,  Availability_Status, Colour, Additional_Info, Length_Name, SearchKey_Name )
 VALUES
-(101, 'Bobby', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Sick', false, 'Black and white', ''),
-(102, 'Daniel', 'Horse', 'Vanners', 564543, 'ABC Paris', '20180831', 'F', '8987498179390', '5671876189197', 'Injured', false, 'Brown', 'Sprained right hind leg. Out for 2 weeks'),
-(103, 'Katherine', 'Cow', 'Abigar', 981733, 'CBH India', '20180228', 'M', '83612863189', '812381931998', 'Sick', false, 'Black', 'Unavilable for one week. Grass only diet'),
-(104, 'Bobby', 'Cat', 'leopard', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', ''),
-(2501, 'Satch', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', false, 'Black and white', ''),
-(1405, 'Adai', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', ''),
-(1406, 'Bibbie', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', false, 'Black and white', ''),
-(3000, 'Ada', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', ''),
-(3001, 'Bibbies', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', '');
+(101, 'Bobby', 'Dog', 'Beagle', '234234', 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', '', '5.0', 'a0-b3-c0-d0-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o1-p0-q0-r0-s0-t0-u0-v0-w0-x0-y1-z0'),
+(102, 'Daniel', 'Horse', 'Vanners', '564543', 'ABC Paris', '20180831', 'F', '8987498179390', '5671876189197','Injured', false, 'Brown', 'Sprained right hind leg. Out for 2 weeks', '6.0', 'a1-b0-c0-d1-e1-f0-g0-h0-i1-j0-k0-l1-m0-n1-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
+(103, 'Katherine', 'Cow', 'Abigar', '981733', 'CBH India', '20180228', 'M', '83612863189', '812381931998', 'Sick', true, 'Black', 'Unavilable for one week. Grass only diet', '9.0', 'a1-b0-c0-d0-e2-f0-g0-h1-i1-j0-k1-l0-m0-n1-o0-p0-q0-r1-s0-t1-u0-v0-w0-x0-y0-z0'),
+(104, 'Bobby', 'Cat', 'leopard', '234234', 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Passed', false, 'Black and white', '', '5.0', 'a0-b3-c0-d0-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o1-p0-q0-r0-s0-t0-u0-v0-w0-x0-y1-z0'),
+(2501, 'Satch', 'Dog', 'Beagle', '234234', 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', '', '5.0', 'a1-b0-c1-d0-e0-f0-g0-h1-i0-j0-k0-l0-m0-n0-o0-p0-q0-r0-s1-t1-u0-v0-w0-x0-y0-z0'),
+(1405, 'Adai', 'Dog', 'Beagle', '234234', 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', '', '4.0', 'a2-b0-c0-d1-e0-f0-g0-h0-i1-j0-k0-l0-m0-n0-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
+(1406, 'Bibbie', 'Dog', 'Beagle', '234234', 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', false, 'Black and white', '', '6.0', 'a0-b3-c0-d0-e1-f0-g0-h0-i2-j0-k0-l0-m0-n0-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
+(3000, 'Ada', 'Dog', 'Beagle', '234234', 'HOC London', '20180815', 'M', '197839178371', '176387613813','Healthy', true, 'Black and white', '', '3.0', 'a2-b0-c0-d1-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
+(3001, 'Bibbies', 'Dog', 'Beagle', '234234', 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', false, 'Black and white', '', '7.0', 'a0-b3-c0-d0-e1-f0-g0-h0-i2-j0-k0-l0-m0-n0-o0-p0-q0-r0-s1-t0-u0-v0-w0-x0-y0-z0');
+
+-- INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattoo, Birth_Date, Sex, RFID, Microchip, Health_Status, Availability_Status, Colour, Additional_Info)
+-- VALUES
+-- (101, 'Bobby', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Sick', false, 'Black and white', ''),
+-- (102, 'Daniel', 'Horse', 'Vanners', 564543, 'ABC Paris', '20180831', 'F', '8987498179390', '5671876189197', 'Injured', false, 'Brown', 'Sprained right hind leg. Out for 2 weeks'),
+-- (103, 'Katherine', 'Cow', 'Abigar', 981733, 'CBH India', '20180228', 'M', '83612863189', '812381931998', 'Sick', false, 'Black', 'Unavilable for one week. Grass only diet'),
+-- (104, 'Bobby', 'Cat', 'leopard', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', ''),
+-- (2501, 'Satch', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', false, 'Black and white', ''),
+-- (1405, 'Adai', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', ''),
+-- (1406, 'Bibbie', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', false, 'Black and white', ''),
+-- (3000, 'Ada', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', ''),
+-- (3001, 'Bibbies', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', '');
 
 
 DROP TABLE IF EXISTS COMMENTS; 
@@ -101,19 +101,12 @@ CREATE TABLE COMMENTS (
 
 INSERT INTO COMMENTS (Animal_ID, Comment_ID, Upload_Time, User_ID, Message)
 VALUES
-<<<<<<< HEAD
 ('102', '1', '2021-11-17 09:07:00', '2', 'Can someone check on this horse sometime today?'),
 ('102', '2', '2021-11-17 10:35:00', '3', 'Yes, I will be doing a checkup at 11AM.'),
 ('101', '3', '2021-11-17 10:50:00', '4', 'Kristy, please accompany me to a checkup at noon. It is vital that we perform this check today. The condition appears to be worsening.'),
 ('101', '4', '2021-11-20 15:00:00', '5', 'Looking good.'),
 ('101', '5', '2021-11-21 10:00:00', '6', 'Can someone please check on the foot?');
-=======
-(102, 1, '2021-11-17 09:07:00', 2, 'Can someone check on this horse sometime today?'),
-(102, 2, '2021-11-17 10:35:00', 3, 'Yes, I will be doing a checkup at 11AM.'),
-(101, 3, '2021-11-17 10:50:00', 4, 'Kristy, please accompany me to a checkup at noon. It is vital that we perform this check today. The condition appears to be worsening.'),
-(101, 4, '2021-11-20 15:00:00', 5, 'Looking good.'),
-(101, 5, '2021-11-21 10:00:00', 6, 'Can someone please check on the foot?');
->>>>>>> 8603b26c67a775bf8707b40756fe2ecc914efa45
+
 
 
 

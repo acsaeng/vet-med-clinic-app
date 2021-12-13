@@ -34,14 +34,14 @@ public class AnimalRepository {
 	/**
 	 * Desired number of search results
 	 */
-	int desiredNumberOfResults = 4;
+	int desiredNumberOfResults = 5;
 
 	/**
      * Constructor that initializes the AnimalRepository
      */
 	public AnimalRepository() {
 		dao = DatabaseConnection.getConnection();
-//		search = new Search(dao, tableName, desiredNumberOfResults);
+		search = new Search(desiredNumberOfResults);
 	}
 
 
@@ -200,8 +200,8 @@ public class AnimalRepository {
      * @param onlyAvailableAnimals = boolean deciding whether to return all animals or only available animals
      * @return specified animal if found, null otherwise
      */
-    public ArrayList<String> searchAnimalByName(String name, String species, boolean onlyAvailableAnimals) throws Exception{
-    	ArrayList<String> foundResults = search.searchForName(name, species, onlyAvailableAnimals);
+    public ArrayList<Animal> searchAnimalByName(String name, String species, boolean onlyAvailableAnimals) throws Exception{
+    	ArrayList<Animal> foundResults = search.searchForName(name, species, onlyAvailableAnimals);
     	return foundResults;
     }
 }

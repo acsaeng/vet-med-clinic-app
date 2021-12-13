@@ -7,104 +7,214 @@ import java.util.Set;
 import group825.vetapp2.database.*;
 
 import java.lang.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.time.LocalDate;
 
 public class Search {
 	OldDatabaseConnection dao;
-	ArrayList<String> list_species;
-	String query, table_name;
+	ArrayList<String> listSpecies;
+	String query, tableName;
 	int desiredNumberOfResults;
 	
 	int idx_SearchKey = 15;
 	int idx_species = 2;
 	int idx_names = 1;
 	
+	/**
+	 * Connector to the database
+	 */
+	Connection dao2;
+
 	
-	public Search(OldDatabaseConnection dao, String table_name, int desiredNumberOfResults) throws Exception{
-		this.dao = dao;
-		this.table_name = table_name;
+	
+	public Search(int desiredNumberOfResults) {
+//		this.dao = dao;
+		this.dao2 = DatabaseConnection.getConnection();
+		this.tableName = "ANIMAL";
+		this.listSpecies = new ArrayList<String>();
+		
 		get_all_species();
 		this.desiredNumberOfResults = desiredNumberOfResults;
+		
+		
 	}
 	
-	private void get_all_species() throws Exception{
-		query = "SELECT * FROM "+this.table_name;
-		String allRows = dao.getRows(query);
-		System.out.println(allRows); //get all the animals from the database
-		System.out.println("");
-		list_species = dao.parseInfoReturned(allRows, idx_species);
-		Set uniqueSpecies = new HashSet(list_species);
-		list_species = new ArrayList(uniqueSpecies);
-		System.out.println("list_species: " + list_species);
+	/**
+	 * Get all current animal species on the database
+	 * @throws Exception
+	 */
+	private void get_all_species(){
+//		query = "SELECT * FROM "+this.tableName;
+//		String allRows = dao.getRows(query);
+//		System.out.println(allRows); //get all the animals from the database
+//		System.out.println("");
+//		listSpecies = dao.parseInfoReturned(allRows, idx_species);
+//		Set uniqueSpecies = new HashSet(listSpecies);
+//		listSpecies = new ArrayList(uniqueSpecies);
+//		System.out.println("listSpecies: " + listSpecies);
+		
+		
+		// Execute SQL query to retrieve all animals
+		try {
+			PreparedStatement statement = this.dao2.prepareStatement("SELECT * FROM "+this.tableName);
+			ResultSet results = statement.executeQuery();
+			
+			while (results.next()) {
+				this.listSpecies.add(results.getString("Species"));
+			}
+			Set uniqueSpecies = new HashSet(listSpecies);
+			listSpecies = new ArrayList(uniqueSpecies);
+			statement.close();
+//			System.out.println("listSpecies: " + listSpecies);
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error gettting the species currently on database");
+		}
+			
 	}
 	
-	public void updateListOfSpecies() throws Exception { //method is used by Administrator to update the List of Species recorded inside the database
+	
+	/**
+	 * Used by Administrator who runs the system to update the List of Species recorded inside the database
+	 * @throws SQLException
+	 */
+	public void updateListOfSpecies() throws Exception { 
 		get_all_species();
 	}
 	
 	
-	public ArrayList<String> searchForName(String animalName, String searchSpecies, boolean onlyAvailableAnimals) throws Exception { //sample: "Bobby horse" or "horse Bobby"
+	public ArrayList<Animal> searchForName(String animalName, String searchSpecies, boolean onlyAvailableAnimals) { //sample: "Bobby horse" or "horse Bobby"
+		//PART ONE - EXACT NAME MATCHES --------------------------------------------------------------------------------------------
+		
+//		String extra ="";
+//		if (onlyAvailableAnimals) {extra = " AND A.Animal_Status='Available'";}
+//		
+//		
+//		if(searchSpecies != null) {
+//			query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Species='"+searchSpecies+"' AND A.Animal_Name='"+animalName+"'" + extra + " ORDER BY A.Animal_ID;";
+//		}
+//		else {
+//			query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Animal_Name='"+animalName+"'" + extra + " ORDER BY A.Animal_ID;";
+//		}
+//		System.out.println(query);
+//		
+//		String allRows = dao.getRows(query);
+//		System.out.println("\t>>> Got response from Server");
+//		System.out.println("'"+allRows+"'");
+//		System.out.println("---------");
+//		ArrayList<String> exactMatches = new ArrayList<String>();
+//		for (String row: allRows.split("\n")) {exactMatches.add(row);}
+//		if (!isResultsEmpty(allRows)) { return exactMatches;} //if several exact matches to input have been received, return exact matches
+//		System.out.println("\t>>> Did not get exact matches from query\n");
+		
+
 		String extra ="";
-		if (onlyAvailableAnimals) {extra = " AND A.Animal_Status='Available'";}
+		if (onlyAvailableAnimals) {extra = " AND A.Availability_Status='Available'";}
 		
 		
 		if(searchSpecies != null) {
-			query = "SELECT * FROM "+this.table_name +" AS A WHERE A.Species='"+searchSpecies+"' AND A.Animal_Name='"+animalName+"'" + extra + " ORDER BY A.Animal_ID;";
+			query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Animal_Name=?  AND A.Species=? " + extra + " ORDER BY A.Animal_ID;";
 		}
 		else {
-			query = "SELECT * FROM "+this.table_name +" AS A WHERE A.Animal_Name='"+animalName+"'" + extra + " ORDER BY A.Animal_ID;";
+			query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Animal_Name=?" + extra + " ORDER BY A.Animal_ID;";
 		}
 		System.out.println(query);
 		
-		String allRows = dao.getRows(query);
-		System.out.println("\t>>> Got response from Server");
-		System.out.println("'"+allRows+"'");
-		System.out.println("---------");
-		ArrayList<String> exactMatches = new ArrayList<String>();
-		for (String row: allRows.split("\n")) {exactMatches.add(row);}
-		if (!isResultsEmpty(allRows)) { return exactMatches;} //if several exact matches to input have been received, return exact matches
-		System.out.println("\t>>> Did not get exact matches from query\n");
+		try {
+			PreparedStatement statement = this.dao2.prepareStatement(query);
+			statement.setString(1, animalName);
+			if(searchSpecies != null) {statement.setString(2, searchSpecies);}
+			
+			ResultSet results = statement.executeQuery();
+			System.out.println("\t>>> Got response from Server");
+			
+//			System.out.println("'"+allRows+"'");
+//			System.out.println("---------");
+			ArrayList<Animal> exactMatches = new ArrayList<Animal>();
+			while (results.next()) {
+				exactMatches.add(new Animal(results.getInt("Animal_ID"), results.getString("Animal_Name"),
+						results.getString("Species"), results.getString("Breed"), results.getInt("Tattoo_Num"),
+						results.getString("City_Tattoo"), LocalDate.parse(results.getString("Birth_Date")),
+						results.getString("Sex").charAt(0), results.getString("RFID"), results.getString("Microchip"),
+						results.getString("Health_Status"), results.getBoolean("Availability_Status"),
+						results.getString("Colour"), results.getString("Additional_Info"), 
+						results.getInt("Length_Name"), results.getString("SearchKey_Name")));
+			}
+			
+			if (exactMatches.size() > 0) {
+				return exactMatches;
+			}
+			
+		}catch (Exception e) {//
+			e.printStackTrace();
+			System.out.println("Error searching for exact match");
+//			System.out.println("No animals were found for the user entered name :" + animalName);
+//			System.out.println("\n\n >>> Proceed to part two with ");
+		}
+	
 		
-		//Begin search by Name for similar names ----------------------------------------------------------------
-//		if(includesAnimalType) {
-//			query = "SELECT * FROM "+this.table_name +" AS A WHERE A.Species='"+searchSpecies+"' AND A.Length_Name='"+animalName.length()+"';";
-//		}
-//		else {
-//			query = "SELECT * FROM "+this.table_name +" AS A WHERE A.Length_Name='"+animalName.length()+"';";
-//		}
-//		System.out.println(query);
-//		allRows = dao.getRows(query);
-//		System.out.println("\t>>> Got response from Server");
-//		System.out.println(allRows);
-//		System.out.println("---------");
-//		ArrayList<String> findings_searchKeys = dao.parseInfoReturned(allRows, 16);
-//		System.out.println(findings_searchKeys);
-//		//UPDATE THIS PORTION^^^^^^^^
-		String allRowsFromEveryQuery = getMinNumOfResults((searchSpecies != null), searchSpecies, animalName);
-		ArrayList<String> allResultsFromDb = new ArrayList<String>();
-		for (String rowResult: allRowsFromEveryQuery.split("\n")) {allResultsFromDb.add(rowResult);}
-//		System.out.println("allRowsFromEveryQuery = '"+allRowsFromEveryQuery+"'");
+		
+		
+		
+		//PART TWO - SEARCH FOR SIMILAR NAME MATCHES ------------------------------------------------------------------------------------------
+		
+		System.out.println("\t>>> Did not get exact matches from query\n");
+		System.out.println("\n\n >>> Proceed to part two to search for names that are similar");
+//		String allRowsFromEveryQuery = getMinNumOfResults((searchSpecies != null), searchSpecies, animalName);
+//		ArrayList<String> allResultsFromDb = new ArrayList<String>();
+//		for (String rowResult: allRowsFromEveryQuery.split("\n")) {allResultsFromDb.add(rowResult);}
+////		System.out.println("allRowsFromEveryQuery = '"+allRowsFromEveryQuery+"'");
+		
+		//Get an arraylist of Animals whose names are of similar length to the entered name
+		ArrayList<Animal> minMatches =  getMinNumOfResults((searchSpecies != null), searchSpecies, animalName);
+		
 		
 		//if nothing was found at all, return blank ArrayList
-		if(allRowsFromEveryQuery == "") {return new ArrayList<String>();}
+		if(minMatches.size() == 0) {return new ArrayList<Animal>();}
 		
-		//Otherwise, organize findings based on most similar
-		System.out.println("allFindings_searchKeys:");
-		ArrayList<String> allFindings_searchKeys = dao.parseInfoReturned(allRowsFromEveryQuery, idx_SearchKey);
+		//Otherwise, organize findings based on most similar search key
+		System.out.println("allFindingsSearchKeys:");
+//		ArrayList<String> allFindingsSearchKeys = dao.parseInfoReturned(allRowsFromEveryQuery, idx_SearchKey);
+		ArrayList<String> allFindingsSearchKeys = new ArrayList<String>();
+		for (Animal currAnimal: minMatches){ 
+			allFindingsSearchKeys.add(currAnimal.getSearchKeyName());
+		}
 
 		System.out.println("animalName = '" + animalName+"'");
 		String newSearchKey = generateSearchKey(animalName);
-//		calcDifference(newSearchKey, allFindings_searchKeys.get(0)); // test
+//		calcDifference(newSearchKey, allFindingsSearchKeys.get(0)); // test
 		ArrayList<Integer> list_differences = new ArrayList<Integer>();
-		for (String dbSearchKey: allFindings_searchKeys) {
+		for (String dbSearchKey: allFindingsSearchKeys) {
 			list_differences.add(calcDifference(newSearchKey, dbSearchKey));
 		}
 		
 		System.out.println("\nlist_differences = "+list_differences);
-		System.out.println("list_names = "+ dao.parseInfoReturned(allRowsFromEveryQuery, idx_names));
+//		System.out.println("list_names = "+ dao.parseInfoReturned(allRowsFromEveryQuery, idx_names));
 		
-		//organize db results based on closest similarity
+		
+//		//organize db results based on closest similarity
+//		int numResultsReturned = 0;
+//		ArrayList<String> organizedResults = new ArrayList<String>();
+//		//trial for get the minimum then remove 
+////		int idxMin = getIndexOfMin(list_differences);
+////		organizedResults.add(allResultsFromDb.get(idxMin));
+////		allResultsFromDb.remove(idxMin);
+//		
+//		
+//		while(numResultsReturned < this.desiredNumberOfResults && list_differences.size()!=0) {
+//			int idxMin = getIndexOfMin(list_differences);
+//			organizedResults.add(allResultsFromDb.get(idxMin));
+//			allResultsFromDb.remove(idxMin);
+//			list_differences.remove(idxMin);
+//			numResultsReturned++;
+//		}
+		
+		
+		// PART THREE - organize Database results based on closest similarity-----------------------------------------------------------------------
 		int numResultsReturned = 0;
-		ArrayList<String> organizedResults = new ArrayList<String>();
+		ArrayList<Animal> organizedResults = new ArrayList<Animal>();
 		//trial for get the minimum then remove 
 //		int idxMin = getIndexOfMin(list_differences);
 //		organizedResults.add(allResultsFromDb.get(idxMin));
@@ -113,21 +223,23 @@ public class Search {
 		
 		while(numResultsReturned < this.desiredNumberOfResults && list_differences.size()!=0) {
 			int idxMin = getIndexOfMin(list_differences);
-			organizedResults.add(allResultsFromDb.get(idxMin));
-			allResultsFromDb.remove(idxMin);
+			organizedResults.add(minMatches.get(idxMin));
+			minMatches.remove(idxMin);
 			list_differences.remove(idxMin);
 			numResultsReturned++;
 		}
+		
+		
 //		System.out.println("organizedResults: '"+ organizedResults+"'");
 //		System.out.println("allResultsFromDb: '"+ allResultsFromDb+"'");
 		System.out.println("organizedResults: ");
-		for(String result: organizedResults) {
-			System.out.println("\t -> "+result);
+		for(Animal currAnimal: organizedResults) {
+			System.out.println("\t -> "+currAnimal.getName());
 		}
 		System.out.println(" ----");
 		System.out.println("remaining of allResultsFromDb: ");
-		for(String result: allResultsFromDb) {
-			System.out.println("\t -> "+result);
+		for(Animal currAnimal:  minMatches) {
+			System.out.println("\t -> "+currAnimal.getName());
 		}
 		System.out.println(" ----");
 		
@@ -149,67 +261,166 @@ public class Search {
 		return minIdx;
 	}
 	
-	private String getMinNumOfResults(boolean includesAnimalType, String searchSpecies, String animalName) throws Exception{	
+	/**
+	 * Get an an ArrayList of animals which will have at least the desired number of results entered in the constructor
+	 * This arrayList is populated by animal's whose names are of similar length.
+	 * Longer and shorter names are added until the minimum number of desired results is achieved.
+	 * 
+	 * getMinOfResults will return empty arraylist if the database has no names of the same length and will stop incrementing and decrementing
+	 * the name length when no results is found in either situations.
+	 * 
+	 * @param includesAnimalType = boolean to determine whether or not to include the animal's species in the search query
+	 * @param searchSpecies = species entered by user
+	 * @param animalName = name of the animal entered by the user
+	 * @return ArrayList<Animal> containing the minimum number of results whose names are of similar length to the search query
+	 * @throws SQLException
+	 */
+	private ArrayList<Animal> getMinNumOfResults(boolean includesAnimalType, String searchSpecies, String animalName){	
+//		//Send search query to search for name of the same length
+//		if(includesAnimalType) {
+//			query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Species='"+searchSpecies+"' AND A.Length_Name='"+animalName.length()+"';";
+//		}
+//		else {
+//			query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Length_Name='"+animalName.length()+"';";
+//		}
+//		System.out.println(query);
+//		String allRowsFromEveryQuery = dao.getRows(query);
+//		System.out.println("\t>>> Got response from Server");
+//		System.out.println(allRowsFromEveryQuery);
+//		System.out.println("---------");
+		
+		
 		//Send search query to search for name of the same length
+		ArrayList<Animal> minMatches = new ArrayList<Animal>();
+		
 		if(includesAnimalType) {
-			query = "SELECT * FROM "+this.table_name +" AS A WHERE A.Species='"+searchSpecies+"' AND A.Length_Name='"+animalName.length()+"';";
+			query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Length_Name=? AND A.Species=?;";
 		}
 		else {
-			query = "SELECT * FROM "+this.table_name +" AS A WHERE A.Length_Name='"+animalName.length()+"';";
+			query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Length_Name=?;";
 		}
-		System.out.println(query);
-		String allRowsFromEveryQuery = dao.getRows(query);
-		System.out.println("\t>>> Got response from Server");
-		System.out.println(allRowsFromEveryQuery);
-		System.out.println("---------");
+		System.out.println("query = "+query);
 		
+		try{
+			PreparedStatement statement = this.dao2.prepareStatement(query);
+			statement.setInt(1, animalName.length());
+			if(includesAnimalType) {statement.setString(2, searchSpecies);}
+			
+			ResultSet results = statement.executeQuery();
+			
+//			while (results.next()) {
+//				minMatches.add(new Animal(results.getInt("Animal_ID"), results.getString("Animal_Name"),
+//						results.getString("Species"), results.getString("Breed"), results.getInt("Tattoo_Num"),
+//						results.getString("City_Tattoo"), LocalDate.parse(results.getString("Birth_Date")),
+//						results.getString("Sex").charAt(0), results.getString("RFID"), results.getString("Microchip"),
+//						results.getString("Health_Status"), results.getBoolean("Availability_Status"),
+//						results.getString("Colour"), results.getString("Additional_Info"), 
+//						results.getInt("Length_Name"), results.getString("SearchKey_Name")));
+//			}
+			minMatches = createListAnimal(results, minMatches);
+			System.out.println("\t>>> Got response from Server - Grabbed names of the same length");
+			statement.close();
+			
+		}catch(Exception e) {
+			System.out.println("Error grabbing names of the same length");
+		}
 		
+	
 		
 		boolean noMoreSmallerNames = false; 
 		boolean noMoreBiggerNames = false;
 		int lengthDeviationFromOriginalName = 1;
-		System.out.println("allRowsFromEveryQuery = '"+allRowsFromEveryQuery+"'");
+
 //		System.out.println("allRowsFromEveryQuery.split(n).length = " + allRowsFromEveryQuery.split("\n").length);
-//		System.out.println(allRowsFromEveryQuery);
-		while(allRowsFromEveryQuery.split("\n").length < this.desiredNumberOfResults && (!noMoreSmallerNames || !noMoreBiggerNames)) {
+
+//		while(allRowsFromEveryQuery.split("\n").length < this.desiredNumberOfResults && (!noMoreSmallerNames || !noMoreBiggerNames)) {
+		while(minMatches.size() < this.desiredNumberOfResults && (!noMoreSmallerNames || !noMoreBiggerNames)) {
 			//while loop ends when the number of desired search queries is found 
 			//or when no more names can be found that are greater or less than the size of the animalName that is in the search input
+			try {
+				if (!noMoreSmallerNames) {
+					System.out.println("------query for names of SMALLER size");
+					ArrayList<Animal> smallerNames = new ArrayList<Animal>();
+					
+					if(includesAnimalType) {
+						query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Length_Name=? AND A.Species=?";
+					}
+					else {
+						query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Length_Name=?";
+					}
+//					String allRows = dao.getRows(query);
+//					System.out.println("\t>>> Got response from Server");
+//					System.out.println(allRows);
+//					System.out.println("---------");
+//					allRowsFromEveryQuery = allRowsFromEveryQuery + allRows;
+					
+					PreparedStatement statement = this.dao2.prepareStatement(query);
+					statement.setInt(1, animalName.length()-lengthDeviationFromOriginalName);
+					if(includesAnimalType) {statement.setString(2, searchSpecies);}
+					
+					ResultSet results = statement.executeQuery();
+					smallerNames = createListAnimal(results, smallerNames);
 			
-			if (!noMoreSmallerNames) {
-				System.out.println("------query for names of SMALLER size");
+					for (Animal newAnimal: smallerNames) {minMatches.add(newAnimal);}
+					
+					if (smallerNames.size() ==0) {noMoreSmallerNames = true;}
+					statement.close();
+				}
 				
-				if(includesAnimalType) {
-					query = "SELECT * FROM "+this.table_name +" AS A WHERE A.Species='"+searchSpecies+"' AND A.Length_Name='"+(animalName.length()-lengthDeviationFromOriginalName )+"';";
+				if (!noMoreBiggerNames) {
+//					System.out.println("------query for names of LARGER size");
+//					
+//					if(includesAnimalType) {
+//						query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Species='"+searchSpecies+"' AND A.Length_Name='"+(animalName.length()+lengthDeviationFromOriginalName )+"';";
+//					}
+//					else {
+//						query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Length_Name='"+(animalName.length()+lengthDeviationFromOriginalName )+"';";
+//					}
+//					String allRows = dao.getRows(query);
+//					System.out.println("\t>>> Got response from Server");
+//					System.out.println(allRows);
+//					System.out.println("---------");
+//					allRowsFromEveryQuery = allRowsFromEveryQuery + allRows;
+//					if (isResultsEmpty(allRows)) {noMoreBiggerNames = true;}
+//					
+					
+					
+					System.out.println("------query for names of LARGER size");
+					ArrayList<Animal> largerNames = new ArrayList<Animal>();
+					
+					if(includesAnimalType) {
+						query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Length_Name=? AND A.Species=?";
+					}
+					else {
+						query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Length_Name=?";
+					}
+//					String allRows = dao.getRows(query);
+//					System.out.println("\t>>> Got response from Server");
+//					System.out.println(allRows);
+//					System.out.println("---------");
+//					allRowsFromEveryQuery = allRowsFromEveryQuery + allRows;
+					
+					PreparedStatement statement = this.dao2.prepareStatement(query);
+					statement.setInt(1, animalName.length()+lengthDeviationFromOriginalName);
+					if(includesAnimalType) {statement.setString(2, searchSpecies);}
+					
+					ResultSet results = statement.executeQuery();
+					largerNames = createListAnimal(results, largerNames);
+					
+					for (Animal newAnimal: largerNames) {minMatches.add(newAnimal);}
+					
+					if (largerNames.size() ==0) {noMoreBiggerNames = true;}
+					statement.close();
+					
 				}
-				else {
-					query = "SELECT * FROM "+this.table_name +" AS A WHERE A.Length_Name='"+(animalName.length()-lengthDeviationFromOriginalName )+"';";
-				}
-				String allRows = dao.getRows(query);
-				System.out.println("\t>>> Got response from Server");
-				System.out.println(allRows);
-				System.out.println("---------");
-				allRowsFromEveryQuery = allRowsFromEveryQuery + allRows;
-				if (isResultsEmpty(allRows)) {noMoreSmallerNames = true;}
+				
+				lengthDeviationFromOriginalName++;
+			}catch(Exception e) {
+				e.printStackTrace();
+				System.out.println("Error getting names for smaller and bigger names");
+				break; //break out of while loop if error encountered
 			}
 			
-			if (!noMoreBiggerNames) {
-				System.out.println("------query for names of LARGER size");
-				
-				if(includesAnimalType) {
-					query = "SELECT * FROM "+this.table_name +" AS A WHERE A.Species='"+searchSpecies+"' AND A.Length_Name='"+(animalName.length()+lengthDeviationFromOriginalName )+"';";
-				}
-				else {
-					query = "SELECT * FROM "+this.table_name +" AS A WHERE A.Length_Name='"+(animalName.length()+lengthDeviationFromOriginalName )+"';";
-				}
-				String allRows = dao.getRows(query);
-				System.out.println("\t>>> Got response from Server");
-				System.out.println(allRows);
-				System.out.println("---------");
-				allRowsFromEveryQuery = allRowsFromEveryQuery + allRows;
-				if (isResultsEmpty(allRows)) {noMoreBiggerNames = true;}
-			}
-			
-			lengthDeviationFromOriginalName++;
 			
 		}
 		
@@ -217,13 +428,27 @@ public class Search {
 //		System.out.println("All Findings: ");
 //		System.out.println(allRowsFromEveryQuery);
 //		System.out.println("");
-//		ArrayList<String> allFindings_searchKeys = dao.parseInfoReturned(allRowsFromEveryQuery, 16);
-//		System.out.println(allFindings_searchKeys);
+//		ArrayList<String> allFindingsSearchKeys = dao.parseInfoReturned(allRowsFromEveryQuery, 16);
+//		System.out.println(allFindingsSearchKeys);
 		
 		
-		return allRowsFromEveryQuery;
+		return minMatches;
 	}
 	
+	
+	private ArrayList<Animal> createListAnimal(ResultSet results, ArrayList<Animal> currArr) throws Exception{
+		while (results.next()) {
+			currArr.add(new Animal(results.getInt("Animal_ID"), results.getString("Animal_Name"),
+					results.getString("Species"), results.getString("Breed"), results.getInt("Tattoo_Num"),
+					results.getString("City_Tattoo"), LocalDate.parse(results.getString("Birth_Date")),
+					results.getString("Sex").charAt(0), results.getString("RFID"), results.getString("Microchip"),
+					results.getString("Health_Status"), results.getBoolean("Availability_Status"),
+					results.getString("Colour"), results.getString("Additional_Info"), 
+					results.getInt("Length_Name"), results.getString("SearchKey_Name")));
+		}
+		
+		return currArr;
+	}
 	
 	private int calcDifference(String newSearchKey, String dbSearchKey) {
 		System.out.println("\n --within calcDifference()");

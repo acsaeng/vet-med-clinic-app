@@ -25,21 +25,10 @@ public class WeightHistoryRepository {
     private final Connection dao;
 
     /**
-     * Database table name
-     */
-    private final String tableName;
-
-    /**
-     * Results of a query to the database
-     */
-    private ResultSet results;
-
-    /**
      * Class constructor that initializes the WeightHistoryRepository
      */
     public WeightHistoryRepository() {
         this.dao = DatabaseConnection.getConnection();
-        this.tableName = "WEIGHT_HISTORY";
     }
 
     /**
@@ -53,9 +42,10 @@ public class WeightHistoryRepository {
 
         try {
             // Execute SQL query
-            PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM WEIGHT_HISTORY WHERE Animal_ID = ?;");
+            PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM WEIGHT_HISTORY WHERE Animal_ID = ? ORDER BY Date_Recorded DESC;");
             statement.setInt(1, animalID);
-            results = statement.executeQuery();
+
+            ResultSet results = statement.executeQuery();
 
             // Process the results set and add entries into weight history
             while (results.next()) {
@@ -94,7 +84,6 @@ public class WeightHistoryRepository {
     /**
      * Deletes an animal's weight entry
      * @param weight animal's weight entry
-     * @throws Exception error when accessing the database
      */
     public void deleteWeight(Weight weight) {
         try {

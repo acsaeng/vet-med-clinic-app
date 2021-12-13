@@ -19,12 +19,13 @@ const AnimalNavbar = () => {
             {/* <img src={profilePhoto} alt="Animal Profile" className="p-4"></img> */}
             {/* {window.location.reload()} */}
             <div className="d-flex flex-column justify-content-start align-items-center py-4 animal-info mx-5">
-                <h3 className="mt-2">{localStorage.getItem("animalName")}</h3>
+                <h3 className="mt-2 fw-bold">{localStorage.getItem("animalName")}</h3>
                 <p className="species-text">{localStorage.getItem("animalSpecies")}</p>
-                <p className="status-text px-5">{localStorage.getItem("animalStatus")}</p>
+                <p className="availability-text">{localStorage.getItem("animalStatus")}</p>
+                <p className="status-text">Healthy</p>
             </div>
 
-            <div className="px-4 py-2">
+            <div className="px-4 pb-5 dropdown">
                 <DropdownButton id="dropdown-basic-button" title="Select an option..." variant="dark">
                     <Dropdown.Item href="/animal-info">Animal Information</Dropdown.Item>
                     <Dropdown.Item href="/health-records">Health Records</Dropdown.Item>

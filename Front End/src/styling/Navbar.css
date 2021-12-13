@@ -1,5 +1,6 @@
 .navbar {
   background-color: #cfd8dc;
+  height: 21%;
 }
 
 .navbar div:last-of-type {
@@ -16,12 +17,27 @@
   margin-top: -5px;
 }
 
+
+.availability-text {
+    background-color: lightblue;
+    text-align: center;
+    margin-top: -10px;
+    width: 150px;
+  }
+  
+
 .status-text {
   background-color: lightgreen;
+  text-align: center;
   margin-top: -10px;
+  width: 150px;
 }
 
 .admin-text {
     font-style: italic;
     margin-top: -15px;
+}
+
+.dropdown {
+    margin-bottom: -5px;
 }

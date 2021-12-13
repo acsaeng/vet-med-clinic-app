@@ -1,7 +1,6 @@
 package group825.vetapp2.weighthistory;
 
 import group825.vetapp2.exceptions.ApiRequestException;
-import group825.vetapp2.exceptions.InvalidIdException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +37,7 @@ public class WeightHistoryController {
      * @return weight history of an animal
      */
     @GetMapping(path = "/{animalID}")
-    public ArrayList<Weight> selectWeight(@PathVariable("animalID") int animalID) {
+    public ArrayList<Weight> selectWeightHistoryById(@PathVariable("animalID") int animalID) {
         return this.service.selectWeightHistoryByID(animalID);
     }
 

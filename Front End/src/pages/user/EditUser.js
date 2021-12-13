@@ -24,8 +24,6 @@ function EditUser() {
         .then(res => {
             const info = res.data;
 
-            console.log(info);
-
             if(info === "") {
                 alert("User ID does not exist");
             } else {

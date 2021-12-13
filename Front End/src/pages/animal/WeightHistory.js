@@ -43,7 +43,10 @@ function WeightHistory() {
 
     function onDelete(index) {
         console.log({animalId: 102, date: weightHistory[0][index].date, weight: weightHistory[0][index].weight});
-        axios.delete("http://localhost:8080/app/animal/weight-history", {data: {animalId: 102, date: weightHistory[0][index].date, weight: weightHistory[0][index].weight}})
+        axios.delete("http://localhost:8080/app/animal/weight-history", {data: {animalId: 102, 
+                                                                         date: weightHistory[0][index].date,
+                                                                         weight: weightHistory[0][index].weight,
+                                                                         userId: weightHistory[0][index].userId}})
         .then(res => {
             console.log(res);
             console.log(res.data);
@@ -57,7 +60,7 @@ function WeightHistory() {
     function handleSubmit(event) {
         event.preventDefault();
 
-        axios.post("http://localhost:8080/app/animal/weight-history", { animalId: 102, date: date, weight: weight })
+        axios.post("http://localhost:8080/app/animal/weight-history", { animalId: 102, date: date, weight: weight, userId: 1 })
         .then(res => {
           console.log(res);
           console.log(res.data);

@@ -21,47 +21,19 @@ function RequestAnimal() {
     const [returnDate, setReturnDate] = useState(new Date());
     const [reason, setReason] = useState(null);
 
-    const urlParams = new URLSearchParams(useLocation().search)
-    
-    const requestID = 1 //dummy, backend assigns a new requestID
-    const animalID = urlParams.get("animalID")
-    localStorage.setItem("animalID", animalID)
-    let animalName = ""
-    let animalSpecies = ""
-    // const animalName = urlParams.get("animalName")
-    // const animalSpecies = urlParams.get("animalSpecies")
-    // const requesterID = urlParams.get("requesterID")
-    // const requesterFirstName = urlParams.get("requesterFirstName")
-    // const requesterLastName = urlParams.get("requesterLastName")
+    // const animalID = localStorage.getItem("animalID")
     const requesterID = localStorage.getItem("userID")
-    const requesterFirstName = localStorage.getItem("userFirstName")
-    const requesterLastName = localStorage.getItem("userLastName")
     const requestStatus = "Pending"
 
-    axios.get('http://localhost:8080/app/animal/'+animalID).then(
+    // axios.get('http://localhost:8080/app/animal/'+animalID).then(
+    axios.get('http://localhost:8080/app/animal/'+102).then(
         res => {
-            console.log(res);
-            animalName = res.data[0].name
-            localStorage.setItem("animalName", animalName)
-            animalSpecies = res.data[0].species
-            localStorage.setItem("animalSpecies", animalSpecies)
-            localStorage.setItem("animalStatus", res.data[0].status)
-            // window.location.reload()
+            // localStorage.setItem("animalID", res.data[0].animalID)
+            // localStorage.setItem("animalName", res.data[0].animalName)
+            // localStorage.setItem("animalSpecies", res.data[0].animalSpecies)
+            // localStorage.setItem("animalStatus", res.data[0].animalStatus)
         }
     )
-    
-    function singleRefresh(event){
-        event.preventDefault();
-        window.location.reload()
-    }
-    //dummy values
-    // const requestID = 1; 
-    // const animalID = 1
-    // const requesterID = 1
-    
-
-    let navigate = useNavigate();
-    let currLocation = useLocation();
 
     console.log(useLocation())
         
@@ -82,36 +54,33 @@ function RequestAnimal() {
         var rightNow = new Date();
         var formattedDay = rightNow.getDate() < 10 ? "0" + rightNow.getDate().toString() : rightNow.getDate()
         var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
-        var requestDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
+        var requestDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay + " 00:00:00"
 
         var checkoutDay = checkoutDate.getDate() < 10 ? "0" + checkoutDate.getDate().toString() : checkoutDate.getDate()
         var checkoutMonth = (checkoutDate.getMonth()+1) < 10 ? "0" + (checkoutDate.getMonth()+1).toString() : (checkoutDate.getMonth()+1)
-        var formattedCheckoutDate = checkoutDate.getFullYear() + "-" + checkoutMonth +"-" + checkoutDay
+        var formattedCheckoutDate = checkoutDate.getFullYear() + "-" + checkoutMonth +"-" + checkoutDay + " 00:00:00"
 
         var returnDay = returnDate.getDate() < 10 ? "0" + returnDate.getDate().toString() : returnDate.getDate()
         var returnMonth = (returnDate.getMonth()+1) < 10 ? "0" + (returnDate.getMonth()+1).toString() : (returnDate.getMonth()+1)
-        var formattedReturnDate =returnDate.getFullYear() + "-" + returnMonth +"-" + returnDay
+        var formattedReturnDate =returnDate.getFullYear() + "-" + returnMonth +"-" + returnDay + " 00:00:00"
 
-        axios.post('http://localhost:8080/app/request/animal/', {
-            animalID: parseInt(animalID),
-            requestID: 1, //dummy, backend assigns a new requestID
+        axios.post('http://localhost:8080/app/request/', {
+            animalID: 102,
+            // animalID: parseInt(animalID),
+            requestID: null, //dummy, backend assigns a new requestID
             requesterID: parseInt(requesterID),
             requestDate: requestDate,
             checkoutDate: formattedCheckoutDate,
             returnDate: formattedReturnDate,
             reason: reason,
-            requestStatus: requestStatus,
-            requesterFirstName: requesterFirstName,
-            requesterLastName: requesterLastName,
-            animalName: animalName,
-            animalSpecies: animalSpecies,
+            requestStatus: requestStatus
             
         }).then(
           res => {
               console.log(res);
           }
         )
-        window.location.reload()
+        // window.location.reload()
       }
 
 

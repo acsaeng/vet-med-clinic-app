@@ -2,12 +2,14 @@ package group825.vetapp2.animal;
 
 import group825.vetapp2.database.DatabaseConnection;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * Repository that stores Animal information
@@ -24,15 +26,15 @@ public class AnimalRepository {
 	 */
 	Connection dao;
 
-//	/**
-//	 * Search object with methods to perform animal searches
-//	 */
-//	Search search;
-//
-//	/**
-//	 * Desired number of search results
-//	 */
-//	int desiredNumberOfResults = 4;
+	/**
+	 * Search object with methods to perform animal searches
+	 */
+	Search search;
+
+	/**
+	 * Desired number of search results
+	 */
+	int desiredNumberOfResults = 4;
 
 	/**
      * Constructor that initializes the AnimalRepository
@@ -40,6 +42,39 @@ public class AnimalRepository {
 	public AnimalRepository() {
 		dao = DatabaseConnection.getConnection();
 //		search = new Search(dao, tableName, desiredNumberOfResults);
+	}
+
+
+	/**
+	 * Selects all animals in the database
+	 */
+	public ArrayList<Animal> selectAllAnimals() {
+		ArrayList<Animal> animals = new ArrayList<Animal>();
+
+		try {
+			// Execute SQL query to retrieve all animals
+			PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM ANIMAL");
+			ResultSet results = statement.executeQuery();
+
+			// Extract each animal's information
+			while (results.next()) {
+				Animal animal = new Animal(results.getInt("Animal_ID"), results.getString("Animal_Name"),
+						results.getString("Species"), results.getString("Breed"), results.getInt("Tattoo_Num"),
+						results.getString("City_Tattoo"), LocalDate.parse(results.getString("Birth_Date")),
+						results.getString("Sex").charAt(0), results.getString("RFID"), results.getString("Microchip"),
+						results.getString("Health_Status"), results.getBoolean("Availability_Status"),
+						results.getString("Colour"), results.getString("Additional_Info"));
+
+				animals.add(animal);
+			}
+
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return animals;
 	}
 
 	/**
@@ -134,7 +169,7 @@ public class AnimalRepository {
 					" Species = ?, Breed = ?, Tattoo_Num = ?, City_Tattoo = ?, Birth_Date = ?, Sex = ?, RFID = ?, Microchip = ?, " +
 					"Health_Status = ?, Availability_Status = ?, Colour = ?, Additional_Info = ? WHERE ANIMAL_ID = ?");
 
-			statement.setInt(1, updatedInfo.getAnimalID());
+			statement.setInt(1, animalID);
 			statement.setString(2, updatedInfo.getName());
 			statement.setString(3, updatedInfo.getSpecies());
 			statement.setString(4, updatedInfo.getBreed());
@@ -158,15 +193,15 @@ public class AnimalRepository {
 		}
 	}
 
-//    /**
-//     * Searches for an animal by name in the database
-//     * @param name = animal's name
-//     * @param species =  animal's species
-//     * @param onlyAvailableAnimals = boolean deciding whether to return all animals or only available animals
-//     * @return specified animal if found, null otherwise
-//     */
-//    public ArrayList<String> searchAnimalByName(String name, String species, boolean onlyAvailableAnimals) throws Exception{
-//    	ArrayList<String> foundResults = search.searchForName(name, species, onlyAvailableAnimals);
-//    	return foundResults;
-//    }
+    /**
+     * Searches for an animal by name in the database
+     * @param name = animal's name
+     * @param species =  animal's species
+     * @param onlyAvailableAnimals = boolean deciding whether to return all animals or only available animals
+     * @return specified animal if found, null otherwise
+     */
+    public ArrayList<String> searchAnimalByName(String name, String species, boolean onlyAvailableAnimals) throws Exception{
+    	ArrayList<String> foundResults = search.searchForName(name, species, onlyAvailableAnimals);
+    	return foundResults;
+    }
 }

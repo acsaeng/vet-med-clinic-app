@@ -3,13 +3,73 @@ import Sidebar from '../../components/Sidebar';
 import AnimalNavbar from '../../components/AnimalNavbar';
 import Table from 'react-bootstrap/Table'
 import Form from "react-bootstrap/Form";
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import CloseButton from 'react-bootstrap/CloseButton'
 
 
 function WeightHistory() {
+    const [isLoading, setLoading] = useState(true);
+    const [weight, setWeight] = useState(0);
+    const [date, setDate] = useState();
+    const [weightHistory, setWeightHistory] = useState();
 
+    // Retrieves the weight history of the selected animal
+    useEffect(() => {
+        // let urlParams = new URLSearchParams(useLocation().search)
+        // this.state.animalID = parseInt(urlParams.get("animalID"))
+        axios.get("http://localhost:8080/app/animal/weight-history/102")
+           .then(res => {
+                const weightEntries = res.data;
+                setWeightHistory([weightEntries]);
+                setLoading(false);
+           })
+     })
+
+    // Populates the weight history table
+    function populateTable() {
+        let rows = [];
+
+        for(let i = 0; i < weightHistory[0].length; i++) {
+            rows.push(<tr>
+                        <td>{weightHistory[0][i].date}</td>
+                        <td>{weightHistory[0][i].weight}</td>
+                        <td><CloseButton onClick={() => onDelete(i)} /></td>
+                      </tr>);
+        }
+            
+        return <tbody>{rows}</tbody>
+    }
+
+    function onDelete(index) {
+        console.log({animalId: 102, date: weightHistory[0][index].date, weight: weightHistory[0][index].weight});
+        axios.delete("http://localhost:8080/app/animal/weight-history", {data: {animalId: 102, date: weightHistory[0][index].date, weight: weightHistory[0][index].weight}})
+        .then(res => {
+            console.log(res);
+            console.log(res.data);
+          })
+        .catch(err => console.log(err));
+        
+        window.location.reload()
+    }
+    
+    // Adds a weight entry to the database
     function handleSubmit(event) {
         event.preventDefault();
-        return;
+
+        axios.post("http://localhost:8080/app/animal/weight-history", { animalId: 102, date: date, weight: weight })
+        .then(res => {
+          console.log(res);
+          console.log(res.data);
+        })
+        .catch(err => console.log(err));
+
+        window.location.reload()
+    }
+    
+    // Buffer that waits until table has loaded to show the page
+    if (isLoading) {
+        return<></>;
     }
 
     return (
@@ -29,39 +89,32 @@ function WeightHistory() {
 
                     <div className="d-flex flex-column ms-5">
 
-                        <form className="d-flex flex-column align-items-start my-5" onSubmit={handleSubmit}>
-                            <div className="d-flex my-2 ms-5 w-25">
+                        <form className="d-flex flex-column align-items-start my-5 ms-5 w-75" onSubmit={handleSubmit}>
+                            <div className="d-flex mb-3 w-25">
                                 <h4 className="w-100">Weight:</h4>
-                                <input className="form-control"/>
+                                <input className="form-control" type="number" value={weight} onChange={e => setWeight(e.target.value)}/>
                             </div>
 
-                            <div className="d-flex my-2 ms-5 w-25">
-                                <h4 type="date" className="w-100">Date</h4>
-                                <Form.Control type="date" name='date_of_birth'></Form.Control>
+                            <div className="d-flex mb-3 w-25">
+                                <h4 type="date" className="w-100">Date:</h4>
+                                <Form.Control type="date" value={date} onChange={e => setDate(e.target.value)}></Form.Control>
+                            </div>
+
+                            <div className="ms-5 w-25">
+                                <button className="btn btn-secondary px-3 py-1" type="submit">Submit</button>
                             </div>
                         </form>
 
-                        <Table striped bordered hover center className="w-50 ms-5">
-                            <thead>
+
+                        <Table striped bordered hover center className="w-25 ms-5">
+                            <thead className="w-50">
                                 <tr>
                                 <th>Date</th>
                                 <th>Weight Recorded (lbs)</th>
+                                <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                   <td>2021-05-19</td>
-                                <td>26.2</td>
-                                </tr>
-                                <tr>
-                                <td>2021-05-25</td>
-                                <td>24.7</td>
-                                </tr>
-                                <tr>
-                                <td>2021-05-30</td>
-                                <td>25.6</td>
-                                </tr>
-                            </tbody>
+                            {populateTable()}
                             </Table>
 
                         </div>
@@ -70,7 +123,6 @@ function WeightHistory() {
 
 
                 </div>
-            
         );
     }
 

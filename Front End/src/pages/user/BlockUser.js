@@ -1,12 +1,18 @@
 import '../../styling/main.css';
 import Sidebar from '../../components/Sidebar';
 import UserNavbar from '../../components/UserNavbar';
+import { useState } from 'react';
+import axios from 'axios';
 
 function BlockUser() {
+    const [userId, setUserId] = useState();
 
     function handleSubmit(event) {
         event.preventDefault();
-        return;
+        axios.put("http://localhost:8080/app/user/block-user/" + userId);
+
+        alert("User blocked")
+        window.location.reload()
     }
     
   return (
@@ -25,14 +31,14 @@ function BlockUser() {
                 <h1 className="mt-5 ms-5">Block User</h1>
                     <form className="d-flex flex-column  align-items-start mt-5" onSubmit={handleSubmit}>
                         <div className="d-flex my-3 w-50">
-                            <h4 className="w-100">User ID:</h4>
-                            <input className="form-control"/>
-                        </div>
-                        
-                        <div className="align-items-center mt-3 mb-5 w-50">
-                            <button className="btn btn-secondary px-4 py-2" type="submit">Submit</button>
+                            <h5 className="w-100">User ID:</h5>
+                            <input className="form-control" value={userId} onChange={e => setUserId(e.target.value)}/>
                         </div>
 
+                        <div className="d-flex w-50">
+                                <div className="w-50 mx-5"></div>
+                                <button className="btn btn-secondary px-4 py-2 mx-5 my-3" type="submit">Submit</button>
+                        </div>
                     </form>
 
 

@@ -3,11 +3,16 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 
 const UserNavbar = () => {
+    let userInfo = {
+        "userFirstName": localStorage.getItem("userFirstName"),
+        "userLastName": localStorage.getItem("userLastName"),
+    }
+
     return (
-        <div className="navbar d-flex justify-content-start ps-5 pe-4 pt-4 pb-3">
-            <div className="d-flex flex-column justify-content-start mt-3 animal-info">
+        <div className="navbar d-flex justify-content-start ps-5 pe-4 pt-4 pb-4">
+            <div className="d-flex flex-column justify-content-start mt-3">
                 <h3>User Management</h3>
-                <p className="mt-3">Name</p>
+                <p className="mt-3">{userInfo.userFirstName} {userInfo.userLastName}</p>
                 <p className="admin-text">System Administrator</p>
             </div>
 

@@ -61,26 +61,6 @@ public class Request {
 	 */
 	private String requestStatus;
 	
-	/**
-	 * First name of the user who made the request
-	 */
-	private String requesterFirstName;
-	
-	/**
-	 * Last name of the user who made the request
-	 */
-	private String requesterLastName;
-	
-	/**
-	 * Name of the animal being requested
-	 */
-	private String animalName;
-	
-	/**
-	 * Species of the animal being requested
-	 */
-	private String animalSpecies;
-	
 
 
 	/**
@@ -101,9 +81,7 @@ public class Request {
 	public Request(@JsonProperty("animalID") int animalID, @JsonProperty("requestID") int requestID,
 				   @JsonProperty("requesterID") int requesterID, @JsonProperty("requestDate") String requestDate,
 				   @JsonProperty("checkoutDate") String checkoutDate, @JsonProperty("returnDate") String returnDate, 
-				   @JsonProperty("reason") String reason, @JsonProperty("requestStatus") String requestStatus, 
-				   @JsonProperty("requesterFirstName") String requesterFirstName, @JsonProperty("requesterLastName") String requesterLastName,
-				   @JsonProperty("animalName") String animalName, @JsonProperty("animalSpecies") String animalSpecies ) {
+				   @JsonProperty("reason") String reason, @JsonProperty("requestStatus") String requestStatus) {
 		this.animalID = animalID;
 		this.requestID = requestID;
 		this.requesterID = requesterID;
@@ -112,10 +90,6 @@ public class Request {
 		this.returnDate = returnDate;
 		this.reason = reason;
 		this.requestStatus = requestStatus;
-		this.requesterFirstName = requesterFirstName;
-		this.requesterLastName = requesterLastName;
-		this.animalName = animalName;
-		this.animalSpecies = animalSpecies;
 	}
 
 	/**

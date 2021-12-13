@@ -179,6 +179,8 @@ public class DiagnosisRepository {
             statement.setInt(6, update.getUserID());
             statement.setInt(7, update.getAnimalID());
             statement.setInt(8, diagnosisID);
+            
+            System.out.println(statement);
             statement.executeUpdate();
 
             statement.close();

@@ -20,8 +20,7 @@ function AddDiagnosis() {
 
     axios.get('http://localhost:8080/app/animal/'+animalID).then(
         res => {
-            console.log(res);
-            localStorage.setItem("userID", res.data[0].userID)
+            // console.log(res);
             localStorage.setItem("animalID", res.data[0].animalID)
             // window.location.reload()
         }
@@ -32,7 +31,7 @@ function AddDiagnosis() {
         window.location.reload()
     }
 
-    console.log(useLocation())
+    // console.log(useLocation())
 
     function getDiagnosis(diagnosis){
         setDiagnosis(diagnosis.target.value)
@@ -46,7 +45,7 @@ function AddDiagnosis() {
         event.preventDefault();
         document.getElementById("descriptionInput").value = ""
         document.getElementById("diagnosisInput").value = ""
-        console.log("From Clicking the button: " + diagnosis)
+        console.log("From Clicking the button: " + diagnosis + " " + description)
         sendRequest(event)
     }
 
@@ -56,22 +55,25 @@ function AddDiagnosis() {
         var rightNow = new Date();
         var formattedDay = rightNow.getDate() < 10 ? "0" + rightNow.getDate().toString() : rightNow.getDate()
         var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
-        var diagnosisDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
+        var diagnosisDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay + " 00:00:00"
 
-        axios.post('http://localhost:8080/app/treatment/diagnosis/', {
-            diagnosisID: 1, //dummy, backend assigns a new diagnosisID
+
+        axios.post('http://localhost:8080/app/treatment/diagnosis/animalID=' + animalID, {
+            diagnosisID: null, //dummy, backend assigns a new diagnosisID
+            diagnosisDate: diagnosisDate,
             diagnosis: diagnosis,
             description: description,
-            diagnosisDate: diagnosisDate,
             diagnosisStatus: diagnosisStatus,
             animalID: parseInt(animalID),
-            userID: parseInt(userID)
+            userID: 1
+            // userID: parseInt(userID)
         }).then(
           res => {
               console.log(res);
           }
         )
-        window.location.reload()
+        
+        // window.location.reload()
       }
 
 

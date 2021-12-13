@@ -38,7 +38,7 @@ public class DiagnosisController {
 	 * @param diagnosis the diagnosis
 	 * @throws Exception when there is an SQL Exception
 	 */
-	@PostMapping
+	@PostMapping(path = "/animalID={animalID}") 
 	public void addDiagnosis(@RequestBody Diagnosis diagnosis) throws Exception {
 		if (diagnosis.anyNulls()) {
 			throw new ApiRequestException("At least one diagnosis field is null");

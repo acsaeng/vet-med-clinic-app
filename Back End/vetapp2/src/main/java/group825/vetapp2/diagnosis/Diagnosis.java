@@ -60,15 +60,16 @@ public class Diagnosis {
 	 * @param diagnosis the ailment associated with the animal
 	 * @param description describes the condition in further detail
 	 */
-	public Diagnosis(@JsonProperty("diagnosisID") int diagnosisID, @JsonProperty("diagnosis") String diagnosis, 
-			@JsonProperty("description") String description, @JsonProperty("diagnosisDate") String diagnosisDate, 
+	public Diagnosis(@JsonProperty("diagnosisID") int diagnosisID, @JsonProperty("diagnosisDate") String diagnosisDate,
+			@JsonProperty("diagnosis") String diagnosis, @JsonProperty("description") String description,  
 			@JsonProperty("diagnosisStatus") String diagnosisStatus, @JsonProperty("animalID") int animalID, @JsonProperty("userID") int userID	) {
-		this.animalID = animalID;
+		
+		this.diagnosisID = diagnosisID;
+		this.diagnosisDate = diagnosisDate;
 		this.diagnosis = diagnosis;
 		this.description = description;
-		this.diagnosisDate = diagnosisDate;
 		this.diagnosisStatus = diagnosisStatus;
-		this.diagnosisID = diagnosisID;
+		this.animalID = animalID;
 		this.userID = userID;
 	}
 
@@ -77,7 +78,7 @@ public class Diagnosis {
 	 * @return true if any of the fields are left empty, false otherwise
 	 */
 	public boolean anyNulls() {
-		return diagnosis == null || description == null || diagnosisID==0 || diagnosisDate==null || userID ==0 || animalID==0 || diagnosisStatus==null;
+		return diagnosis == null || description == null || diagnosisDate==null || userID ==0 || animalID==0 || diagnosisStatus==null;
 	}
 	
 	

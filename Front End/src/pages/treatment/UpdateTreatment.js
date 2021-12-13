@@ -12,22 +12,21 @@ function ManageTreatment() {
     // const Authenticated = useState(localStorage.getItem("Authenticated"))
     // window.location.reload()
     const [treatment, setTreatment] = useState(localStorage.getItem("treatment"));
-    const [description, setDescription] = useState(localStorage.getItem("treatmentDescription"));
+    const [description, setDescription] = useState(localStorage.getItem("description"));
     
     const animalID = localStorage.getItem("animalID")
-    const userID = localStorage.getItem("userID")
     const treatmentID = localStorage.getItem("treatmentID")
     const treatmentStatus = localStorage.getItem("treatmentStatus")
 
-    axios.get('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID).then(
+    // axios.get('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID).then(
+        axios.get('http://localhost:8080/app/treatment/protocol/treatmentID='+5).then(
         res => {
-            console.log(res);
+            // console.log(res);
             localStorage.setItem("treatmentID", res.data[0].treatmentID)
             localStorage.setItem("treatment", res.data[0].treatment)
             localStorage.setItem("description", res.data[0].description)
             localStorage.setItem("treatmentStatus", res.data[0].treatmentStatus)
             localStorage.setItem("animalID", res.data[0].animalID)
-            localStorage.setItem("userID", res.data[0].userID)
             // window.location.reload()
         }
     )
@@ -75,7 +74,8 @@ function ManageTreatment() {
             treatmentDate: treatmentDate,
             treatmentStatus: "Complete",
             animalID: parseInt(animalID),
-            userID: parseInt(userID)
+            userID: 1
+            // userID: parseInt(userID)
             
         }).then(
           res => {
@@ -101,7 +101,8 @@ function ManageTreatment() {
             treatmentDate: treatmentDate,
             treatmentStatus: treatmentStatus,
             animalID: parseInt(animalID),
-            userID: parseInt(userID)
+            userID: 1
+            // userID: parseInt(userID)
         }).then(
           res => {
               console.log(res);
@@ -131,12 +132,14 @@ function ManageTreatment() {
             <div class="custom-field mt-4 mb-3 mx-5">
                 <label className="mt-4 mb-2"> Treatment Protocol: </label> <br/>
                 <textarea className="form-control w-25" id="treatmentInput" onChange={getTreatment} cols='100' rows='1'>
+                    {treatment}
                 </textarea>
             </div>
 
             <div class="custom-field mt-4 mb-3 mx-5">
                 <label className="mb-2"> Description: </label> <br/>
                 <textarea className="form-control w-50" id="descriptionInput" onChange={getDescription} cols='100' rows='5'>
+                    {description}
                 </textarea>
             </div>
             <div class="button mx-5 mt-3">

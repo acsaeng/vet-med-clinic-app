@@ -38,7 +38,7 @@ public class TreatmentController {
 	 * @param treatment the treatment
 	 * @throws Exception when there is an SQL Exception
 	 */
-	@PostMapping
+	@PostMapping(path = "/animalID={animalID}") 
 	public void addTreatment(@RequestBody Treatment treatment) throws Exception {
 		if (treatment.anyNulls()) {
 			throw new ApiRequestException("At least one treatment field is null");

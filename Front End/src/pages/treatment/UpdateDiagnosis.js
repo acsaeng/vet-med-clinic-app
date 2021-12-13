@@ -12,14 +12,15 @@ function ManageDiagnosis() {
     // const Authenticated = useState(localStorage.getItem("Authenticated"))
     // window.location.reload()
     const [diagnosis, setDiagnosis] = useState(localStorage.getItem("diagnosis"))
-    const [description, setDescription] = useState(localStorage.getItem("diagnosisDescription"))
+    const [description, setDescription] = useState(localStorage.getItem("description"))
     
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
     const diagnosisID = localStorage.getItem("diagnosisID")
     const diagnosisStatus = localStorage.getItem("diagnosisStatus")
 
-    axios.get('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID).then(
+    // axios.get('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID).then(
+    axios.get('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+1).then(
         res => {
             console.log(res);
             localStorage.setItem("diagnosisID", res.data[0].diagnosisID)
@@ -27,7 +28,6 @@ function ManageDiagnosis() {
             localStorage.setItem("description", res.data[0].description)
             localStorage.setItem("diagnosisStatus", res.data[0].diagnosisStatus)
             localStorage.setItem("animalID", res.data[0].animalID)
-            localStorage.setItem("userID", res.data[0].userID)
             // window.location.reload()
         }
     )
@@ -66,7 +66,7 @@ function ManageDiagnosis() {
         event.preventDefault();
         document.getElementById("descriptionInput").value = ""
         document.getElementById("diagnosisInput").value = ""
-        console.log("From Clicking the complete button: " + diagnosis)
+        console.log("From Clicking the complete button: " + diagnosis + description)
 
         axios.put('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID, {
             diagnosisID: parseInt(diagnosisID),
@@ -75,7 +75,8 @@ function ManageDiagnosis() {
             diagnosisDate: diagnosisDate,
             diagnosisStatus: "Complete",
             animalID: parseInt(animalID),
-            userID: parseInt(userID)
+            userID: 1
+            // userID: parseInt(userID)
             
         }).then(
           res => {
@@ -101,14 +102,15 @@ function ManageDiagnosis() {
             diagnosisDate: diagnosisDate,
             diagnosisStatus: diagnosisStatus,
             animalID: parseInt(animalID),
-            userID: parseInt(userID)
+            userID: 1
+            // userID: parseInt(userID)
             
         }).then(
           res => {
               console.log(res);
           }
         )
-        window.location.reload()
+        // window.location.reload()
       }
 
 
@@ -131,12 +133,14 @@ function ManageDiagnosis() {
             <div class="custom-field mt-4 mb-3 mx-5">
                 <label className="mb-2"> Diagnosis: </label> <br/>
                 <textarea className="form-control w-25" id="diagnosisInput" onChange={getDiagnosis} cols='100' rows='1'>
+                    {diagnosis}
                 </textarea>
             </div>
 
             <div class="custom-field mt-4 mb-3 mx-5">
                 <label className="mb-2"> Description: </label> <br/>
                 <textarea className="form-control w-50" id="descriptionInput" onChange={getDescription} cols='100' rows='5'>
+                    {description}
                 </textarea>
             </div>
             <div class="button mx-5 mt-3">

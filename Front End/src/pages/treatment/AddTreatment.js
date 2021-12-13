@@ -19,7 +19,7 @@ function AddTreatment() {
 
     axios.get('http://localhost:8080/app/animal/'+animalID).then(
         res => {
-            console.log(res);
+            // console.log(res);
             localStorage.setItem("userID", res.data[0].userID)
             localStorage.setItem("animalID", res.data[0].animalID)
             // window.location.reload()
@@ -31,7 +31,7 @@ function AddTreatment() {
         window.location.reload()
     }
 
-    console.log(useLocation())
+    // console.log(useLocation())
 
     function getTreatment(treatment){
         setTreatment(treatment.target.value)
@@ -44,7 +44,6 @@ function AddTreatment() {
     function clickButton(event){
         event.preventDefault();
         document.getElementById("treatmentInput").value = ""
-        document.getElementById("prescriptionInput").value = ""
         document.getElementById("descriptionInput").value = ""
         console.log("From Clicking the button: " + treatment)
         sendRequest(event)
@@ -59,13 +58,14 @@ function AddTreatment() {
         var treatmentDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
 
         axios.post('http://localhost:8080/app/treatment/protocol/', {
-            treatmentID: 1, //dummy, backend assigns a new treamentID
+            treatmentID: null, //dummy, backend assigns a new treamentID
+            treatmentDate: treatmentDate,
             treatment: treatment,
             description: description,
-            treatmentDate: treatmentDate,
             treatmentStatus: treatmentStatus,
             animalID: parseInt(animalID),
-            userID: parseInt(userID)
+            userID: 1
+            // userID: parseInt(userID)
         }).then(
           res => {
               console.log(res);

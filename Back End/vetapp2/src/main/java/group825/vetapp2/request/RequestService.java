@@ -92,18 +92,18 @@ public class RequestService {
 	 */
 	public List<Request> createListRequest(ArrayList<String> foundResults){
 		List<Request> listResults = new ArrayList<Request>(); 
-		//review against Database setup
-		int idxAnimalID=0, idxRequestID=1, idxRequesterID=2, idxRequestDate=3, idxCheckoutDate=4, idxReturnDate=5, 
-				idxReason=6, idxRequestStatus=7, idxRequesterFirstName=8, idxRequesterLastName=9, idxAnimalName=10, idxAnimalSpecies=11;
-		for (String result: foundResults) {
-			String[] resultSplit = result.split(repo.getSplitPlaceholder());
-		Request temp =  new Request( Integer.valueOf(resultSplit[idxAnimalID]), Integer.valueOf(resultSplit[idxRequestID]), Integer.valueOf(resultSplit[idxRequesterID]), 
-				resultSplit[idxRequestDate], resultSplit[idxCheckoutDate], resultSplit[idxReturnDate], resultSplit[idxReason], 
-				resultSplit[idxRequestStatus], resultSplit[idxRequesterFirstName], resultSplit[idxRequesterLastName], 
-				resultSplit[idxAnimalName], resultSplit[idxAnimalSpecies]);
-		listResults.add(temp);
-
-	}
+//		//review against Database setup
+//		int idxAnimalID=0, idxRequestID=1, idxRequesterID=2, idxRequestDate=3, idxCheckoutDate=4, idxReturnDate=5, 
+//				idxReason=6, idxRequestStatus=7, idxRequesterFirstName=8, idxRequesterLastName=9, idxAnimalName=10, idxAnimalSpecies=11;
+//		for (String result: foundResults) {
+//			String[] resultSplit = result.split(repo.getSplitPlaceholder());
+//		Request temp =  new Request( Integer.valueOf(resultSplit[idxAnimalID]), Integer.valueOf(resultSplit[idxRequestID]), Integer.valueOf(resultSplit[idxRequesterID]), 
+//				resultSplit[idxRequestDate], resultSplit[idxCheckoutDate], resultSplit[idxReturnDate], resultSplit[idxReason], 
+//				resultSplit[idxRequestStatus], resultSplit[idxRequesterFirstName], resultSplit[idxRequesterLastName], 
+//				resultSplit[idxAnimalName], resultSplit[idxAnimalSpecies]);
+//		listResults.add(temp);
+//
+//	}
 	System.out.println("\nPrepared List to send as json response to API endpoint:");
 	System.out.println(listResults);
 

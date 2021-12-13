@@ -13,11 +13,9 @@ import { useChecklist } from 'react-checklist';
 
 
 function SendAlert() {
-    const Authenticated = localStorage.getItem("Authenticated")
+    // const Authenticated = localStorage.getItem("Authenticated")
     const [message, setMessage] = useState(null);
 
-    let animalName = ""
-    let animalSpecies = ""
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
     const userFirstName = localStorage.getItem("userFirstName")
@@ -26,11 +24,9 @@ function SendAlert() {
     axios.get('http://localhost:8080/app/animal/'+animalID).then(
         res => {
             console.log(res);
-            animalName = res.data[0].name
-            localStorage.setItem("animalName", animalName)
-            animalSpecies = res.data[0].species
-            localStorage.setItem("animalSpecies", animalSpecies)
-            localStorage.setItem("animalStatus", res.data[0].status)
+            localStorage.setItem("animalName", res.data[0].animalName)
+            localStorage.setItem("animalSpecies", res.data[0].animalSpecies)
+            localStorage.setItem("animalStatus", res.data[0].animalStatus)
             // window.location.reload()
         }
     )
@@ -40,26 +36,26 @@ function SendAlert() {
     const diagnosisList = [
         { _id: 1, label: 'Diagnosis 1' },
         { _id: 2, label: 'Diagnosis 2' },
-        { _id: 3, label: 'Diagnosis 3' },];
+        { _id: 3, label: 'Diagnosis 3' }];
 
     const treatmentList = [
         { _id: 4, label: 'Treatment 1' },
         { _id: 5, label: 'Treatment 2' },
-        { _id: 6, label: 'Treatment 3' },];
+        { _id: 6, label: 'Treatment 3' }];
 
     const staffList = [
         { _id: 7, label: 'Staff 1' },
         { _id: 8, label: 'Staff 2' },
-        { _id: 9, label: 'Staff 3' },];
+        { _id: 9, label: 'Staff 3' }];
 
 
     const { handleCheck, checkedItems } = useChecklist(data,
         {key: '_id', keyType: 'number'});
     
-    function singleRefresh(event){
-        event.preventDefault();
-        window.location.reload()
-    }
+    // function singleRefresh(event){
+    //     event.preventDefault();
+    //     window.location.reload()
+    // }
 
     console.log(useLocation())
         
@@ -86,9 +82,7 @@ function SendAlert() {
             userID: parseInt(userID),
             message: message,
             userFirstName: userFirstName,
-            userLastName: userLastName,
-            animalName: animalName,
-            animalSpecies: animalSpecies,
+            userLastName: userLastName
             
         }).then(
           res => {

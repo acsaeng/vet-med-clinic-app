@@ -2,6 +2,9 @@ package group825.vetapp2.users;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import group825.vetapp2.exceptions.ApiRequestException;
+
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,6 +68,17 @@ public class UserController {
     @ResponseBody
     public User getUserById(@PathVariable("userID") int userID) {
         return this.service.selectUserById(userID);
+    }
+    
+    /**
+     * 'GET' request that returns a user based on user type
+     * @param userType user's type
+     * @return list of users matching the user type
+     */
+    @GetMapping(path = "/user/userType={userType}")
+    @ResponseBody
+    public ArrayList<User> getUserByType(@PathVariable("userType") String userType) {
+        return this.service.selectUserByType(userType);
     }
 
     /**

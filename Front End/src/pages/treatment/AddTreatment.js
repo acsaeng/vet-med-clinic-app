@@ -20,6 +20,9 @@ function AddTreatment() {
     axios.get('http://localhost:8080/app/animal/'+animalID).then(
         res => {
             localStorage.setItem("animalID", res.data[0].animalID)
+            localStorage.setItem("animalName", res.data[0].animalName)
+            localStorage.setItem("animalSpecies", res.data[0].animalSpecies)
+            localStorage.setItem("animalStatus", res.data[0].animalStatus)
         }
     )
 

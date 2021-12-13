@@ -1,5 +1,7 @@
 package group825.vetapp2.users;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +54,15 @@ public class UserService {
     public User selectUserById(int userID) {
         return this.repo.selectUserById(userID);
     }
+    
+    /**
+     * Returns a list of users based on user type
+     * @param userType the type of user
+     * @return a list of user's matching the type
+     */
+    public ArrayList<User> selectUserByType(String userType) {
+    	return this.repo.selectUserByType(userType);
+	}
 
     /**
      * Updates a user's information
@@ -69,4 +80,5 @@ public class UserService {
     public boolean blockUser(int userID) {
         return this.repo.blockUser(userID);
     }
+
 }

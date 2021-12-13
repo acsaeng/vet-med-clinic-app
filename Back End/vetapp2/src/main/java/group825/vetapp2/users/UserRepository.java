@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * Repository that stores User information
@@ -75,7 +76,7 @@ public class UserRepository {
 				user = new User(results.getInt("User_ID"), results.getString("First_Name"), results.getString("Last_Name"),
 						results.getString("User_Type"), results.getString("Username"), results.getString("Email"),
 						results.getString("Phone_Number"), results.getString("User_Password"),
-						LocalDate.parse(results.getString("Start_Date")), results.getBoolean("User_Status"));
+						LocalDate.parse(results.getString("Start_Date")), results.getBoolean("Is_Active"));
 			}
 
 			statement.close();
@@ -86,6 +87,39 @@ public class UserRepository {
 
 		return user;
 	}
+	
+	/**
+	 * Finds a list of users in the database by type
+	 * @param userType a type of user
+	 * @return a list of users matching the type
+	 */
+	public ArrayList<User> selectUserByType(String userType) {
+		userType.replace("%20", " ");
+		ArrayList<User> users = new ArrayList<User>();
+
+		try {
+			// Execute SQL query to retrieve specified user
+			PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM USERS WHERE User_Type = ?");
+
+			statement.setString(1, userType);
+			ResultSet results = statement.executeQuery();
+
+			// Extract the user's information
+			while (results.next()) {
+				users.add(new User(results.getInt("User_ID"), results.getString("First_Name"), results.getString("Last_Name"),
+						results.getString("User_Type"), results.getString("Username"), results.getString("Email"),
+						results.getString("Phone_Number"), results.getString("User_Password"),
+						LocalDate.parse(results.getString("Start_Date")), results.getBoolean("Is_Active")));
+			}
+
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return users;
+	}
 
     /**
      * Adds a user to the database
@@ -95,7 +129,7 @@ public class UserRepository {
 		try {
 			// Execute SQL query to add new user to the database
 			PreparedStatement statement = this.dao.prepareStatement("INSERT INTO USERS (User_ID, First_Name," +
-					"Last_Name, User_Type, Username,  Email, Phone_Number, User_Password, Start_Date, User_Status) VALUE " +
+					"Last_Name, User_Type, Username,  Email, Phone_Number, User_Password, Start_Date, Is_Active) VALUE " +
 					"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
 			statement.setInt(1, user.getId());
@@ -127,7 +161,7 @@ public class UserRepository {
 			// Execute SQL query to update the user's information
 			PreparedStatement statement = this.dao.prepareStatement("UPDATE USERS SET First_Name = ?, " +
 					"Last_Name = ?, User_Type = ?, Username = ?,  Email = ?, Phone_Number = ?, User_Password = ?, " +
-					"Start_Date = ?, User_Status = ?  WHERE User_ID = ?");
+					"Start_Date = ?, Is_Active = ?  WHERE User_ID = ?");
 
 			statement.setString(1, updatedInfo.getFirstName());
 			statement.setString(2, updatedInfo.getLastName());
@@ -168,4 +202,5 @@ public class UserRepository {
 
 		return false;
 	}
+
 }

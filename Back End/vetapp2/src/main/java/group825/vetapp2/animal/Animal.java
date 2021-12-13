@@ -198,4 +198,12 @@ public class Animal {
     	if (this.nameLength == 0) {this.nameLength = this.name.length();}
     	if (this.searchKeyName == null) {this.searchKeyName = SearchKey.generateSearchKey(this.name); }
     }
+    
+    @Override 
+    public String toString() {
+    	String newString = "{ animalID: " + animalID + ", name: " + name + ", breed: " + breed + ", species: " + species + ", sex: " + sex +  ", tattoo: " + tattoo + ", cityTattoo: " + cityTattoo + ", dob: " + dob 
+    + ", rfid: " + rfid + ", microchip: " + microchip 
+    + ", nameLength: " + nameLength + ", searchKeyName: " + searchKeyName + "}";
+     return newString;
+    }
 }

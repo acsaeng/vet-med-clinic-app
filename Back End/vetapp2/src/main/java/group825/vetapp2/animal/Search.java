@@ -12,15 +12,29 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 
+/**
+ * Class holds the methods to query the database and process the results to return search results.
+ * @author Jimmy Zhuj
+ * @version 2.0
+ * @since December 13, 2021
+ */
 public class Search {
-	OldDatabaseConnection dao;
+
+	/**
+	 * List to store all the species currently on the database 
+	 */
 	ArrayList<String> listSpecies;
-	String query, tableName;
-	int desiredNumberOfResults;
 	
-	int idx_SearchKey = 15;
-	int idx_species = 2;
-	int idx_names = 1;
+	/**
+	 * String data members to hold the database query and the database table name
+	 */
+	String query, tableName;
+	
+	
+	/**
+	 * Number of results that should be returned
+	 */
+	int desiredNumberOfResults;
 	
 	/**
 	 * Connector to the database
@@ -29,33 +43,26 @@ public class Search {
 
 	
 	
+	/**
+	 * Constructor initializes database connection, table name, and list of species
+	 * @param desiredNumberOfResults = number of results to return from seach
+	 */
 	public Search(int desiredNumberOfResults) {
-//		this.dao = dao;
 		this.dao2 = DatabaseConnection.getConnection();
 		this.tableName = "ANIMAL";
+		this.desiredNumberOfResults = desiredNumberOfResults;
 		this.listSpecies = new ArrayList<String>();
 		
+		//update the list of species to match what is on the database
 		get_all_species();
-		this.desiredNumberOfResults = desiredNumberOfResults;
-		
 		
 	}
 	
 	/**
-	 * Get all current animal species on the database
+	 * Get all animal species currently on the database
 	 * @throws Exception
 	 */
-	private void get_all_species(){
-//		query = "SELECT * FROM "+this.tableName;
-//		String allRows = dao.getRows(query);
-//		System.out.println(allRows); //get all the animals from the database
-//		System.out.println("");
-//		listSpecies = dao.parseInfoReturned(allRows, idx_species);
-//		Set uniqueSpecies = new HashSet(listSpecies);
-//		listSpecies = new ArrayList(uniqueSpecies);
-//		System.out.println("listSpecies: " + listSpecies);
-		
-		
+	private void get_all_species(){		
 		// Execute SQL query to retrieve all animals
 		try {
 			PreparedStatement statement = this.dao2.prepareStatement("SELECT * FROM "+this.tableName);
@@ -77,7 +84,7 @@ public class Search {
 	
 	
 	/**
-	 * Used by Administrator who runs the system to update the List of Species recorded inside the database
+	 * Can be used by Administrator who runs the system to update the List of Species recorded inside the database
 	 * @throws SQLException
 	 */
 	public void updateListOfSpecies() throws Exception { 
@@ -85,31 +92,15 @@ public class Search {
 	}
 	
 	
+	/**
+	 * Searches database for results that match the name exactly or returns results with similar names
+	 * @param animalName = search name entered by user
+	 * @param searchSpecies = species name that the user may or may not enter
+	 * @param onlyAvailableAnimals = boolean to determine whether to only return results where the animal is available
+	 * @return
+	 */
 	public ArrayList<Animal> searchForName(String animalName, String searchSpecies, boolean onlyAvailableAnimals) { //sample: "Bobby horse" or "horse Bobby"
 		//PART ONE - EXACT NAME MATCHES --------------------------------------------------------------------------------------------
-		
-//		String extra ="";
-//		if (onlyAvailableAnimals) {extra = " AND A.Animal_Status='Available'";}
-//		
-//		
-//		if(searchSpecies != null) {
-//			query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Species='"+searchSpecies+"' AND A.Animal_Name='"+animalName+"'" + extra + " ORDER BY A.Animal_ID;";
-//		}
-//		else {
-//			query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Animal_Name='"+animalName+"'" + extra + " ORDER BY A.Animal_ID;";
-//		}
-//		System.out.println(query);
-//		
-//		String allRows = dao.getRows(query);
-//		System.out.println("\t>>> Got response from Server");
-//		System.out.println("'"+allRows+"'");
-//		System.out.println("---------");
-//		ArrayList<String> exactMatches = new ArrayList<String>();
-//		for (String row: allRows.split("\n")) {exactMatches.add(row);}
-//		if (!isResultsEmpty(allRows)) { return exactMatches;} //if several exact matches to input have been received, return exact matches
-//		System.out.println("\t>>> Did not get exact matches from query\n");
-		
-
 		String extra ="";
 		if (onlyAvailableAnimals) {extra = " AND A.Availability_Status='Available'";}
 		
@@ -120,7 +111,7 @@ public class Search {
 		else {
 			query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Animal_Name=?" + extra + " ORDER BY A.Animal_ID;";
 		}
-		System.out.println(query);
+//		System.out.println("query = "+query);
 		
 		try {
 			PreparedStatement statement = this.dao2.prepareStatement(query);
@@ -128,10 +119,7 @@ public class Search {
 			if(searchSpecies != null) {statement.setString(2, searchSpecies);}
 			
 			ResultSet results = statement.executeQuery();
-			System.out.println("\t>>> Got response from Server");
 			
-//			System.out.println("'"+allRows+"'");
-//			System.out.println("---------");
 			ArrayList<Animal> exactMatches = new ArrayList<Animal>();
 			while (results.next()) {
 				exactMatches.add(new Animal(results.getInt("Animal_ID"), results.getString("Animal_Name"),
@@ -147,79 +135,44 @@ public class Search {
 				return exactMatches;
 			}
 			
-		}catch (Exception e) {//
+		}catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Error searching for exact match");
-//			System.out.println("No animals were found for the user entered name :" + animalName);
-//			System.out.println("\n\n >>> Proceed to part two with ");
+
 		}
 	
 		
-		
-		
-		
 		//PART TWO - SEARCH FOR SIMILAR NAME MATCHES ------------------------------------------------------------------------------------------
-		
-		System.out.println("\t>>> Did not get exact matches from query\n");
-		System.out.println("\n\n >>> Proceed to part two to search for names that are similar");
-//		String allRowsFromEveryQuery = getMinNumOfResults((searchSpecies != null), searchSpecies, animalName);
-//		ArrayList<String> allResultsFromDb = new ArrayList<String>();
-//		for (String rowResult: allRowsFromEveryQuery.split("\n")) {allResultsFromDb.add(rowResult);}
-////		System.out.println("allRowsFromEveryQuery = '"+allRowsFromEveryQuery+"'");
+//		System.out.println("\t>>> Did not get exact matches from query\n");
+//		System.out.println("\n\n >>> Proceed to part two to search for names that are similar");
+
 		
 		//Get an arraylist of Animals whose names are of similar length to the entered name
 		ArrayList<Animal> minMatches =  getMinNumOfResults((searchSpecies != null), searchSpecies, animalName);
-		
 		
 		//if nothing was found at all, return blank ArrayList
 		if(minMatches.size() == 0) {return new ArrayList<Animal>();}
 		
 		//Otherwise, organize findings based on most similar search key
-		System.out.println("allFindingsSearchKeys:");
-//		ArrayList<String> allFindingsSearchKeys = dao.parseInfoReturned(allRowsFromEveryQuery, idx_SearchKey);
+//		System.out.println("allFindingsSearchKeys:");
 		ArrayList<String> allFindingsSearchKeys = new ArrayList<String>();
 		for (Animal currAnimal: minMatches){ 
 			allFindingsSearchKeys.add(currAnimal.getSearchKeyName());
 		}
 
-		System.out.println("animalName = '" + animalName+"'");
+//		System.out.println("animalName = '" + animalName+"'");
 		String newSearchKey = generateSearchKey(animalName);
-//		calcDifference(newSearchKey, allFindingsSearchKeys.get(0)); // test
 		ArrayList<Integer> list_differences = new ArrayList<Integer>();
 		for (String dbSearchKey: allFindingsSearchKeys) {
 			list_differences.add(calcDifference(newSearchKey, dbSearchKey));
-		}
-		
-		System.out.println("\nlist_differences = "+list_differences);
-//		System.out.println("list_names = "+ dao.parseInfoReturned(allRowsFromEveryQuery, idx_names));
-		
-		
-//		//organize db results based on closest similarity
-//		int numResultsReturned = 0;
-//		ArrayList<String> organizedResults = new ArrayList<String>();
-//		//trial for get the minimum then remove 
-////		int idxMin = getIndexOfMin(list_differences);
-////		organizedResults.add(allResultsFromDb.get(idxMin));
-////		allResultsFromDb.remove(idxMin);
-//		
-//		
-//		while(numResultsReturned < this.desiredNumberOfResults && list_differences.size()!=0) {
-//			int idxMin = getIndexOfMin(list_differences);
-//			organizedResults.add(allResultsFromDb.get(idxMin));
-//			allResultsFromDb.remove(idxMin);
-//			list_differences.remove(idxMin);
-//			numResultsReturned++;
-//		}
-		
+		}	
+//		System.out.println("\nlist_differences = "+list_differences);
+
 		
 		// PART THREE - organize Database results based on closest similarity-----------------------------------------------------------------------
+//		System.out.println("\n\n >>> Proceed to part three to return the results based on names which are the most similar");
 		int numResultsReturned = 0;
 		ArrayList<Animal> organizedResults = new ArrayList<Animal>();
-		//trial for get the minimum then remove 
-//		int idxMin = getIndexOfMin(list_differences);
-//		organizedResults.add(allResultsFromDb.get(idxMin));
-//		allResultsFromDb.remove(idxMin);
-		
 		
 		while(numResultsReturned < this.desiredNumberOfResults && list_differences.size()!=0) {
 			int idxMin = getIndexOfMin(list_differences);
@@ -227,28 +180,29 @@ public class Search {
 			minMatches.remove(idxMin);
 			list_differences.remove(idxMin);
 			numResultsReturned++;
-		}
+		}		
 		
-		
-//		System.out.println("organizedResults: '"+ organizedResults+"'");
-//		System.out.println("allResultsFromDb: '"+ allResultsFromDb+"'");
-		System.out.println("organizedResults: ");
-		for(Animal currAnimal: organizedResults) {
-			System.out.println("\t -> "+currAnimal.getName());
-		}
-		System.out.println(" ----");
-		System.out.println("remaining of allResultsFromDb: ");
-		for(Animal currAnimal:  minMatches) {
-			System.out.println("\t -> "+currAnimal.getName());
-		}
-		System.out.println(" ----");
+//		System.out.println("organizedResults: ");
+//		for(Animal currAnimal: organizedResults) {
+//			System.out.println("\t -> "+currAnimal.getName());
+//		}
+//		System.out.println("remaining of allResultsFromDb: ");
+//		for(Animal currAnimal:  minMatches) {
+//			System.out.println("\t -> "+currAnimal.getName());
+//		}
+//		System.out.println(" ----");
 		
 		return organizedResults;
 		
 	}
 	
+	/**
+	 * Get the index of the element in arraylist which holds the lowest value in the arraylist.
+	 * This is used to identify the position of the result in the arraylist whose name is most similar to the search query's animal name 
+	 * @param list_differences
+	 * @return
+	 */
 	private int getIndexOfMin(ArrayList<Integer> list_differences) {
-//		System.out.println("list_differences = " + list_differences);
 		int minIdx =0;
 		Integer minValue =  list_differences.get(minIdx);
 		for (int idx=0; idx<list_differences.size(); idx++) {
@@ -257,40 +211,27 @@ public class Search {
 				minIdx = idx;
 			}
 		}
-		System.out.println("\t ==> Min value found was: "+minValue);
+//		System.out.println("\t ==> Min value found was: "+minValue);
 		return minIdx;
 	}
 	
 	/**
 	 * Get an an ArrayList of animals which will have at least the desired number of results entered in the constructor
-	 * This arrayList is populated by animal's whose names are of similar length.
-	 * Longer and shorter names are added until the minimum number of desired results is achieved.
+	 * This arrayList is populated by animals whose names are of similar length.
+	 * Longer and shorter names are added until at least the minimum number of desired results is achieved.
 	 * 
 	 * getMinOfResults will return empty arraylist if the database has no names of the same length and will stop incrementing and decrementing
 	 * the name length when no results is found in either situations.
 	 * 
 	 * @param includesAnimalType = boolean to determine whether or not to include the animal's species in the search query
-	 * @param searchSpecies = species entered by user
+	 * @param searchSpecies = species which may or may not have been entered by user
 	 * @param animalName = name of the animal entered by the user
 	 * @return ArrayList<Animal> containing the minimum number of results whose names are of similar length to the search query
 	 * @throws SQLException
 	 */
 	private ArrayList<Animal> getMinNumOfResults(boolean includesAnimalType, String searchSpecies, String animalName){	
-//		//Send search query to search for name of the same length
-//		if(includesAnimalType) {
-//			query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Species='"+searchSpecies+"' AND A.Length_Name='"+animalName.length()+"';";
-//		}
-//		else {
-//			query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Length_Name='"+animalName.length()+"';";
-//		}
-//		System.out.println(query);
-//		String allRowsFromEveryQuery = dao.getRows(query);
-//		System.out.println("\t>>> Got response from Server");
-//		System.out.println(allRowsFromEveryQuery);
-//		System.out.println("---------");
 		
-		
-		//Send search query to search for name of the same length
+		//get results for names of the same length
 		ArrayList<Animal> minMatches = new ArrayList<Animal>();
 		
 		if(includesAnimalType) {
@@ -299,7 +240,7 @@ public class Search {
 		else {
 			query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Length_Name=?;";
 		}
-		System.out.println("query = "+query);
+//		System.out.println("query = "+query);
 		
 		try{
 			PreparedStatement statement = this.dao2.prepareStatement(query);
@@ -308,38 +249,27 @@ public class Search {
 			
 			ResultSet results = statement.executeQuery();
 			
-//			while (results.next()) {
-//				minMatches.add(new Animal(results.getInt("Animal_ID"), results.getString("Animal_Name"),
-//						results.getString("Species"), results.getString("Breed"), results.getInt("Tattoo_Num"),
-//						results.getString("City_Tattoo"), LocalDate.parse(results.getString("Birth_Date")),
-//						results.getString("Sex").charAt(0), results.getString("RFID"), results.getString("Microchip"),
-//						results.getString("Health_Status"), results.getBoolean("Availability_Status"),
-//						results.getString("Colour"), results.getString("Additional_Info"), 
-//						results.getInt("Length_Name"), results.getString("SearchKey_Name")));
-//			}
 			minMatches = createListAnimal(results, minMatches);
-			System.out.println("\t>>> Got response from Server - Grabbed names of the same length");
+//			System.out.println("\t>>> Got response from Server - Grabbed names of the same length");
 			statement.close();
 			
 		}catch(Exception e) {
 			System.out.println("Error grabbing names of the same length");
 		}
 		
-	
-		
+			
+		//get results for names of longer and/or shorter length 
 		boolean noMoreSmallerNames = false; 
 		boolean noMoreBiggerNames = false;
 		int lengthDeviationFromOriginalName = 1;
+		
 
-//		System.out.println("allRowsFromEveryQuery.split(n).length = " + allRowsFromEveryQuery.split("\n").length);
-
-//		while(allRowsFromEveryQuery.split("\n").length < this.desiredNumberOfResults && (!noMoreSmallerNames || !noMoreBiggerNames)) {
-		while(minMatches.size() < this.desiredNumberOfResults && (!noMoreSmallerNames || !noMoreBiggerNames)) {
-			//while loop ends when the number of desired search queries is found 
-			//or when no more names can be found that are greater or less than the size of the animalName that is in the search input
+		//while loop ends when the number of desired search queries is found 
+		//or when no more names can be found that are greater or less than the size of the animalName that is in the search input
+		while(minMatches.size() < this.desiredNumberOfResults && (!noMoreSmallerNames || !noMoreBiggerNames)) {	
 			try {
 				if (!noMoreSmallerNames) {
-					System.out.println("------query for names of SMALLER size");
+//					System.out.println("------query for names of SMALLER size");
 					ArrayList<Animal> smallerNames = new ArrayList<Animal>();
 					
 					if(includesAnimalType) {
@@ -348,11 +278,6 @@ public class Search {
 					else {
 						query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Length_Name=?";
 					}
-//					String allRows = dao.getRows(query);
-//					System.out.println("\t>>> Got response from Server");
-//					System.out.println(allRows);
-//					System.out.println("---------");
-//					allRowsFromEveryQuery = allRowsFromEveryQuery + allRows;
 					
 					PreparedStatement statement = this.dao2.prepareStatement(query);
 					statement.setInt(1, animalName.length()-lengthDeviationFromOriginalName);
@@ -369,23 +294,6 @@ public class Search {
 				
 				if (!noMoreBiggerNames) {
 //					System.out.println("------query for names of LARGER size");
-//					
-//					if(includesAnimalType) {
-//						query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Species='"+searchSpecies+"' AND A.Length_Name='"+(animalName.length()+lengthDeviationFromOriginalName )+"';";
-//					}
-//					else {
-//						query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Length_Name='"+(animalName.length()+lengthDeviationFromOriginalName )+"';";
-//					}
-//					String allRows = dao.getRows(query);
-//					System.out.println("\t>>> Got response from Server");
-//					System.out.println(allRows);
-//					System.out.println("---------");
-//					allRowsFromEveryQuery = allRowsFromEveryQuery + allRows;
-//					if (isResultsEmpty(allRows)) {noMoreBiggerNames = true;}
-//					
-					
-					
-					System.out.println("------query for names of LARGER size");
 					ArrayList<Animal> largerNames = new ArrayList<Animal>();
 					
 					if(includesAnimalType) {
@@ -394,11 +302,6 @@ public class Search {
 					else {
 						query = "SELECT * FROM "+this.tableName +" AS A WHERE A.Length_Name=?";
 					}
-//					String allRows = dao.getRows(query);
-//					System.out.println("\t>>> Got response from Server");
-//					System.out.println(allRows);
-//					System.out.println("---------");
-//					allRowsFromEveryQuery = allRowsFromEveryQuery + allRows;
 					
 					PreparedStatement statement = this.dao2.prepareStatement(query);
 					statement.setInt(1, animalName.length()+lengthDeviationFromOriginalName);
@@ -411,31 +314,29 @@ public class Search {
 					
 					if (largerNames.size() ==0) {noMoreBiggerNames = true;}
 					statement.close();
-					
 				}
-				
+			
 				lengthDeviationFromOriginalName++;
+				
 			}catch(Exception e) {
 				e.printStackTrace();
 				System.out.println("Error getting names for smaller and bigger names");
 				break; //break out of while loop if error encountered
-			}
-			
-			
-		}
+			}			
+		}//end of while loop
 		
-		System.out.println("\n---- now have minimum number of search queries or no more names could be found");
-//		System.out.println("All Findings: ");
-//		System.out.println(allRowsFromEveryQuery);
-//		System.out.println("");
-//		ArrayList<String> allFindingsSearchKeys = dao.parseInfoReturned(allRowsFromEveryQuery, 16);
-//		System.out.println(allFindingsSearchKeys);
-		
-		
+//		System.out.println("\n---- now have minimum number of search queries or no more names could be found");		
 		return minMatches;
 	}
 	
 	
+	/**
+	 * Given ResultSet from executed query, add new Animal object into the arraylist 
+	 * @param results = resultset from database
+	 * @param currArr = ArrayList<Animal> which is to have animal objects (instantiated with information from the resultset) added in
+	 * @return the updated arraylist
+	 * @throws SQLException
+	 */
 	private ArrayList<Animal> createListAnimal(ResultSet results, ArrayList<Animal> currArr) throws Exception{
 		while (results.next()) {
 			currArr.add(new Animal(results.getInt("Animal_ID"), results.getString("Animal_Name"),
@@ -450,12 +351,18 @@ public class Search {
 		return currArr;
 	}
 	
+	/**
+	 * Calculates the difference in the search keys between the user's search name and the name of the animal stored on the database
+	 * @param newSearchKey = search key belonging to the user's search name
+	 * @param dbSearchKey = search key belonging to the animal on the database
+	 * @return integer representing the difference between the search keys of the user's search name and the name of the animal stored on the database based on presence and frequency of letters
+	 */
 	private int calcDifference(String newSearchKey, String dbSearchKey) {
-		System.out.println("\n --within calcDifference()");
-		System.out.println("newSearchKey: "+newSearchKey);
-		System.out.println("dbSearchKey: "+dbSearchKey);
-		ArrayList<DictionaryLetter> dict_new = createLetterDictionary_bySearchKey(newSearchKey);
-		ArrayList<DictionaryLetter> dict_db = createLetterDictionary_bySearchKey(dbSearchKey);
+//		System.out.println("\n --within calcDifference()");
+//		System.out.println("newSearchKey: "+newSearchKey);
+//		System.out.println("dbSearchKey: "+dbSearchKey);
+		ArrayList<DictionaryLetter> dict_new = createLetterDictionaryBySearchKey(newSearchKey);
+		ArrayList<DictionaryLetter> dict_db = createLetterDictionaryBySearchKey(dbSearchKey);
 		
 		int difference = 0;
 		for (int idx=0; idx<dict_new.size(); idx++) {
@@ -466,14 +373,18 @@ public class Search {
 		return difference;
 	}
 	
-	private boolean isResultsEmpty(String queryResults) {
-		if(queryResults == "") {return true;}
-		return false;
-	}
 	
-	private ArrayList<DictionaryLetter> createLetterDictionary_bySearchKey(String searchKey){
-//		System.out.println("\n --within createLetterDictionary_bySearchKey()");
-		System.out.println("searchKey: "+searchKey);
+	/**
+	 * Creates a dictionary (data structure) based on the search key passed in 
+	 * where the keys are letters of the alphabet and the values is the quantity of that letter in the name 
+	 * (either of the user's search name or the name of the animal on the database)
+	 * @param searchKey = String where each part is delimited with "-" and each part is comprised of a letter of the alphabet and 
+	 * 						an integer representing how often that letter appears in the name
+	 * @return ArrayList<DictionaryLetter> which acts as a dictionary data structure
+	 */
+	private ArrayList<DictionaryLetter> createLetterDictionaryBySearchKey(String searchKey){
+//		System.out.println("\n --within createLetterDictionaryBySearchKey()");
+//		System.out.println("searchKey: "+searchKey);
 		ArrayList<DictionaryLetter> dict = createLetterDictionary();
 		for (String subString: searchKey.split("-")) {
 			subString = subString.replaceAll("\\s", "");
@@ -485,12 +396,18 @@ public class Search {
 		return dict;
 	}
 	
+	
+	/**
+	 * Create a search key based on the name passed in
+	 * @param animalName = name of an animal
+	 * @return searchKey which is a String where each part is delimited with "-" and each part is comprised of a letter of the alphabet and 
+	 * 						an integer representing how often that letter appears in the name
+	 */
 	private String generateSearchKey(String animalName) {
 		//create a dictionary for all the letters in the alphabet
 		ArrayList<DictionaryLetter> dict = createLetterDictionary();
 		
 		//update dictionary to count number of each letter in the animalName
-//		dict = updateForName(dict, animalName);
 		for (int idx=0; idx<animalName.length(); idx++) {
 			char letter = animalName.toLowerCase().charAt(idx);
 //			System.out.println(letter);
@@ -504,11 +421,15 @@ public class Search {
 			newSearchKey =newSearchKey + String.valueOf(letter) +  dict.get((int)letter-(int)'a').value + "-";
 		}
 		newSearchKey = newSearchKey.substring(0, newSearchKey.length()-1);
-		System.out.print("newSearchKey: ");
-		System.out.println(newSearchKey);
+//		System.out.print("newSearchKey: "+ newSearchKey);
 		return newSearchKey;
 	}
 	
+	
+	/**
+	 * Create a dictionary data structure where all the values are zero for each key which is a letter of the alphabet
+	 * @return dictionary data structure for a blank name so all letter keys have a value of zero 
+	 */
 	public ArrayList<DictionaryLetter> createLetterDictionary(){
 		ArrayList<DictionaryLetter> dict = new ArrayList<DictionaryLetter>();
 		for (int idx=0; idx<26; idx++) {

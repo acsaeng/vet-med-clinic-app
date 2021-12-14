@@ -4,12 +4,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class CommentsList extends Component{
     
+    
+
     state = {
         comments: [],
         // animalID: 101,
         animalID : this.props.animalID,
         toggleStudent: this.props.toggleStudent,
-        currUserType: localStorage.getItem("userType"),
+        currUserType: this.props.usertype,
         currUserID: localStorage.getItem("userID"),
         // navigate : useNavigate()
     };
@@ -22,6 +24,8 @@ export default class CommentsList extends Component{
                 this.setState({comments: res.data})
             }
         )
+
+        console.log("this.props.usertype = "+this.props.usertype)
     }
     
 

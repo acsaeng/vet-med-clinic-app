@@ -21,6 +21,19 @@ const AnimalNavbar = () => {
     // console.log(activeUserType)
 
 
+    function healthStatus() {
+        if (localStorage.getItem("healthStatus") === "Healthy") {
+            return <p className="healthy-status-text">{localStorage.getItem("healthStatus")}</p>
+        } else if (localStorage.getItem("healthStatus") === "Injured") {
+            return <p className="injured-status-text">{localStorage.getItem("healthStatus")}</p>
+        } else if (localStorage.getItem("healthStatus") === "Sick") {
+            return <p className="sick-status-text">{localStorage.getItem("healthStatus")}</p>
+        } else if (localStorage.getItem("healthStatus") === "Passed") {
+            return <p className="passed-status-text">{localStorage.getItem("healthStatus")}</p>
+        }
+    }
+
+
     return (
         <div className="navbar d-flex justify-content-start">
             {/* <img src={profilePhoto} alt="Animal Profile" className="p-4"></img> */}
@@ -28,8 +41,8 @@ const AnimalNavbar = () => {
             <div className="d-flex flex-column justify-content-start align-items-center py-4 animal-info mx-5">
                 <h3 className="mt-2 fw-bold">{localStorage.getItem("animalName")}</h3>
                 <p className="species-text">{localStorage.getItem("animalSpecies")}</p>
-                {/* <p className="availability-text">{localStorage.getItem("animalStatus")}</p> */}
-                <p className="status-text">{localStorage.getItem("healthStatus")}</p>
+                {healthStatus()}
+                
             </div>
 
             <div className="px-4 dropdown" style={{paddingBottom: "35px"}}>

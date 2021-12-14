@@ -1,7 +1,7 @@
 import "../styling/Sidebar.css";
 import { Link } from "react-router-dom";
 import { ProSidebar, Menu, MenuItem, SidebarHeader, SidebarContent, SidebarFooter } from "react-pro-sidebar";
-import { FaHome, FaDog, FaHeart, FaUser } from "react-icons/fa";
+import { FaHome, FaDog, FaHeart, FaUser, FaPaperPlane } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
 import { AiFillPlusCircle, AiFillFolder } from "react-icons/ai";
 import ucvmLogo from "../images/ucvm-logo-sm.png";
@@ -33,7 +33,7 @@ function Sidebar() {
   
 
   function manageUser(){
-    if (userType === "Admin"){
+    if (userType === "Admin") {
         return <MenuItem icon={<FaUser />}>
                 Manage Users
                 <Link to="/add-user" />
@@ -62,15 +62,11 @@ function Sidebar() {
                 Manage Animals
                 <Link to="/manage-animals" />
             </MenuItem>
-            {manageUser()}
-            {/* <MenuItem icon={<FaUser />}>
-                Manage Users
-                <Link to="/add-user" />
-            </MenuItem> */}
-            <MenuItem icon={<FaDog />}>
+            <MenuItem icon={<FaPaperPlane />}>
                 View Requests
                 <Link to="/view-requests" />
             </MenuItem>
+            {manageUser()}
             <MenuItem icon={<IoLogOut />}>
                 Sign Out
                 <Link to="/" />

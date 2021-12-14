@@ -70,7 +70,7 @@ export default class RequestViewByTeachingTechnician extends Component{
             <div className="overflow-auto">
                 {this.state.allRequests.map(request => 
                 ((request.requestStatus === "Pending" || request.requestStatus === "Accepted")) ? 
-                    <div class="card text-white bg-warning mx-5 my-3" key={request.requestID} style={{width: "50rem"}}>
+                    <div class="card bg-light mx-5 my-3" key={request.requestID} style={{width: "50rem"}}>
                         <div class="card-header" >
                             <h6> Request {request.requestID} by {request.requesterFirstName} {request.requesterLastName} </h6> 
                             <h6> Animal {request.animalID}: {request.animalName}, {request.animalSpecies} </h6>
@@ -88,7 +88,7 @@ export default class RequestViewByTeachingTechnician extends Component{
                                     <p> {request.reason} </p>
                                 </div>
                                 <div className="d-flex flex-column px-5 py-4 align-right">
-                                        <button onClick={() => this.clickCancel([request.animalID, request.requestID, request.requesterID, request.requestDate, request.checkoutDate, request.returnDate, request.reason, request.requestStatus, request.requesterFirstName, request.requesterLastName, request.animalName, request.animalSpecies])}>CANCEL</button>
+                                        <button className="btn btn-secondary" onClick={() => this.clickCancel([request.animalID, request.requestID, request.requesterID, request.requestDate, request.checkoutDate, request.returnDate, request.reason, request.requestStatus, request.requesterFirstName, request.requesterLastName, request.animalName, request.animalSpecies])}>CANCEL</button>
                                     </div>
                             </div>
 

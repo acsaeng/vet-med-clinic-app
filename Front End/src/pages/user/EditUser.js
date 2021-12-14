@@ -101,6 +101,7 @@ function EditUser() {
                         <div className="d-flex my-3 w-50">
                                 <h5 className="w-100">Position:</h5>
                                 <select class="form-select ms-2" value={position} onChange={e => setPosition(e.target.value)}>
+                                    <option selected value="">Select an option...</option>
                                     <option value="Admin">Admin</option>
                                     <option value="Animal Care Attendant">Animal Care Attendant</option>
                                     <option value="Animal Health Technician">Animal Health Technician</option>
@@ -130,11 +131,12 @@ function EditUser() {
                         </div>
 
                         <div className="d-flex my-3 w-50">
-                                <h5 className="w-100">Status:</h5>
-                                <select class="form-select ms-2" value={activeStatus} onChange={e => setActiveStatus(e.target.value)}>
-                                    <option value="true">Active</option>
-                                    <option value="false">Blocked</option>
-                                </select>
+                            <h5 className="w-100">Status:</h5>
+                            <select class="form-select ms-2" value={activeStatus} onChange={e => setActiveStatus(e.target.value)}>
+                                <option selected value="">Select an option...</option>
+                                <option value="true">Active</option>
+                                <option value="false">Blocked</option>
+                            </select>
                         </div>
 
                         <div className="d-flex my-3 w-50">

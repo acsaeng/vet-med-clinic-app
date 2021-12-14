@@ -94,7 +94,7 @@ function WeightHistory() {
 
                     <div className="d-flex flex-column ms-5">
 
-                        <form className="d-flex flex-column align-items-start my-5 ms-5 w-75" onSubmit={handleSubmit}>
+                        <form className="d-flex flex-column align-items-start my-5 w-100" onSubmit={handleSubmit}>
                             <div className="d-flex mb-3 w-25">
                                 <h4 className="w-100">Weight:</h4>
                                 <input className="form-control" type="number" value={weight} onChange={e => setWeight(e.target.value)}/>
@@ -105,8 +105,8 @@ function WeightHistory() {
                                 <Form.Control type="date" value={date} onChange={e => setDate(e.target.value)}></Form.Control>
                             </div>
 
-                            <div className="ms-5 w-25">
-                                <button className="btn btn-secondary px-3 py-1" type="submit">Submit</button>
+                            <div className="ps-5 ms-5 w-25 mb-4">
+                                <button className="btn btn-secondary ms-4 px-3 py-1" type="submit">Submit</button>
                             </div>
                         </form>
 

@@ -26,11 +26,33 @@
   }
   
 
-.status-text {
+.healthy-status-text {
   background-color: lightgreen;
   text-align: center;
   margin-top: -10px;
   width: 150px;
+}
+
+.injured-status-text {
+    background-color: rgb(255, 110, 110);
+    text-align: center;
+    margin-top: -10px;
+    width: 150px;
+}
+
+.sick-status-text {
+    background-color: lemonchiffon;
+    text-align: center;
+    margin-top: -10px;
+    width: 150px;
+}
+
+.passed-status-text {
+    color: white;
+    background-color: black;
+    text-align: center;
+    margin-top: -10px;
+    width: 150px;
 }
 
 .admin-text {

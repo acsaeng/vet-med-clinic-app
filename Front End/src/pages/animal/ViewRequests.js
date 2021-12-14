@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../styling/Home.css';
 // import Navbar from '../components/Navbar';
 import Sidebar from '../../components/Sidebar';
-import AnimalNavbar from '../../components/AnimalNavbar';
 import  '../../styling/Scrollbox.css';
 
 // Requires npm install axios --save
@@ -15,6 +14,7 @@ import RequestViewByAdmin from '../../components/RequestViewByAdmin.js';
 import RequestViewByHealthTechnician from '../../components/RequestViewByHealthTechnician.js';
 import RequestViewByTeachingTechnician from '../../components/RequestViewByTeachingTechnician.js';
 import jwt_decode from "jwt-decode";
+import BlankNavbar from '../../components/BlankNavbar';
 
 
 function ViewRequests() {
@@ -36,24 +36,22 @@ function ViewRequests() {
     <div className="main-container d-flex flex-column flex-grow-1">
         
         <div className="d-flex w-100 h-100">
-            <Sidebar />
+                <div className="sidebar">
+                    <Sidebar />
+                </div>
+
+                <div className="placeholder">
+                    <Sidebar />
+                </div>
+
             { allowView ? 
-            <div className="d-flex flex-column flex-grow-1 align-items-left mt-5 mx-5">
-                 
-                <div className="d-flex">
-                    {userType === "Admin"?
-                        <h1>All Pending Requests waiting for Admin</h1>: null
-                        // <h1>All Accepted Requests waiting for Health Technician</h1>
-                    }
-                    {userType === "Animal Health Technician"?
-                        <h1>All Accepted Requests waiting for Health Technician</h1>: null
-                    } 
-                    {userType === "Teaching Technician"?
-                        <h1>All Pending or Accepted Requests you submitted</h1>: null
-                    } 
+            <div className="d-flex flex-column flex-grow-1">
+                <BlankNavbar />
+                <div className="d-flex ms-5 mt-5">
+                    <h1>View Requests</h1>
                 </div>
                 
-                <div class="ex1 mt-3 mx-3">
+                <div class="ex1 mt-4 ms-5 w-75">
                     {userType === "Admin" ?
                         <RequestViewByAdmin/>: null
                         // <Request_ViewByHealthTechnician/>

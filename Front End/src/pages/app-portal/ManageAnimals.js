@@ -43,7 +43,7 @@ function ManageAnimal() {
 
             <h1 className="mt-5 mb-4 ms-5">Search Animal</h1>
 
-            <form className="d-flex flex-row ps-5 mx-5 w-75" onSubmit={(e) => reloadSearches(e)}>
+            <form className="d-flex flex-row mx-5 w-75" onSubmit={(e) => reloadSearches(e)}>
                 <input type="text" className="form-control me-2" size="100" placeholder="Search an animal..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
                 <button className="btn btn-secondary" type="submit">Search</button>
             </form> 

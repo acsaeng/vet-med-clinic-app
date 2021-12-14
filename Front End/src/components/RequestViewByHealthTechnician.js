@@ -92,7 +92,7 @@ export default class RequestViewByHealthTechnician extends Component{
                 {this.state.allRequests.map(request => 
                 // currentRequest = [request.requestID]
                 (request.requestStatus === "Accepted" ) ? //Health Technicians will only see the Requests which have a status of "Accepted"
-                    <div class="card text-white bg-warning mx-5 my-3" key={request.requestID} style={{width: "50rem"}}>
+                    <div class="card bg-light mx-5 my-3" key={request.requestID} style={{width: "50rem"}}>
                         <div class="card-header" >
                             <h6> Request {request.requestID} by {request.requesterFirstName} {request.requesterLastName} </h6> 
                             <h6> Animal {request.animalID}: {request.animalName}, {request.animalSpecies} </h6>
@@ -112,10 +112,10 @@ export default class RequestViewByHealthTechnician extends Component{
                                 <div className="d-flex flex-column px-5 py-4 align-right">
                                         {/* <button tasks={this.clickTest()}>testing</button> */}
                                         {/* <button onclick={(e) => this.clickTest(e)}>Accept</button> */}
-                                        <button onClick={() => this.clickAccept([request.animalID, request.requestID, request.requesterID, request.requestDate, request.checkoutDate, request.returnDate, request.reason, request.requestStatus, request.requesterFirstName, request.requesterLastName, request.animalName, request.animalSpecies])}>APPROVE</button>
+                                        <button className="btn btn-secondary" onClick={() => this.clickAccept([request.animalID, request.requestID, request.requesterID, request.requestDate, request.checkoutDate, request.returnDate, request.reason, request.requestStatus, request.requesterFirstName, request.requesterLastName, request.animalName, request.animalSpecies])}>APPROVE</button>
                                         <p/>
                                         {/* <button onclick={(e) => this.clickTest(e)}>Reject</button> */}
-                                        <button onClick={() => this.clickReject([request.animalID, request.requestID, request.requesterID, request.requestDate, request.checkoutDate, request.returnDate, request.reason, request.requestStatus, request.requesterFirstName, request.requesterLastName, request.animalName, request.animalSpecies])}>REJECT</button>
+                                        <button className="btn btn-secondary" onClick={() => this.clickReject([request.animalID, request.requestID, request.requesterID, request.requestDate, request.checkoutDate, request.returnDate, request.reason, request.requestStatus, request.requesterFirstName, request.requesterLastName, request.animalName, request.animalSpecies])}>REJECT</button>
                                     </div>
                             </div>
 

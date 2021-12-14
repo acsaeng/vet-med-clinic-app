@@ -32,7 +32,7 @@ function Home() {
     function time() {
         time = "";
 
-        if (datetime.getHours == 0) {
+        if (datetime.getHours() == 0) {
             time += "12:";
         } else if (datetime.getHours() > 12) {
             time += (datetime.getHours() - 12) + ":";
@@ -46,7 +46,7 @@ function Home() {
             time += datetime.getMinutes();
         }
 
-        if (datetime.getHours < 12) {
+        if (datetime.getHours() < 12) {
             time += " am";
         } else {
             time += " pm";

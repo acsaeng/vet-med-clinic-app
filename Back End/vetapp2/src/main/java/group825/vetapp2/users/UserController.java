@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import group825.vetapp2.exceptions.ApiRequestException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,14 +36,29 @@ public class UserController {
     }
 
     /**
-     * 'POST' request that verifies user username and password inputs
-     * @param json node containing the username and password inputs
-     * @return true if login was successful, false otherwise
+     * Get Json Web Token if user is authenticated properly
+     * @param userName = username entered by the user
+     * @param password = password entered by the user
+     * @return String containing the JWT
+     * @throws JWTCreationException
      */
-    @PostMapping(path = "/login")
+    @GetMapping(path = "/authenticate")
     @ResponseBody
-    public boolean loginUser(@RequestBody ObjectNode json) {
-        return this.service.loginUser(json.get("username").asText(), json.get("password").asText());
+    public String authenticateUser(@RequestParam String userName, @RequestParam String password) throws Exception{
+    	String token =  this.service.authenticateUser(userName, password);
+    	return token;
+    }
+    
+    /**
+     * 'GET' request that verifies user username and password inputs
+     * @param userName = username entered by the user
+     * @param password = password entered by the user
+     * @return the User object if login was successful, otherwise return a dummy User object with blank info
+     */
+    @GetMapping(path = "/login")
+    @ResponseBody
+    public User loginUser(@RequestParam String userName, @RequestParam String password) {
+        return this.service.loginUser(userName, password);
     }
 
     /**

@@ -29,7 +29,7 @@ import AddTreatment from './pages/treatment/AddTreatment';
 
 
 
-// import ViewRequests from './pages/animal/ViewRequests';
+import ViewRequests from './pages/animal/ViewRequests';
 
 function App() {
   return (
@@ -59,7 +59,7 @@ function App() {
 
                 <Route path='/request-treatment' element={<RequestTreatment/>}/> 
                 <Route path='/request-animal' element={<RequestAnimal/>}/>
-                {/* <Route path='/view-requests' element={<ViewRequests/>}/> */}
+                <Route path='/view-requests' element={<ViewRequests/>}/>
                 <Route path='/add-treatment' element={<AddTreatment/>}/> 
                 <Route path='/update-treatment' element={<UpdateTreatment/>}/> 
                 <Route path='/add-diagnosis' element={<AddDiagnosis/>}/> 

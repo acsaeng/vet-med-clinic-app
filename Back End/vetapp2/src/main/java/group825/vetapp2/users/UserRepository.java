@@ -1,6 +1,7 @@
 package group825.vetapp2.users;
 
 import group825.vetapp2.database.DatabaseConnection;
+
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -9,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Repository that stores User information
@@ -38,7 +40,10 @@ public class UserRepository {
      * @param password user's password
      * @return 1 if login was successful, 0 otherwise
      */
-	public boolean loginUser(String username, String password) {
+	public User loginUser(String username, String password) {
+		//empty dummy user to return if user is not found in database
+		User singleUser = new User(0, "", "","","","","","",LocalDate.parse("2018-08-15"),true);
+		
 		try {
 			// Create and execute a query to verify username and password
 			PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM USERS WHERE Username = ? AND User_Password = ?");
@@ -46,14 +51,22 @@ public class UserRepository {
 			statement.setString(2, password);
 
 			ResultSet results = statement.executeQuery();
+			
+			while (results.next()) {
+				singleUser = new User(results.getInt("User_ID"), results.getString("First_Name"), results.getString("Last_Name"),
+						results.getString("User_Type"), results.getString("Username"), results.getString("Email"),
+						results.getString("Phone_Number"), results.getString("User_Password"),
+						LocalDate.parse(results.getString("Start_Date")), results.getBoolean("Is_Active"));
+			}
 
-			// Checks if the result set is empty
-			return results.isBeforeFirst();
+			return singleUser;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return false;
+		//returns empty user
+		return singleUser;
     }
 
 	/**

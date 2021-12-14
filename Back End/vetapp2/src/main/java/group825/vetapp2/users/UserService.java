@@ -1,9 +1,16 @@
 package group825.vetapp2.users;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
+
 
 /**
  * Service that performs User requests
@@ -28,13 +35,50 @@ public class UserService {
         this.repo = repo;
     }
 
+    
+    /**
+     * Authenticates user's entered username and password against the database.
+     * If user was found, return a Json web token
+     * 
+     * @param username = user's entered username
+     * @param password = user's enetered password
+     * @return String containing json web token
+     * @throws JWTCreationException
+     */
+    public String authenticateUser(String username, String password) throws Exception{
+    	String token = "";
+    	int numMins = 60;
+
+    	User result =  this.repo.loginUser(username, password);
+    	
+    	//if user exists on the database
+    	if (result.getFirstName().length() > 0) {
+    		String userType = result.getUserType();
+    		
+    		try {
+    		    Algorithm algorithm = Algorithm.HMAC256("secret");
+    		    token = JWT.create()
+    		    		.withSubject(userType)
+//    		    		.withExpiresAt(new Date(System.currentTimeMillis() + numMins*60*1000))
+    		    		.sign(algorithm);
+    		    
+//    		    System.out.println("Token created = "+token);
+    		} catch (JWTCreationException exception){
+    			System.out.println("Invalid Signing configuration / Couldn't convert Claims.");
+    		}
+    	}
+    	
+    	return token;
+    }
+    
+    
     /**
      * Verifies a user's username and password information
      * @param username user's username
      * @param password user's password
      * @return true if login was successful, false otherwise
      */
-    public boolean loginUser(String username, String password) {
+    public User loginUser(String username, String password) {
     	return this.repo.loginUser(username, password);
     }
 

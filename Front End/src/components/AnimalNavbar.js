@@ -2,7 +2,8 @@ import "../styling/Navbar.css";
 import profilePhoto from "../images/profile.png";
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
-
+import jwt_decode from "jwt-decode";
+import { useState } from 'react';
 
 const AnimalNavbar = () => {
     
@@ -13,6 +14,12 @@ const AnimalNavbar = () => {
     //         window.location.reload();
     //     }
     // }
+    let token = localStorage.getItem("token")
+    let decoded = jwt_decode(token);
+    const [activeUserType, setType] = useState(decoded.sub)
+    // let activeUserType = decoded.sub
+    // console.log(activeUserType)
+
 
     return (
         <div className="navbar d-flex justify-content-start">
@@ -21,8 +28,8 @@ const AnimalNavbar = () => {
             <div className="d-flex flex-column justify-content-start align-items-center py-4 animal-info mx-5">
                 <h3 className="mt-2 fw-bold">{localStorage.getItem("animalName")}</h3>
                 <p className="species-text">{localStorage.getItem("animalSpecies")}</p>
-                <p className="availability-text">{localStorage.getItem("animalStatus")}</p>
-                <p className="status-text">Healthy</p>
+                {/* <p className="availability-text">{localStorage.getItem("animalStatus")}</p> */}
+                <p className="status-text">{localStorage.getItem("healthStatus")}</p>
             </div>
 
             <div className="px-4 dropdown" style={{paddingBottom: "35px"}}>
@@ -33,7 +40,10 @@ const AnimalNavbar = () => {
                     <Dropdown.Item href="/comments?withStudents=true">Comments</Dropdown.Item>
                     <Dropdown.Item href="/photos">Photos</Dropdown.Item>
                     <Dropdown.Item href="/weight-history">Weight History</Dropdown.Item>
-                    <Dropdown.Item href="/request-animal">Request Animal</Dropdown.Item>
+                    {activeUserType === "Teaching Technician" ? 
+                        <Dropdown.Item href="/request-animal">Request Animal</Dropdown.Item>:null
+                    }
+                    
                     <Dropdown.Item href="/send-alert">Send Alert</Dropdown.Item>
                 </DropdownButton>
             </div>

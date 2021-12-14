@@ -11,6 +11,7 @@
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.2",
     "react-checklist": "^1.0.12",
+    "react-clock": "^3.0.0",
     "react-datepicker": "^4.5.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",

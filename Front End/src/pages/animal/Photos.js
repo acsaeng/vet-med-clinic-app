@@ -187,15 +187,15 @@ function Photos() {
                     <Sidebar />
                 </div>
                 <div className= "d-flex flex-column w-100">
-                    <div>
-                        <AnimalNavbar />
-                    </div>
+                    <AnimalNavbar />
                     <h1 className="ms-5 mt-5">Photos</h1>
-                    <div className="d-flex flex-row w-75 mb-3 justify-content-end">  
+
+                    <div className="ms-5">
+                    <div className="d-flex flex-row w-75 mb-3 ms-5 justify-content-end">  
                         {/* <button className="btn btn-secondary p-2 ms-3" >Upload Photo</button> */}
-                        <input className="btn btn-secondary p-2 ms-3" type="file" name="image" accept="image/png, image/jpeg" onChange={(e) => handleFile(e)}/>
-                        <button className="btn btn-secondary p-2 ms-3" onClick={(e) => handleUpload(e)}>Upload Photo</button>
-                        <button className="btn btn-secondary p-2 ms-3" onClick={()=> deletePhotos()}>Delete Photo</button>
+                        <input className="btn btn-secondary px-2 ms-3" type="file" name="image" accept="image/png, image/jpeg" onChange={(e) => handleFile(e)}/>
+                        <button className="btn btn-secondary px-2 ms-3" onClick={(e) => handleUpload(e)}>Upload Photo</button>
+                        <button className="btn btn-secondary px-2 ms-3" onClick={()=> deletePhotos()}>Delete Photo</button>
                     </div>
 
                     <div class="ex2 mx-5 w-75">
@@ -211,6 +211,7 @@ function Photos() {
                                     </div>
                                 </div>
                             )}        
+                        </div>
                         </div>
 
 

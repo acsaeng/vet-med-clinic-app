@@ -22,14 +22,20 @@ function AnimalInfo() {
     const [colour, setColour] = useState();
     const [additionalInfo, setAdditionalInfo] = useState();
 
-
     const urlParams = new URLSearchParams(useLocation().search)
-    const animalID = urlParams.get("animalID")
-    localStorage.setItem("animalID", animalID)
+    
+
+    
+    if (localStorage.getItem("animalID") === null){
+        const newAnimalID = urlParams.get("animalID")
+        localStorage.setItem("animalID", newAnimalID)
+    }
+    const animalID = localStorage.getItem("animalID")
+    
 
     function loadData() {
         if (isLoading) {
-            axios.get("http://localhost:8080/app/animal/" + "101")
+            axios.get("http://localhost:8080/app/animal/" + animalID)
             .then(res => {
                 const info = res.data;
 
@@ -56,11 +62,11 @@ function AnimalInfo() {
     function handleSubmit(event) {
         event.preventDefault();
         
-        axios.put("http://localhost:8080/app/animal/" + "101", { name: name, species: species, breed: breed, tattoo: tattoo, 
-                                                                cityTattoo: cityTattoo, dob: dob, sex: sex, rfid: rfid,
-                                                                microchip: microchip, healthStatus: healthStatus,
-                                                                availabilityStatus: availabilityStatus, colour: colour,
-                                                                additionalInfo: additionalInfo})
+        axios.put("http://localhost:8080/app/animal/" + animalID, { name: name, species: species, breed: breed, tattoo: tattoo, 
+                                                                    cityTattoo: cityTattoo, dob: dob, sex: sex, rfid: rfid,
+                                                                    microchip: microchip, healthStatus: healthStatus,
+                                                                    availabilityStatus: availabilityStatus, colour: colour,
+                                                                    additionalInfo: additionalInfo})
         .then(res => {
           console.log(res);
           console.log(res.data);

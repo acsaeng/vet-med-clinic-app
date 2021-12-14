@@ -25,7 +25,7 @@ const AnimalNavbar = () => {
                 <p className="status-text">Healthy</p>
             </div>
 
-            <div className="px-4 pb-5 dropdown">
+            <div className="px-4 dropdown" style={{paddingBottom: "35px"}}>
                 <DropdownButton id="dropdown-basic-button" title="Select an option..." variant="dark">
                     <Dropdown.Item href="/animal-info">Animal Information</Dropdown.Item>
                     <Dropdown.Item href="/health-records">Health Records</Dropdown.Item>

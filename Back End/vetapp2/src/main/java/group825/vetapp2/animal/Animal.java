@@ -101,46 +101,6 @@ public class Animal {
     private String searchKeyName;
 
     /**
-     * Constructor that initializes the Animal
-     * @param animalID animal's ID number
-     * @param name animal's name
-     * @param species animal's species
-     * @param breed animal's breed
-     * @param tattoo animal's tattoo
-     * @param cityTattoo animal's city tattoo
-     * @param sex animal's sex
-     * @param dob animal's date of birth
-     * @param rfid animal's RFID
-     * @param microchip animal's microchip number
-     * @param healthStatus animal's health status
-     * @param availabilityStatus animal's availability status
-     * @param colour animal's colour
-     * @param additionalInfo additional information on the animal
-     */
-    public Animal(@JsonProperty("animalID") int animalID, @JsonProperty("name") String name,
-                  @JsonProperty("species") String species, @JsonProperty("breed") String breed,
-                  @JsonProperty("tattoo") int tattoo, @JsonProperty("cityTattoo") String cityTattoo,
-                  @JsonProperty("dob") LocalDate dob, @JsonProperty("sex") char sex,
-                  @JsonProperty("rfid") String rfid, @JsonProperty("microchip") String microchip,
-                  @JsonProperty("healthStatus") String healthStatus, @JsonProperty("availabilityStatus") boolean availabilityStatus,
-                  @JsonProperty("colour") String colour, @JsonProperty("additionalInfo") String additionalInfo) {
-        this.animalID = animalID;
-        this.name = name;
-        this.species = species;
-        this.breed = breed;
-        this.tattoo = tattoo;
-        this.cityTattoo = cityTattoo;
-        this.dob = dob;
-        this.sex = sex;
-        this.rfid = rfid;
-        this.microchip = microchip;
-        this.healthStatus = healthStatus;
-        this.availabilityStatus = availabilityStatus;
-        this.colour = colour;
-        this.additionalInfo = additionalInfo;
-    }
-
-    /**
      * Constructor that initializes the Animal with a search key
      * @param animalID animal's ID number
      * @param name animal's name
@@ -181,7 +141,7 @@ public class Animal {
         this.additionalInfo = additionalInfo;
         this.nameLength = nameLength;
         this.searchKeyName = searchKeyName;
-        
+
         updateSearchKey();
     }
 

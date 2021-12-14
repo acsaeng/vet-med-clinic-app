@@ -136,20 +136,20 @@ function Comments() {
                     <Sidebar />
                 </div>
         <div className= "d-flex flex-column w-100">
-        <div>
-            <AnimalNavbar /> 
-        </div> 
-        <div className="d-flex mt-5 mb-4 mx-5">
+        
+        <AnimalNavbar /> 
+        
+        <div className="d-flex mt-5 mb-4 mx-5 w-75">
               <h1>Comments</h1>
-              <div className="d-flex align-items-right mx-5">
+              <div className="d-flex align-items-center mx-5 ps-5 pt-5">
                 {showStudents === true ?
                 <input type="checkbox" id="toggleStudents" onChange={toggle} />:
-                <input type="checkbox" id="toggleStudents" onChange={toggle} checked/>} 
-                <label> Toggle Students</label>
+                <input type="checkbox" id="toggleStudents" onChange={toggle} checked/>}
+                <label>Toggle Students</label>
               </div>
         </div>      
         
-        <div className="d-flex flex-column flex-grow-1 align-items-left mx-5">
+        <div className="d-flex flex-column flex-grow-1 align-items-left mx-5 ps-5 w-75">
             <div class="ex1">
             <CommentsList animalID={animalID} toggleStudent={showStudents} />
               {/* {showStudents === true ?

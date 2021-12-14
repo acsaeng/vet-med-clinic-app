@@ -5,17 +5,17 @@ USE VETAPP;
 
 DROP TABLE IF EXISTS USERS; 
 CREATE TABLE USERS ( 
-     User_ID			int not null,
-     First_Name			varchar (50) not null,
-     Last_Name			varchar (50) not null,
-     User_Type			varchar (100) not null,
-     Username 			varchar (100) not null,
-     Email			 	varchar (100) not null,
-     Phone_Number		varchar (50) not null,
-     User_Password		varchar (50) not null,
-     Start_Date			date,
-     Is_Active			boolean,
-     primary key (User_ID)
+	User_ID			int not null,
+    First_Name			varchar(50) not null,
+    Last_Name			varchar(50) not null,
+    User_Type			varchar(100) not null,
+    Username 			varchar(100) not null,
+    Email			 	varchar(100) not null,
+    Phone_Number		varchar(50) not null,
+    User_Password		varchar(50) not null,
+    Start_Date			date,
+    Is_Active			boolean,
+    primary key (User_ID)
 );
 
 INSERT INTO USERS (User_ID, First_Name, Last_Name, User_Type, Username,  Email, Phone_Number, User_Password, Start_Date, Is_Active)
@@ -37,66 +37,54 @@ VALUES
 
 DROP TABLE IF EXISTS ANIMAL; 
 CREATE TABLE ANIMAL ( 
-     Animal_ID					integer not null,
-     Animal_Name			 	varchar (50) not null,
-     Species					varchar (50) not null,
-     Breed			 			varchar (50) not null,
-     Tattoo_Num			 		integer not null,
-     City_Tattoo			 	varchar (50) not null,
-     Birth_Date			 		date,
-     Sex						varchar (1) not null,
-     RFID			 			varchar (50) not null,
-     Microchip			 		varchar (50) not null,
-     Health_Status			 	varchar (50) not null, 
-     Availability_Status		boolean,
-     Colour						varchar (50) not null,
-     Additional_Info			varchar (50) not null,
-	 Length_Name			 	integer not null,
-	 SearchKey_Name			 	varchar (150) not null,
+	Animal_ID				integer not null,
+    Animal_Name			 	varchar(50) not null,
+    Species					varchar(50) not null,
+    Breed			 		varchar(50) not null,
+    Tattoo_Num			 	integer not null,
+    City_Tattoo			 	varchar(50) not null,
+    Birth_Date			 	date,
+    Sex						varchar(1) not null,
+    RFID			 		varchar(50) not null,
+    Microchip			 	varchar(50) not null,
+    Health_Status			varchar(50) not null, 
+    Availability_Status		boolean,
+    Colour					varchar(50) not null,
+    Additional_Info			varchar(50) not null,
+	Length_Name			 	integer not null,
+	SearchKey_Name			varchar(150) not null,
 
-     primary key (Animal_ID)
+	primary key (Animal_ID)
 );
 
-INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattoo, Birth_Date, Sex, RFID, Microchip, Health_Status,  Availability_Status, Colour, Additional_Info, Length_Name, SearchKey_Name )
+INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattoo, Birth_Date, Sex, RFID, Microchip, Health_Status,  Availability_Status, Colour, Additional_Info, Length_Name, SearchKey_Name)
 VALUES
 (101, 'Bobby', 'Dog', 'Beagle', '234234', 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', '', '5.0', 'a0-b3-c0-d0-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o1-p0-q0-r0-s0-t0-u0-v0-w0-x0-y1-z0'),
 (102, 'Daniel', 'Horse', 'Vanners', '564543', 'ABC Paris', '20180831', 'F', '8987498179390', '5671876189197','Injured', false, 'Brown', 'Sprained right hind leg. Out for 2 weeks', '6.0', 'a1-b0-c0-d1-e1-f0-g0-h0-i1-j0-k0-l1-m0-n1-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
 (103, 'Katherine', 'Cow', 'Abigar', '981733', 'CBH India', '20180228', 'M', '83612863189', '812381931998', 'Sick', true, 'Black', 'Unavilable for one week. Grass only diet', '9.0', 'a1-b0-c0-d0-e2-f0-g0-h1-i1-j0-k1-l0-m0-n1-o0-p0-q0-r1-s0-t1-u0-v0-w0-x0-y0-z0'),
-(104, 'Bobby', 'Cat', 'leopard', '234234', 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Passed', false, 'Black and white', '', '5.0', 'a0-b3-c0-d0-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o1-p0-q0-r0-s0-t0-u0-v0-w0-x0-y1-z0'),
+(104, 'Bobby', 'Cat', 'Leopard', '234234', 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Passed', false, 'Black and white', '', '5.0', 'a0-b3-c0-d0-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o1-p0-q0-r0-s0-t0-u0-v0-w0-x0-y1-z0'),
 (2501, 'Satch', 'Dog', 'Beagle', '234234', 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', '', '5.0', 'a1-b0-c1-d0-e0-f0-g0-h1-i0-j0-k0-l0-m0-n0-o0-p0-q0-r0-s1-t1-u0-v0-w0-x0-y0-z0'),
 (1405, 'Adai', 'Dog', 'Beagle', '234234', 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', '', '4.0', 'a2-b0-c0-d1-e0-f0-g0-h0-i1-j0-k0-l0-m0-n0-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
 (1406, 'Bibbie', 'Dog', 'Beagle', '234234', 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', false, 'Black and white', '', '6.0', 'a0-b3-c0-d0-e1-f0-g0-h0-i2-j0-k0-l0-m0-n0-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
 (3000, 'Ada', 'Dog', 'Beagle', '234234', 'HOC London', '20180815', 'M', '197839178371', '176387613813','Healthy', true, 'Black and white', '', '3.0', 'a2-b0-c0-d1-e0-f0-g0-h0-i0-j0-k0-l0-m0-n0-o0-p0-q0-r0-s0-t0-u0-v0-w0-x0-y0-z0'),
 (3001, 'Bibbies', 'Dog', 'Beagle', '234234', 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', false, 'Black and white', '', '7.0', 'a0-b3-c0-d0-e1-f0-g0-h0-i2-j0-k0-l0-m0-n0-o0-p0-q0-r0-s1-t0-u0-v0-w0-x0-y0-z0');
 
--- INSERT INTO ANIMAL (Animal_ID, Animal_Name, Species, Breed, Tattoo_Num, City_Tattoo, Birth_Date, Sex, RFID, Microchip, Health_Status, Availability_Status, Colour, Additional_Info)
--- VALUES
--- (101, 'Bobby', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Sick', false, 'Black and white', ''),
--- (102, 'Daniel', 'Horse', 'Vanners', 564543, 'ABC Paris', '20180831', 'F', '8987498179390', '5671876189197', 'Injured', false, 'Brown', 'Sprained right hind leg. Out for 2 weeks'),
--- (103, 'Katherine', 'Cow', 'Abigar', 981733, 'CBH India', '20180228', 'M', '83612863189', '812381931998', 'Sick', false, 'Black', 'Unavilable for one week. Grass only diet'),
--- (104, 'Bobby', 'Cat', 'leopard', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', ''),
--- (2501, 'Satch', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', false, 'Black and white', ''),
--- (1405, 'Adai', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', ''),
--- (1406, 'Bibbie', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', false, 'Black and white', ''),
--- (3000, 'Ada', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', ''),
--- (3001, 'Bibbies', 'Dog', 'Beagle', 234234, 'HOC London', '20180815', 'M', '197839178371', '176387613813', 'Healthy', true, 'Black and white', '');
-
 
 DROP TABLE IF EXISTS COMMENTS; 
 CREATE TABLE COMMENTS ( 
-     Animal_ID			 int not null,
-     Comment_ID			int not null,
-     Upload_Time		varchar (50) not null,
-     User_ID			 int not null,
-     Message			 varchar (350) not null,
+	Animal_ID		int not null,
+    Comment_ID		int not null,
+    Upload_Time		varchar(50) not null,
+    User_ID			int not null,
+    Message			varchar(350) not null,
      
-     primary key (Comment_ID),
-     foreign key (Animal_ID) references ANIMAL(Animal_ID) 
-     ON UPDATE CASCADE
-     ON DELETE CASCADE,
-     foreign key (User_ID) references USERS(User_ID) 
-     ON UPDATE CASCADE
-     ON DELETE CASCADE
+    primary key (Comment_ID),
+    foreign key (Animal_ID) references ANIMAL(Animal_ID) 
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+    foreign key (User_ID) references USERS(User_ID) 
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 INSERT INTO COMMENTS (Animal_ID, Comment_ID, Upload_Time, User_ID, Message)
@@ -108,22 +96,21 @@ VALUES
 ('101', '5', '2021-11-21 10:00:00', '6', 'Can someone please check on the foot?');
 
 
-
-
 DROP TABLE IF EXISTS PHOTOS; 
 CREATE TABLE PHOTOS ( 
-     Animal_ID			 integer not null,
-     Photo_ID			 integer not null,
-     File_Path			 varchar (150) not null,
-     User_ID			integer not null,
-     Upload_Date			 varchar (100) not null,
-     primary key (Photo_ID),
-     foreign key (Animal_ID) references ANIMAL(Animal_ID) 
-     ON UPDATE CASCADE
-     ON DELETE CASCADE,
-     foreign key (User_ID) references USERS(User_ID) 
-     ON UPDATE CASCADE
-     ON DELETE CASCADE
+	Animal_ID		integer not null,
+    Photo_ID		integer not null,
+    File_Path		varchar(150) not null,
+    User_ID			integer not null,
+    Upload_Date		varchar(100) not null,
+    
+    primary key (Photo_ID),
+    foreign key (Animal_ID) references ANIMAL(Animal_ID) 
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+    foreign key (User_ID) references USERS(User_ID) 
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 
@@ -137,22 +124,23 @@ VALUES
 ('103', '6', '/photos/103/cow2.jpg', '2', '2021-11-11 00:00:00'),
 ('103', '7', '/photos/103/cow3.jpg', '10', '2021-11-20 00:00:00');
 
+
 DROP TABLE IF EXISTS REMINDERS; 
 CREATE TABLE REMINDERS ( 
-     Animal_ID			 integer not null,
-     Reminder_ID			 integer not null,
-     Date_Created			 varchar (50) not null,
-     Author_ID			 integer not null,
-     Notes			 varchar (50) not null,
-     primary key (Reminder_ID),
-     foreign key (Animal_ID) references ANIMAL(Animal_ID) 
-     ON UPDATE CASCADE
-     ON DELETE CASCADE,
-     foreign key (Author_ID) references USERS(User_ID) 
-     ON UPDATE CASCADE
-     ON DELETE CASCADE
+	Animal_ID		integer not null,
+    Reminder_ID		integer not null,
+    Date_Created	varchar(50) not null,
+    Author_ID		integer not null,
+    Notes			varchar(50) not null,
+    
+    primary key (Reminder_ID),
+    foreign key (Animal_ID) references ANIMAL(Animal_ID) 
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+    foreign key (Author_ID) references USERS(User_ID) 
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
-
 
 INSERT INTO REMINDERS (Animal_ID, Reminder_ID, Date_Created, Author_ID, Notes)
 VALUES
@@ -163,21 +151,22 @@ VALUES
 
 DROP TABLE IF EXISTS REQUEST; 
 CREATE TABLE REQUEST ( 
-     Animal_ID			 	int not null,
-     Request_ID			 	int not null auto_increment,
-     Requester_ID			int not null,
-     Request_Date			varchar (50) not null,
-     Checkout_Date			varchar (50) ,
-     Return_Date			varchar (50) ,
-     Reason			 		varchar (350) ,
-     Request_Status			varchar (50) not null,
-     primary key (Request_ID),
-     foreign key (Animal_ID) references ANIMAL(Animal_ID) 
-     ON UPDATE CASCADE
-     ON DELETE CASCADE,
-     foreign key (Requester_ID) references USERS(User_ID) 
-     ON UPDATE CASCADE
-     ON DELETE CASCADE
+	Animal_ID			int not null,
+    Request_ID			int not null auto_increment,
+    Requester_ID		int not null,
+    Request_Date		varchar(50) not null,
+    Checkout_Date		varchar(50) ,
+    Return_Date			varchar(50) ,
+    Reason			 	varchar(350) ,
+    Request_Status		varchar(50) not null,
+    
+    primary key (Request_ID),
+    foreign key (Animal_ID) references ANIMAL(Animal_ID) 
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+    foreign key (Requester_ID) references USERS(User_ID) 
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 INSERT INTO REQUEST (Animal_ID, Request_ID, Requester_ID, Request_Date, Checkout_Date, Return_Date, Reason, Request_Status)
@@ -196,22 +185,22 @@ VALUES
 
 DROP TABLE IF EXISTS DIAGNOSIS; 
 CREATE TABLE DIAGNOSIS ( 
-     Diagnosis_ID				int not null auto_increment,
-     Diagnosis_Date			 	varchar (50) not null,
-     Diagnosis			 		varchar (50) not null,
-     Diagnosis_Description		varchar (500) not null,
-     Diagnosis_Status			varchar (50) not null,
-     User_ID			 		int not null,
-     Animal_ID			 		int not null,
-     primary key (Diagnosis_ID),
-     foreign key (Animal_ID) references ANIMAL(Animal_ID) 
-     ON UPDATE CASCADE
-     ON DELETE CASCADE,
-     foreign key (User_ID) references USERS(User_ID) 
-     ON UPDATE CASCADE
-     ON DELETE CASCADE
+	Diagnosis_ID			int not null auto_increment,
+    Diagnosis_Date			varchar(50) not null,
+    Diagnosis			 	varchar(50) not null,
+    Diagnosis_Description	varchar(500) not null,
+    Diagnosis_Status		varchar(50) not null,
+    User_ID			 		int not null,
+    Animal_ID			 	int not null,
+    
+    primary key (Diagnosis_ID),
+    foreign key (Animal_ID) references ANIMAL(Animal_ID) 
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+    foreign key (User_ID) references USERS(User_ID) 
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
-
 
 INSERT INTO DIAGNOSIS (Diagnosis_ID, Diagnosis_Date, Diagnosis, Diagnosis_Description, Diagnosis_Status, User_ID, Animal_ID)
 VALUES
@@ -224,20 +213,21 @@ VALUES
 
 DROP TABLE IF EXISTS TREATMENT; 
 CREATE TABLE TREATMENT ( 
-     Treatment_ID				int not null auto_increment,
-     Treatment_Date				varchar (50) not null,
-     Treatment			 		varchar (50) not null,
-     Treatment_Description		varchar (500) not null,
-     Treatment_Status			varchar (50) not null,
-     User_ID			 		int not null,
-     Animal_ID			 		int not null,
-     primary key (Treatment_ID),
-     foreign key (Animal_ID) references ANIMAL(Animal_ID) 
-     ON UPDATE CASCADE
-     ON DELETE CASCADE,
-     foreign key (User_ID) references USERS(User_ID) 
-     ON UPDATE CASCADE
-     ON DELETE CASCADE
+	Treatment_ID			int not null auto_increment,
+    Treatment_Date			varchar(50) not null,
+    Treatment			 	varchar(50) not null,
+    Treatment_Description	varchar(500) not null,
+    Treatment_Status		varchar(50) not null,
+    User_ID			 		int not null,
+    Animal_ID			 	int not null,
+    
+    primary key (Treatment_ID),
+    foreign key (Animal_ID) references ANIMAL(Animal_ID) 
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+    foreign key (User_ID) references USERS(User_ID) 
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 INSERT INTO TREATMENT (Treatment_ID, Treatment_Date, Treatment, Treatment_Description, Treatment_Status, User_ID, Animal_ID)
@@ -251,17 +241,18 @@ VALUES
 
 DROP TABLE IF EXISTS WEIGHT_HISTORY; 
 CREATE TABLE WEIGHT_HISTORY ( 
-     Animal_ID			int not null,
-     Date_Recorded		date,
-     Weight				double,
-     User_ID			int not null,
-     primary key (Date_Recorded, Animal_ID),
-     foreign key (Animal_ID) references ANIMAL(Animal_ID)
-     ON UPDATE CASCADE
-     ON DELETE CASCADE,
-     foreign key (User_ID) references USERS(User_ID) 
-     ON UPDATE CASCADE
-     ON DELETE CASCADE
+	Animal_ID		int not null,
+    Date_Recorded	date,
+    Weight			double,
+    User_ID			int not null,
+    
+    primary key (Date_Recorded, Animal_ID),
+    foreign key (Animal_ID) references ANIMAL(Animal_ID)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+    foreign key (User_ID) references USERS(User_ID) 
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 INSERT INTO WEIGHT_HISTORY(Animal_ID, Date_Recorded, Weight, User_ID)
@@ -280,5 +271,6 @@ VALUES
 (102, '2021-02-01', 410.1, 2),
 (102, '2021-03-01', 406.0, 1),
 (102, '2021-04-01', 402.9, 2);
+
 
 SELECT * FROM ANIMAL;

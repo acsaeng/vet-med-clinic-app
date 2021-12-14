@@ -59,7 +59,7 @@ function AddReminder() {
                 <div className="d-flex flex-column flex-grow-1">
                     <AnimalNavbar />
 
-                    <h1 className="mt-5 ms-5">Add a Reminder</h1>
+                    <h1 className="my-5 ms-5">Add a Reminder</h1>
 
                     <form className="d-flex flex-column  align-items-start mt-2" onSubmit={handleSubmit}>
                         <div className="d-flex my-3 w-75">
@@ -74,14 +74,14 @@ function AddReminder() {
 
 
                         <div className="d-flex my-3 w-75">
-                            <h4 className="w-100">Note</h4>
+                            <h4 className="w-100">Note:</h4>
                             <textarea className="form-control " id="messageInput" onChange={getMessage} cols='100' rows='10' />
                         </div>
                         
                     </form>
 
-                    <div className="d-flex flex-row-reverse w-75">
-                        <button className="btn btn-primary mx-5"  style={{width:"200px"}} onClick={handleSubmit}>Submit</button>
+                    <div className="d-flex flex-row-reverse w-75 ms-5">
+                        <button className="btn btn-secondary mx-5"  style={{width:"100px"}} onClick={handleSubmit}>Submit</button>
                     </div>
 
                     </div>

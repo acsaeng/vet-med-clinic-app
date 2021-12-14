@@ -63,7 +63,8 @@ public class AnimalRepository {
 						results.getString("City_Tattoo"), LocalDate.parse(results.getString("Birth_Date")),
 						results.getString("Sex").charAt(0), results.getString("RFID"), results.getString("Microchip"),
 						results.getString("Health_Status"), results.getBoolean("Availability_Status"),
-						results.getString("Colour"), results.getString("Additional_Info"));
+						results.getString("Colour"), results.getString("Additional_Info"), results.getInt("Length_Name"),
+						results.getString("SearchKey_Name"));
 
 				animals.add(animal);
 			}
@@ -99,7 +100,8 @@ public class AnimalRepository {
 						results.getString("City_Tattoo"), LocalDate.parse(results.getString("Birth_Date")),
 						results.getString("Sex").charAt(0), results.getString("RFID"), results.getString("Microchip"),
 						results.getString("Health_Status"), results.getBoolean("Availability_Status"),
-						results.getString("Colour"), results.getString("Additional_Info"));
+						results.getString("Colour"), results.getString("Additional_Info"), results.getInt("Length_Name"),
+						results.getString("SearchKey_Name"));
 			}
 
 			statement.close();

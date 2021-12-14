@@ -28,31 +28,36 @@ function Home() {
     // console.log("inside Home.js, testing localStorage")
     // console.log(localStorage.getItem("requesterFirstName"))
 
+
+    function time() {
+        time = "";
+
+        if (datetime.getHours == 0) {
+            time += "12:";
+        } else if (datetime.getHours() > 12) {
+            time += (datetime.getHours() - 12) + ":";
+        } else {
+            time += datetime.getHours() + ":";
+        }
+
+        if (datetime.getMinutes() < 10) {
+            time += "0" + datetime.getMinutes();
+        } else {
+            time += datetime.getMinutes();
+        }
+
+        if (datetime.getHours < 12) {
+            time += " am";
+        } else {
+            time += " pm";
+        }
+
+        return time;
+    }
+
+
     return (
         <div className="main-container d-flex flex-column flex-grow-1">
-            {/* { Authenticated ==="isAuthenticated" ? 
-            <div className="d-flex w-100 h-100">
-                <div className="sidebar">
-                    <Sidebar />
-                </div>
-
-                <div className="placeholder">
-                    <Sidebar />
-                </div>
-
-            <div className="vertical-center d-flex flex-column align-items-center">
-                <img src={ucvmLogo} alt="U of C Vet Med Logo" className="pb-5"></img>
-
-                <h1>Welcome, {userInfo.userFirstName} {userInfo.userLastName}!</h1>
-                <h4 className="fst-italic pb-5">{userInfo.userType}</h4>
-
-                <h1 className="pt-2">{`${datetime.getHours() % 12}:${datetime.getMinutes() < 10 ? "0" + datetime.getMinutes():datetime.getMinutes()} ${datetime.getHours() <= 12? "am" : "pm"}`}</h1>
-                <h4>{`${months[datetime.getMonth()]} ${datetime.getDate()}, ${datetime.getFullYear()}`}</h4>
-            </div>
-                </div>
-            : <a href="/">You are not authorized to view this page. Return to Login</a>}
-            </div> */}
-
             <div className="d-flex w-100 h-100">
                 <div className="sidebar">
                     <Sidebar />
@@ -68,8 +73,9 @@ function Home() {
                     <h1>Welcome, {userInfo.userFirstName} {userInfo.userLastName}!</h1>
                     <h4 className="fst-italic pb-5">{userInfo.userType}</h4>
 
-                    <h1 className="pt-2">{`${datetime.getHours()}:${datetime.getMinutes() < 10 ? "0" + datetime.getMinutes():datetime.getMinutes()} ${datetime.getHours() < 12? "am" : "pm"}`}</h1>
+                    <h1 className="pt-2">{time()}</h1>
                     <h4>{`${months[datetime.getMonth()]} ${datetime.getDate()}, ${datetime.getFullYear()}`}</h4>
+
                 </div>
             </div>
         </div>
@@ -78,3 +84,26 @@ function Home() {
 }
 
 export default Home;
+
+{/* { Authenticated ==="isAuthenticated" ? 
+<div className="d-flex w-100 h-100">
+    <div className="sidebar">
+        <Sidebar />
+    </div>
+
+    <div className="placeholder">
+        <Sidebar />
+    </div>
+
+<div className="vertical-center d-flex flex-column align-items-center">
+    <img src={ucvmLogo} alt="U of C Vet Med Logo" className="pb-5"></img>
+
+    <h1>Welcome, {userInfo.userFirstName} {userInfo.userLastName}!</h1>
+    <h4 className="fst-italic pb-5">{userInfo.userType}</h4>
+
+    <h1 className="pt-2">{`${datetime.getHours() % 12}:${datetime.getMinutes() < 10 ? "0" + datetime.getMinutes():datetime.getMinutes()} ${datetime.getHours() <= 12? "am" : "pm"}`}</h1>
+    <h4>{`${months[datetime.getMonth()]} ${datetime.getDate()}, ${datetime.getFullYear()}`}</h4>
+</div>
+    </div>
+: <a href="/">You are not authorized to view this page. Return to Login</a>}
+</div> */}

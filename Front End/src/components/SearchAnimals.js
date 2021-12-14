@@ -78,14 +78,14 @@ export default class SearchAnimals extends Component{
                     // <a href = {"/request-animal?animalID="+animal.animalID} >
                     <a href = {"/animal-info?animalID="+animal.animalID} key={animal.animalID}>
                     {/* // <a href = "/request-animal" onClick={this.storeSelectedAnimalInfo(animal)}>  */}
-                    <div class="card text-black bg-light mx-5 my-3" key={animal.animalID} style={{width: "45rem"}}>
+                    <div className="card text-black bg-light my-3" key={animal.animalID} style={{width: "45rem"}}>
                         
-                        <div class="card-header" >
+                        <div className="card-header" >
                             {/* <h6> Request {request.requestID} by {request.requesterFirstName} {request.requesterLastName} </h6>  */}
                             <h6> Animal #{animal.animalID}: {animal.name}, {animal.breed} {animal.species} </h6>
                             {/* <Link to="/request-animal"/> */}
                         </div>
-                        <div class="card-body"  >
+                        <div className="card-body"  >
 
                         </div>
                         

@@ -25,13 +25,12 @@ function Reminders() {
                     <Sidebar />
                 </div>
         <div className= "d-flex flex-column w-100">
-            <div>
-                <AnimalNavbar /> 
-            </div> 
+            <AnimalNavbar /> 
+
             <div className="d-flex mt-5 mb-2 mx-5">
                 <h1>Reminders</h1>
             </div> 
-            <div className="d-flex flex-column flex-grow-1 align-items-left mx-5">
+            <div className="d-flex flex-column flex-grow-1 align-items-left mx-5 ps-5 w-75">
                   {(activeUserType !== "Student") ? 
                     <label className="d-flex flex-row-reverse custom-field align-items-right mb-3">
                       <a  href="/reminders/add" >

@@ -3,30 +3,23 @@ import '../../styling/main.css';
 import Sidebar from "../../components/Sidebar";
 import ucvmLogo from "../../images/ucvm-logo-lg.png";
 import { useState } from 'react';
-import {useLocation, useNavigate} from 'react-router-dom'
+import jwt_decode from "jwt-decode";
 
 function Home() {
-    let navigate = useNavigate();
 
     const [datetime, setDatetime] = useState(new Date());
     const months= ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const urlParams = new URLSearchParams(useLocation().search)
+
+    let token = localStorage.getItem("token")
+    let decoded = jwt_decode(token)
+    
     let userInfo = {
         "userID":localStorage.getItem("userID"),
         "userFirstName":localStorage.getItem("userFirstName"),
         "userLastName":localStorage.getItem("userLastName"),
-        "userType":localStorage.getItem("userType"),
-        // "requesterID":urlParams.get("requesterID"),
-        // "requesterFirstName":urlParams.get("requesterFirstName"),
-        // "requesterLastName":urlParams.get("requesterLastName"),
-        // "userType":urlParams.get("userType"),
+        "userType":decoded.sub,
     }
-    const [Authenticated, setAuth] = useState(localStorage.getItem("Authenticated"))
-    // let Authenticated = localStorage.getItem("Authenticated")
-    console.log("Authenticated = "+Authenticated)
-    // localStorage.setItem("requesterFirstName", urlParams.get("requesterFirstName"))
-    // console.log("inside Home.js, testing localStorage")
-    // console.log(localStorage.getItem("requesterFirstName"))
+    
 
 
     function time() {

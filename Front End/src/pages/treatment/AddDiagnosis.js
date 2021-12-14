@@ -86,7 +86,7 @@ function AddDiagnosis() {
       
     <div className="main-container d-flex flex-column flex-grow-1">
         
-    { allowView ? 
+    
 
     <div className="d-flex w-100 h-100">
         <div className="sidebar">
@@ -99,23 +99,25 @@ function AddDiagnosis() {
         <div className= "d-flex flex-column w-100">
            
             <AnimalNavbar />
-            
-            <h1 className="ms-5 mt-5">Add Diagnosis</h1>
+            { allowView ? 
+            <div>
+                <h1 className="ms-5 mt-5">Add Diagnosis</h1>
 
-            <div class="custom-field mt-4 mb-3 mx-5">
-                <label className="mb-2"> Diagnosis: </label> <br/>
-                <textarea className="form-control w-25" id="diagnosisInput" onChange={getDiagnosis} cols='100' rows='1' placeholder="Please enter the diagnosis.">
-                </textarea>
-            </div>
+                <div class="custom-field mt-4 mb-3 mx-5">
+                    <label className="mb-2"> Diagnosis: </label> <br/>
+                    <textarea className="form-control w-25" id="diagnosisInput" onChange={getDiagnosis} cols='100' rows='1' placeholder="Please enter the diagnosis.">
+                    </textarea>
+                </div>
 
-            <div class="custom-field mt-4 mb-3 mx-5">
-                <label className="mb-2"> Description: </label> <br/>
-                <textarea className="form-control w-50" id="descriptionInput" onChange={getDescription} cols='100' rows='5' placeholder="Please enter the description of the diagnosis.">
-                </textarea>
-                <button className="mt-4 btn btn-secondary" onClick={clickButton}>Submit</button>
-            </div>
-            </div>
+                <div class="custom-field mt-4 mb-3 mx-5">
+                    <label className="mb-2"> Description: </label> <br/>
+                    <textarea className="form-control w-50" id="descriptionInput" onChange={getDescription} cols='100' rows='5' placeholder="Please enter the description of the diagnosis.">
+                    </textarea>
+                    <button className="mt-4 btn btn-secondary" onClick={clickButton}>Submit</button>
+                </div>
             </div>: <a href="/health-records">Only Animal Health Technicians may add diagnoses. Click here to return to health records.</a>}
+            </div>
+            </div>
         </div>
 
 

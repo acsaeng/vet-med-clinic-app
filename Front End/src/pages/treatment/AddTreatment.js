@@ -81,7 +81,7 @@ function AddTreatment() {
       
 
     <div className="d-flex w-100 h-100">
-        { allowView ? 
+        
 
     <div className="main-container d-flex flex-column flex-grow-1">
     <div className="d-flex w-100 h-100">
@@ -93,27 +93,31 @@ function AddTreatment() {
         </div>
         <div className= "d-flex flex-column w-100">
             <AnimalNavbar />
-            <h1 className="ms-5 mt-5">Add Treatment</h1>
+            { allowView ? 
+            <div>
+                <h1 className="ms-5 mt-5">Add Treatment</h1>
 
-            <div class="custom-field mt-4 mb-3 mx-5">
-                <label className="mb-2"> Treatment Protocol: </label> <br/>
-                <textarea className="form-control w-25" id="treatmentInput" onChange={getTreatment} cols='100' rows='1' placeholder="Please enter the treatment protocol.">
-                </textarea>
-            </div>
+                <div class="custom-field mt-4 mb-3 mx-5">
+                    <label className="mb-2"> Treatment Protocol: </label> <br/>
+                    <textarea className="form-control w-25" id="treatmentInput" onChange={getTreatment} cols='100' rows='1' placeholder="Please enter the treatment protocol.">
+                    </textarea>
+                </div>
 
-            <div class="custom-field mt-4 mb-3 mx-5">
-                <label className="mb-2"> Description: </label> <br/>
-                <textarea className="form-control w-50" id="descriptionInput" onChange={getDescription} cols='100' rows='5' placeholder="Please enter the description of the treatment protocol.">
-                </textarea>
-            </div>
-            <div class="button mx-5">
-                <button class="mt-4 btn btn-secondary" onClick={clickButton}>Submit</button>
-            </div>
-            </div>
-            </div>
-            </div>: <a href="/health-records">Only Animal Health Technicians may add treatments. Click here to return to health records.</a>}
+                <div class="custom-field mt-4 mb-3 mx-5">
+                    <label className="mb-2"> Description: </label> <br/>
+                    <textarea className="form-control w-50" id="descriptionInput" onChange={getDescription} cols='100' rows='5' placeholder="Please enter the description of the treatment protocol.">
+                    </textarea>
+                </div>
+                <div class="button mx-5">
+                    <button class="mt-4 btn btn-secondary" onClick={clickButton}>Submit</button>
+                </div>
+            </div>: 
+            <a href="/health-records">Only Animal Care Attendants may request treatments. Click to return to health records.</a>}
         </div>
-        
+        </div>
+
+        </div>
+    </div>    
     );
 }
 

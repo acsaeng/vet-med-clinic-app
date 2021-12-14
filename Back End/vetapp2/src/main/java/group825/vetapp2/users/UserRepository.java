@@ -228,4 +228,47 @@ public class UserRepository {
 		return false;
 	}
 
+	
+	
+	/**
+	 * Get the emails of the selected staff members
+	 * @param selectedStaff = ArrayList of Integers for the id of each of the selected staff
+	 * @return ArrayList<String> of the user emails
+	 */
+	public ArrayList<String> getEmails(ArrayList<Integer> selectedStaff){
+		ArrayList<String> emailAddresses = new ArrayList<String>();
+		try {
+			String query = "SELECT Email FROM USERS WHERE ";
+			for (Integer userID: selectedStaff) {
+				query = query + "User_ID=? OR ";
+			}
+			query = query.substring(0, query.length()-3);
+//			System.out.println("query = "+query);
+			
+			// Create and execute a query to get all emails
+			PreparedStatement statement = this.dao.prepareStatement(query);
+			int index = 1;
+			for (Integer userID: selectedStaff) {
+				statement.setInt(index, userID);
+				index++;
+			}
+
+			ResultSet results = statement.executeQuery();
+			
+			while (results.next()) {
+				emailAddresses.add(results.getString("Email"));
+			}		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error while getting the email addresses from the database");
+		}
+		
+//		System.out.println("Emails = "+emailAddresses);
+		return emailAddresses;
+		
+		
+	}
+	
+	
+	
 }

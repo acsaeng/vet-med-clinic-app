@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -59,10 +60,7 @@ public class UserService {
     		    Algorithm algorithm = Algorithm.HMAC256("secret");
     		    token = JWT.create()
     		    		.withSubject(userType)
-//    		    		.withExpiresAt(new Date(System.currentTimeMillis() + numMins*60*1000))
     		    		.sign(algorithm);
-    		    
-//    		    System.out.println("Token created = "+token);
     		} catch (JWTCreationException exception){
     			System.out.println("Invalid Signing configuration / Couldn't convert Claims.");
     		}
@@ -123,6 +121,33 @@ public class UserService {
      */
     public boolean blockUser(int userID) {
         return this.repo.blockUser(userID);
+    }
+    
+    
+    /**
+     * Sends an email to all the selected users
+     * @param userID user's ID number
+     */
+    public int sendEmail(ArrayList<Integer> selectedStaff, String message, String subjectType, String currUserID) {
+    	ArrayList<String> technicianEmails = new ArrayList<String>();
+    	if (selectedStaff.size()>0) {
+    		technicianEmails = this.repo.getEmails(selectedStaff);
+    	}
+    	
+    	int userID = Integer.valueOf(currUserID);
+    	User sender = this.repo.selectUserById(userID);
+    	
+    	EmailModel systemEmail = EmailModel.getSingleInstance();
+
+    	String emailSubject = subjectType;
+    	
+    	message = message +"\n\n"+"Email was created by User #" + sender.getId()+" "+sender.getFirstName() + ", "+sender.getLastName()
+    			+" ("+sender.getEmail()+")\n"+ "Please use the UofC vetapp to follow up.";
+    	    	
+    	systemEmail.sendEmail(technicianEmails, emailSubject, message);
+    	
+        			
+        return 1;
     }
 
 }

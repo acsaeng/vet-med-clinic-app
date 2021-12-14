@@ -36,7 +36,7 @@ function Comments() {
     const lastName = localStorage.getItem("userLastName")
     // const activeUserType = localStorage.getItem("userType")
     let token = localStorage.getItem("token")
-    let decoded = jwt_decode(token, { header: true });
+    let decoded = jwt_decode(token);
     const [activeUserType, setType] = useState(decoded.sub)
     
 
@@ -156,7 +156,7 @@ function Comments() {
         
         <div className="d-flex flex-column flex-grow-1 align-items-left mx-5 ps-5 w-75">
             <div class="ex1">
-            <CommentsList animalID={animalID} toggleStudent={showStudents} />
+            <CommentsList animalID={animalID} toggleStudent={showStudents} usertype={activeUserType} />
               {/* {showStudents === true ?
                 <CommentsList animalID={animalID} toggleStudent={showStudents} />:
                 null} */}

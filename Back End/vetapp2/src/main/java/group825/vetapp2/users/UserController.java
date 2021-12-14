@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Controller that handles User requests
@@ -114,4 +115,26 @@ public class UserController {
     public boolean blockUser(@PathVariable("userID") int userID) {
         return this.service.blockUser(userID);
     }
+    
+    
+    /**
+     * 'POST' request that sends emails to the selected users passed in
+     * @param selectedStaff = ArrayList of health technician emails to send to 
+     * @param message = message that the user entered
+     * @param subjectType = string identifying what the subject of the email
+     * @param currUserID = id of the user who entered the message
+     */
+    @PostMapping(path = "/user/send-email")
+    public void sendEmail(@RequestParam("selectedStaff") ArrayList<Integer> selectedStaff,
+    		@RequestParam("message") String message, @RequestParam("subjectType") String subjectType,
+    		@RequestParam("currUserID") String currUserID) {
+    	
+//        System.out.println("Inside the send-email");
+//        System.out.println("selected staff = "+selectedStaff);
+//        System.out.println("message = "+message);
+
+        this.service.sendEmail(selectedStaff, message, subjectType, currUserID);
+    }
+    
+    
 }

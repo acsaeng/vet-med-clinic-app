@@ -23,6 +23,7 @@ const Login = () => {
                 res=>{try{
                     console.log(res.data)
                     localStorage.setItem("token", res.data)
+                    window.location.reload()
                     }catch{
                         window.location.reload()
                     }
@@ -52,7 +53,7 @@ const Login = () => {
                     localStorage.setItem("userID", user.id)
                     localStorage.setItem("userFirstName", user.firstName)
                     localStorage.setItem("userLastName", user.lastName)
-                    localStorage.setItem("userType", user.userType)
+                    // localStorage.setItem("userType", user.userType)
                     localStorage.setItem("email", user.email)
                     localStorage.setItem("phoneNum", user.phoneNum)
                     // localStorage.setItem("Authenticated", "isAuthenticated")

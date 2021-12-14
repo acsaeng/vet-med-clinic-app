@@ -8,7 +8,7 @@ export default class RemindersList extends Component{
     state = {
         reminders: [],
         animalID : this.props.animalID,
-        currUserType: localStorage.getItem("userType"),
+        currUserType: this.props.usertype,
     };
 
     componentDidMount(){
@@ -45,7 +45,7 @@ export default class RemindersList extends Component{
                         <div>
                             {reminder.firstName} {reminder.lastName}, {reminder.userType}
                         </div>
-                        { localStorage.getItem("userType") !== "Student" ?
+                        { this.state.currUserType !== "Student" ?
                             <div class="d-flex mx-5 ">
                                 <button class="btn btn-warning" reminderid={reminder.reminderID} onClick={(e) => this.deleteReminder(e)} >Delete</button>
                             </div>:null

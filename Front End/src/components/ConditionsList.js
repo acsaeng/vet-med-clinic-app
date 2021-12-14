@@ -52,13 +52,15 @@ export default class ConditionsList extends Component{
     render(){
         return(
             <div className="overflow-auto">
-                <div class="card text-black bg-basic mx-5 my-3"  style={{width: "30rem"}}>
+                {/* <div class="card text-black bg-basic mx-5 my-3"  style={{width: "30rem"}}> */}
                     {(this.state.diagnosisList.length === 0) ? 
-                        <div class="card-header" >
-                            No ongoing conditions.
+                        <div class="card text-black bg-basic mx-5 my-3"  style={{width: "30rem"}}>
+                            <div class="card-header" >
+                                No ongoing conditions.
+                            </div>
                         </div>
-                        :<div>{this.state.diagnosisList.map(diagnosis => 
-                            <div>
+                        :this.state.diagnosisList.map(diagnosis => 
+                            <div class="card text-black bg-basic mx-5 my-3"  style={{width: "30rem"}}>
                                 <div class="card-header" >
                                     {this.cardLink(diagnosis)}
                                 </div>
@@ -70,10 +72,10 @@ export default class ConditionsList extends Component{
                                     <button className="btn btn-success mx-2 my-2" onClick={ () => this.clickCompleteButton(diagnosis) }>Mark as Complete</button> 
                                 </div>
                             </div>)
-                        }</div>
+                        
                     }
                 </div>
-            </div>
+           
         )
     }
 }

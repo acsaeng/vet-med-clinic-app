@@ -19,14 +19,14 @@ function AddDiagnosis() {
     const userID = localStorage.getItem("userID")
 
     // axios.get('http://localhost:8080/app/animal/'+animalID).then(
-    axios.get('http://localhost:8080/app/animal/'+102).then(
-        res => {
-            localStorage.setItem("animalID", res.data[0].animalID)
-            localStorage.setItem("animalName", res.data[0].animalName)
-            localStorage.setItem("animalSpecies", res.data[0].animalSpecies)
-            localStorage.setItem("animalStatus", res.data[0].animalStatus)
-        }
-    )
+    // axios.get('http://localhost:8080/app/animal/'+102).then(
+    //     res => {
+    //         localStorage.setItem("animalID", res.data[0].animalID)
+    //         localStorage.setItem("animalName", res.data[0].animalName)
+    //         localStorage.setItem("animalSpecies", res.data[0].animalSpecies)
+    //         localStorage.setItem("animalStatus", res.data[0].animalStatus)
+    //     }
+    // )
 
     function getDiagnosis(diagnosis){
         setDiagnosis(diagnosis.target.value)
@@ -81,9 +81,9 @@ function AddDiagnosis() {
             <Sidebar />
         </div>
         <div className= "d-flex flex-column w-100">
-            <div>
-                <AnimalNavbar />
-            </div>
+           
+            <AnimalNavbar />
+            
             <h1 className="ms-5 mt-5">Add Diagnosis</h1>
 
             <div class="custom-field mt-4 mb-3 mx-5">

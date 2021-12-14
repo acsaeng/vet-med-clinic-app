@@ -11,16 +11,22 @@ import {useLocation} from 'react-router-dom'
 function ManageDiagnosis() {
     // const Authenticated = useState(localStorage.getItem("Authenticated"))
     // window.location.reload()
+
+    const urlParams = new URLSearchParams(useLocation().search)
+    const diagnosisID = urlParams.get("diagnosisID")
+
+    // window.location.reload()
+
     const [diagnosis, setDiagnosis] = useState(localStorage.getItem("diagnosis"))
     const [description, setDescription] = useState(localStorage.getItem("description"))
     
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
-    const diagnosisID = localStorage.getItem("diagnosisID")
+    // const diagnosisID = localStorage.getItem("diagnosisID")
     const diagnosisStatus = localStorage.getItem("diagnosisStatus")
 
-    // axios.get('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID).then(
-    axios.get('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+4).then(
+    axios.get('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID).then(
+    // axios.get('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+4).then(
         res => {
             localStorage.setItem("diagnosisID", res.data[0].diagnosisID)
             localStorage.setItem("diagnosis", res.data[0].diagnosis)

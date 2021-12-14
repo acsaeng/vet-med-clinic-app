@@ -17,14 +17,14 @@ function AddTreatment() {
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
 
-    axios.get('http://localhost:8080/app/animal/'+animalID).then(
-        res => {
-            localStorage.setItem("animalID", res.data[0].animalID)
-            localStorage.setItem("animalName", res.data[0].animalName)
-            localStorage.setItem("animalSpecies", res.data[0].animalSpecies)
-            localStorage.setItem("animalStatus", res.data[0].animalStatus)
-        }
-    )
+    // axios.get('http://localhost:8080/app/animal/'+animalID).then(
+    //     res => {
+    //         localStorage.setItem("animalID", res.data[0].animalID)
+    //         localStorage.setItem("animalName", res.data[0].animalName)
+    //         localStorage.setItem("animalSpecies", res.data[0].animalSpecies)
+    //         localStorage.setItem("animalStatus", res.data[0].animalStatus)
+    //     }
+    // )
 
     function getTreatment(treatment){
         setTreatment(treatment.target.value)
@@ -50,15 +50,13 @@ function AddTreatment() {
         var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
         var treatmentDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay + " 00:00:00"
 
-        //axios.post('http://localhost:8080/app/treatment/protocol/animalID=' + animalID, {
-        axios.post('http://localhost:8080/app/treatment/protocol/animalID=' + 102, {
+        axios.post('http://localhost:8080/app/treatment/protocol/animalID=' + animalID, {
             treatmentID: null, //dummy, backend assigns a new treamentID
             treatmentDate: treatmentDate,
             treatment: treatment,
             description: description,
             treatmentStatus: treatmentStatus,
-            animalID: 102,
-            // animalID: parseInt(animalID),
+            animalID: parseInt(animalID),
             userID: parseInt(userID)
         }).then(
           res => {
@@ -118,9 +116,7 @@ function AddTreatment() {
             <Sidebar />
         </div>
         <div className= "d-flex flex-column w-100">
-            <div>
-                <AnimalNavbar />
-            </div>
+            <AnimalNavbar />
             <h1 className="ms-5 mt-5">Add Treatment</h1>
 
             <div class="custom-field mt-4 mb-3 mx-5">

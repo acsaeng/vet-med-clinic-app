@@ -63,7 +63,7 @@ function App() {
                 <Route path='/add-treatment' element={<AddTreatment/>}/> 
                 <Route path='/update-treatment' element={<UpdateTreatment/>}/> 
                 <Route path='/add-diagnosis' element={<AddDiagnosis/>}/> 
-                <Route path='/update-diagnosis' element={<UpdateDiagnosis/>}/> 
+                <Route path='/update-diagnosis/single' element={<UpdateDiagnosis/>}/> 
             </Routes>
         </Router>
     );

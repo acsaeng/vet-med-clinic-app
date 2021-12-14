@@ -4,14 +4,11 @@ import AnimalNavbar from '../../components/AnimalNavbar';
 
 // Requires npm install axios --save
 import axios from 'axios';
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 // import {useLocation} from 'react-router-dom'
 // import {useNavigate} from 'react-router-dom'
 
-
-import AlertDiagnosisList from '../../components/AlertDiagnosisList';
-import AlertTreatmentList from '../../components/AlertTreatmentList';
-import AlertStaffList from '../../components/AlertStaffList';
+import StaffList from '../../components/StaffList';
 
 
 function SendAlert() {
@@ -23,15 +20,6 @@ function SendAlert() {
     const userFirstName = localStorage.getItem("userFirstName")
     const userLastName = localStorage.getItem("userLastName")
 
-    axios.get('http://localhost:8080/app/animal/'+animalID).then(
-        res => {
-            localStorage.setItem("animalID", res.data[0].animalID)
-            localStorage.setItem("animalName", res.data[0].animalName)
-            localStorage.setItem("animalSpecies", res.data[0].animalSpecies)
-            localStorage.setItem("animalStatus", res.data[0].animalStatus)
-            // window.location.reload()
-        }
-    )
         
     function getMessage(message){
         setMessage(message.target.value)
@@ -50,20 +38,20 @@ function SendAlert() {
 
         event.preventDefault();
 
-        axios.post('http://localhost:8080/app/request/animal/', {
-            animalID: parseInt(animalID),
-            requestID: 1, //dummy, backend assigns a new requestID
-            userID: parseInt(userID),
-            message: message,
-            userFirstName: userFirstName,
-            userLastName: userLastName
+        // axios.post('http://localhost:8080/app/request/animal/', {
+        //     animalID: parseInt(animalID),
+        //     requestID: 1, //dummy, backend assigns a new requestID
+        //     userID: parseInt(userID),
+        //     message: message,
+        //     userFirstName: userFirstName,
+        //     userLastName: userLastName
             
-        }).then(
-          res => {
-              console.log(res);
-          }
-        )
-        // window.location.reload()
+        // }).then(
+        //   res => {
+        //       console.log(res);
+        //   }
+        // )
+        window.location.reload()
       }
 
 
@@ -78,30 +66,15 @@ function SendAlert() {
             <Sidebar />
         </div>
         <div className= "d-flex flex-column w-100">
-            <div>
-                <AnimalNavbar />
-            </div>
+            <AnimalNavbar />
             <h1 className="ms-5 mt-5 mb-5">Send Alert</h1>
 
             <div className="d-flex mx-5">
-                        <div className="align-items-left mx-5 mb-">
-                            <h5>Diagnosis List:</h5>
-                            <div className="align-items-left mx-1 mt-3">
-                                <AlertDiagnosisList/>
-                            </div>
-                        </div>
 
-                        <div className="align-items-left mx-5">
-                            <h5>Treatment List:</h5>
-                            <div className="align-items-left mx-1 mt-3">
-                                <AlertTreatmentList/>
-                            </div>
-                        </div>
-
-                        <div className="align-items-left mx-5">
+                        <div className="align-items-left">
                             <h5>Health Technicians:</h5>
                             <div className="align-items-left mx-1 mt-3"></div>
-                                <AlertStaffList/>
+                                <StaffList/>
                         </div>
                     </div> 
 

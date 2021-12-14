@@ -11,15 +11,10 @@ import ConditionsList from '../../components/ConditionsList';
 import TreatmentsList from '../../components/TreatmentsList';
 
 function HealthRecords() {
-    const urlParams = new URLSearchParams(useLocation().search);
-    const animalID = urlParams.get("animalID");
-    let navigate = useNavigate();
-    // const authorID = urlParams.get("authorID")
-    // const firstName = urlParams.get("firstName").replace("%20"," ")
-    // const lastName = urlParams.get("lastName").replace("%20"," ")
-    // const activeUserType = urlParams.get("userType").replace("%20"," ")
 
-    // const animalID = localStorage.getItem("animalID")
+    let navigate = useNavigate();
+
+    const animalID = localStorage.getItem("animalID")
     const authorID = localStorage.getItem("userID")
     const firstName = localStorage.getItem("userFirstName")
     const lastName = localStorage.getItem("userLastName")
@@ -62,10 +57,8 @@ return (
                 <Sidebar />
             </div>
             <div className= "d-flex flex-column w-100">
-                <div>
-                    <AnimalNavbar />
-                </div>
-                <h1 className="mt-5 mb-4 ms-5">Health Records</h1>
+                <AnimalNavbar />
+                <h1 className="d-flex mt-5 mb-4 ms-5">Health Records</h1>
                 <div className="d-flex mx-3">  
                     <div className= "d-flex flex-column w-80 mx-5">
                         {/* LEFT HAND SIDE */}

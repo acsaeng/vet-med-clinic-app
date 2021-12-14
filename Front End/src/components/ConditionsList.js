@@ -6,48 +6,55 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default class ConditionssList extends Component{
     
     state = {
-        comments: [],
-        // animalID: 101,
-        animalID : this.props.animalID,
-        toggleStudent: this.props.toggleStudent
+        diagnosisList: [],
+        animalID : localStorage.getItem("animalID"),
+        currUserType: localStorage.getItem("userType"),
+        currUserID: localStorage.getItem("userID")
     };
 
-    // componentDidMount(){
-    //     console.log(this.state.toggleStudent)
-    //     axios.get('http://localhost:8080/app/comments/animal/'+this.state.animalID).then(
-    //         res => {
-    //             console.log(res);
-    //             this.setState({comments: res.data})
-    //         }
-    //     )
-    // }
+    componentDidMount(){
+        axios.get('http://localhost:8080/app/treatment/diagnosis/animalID='+this.state.animalID).then(
+            res => {
+                this.setState({diagnosisList: res.data})
+            }
+        )
+    }
+
+    cardLink2(diagnosis){
+        // var authorID = diagnosis.authorID.toString()
+        var diagnosisID = diagnosis.diagnosisID.toString()
+        if (this.state.currUserType === "Animal Health Technician"){
+            return <a href={"/update-diagnosis/single?diagnosisID="+diagnosisID}>
+                {diagnosis.diagnosis}
+                </a>
+        }
+        // else{
+        //     return <a href="#">
+        //         {diagnosis.diagnosis}
+        //         </a>
+        // }
+    }
+
     render(){
         return(
             <div className="overflow-auto">
-            {/* {this.state.comments.map(comment =>  */}
                 
                 <div class="card text-white bg-warning mx-5 my-3"  style={{width: "35rem"}}>
-                    <div class="card-header" >
-                        Diagnosis 1
-                        {/* {comment.firstName} {comment.lastName}, {comment.userType} */}
-                    </div>
-                    <div class="card-body"  >
-                        {/* <h5 class="card-title" ></h5> */}
-                        <p class="card-text">
-                            {/* {comment.message} */}
-                            Description
-                        </p>
-                        {/* <p class="card-text">
-                            <small class="text-muted-white">{comment.timestamp}</small>
-                        </p> */}
-                    </div>
+                    {this.state.diagnosisList.map(diagnosis => 
+                        <div>
+                            <div class="card-header" >
+                                {this.cardLink2(diagnosis)}
+                            </div>
+                            
+                            <div class="card-body"  >
+                                {diagnosis.description}
+                            </div>
+                        </div>
+                    )
+                    }
                 </div>
-                {/* ) } */}
             </div>
             
         )
-
     }
-
-
 }

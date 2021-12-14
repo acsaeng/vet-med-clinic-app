@@ -7,54 +7,18 @@ import axios from 'axios';
 import React, {useState} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
 
+import StaffList from '../../components/StaffList';
+
 function RequestTreatment() {
     const [Authenticated, setAuth] = useState(localStorage.getItem("Authenticated"))
-    // window.location.reload()
-    const [requestFor, setRequestFor] = useState(null);
+
     const [message, setMessage] = useState(null);
 
-    // const urlParams = new URLSearchParams(useLocation().search)
-    
-    const requestTreatmentID = 1 //dummy, backend assigns a new requestID
-    // const animalID = urlParams.get("animalID")
-    let animalName = ""
-    let animalSpecies = ""
-    // const animalName = urlParams.get("animalName")
-    // const animalSpecies = urlParams.get("animalSpecies")
-    // const requesterID = urlParams.get("requesterID")
-    // const requesterFirstName = urlParams.get("requesterFirstName")
-    // const requesterLastName = urlParams.get("requesterLastName")
     const animalID = localStorage.getItem("animalID")
     const requesterID = localStorage.getItem("userID")
     const requesterFirstName = localStorage.getItem("userFirstName")
     const requesterLastName = localStorage.getItem("userLastName")
     const requestStatus = "Pending"
-
-    axios.get('http://localhost:8080/app/animal/'+animalID).then(
-        res => {
-            console.log(res);
-            animalName = res.data[0].name
-            localStorage.setItem("animalName", animalName)
-            animalSpecies = res.data[0].species
-            localStorage.setItem("animalSpecies", animalSpecies)
-            localStorage.setItem("animalStatus", res.data[0].status)
-            // window.location.reload()
-        }
-    )
-    
-    function singleRefresh(event){
-        event.preventDefault();
-        window.location.reload()
-    }
-
-    let navigate = useNavigate();
-    let currLocation = useLocation();
-
-    console.log(useLocation())
-
-    function getRequestFor(requestFor){
-        setRequestFor(requestFor.target.value)
-    }
         
     function getMessage(message){
         setMessage(message.target.value)
@@ -84,8 +48,6 @@ function RequestTreatment() {
             requestStatus: requestStatus,
             requesterFirstName: requesterFirstName,
             requesterLastName: requesterLastName,
-            animalName: animalName,
-            animalSpecies: animalSpecies,
             
         }).then(
           res => {
@@ -107,22 +69,21 @@ function RequestTreatment() {
             <Sidebar />
         </div>
         <div className= "d-flex flex-column w-100">
-            <div>
-                <AnimalNavbar />
-            </div>
-            <h1 className="ms-5 mt-5">Request Treatment</h1>
+            <AnimalNavbar />
+            <h1 className="ms-5 mt-5 mb-5">Request Treatment</h1>
 
-            <div className="mt-4 ms-5">
-             <div className="d-flex">
+            <div className="ms-5">
+             <div className="d-flex mb-3">
                  <h6>This request will be sent from {requesterFirstName} {requesterLastName}. </h6> 
              </div>
             
-             <div className="mt-3 py-2">
-                <label className="mb-2">Animal Health Technician Requested:</label> <br/>
-                <textarea className="form-control w-25" id="requestForInput" onChange={getRequestFor} cols='100' rows='1' 
-                    placeholder="Please enter an animal health technician...">
-                </textarea>
-            </div> 
+             <div className="d-flex align-items-left">
+                <div>
+                <h5>Health Technicians:</h5>
+                <div className="align-items-left mx-1 mt-3"></div>
+                    <StaffList/>
+                </div>
+            </div>
 
             <div class="custom-field mt-4 mb-3">
                 <label className="mb-2"> Message: </label> <br/>

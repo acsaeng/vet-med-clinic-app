@@ -73,11 +73,17 @@ public class RequestRepository {
 	 * @return all requests
 	 */
 	public ArrayList<Request> selectAllRequest() throws Exception{
+		String query = "SELECT R2.Animal_ID, R2.Request_ID, R2.Requester_ID, R2.Request_Date, R2.Checkout_Date, R2.Return_Date, "
+				+ "R2.Reason, R2.Request_Status, U.First_Name, U.Last_Name,"
+				+ "A.Animal_Name, A.Species  FROM REQUEST AS R2, Users as U, ANIMAL AS A "
+				+ " WHERE R2.Requester_ID = U.User_ID AND R2.Animal_ID=A.Animal_ID "
+				+" ORDER BY R2.Request_ID ASC"+" ;";
+		
 		ArrayList<Request> requests = new ArrayList<Request>();
 
         try {
             // Execute SQL query
-            PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM REQUEST;");
+            PreparedStatement statement = this.dao.prepareStatement(query);
             results = statement.executeQuery();
 
             // Process the results set and add entries into treatment
@@ -85,7 +91,9 @@ public class RequestRepository {
                 requests.add(new Request(results.getInt("Animal_ID"), results.getInt("Request_ID"), 
                 		results.getInt("Requester_ID"), results.getString("Request_Date"), 
                 		results.getString("Checkout_Date"), results.getString("Return_Date"), 
-                		results.getString("Reason"), results.getString("Request_Status")));
+                		results.getString("Reason"), results.getString("Request_Status"),
+                		results.getString("First_Name"), results.getString("Last_Name"), 
+                		results.getString("Animal_Name"), results.getString("Species")));
             }
 
             statement.close();
@@ -105,10 +113,15 @@ public class RequestRepository {
 	 */
 	public ArrayList<Request> selectRequestsById(int userID) throws Exception {
 		ArrayList<Request> requests = new ArrayList<Request>();
-
+		String query = "SELECT R2.Animal_ID, R2.Request_ID, R2.Requester_ID, R2.Request_Date, R2.Checkout_Date, R2.Return_Date, "
+				+ "R2.Reason, R2.Request_Status, U.First_Name, U.Last_Name,"
+				+ "A.Animal_Name, A.Species  FROM REQUEST AS R2, Users as U, ANIMAL AS A "
+				+ " WHERE R2.Requester_ID = U.User_ID AND R2.Animal_ID=A.Animal_ID AND Requester_ID = ?"
+				+" ORDER BY R2.Request_ID ASC"+" ;";
         try {
             // Execute SQL query
-            PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM REQUEST WHERE Requester_ID = ?;");
+//            PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM REQUEST WHERE Requester_ID = ?;");
+            PreparedStatement statement = this.dao.prepareStatement(query);
             statement.setInt(1, userID);
             results = statement.executeQuery();
 
@@ -117,7 +130,9 @@ public class RequestRepository {
                 requests.add(new Request(results.getInt("Animal_ID"), results.getInt("Request_ID"), 
                 		results.getInt("Requester_ID"), results.getString("Request_Date"), 
                 		results.getString("Checkout_Date"), results.getString("Return_Date"), 
-                		results.getString("Reason"), results.getString("Request_Status")));
+                		results.getString("Reason"), results.getString("Request_Status"),
+                		results.getString("First_Name"), results.getString("Last_Name"), 
+                		results.getString("Animal_Name"), results.getString("Species")));
             }
 
             statement.close();

@@ -45,48 +45,19 @@ export default class SearchAnimals extends Component{
         this.getAvailableAnimals()
     }
 
-    // storeSelectedAnimalInfo(animal){
-    //     localStorage.setItem("animalID", animal.id)
-    //     localStorage.setItem("animalName", animal.name)
-    //     localStorage.setItem("animalSpecies", animal.species)
-    //     localStorage.setItem("animalBreed", animal.breed)
-    //     localStorage.setItem("animalSex", animal.sex)
-    //     localStorage.setItem("animalWeight", animal.weight)
-    //     // localStorage.setItem("animalWeight", animal.weight)
-    //     // localStorage.setItem("animalWeight", animal.weight)
-    //     // localStorage.setItem("animalWeight", animal.weight)
-    //     // localStorage.setItem("animalWeight", animal.weight)
-    //     // localStorage.setItem("animalWeight", animal.weight)
-    //     // localStorage.setItem("animalWeight", animal.weight)
-    //     // localStorage.setItem("animalWeight", animal.weight)
-
-    // }
-
-    // clickToRedirect(){
-    //     let path = "/request-animal";
-    //     navigate("/request-animal")
-    // }
-
-    
-
 
     render(){
         return(
-            // <div>placeholder</div>
+
             <div className="overflow-auto">
                 {this.state.allAvailableAnimals.map(animal =>
-                    // <a href = {"/request-animal?animalID="+animal.animalID} >
                     <a href = {"/animal-info?animalID="+animal.animalID} key={animal.animalID}>
-                    {/* // <a href = "/request-animal" onClick={this.storeSelectedAnimalInfo(animal)}>  */}
                     <div className="card text-black bg-light my-3" key={animal.animalID} style={{width: "45rem"}}>
                         
                         <div className="card-header" >
-                            {/* <h6> Request {request.requestID} by {request.requesterFirstName} {request.requesterLastName} </h6>  */}
                             <h6> Animal #{animal.animalID}: {animal.name}, {animal.breed} {animal.species} </h6>
-                            {/* <Link to="/request-animal"/> */}
                         </div>
                         <div className="card-body"  >
-
                         </div>
                         
                     </div>

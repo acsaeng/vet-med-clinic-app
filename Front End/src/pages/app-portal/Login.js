@@ -8,12 +8,35 @@ import ucvmLogo from "../../images/ucvm-logo-lg.png";
 const Login = () => {
     const [usernameEntered, setUsername] = useState("");
     const [passwordEntered, setPassword] = useState("");
-    localStorage.setItem("Authenticated", false)
+    window.localStorage.clear();
+    // localStorage.setItem("Authenticated", false)
     
     let navigate = useNavigate();
 
     function handleSubmit(event) {
         event.preventDefault();
+
+        axios.get('http://localhost:8080/app/authenticate/', {params: { 
+            userName: usernameEntered,
+            password: passwordEntered
+            }}).then(
+                res=>{try{
+                    console.log(res.data)
+                    localStorage.setItem("token", res.data)
+                    }catch{
+                        window.location.reload()
+                    }
+                }
+            )
+
+        axios.interceptors.request.use(
+                config =>{
+                    config.headers.authorization = `Bearer ${localStorage.getItem("token")}`
+                    return config;
+                }
+            )
+
+
 
         axios.get('http://localhost:8080/app/login/', {params: { 
             userName: usernameEntered,
@@ -22,24 +45,26 @@ const Login = () => {
               res => {
                   console.log(res.data);
                 let user = res.data
-                // console.log(user[0].firstName)
-                if (user[0].firstName === null){ //if null
+                // console.log(user.firstName)
+                if (user.firstName === ""){ //if null
                     alert("Invalid username and/or password");
                 } else{
-                    localStorage.setItem("userID", user[0].id)
-                    localStorage.setItem("userFirstName", user[0].firstName)
-                    localStorage.setItem("userLastName", user[0].lastName)
-                    localStorage.setItem("userType", user[0].userType)
-                    localStorage.setItem("email", user[0].email)
-                    localStorage.setItem("phoneNum", user[0].phoneNum)
-                    localStorage.setItem("Authenticated", "isAuthenticated")
-                    // navigate(`/home?requesterID=${user[0].id}&requesterFirstName=${user[0].firstName}&requesterLastName=${user[0].lastName}&userType=${user[0].userType.replace(" ", "%20")}`)
+                    localStorage.setItem("userID", user.id)
+                    localStorage.setItem("userFirstName", user.firstName)
+                    localStorage.setItem("userLastName", user.lastName)
+                    localStorage.setItem("userType", user.userType)
+                    localStorage.setItem("email", user.email)
+                    localStorage.setItem("phoneNum", user.phoneNum)
+                    // localStorage.setItem("Authenticated", "isAuthenticated")
+                    // navigate(`/home?requesterID=${user.id}&requesterFirstName=${user.firstName}&requesterLastName=${user.lastName}&userType=${user.userType.replace(" ", "%20")}`)
+                    navigate(`/home`)
+                    window.location.reload()
                 }
             })
+        
+        
 
-        navigate(`/home`)
-
-        // window.location.reload()
+        
     }
 
 

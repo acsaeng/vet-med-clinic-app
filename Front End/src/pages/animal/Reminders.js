@@ -8,11 +8,15 @@ import '../../styling/Comments.css';
 import RemindersList from '../../components/RemindersList'
 import React, {useState} from 'react'
 import {useLocation, Link} from 'react-router-dom'
-
+import jwt_decode from "jwt-decode";
 
 function Reminders() {
     const animalID = localStorage.getItem("animalID")
-    const activeUserType = localStorage.getItem("userType")
+    // const activeUserType = localStorage.getItem("userType")
+
+    let token = localStorage.getItem("token")
+    let decoded = jwt_decode(token);
+    const [activeUserType, setType] = useState(decoded.sub)
 
   return (
     <div className="main-container d-flex flex-column flex-grow-1">

@@ -5,6 +5,8 @@ import { FaHome, FaDog, FaHeart, FaUser } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
 import { AiFillPlusCircle, AiFillFolder } from "react-icons/ai";
 import ucvmLogo from "../images/ucvm-logo-sm.png";
+import jwt_decode from "jwt-decode";
+import { useState } from 'react';
 
 function Sidebar() {
   const headerStyle = {
@@ -15,6 +17,30 @@ function Sidebar() {
     overflow: "hidden",
     whiteSpace: "noWrap"
   };
+
+  let type = ""
+  try{
+    let token = localStorage.getItem("token")
+    let decoded = jwt_decode(token);
+    type = decoded.sub
+  }catch{
+      window.location.reload()
+      let token = localStorage.getItem("token")
+      let decoded = jwt_decode(token);
+      type = decoded.sub
+  }
+  const [userType, setType] = useState(type)
+  
+
+  function manageUser(){
+    if (userType === "Admin"){
+        return <MenuItem icon={<FaUser />}>
+                Manage Users
+                <Link to="/add-user" />
+            </MenuItem>
+    }
+
+  }
 
   return (
     <ProSidebar>
@@ -36,9 +62,14 @@ function Sidebar() {
                 Manage Animals
                 <Link to="/manage-animals" />
             </MenuItem>
-            <MenuItem icon={<FaUser />}>
+            {manageUser()}
+            {/* <MenuItem icon={<FaUser />}>
                 Manage Users
                 <Link to="/add-user" />
+            </MenuItem> */}
+            <MenuItem icon={<FaDog />}>
+                View Requests
+                <Link to="/view-requests" />
             </MenuItem>
             <MenuItem icon={<IoLogOut />}>
                 Sign Out

@@ -17,8 +17,8 @@ function ManageAnimal() {
         console.log("--first visit to page will have no search param")
     }
     const [searchQuery, setSearchQuery] = useState(urlQuery);
-    const [Authenticated, setAuth] = useState(localStorage.getItem("Authenticated"))
-    const [userType, setType] = useState(localStorage.getItem("userType"))
+    // const [Authenticated, setAuth] = useState(localStorage.getItem("Authenticated"))
+    // const [userType, setType] = useState(localStorage.getItem("userType"))
 
     function reloadSearches(e){
         e.preventDefault();

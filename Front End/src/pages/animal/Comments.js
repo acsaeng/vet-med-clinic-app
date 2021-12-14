@@ -8,6 +8,8 @@ import CommentsList from '../../components/CommentsList'
 import React, {useState} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
 
+import jwt_decode from "jwt-decode";
+
 
 //sample url: http://localhost:3000/animal-comments?animalID=101&withStudents=true
 //this link works
@@ -32,7 +34,10 @@ function Comments() {
     const authorID = localStorage.getItem("userID")
     const firstName = localStorage.getItem("userFirstName")
     const lastName = localStorage.getItem("userLastName")
-    const activeUserType = localStorage.getItem("userType")
+    // const activeUserType = localStorage.getItem("userType")
+    let token = localStorage.getItem("token")
+    let decoded = jwt_decode(token, { header: true });
+    const [activeUserType, setType] = useState(decoded.sub)
     
 
     

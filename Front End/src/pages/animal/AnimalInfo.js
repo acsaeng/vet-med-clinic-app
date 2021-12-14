@@ -24,14 +24,14 @@ function AnimalInfo() {
 
     const urlParams = new URLSearchParams(useLocation().search)
     
-
-    
-    if (localStorage.getItem("animalID") === null){
-        const newAnimalID = urlParams.get("animalID")
-        localStorage.setItem("animalID", newAnimalID)
+    var animalID = urlParams.get("animalID")
+    if (animalID !== null){
+        localStorage.setItem("animalID", animalID)
+    }else{
+        animalID = localStorage.getItem("animalID")
     }
-    const animalID = localStorage.getItem("animalID")
     
+
 
     function loadData() {
         if (isLoading) {
@@ -40,7 +40,9 @@ function AnimalInfo() {
                 const info = res.data;
 
                 setName(info.name);
+                localStorage.setItem("animalName", info.name)
                 setSpecies(info.species);
+                localStorage.setItem("animalSpecies", info.species)
                 setBreed(info.breed);
                 setTattoo(info.tattoo);
                 setCityTattoo(info.cityTattoo);
@@ -49,6 +51,7 @@ function AnimalInfo() {
                 setRfid(info.rfid)
                 setMicrochip(info.microchip);
                 setHealthStatus(info.healthStatus);
+                localStorage.setItem("healthStatus", info.healthStatus)
                 setAvailabilityStatus(info.availabilityStatus);
                 setColour(info.colour);
                 setAdditionalInfo(info.additionalInfo);

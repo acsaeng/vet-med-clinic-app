@@ -202,8 +202,8 @@ public class AnimalRepository {
      * @param onlyAvailableAnimals = boolean deciding whether to return all animals or only available animals
      * @return specified animal if found, null otherwise
      */
-    public ArrayList<Animal> searchAnimalByName(String name, String species, boolean onlyAvailableAnimals) throws Exception{
-    	ArrayList<Animal> foundResults = search.searchForName(name, species, onlyAvailableAnimals);
+    public ArrayList<Animal> searchAnimalByName(String name, boolean onlyAvailableAnimals) throws Exception{
+    	ArrayList<Animal> foundResults = search.searchForName(name, onlyAvailableAnimals);
     	return foundResults;
     }
 }

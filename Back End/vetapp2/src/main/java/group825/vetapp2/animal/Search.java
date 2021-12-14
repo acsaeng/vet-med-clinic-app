@@ -69,7 +69,7 @@ public class Search {
 			ResultSet results = statement.executeQuery();
 			
 			while (results.next()) {
-				this.listSpecies.add(results.getString("Species"));
+				this.listSpecies.add(results.getString("Species").toLowerCase());
 			}
 			Set uniqueSpecies = new HashSet(listSpecies);
 			listSpecies = new ArrayList(uniqueSpecies);
@@ -99,7 +99,31 @@ public class Search {
 	 * @param onlyAvailableAnimals = boolean to determine whether to only return results where the animal is available
 	 * @return
 	 */
-	public ArrayList<Animal> searchForName(String animalName, String searchSpecies, boolean onlyAvailableAnimals) { //sample: "Bobby horse" or "horse Bobby"
+	public ArrayList<Animal> searchForName(String animalName, boolean onlyAvailableAnimals) { //sample: "Bobby horse" or "horse Bobby"
+		String searchSpecies = null;
+		//check if user entered a species beside the name
+		
+		//only handle inputs of two words where one might be species type
+		if (animalName.split(" ").length <= 2) {
+			boolean breakOuter = false;
+			int idx_animalSearchName = 1;
+			for (String searchWord: animalName.split(" ")) {
+				for (String species: this.listSpecies) {
+					if (species.equals(searchWord.toLowerCase())) {
+						searchSpecies = searchWord.toLowerCase();
+						animalName = animalName.split(" ")[idx_animalSearchName];
+						breakOuter = true;
+						break;
+					}
+				}
+				idx_animalSearchName--;
+				if (breakOuter) {break;}
+			}
+		}
+		
+		
+		
+		
 		//PART ONE - EXACT NAME MATCHES --------------------------------------------------------------------------------------------
 		String extra ="";
 		if (onlyAvailableAnimals) {extra = " AND A.Availability_Status='Available'";}
@@ -131,9 +155,9 @@ public class Search {
 						results.getInt("Length_Name"), results.getString("SearchKey_Name")));
 			}
 			
-			if (exactMatches.size() > 0) {
-				return exactMatches;
-			}
+//			if (exactMatches.size() > 0) {
+//				return exactMatches;
+//			}
 			
 		}catch (Exception e) {
 			e.printStackTrace();

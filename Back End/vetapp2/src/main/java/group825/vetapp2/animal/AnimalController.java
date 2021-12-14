@@ -80,10 +80,10 @@ public class AnimalController {
      * @return List of Animal objects which have names similar to the name parameter
      */
     @GetMapping(path = "/searchAvailable")
-    public List<Animal> searchAnimalAvailable(@RequestParam(required = true) String name, @RequestParam(name = "species", required = false) String species) throws Exception{
+    public List<Animal> searchAnimalAvailable(@RequestParam(required = true) String name) throws Exception{
         if (name != null) {
             boolean onlyAvailableAnimals = true;
-            return this.service.searchAnimalByName(name, species, onlyAvailableAnimals);
+            return this.service.searchAnimalByName(name, onlyAvailableAnimals);
         }
         return null;
     }
@@ -96,9 +96,11 @@ public class AnimalController {
      * @return List<Animal> where the Animal match by animalID, similarity by name, or similarity by name and species
      */
     @GetMapping(path = "/search")
-    public List<Animal> searchAnimal(@RequestParam(required = false) String name, @RequestParam(name = "species", required = false) String species,
+    public List<Animal> searchAnimal(@RequestParam(name = "name", required = false) String name,
                                      @RequestParam(name = "animalID", required = false) String animalID) throws Exception{
-        //return list of single animal or none identified by unique animal id
+        
+    	String species = null;
+    	//return list of single animal or none identified by unique animal id
         if (animalID != null) {
             int id = Integer.valueOf(animalID);
             ArrayList<Animal> animalById = new ArrayList<Animal>();
@@ -107,7 +109,8 @@ public class AnimalController {
         }
         //return list of multiple animals based on similarity by name or by name and species
         else if (name != null) {
-            return this.service.searchAnimalByName(name, species, false);
+        	
+            return this.service.searchAnimalByName(name,  false);
         }
         return null;
     }

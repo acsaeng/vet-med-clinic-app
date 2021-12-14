@@ -105,6 +105,8 @@ public class EmailModel {
                 message.setSubject(subject);
                 message.setText(text);
                 Transport.send(this.message);
+        	}else {
+        		System.out.println("No recipients selected. No email will be sent out.");
         	}
             
         } catch (MessagingException e) {

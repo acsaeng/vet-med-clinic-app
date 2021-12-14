@@ -129,7 +129,11 @@ public class UserService {
      * @param userID user's ID number
      */
     public int sendEmail(ArrayList<Integer> selectedStaff, String message, String subjectType, String currUserID) {
-    	ArrayList<String> technicianEmails = this.repo.getEmails(selectedStaff);
+    	ArrayList<String> technicianEmails = new ArrayList<String>();
+    	if (selectedStaff.size()>0) {
+    		technicianEmails = this.repo.getEmails(selectedStaff);
+    	}
+    	
     	int userID = Integer.valueOf(currUserID);
     	User sender = this.repo.selectUserById(userID);
     	

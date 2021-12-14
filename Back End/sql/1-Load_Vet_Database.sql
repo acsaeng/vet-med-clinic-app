@@ -28,7 +28,7 @@ VALUES
 (6, 'Krity', 'Lou', 'Student', 'krityLou1', 'kristy.lou@vet.com', '403-498-6596', 'kRISTYYYY1!1', '2020-05-08', true),
 (7, 'Aron', 'Saengchan', 'Animal Health Technician', 'aron', 'aron.saengchan@ucalgary.ca', '403-111-1111', 'pass', '2020-09-05', true),
 (8, 'Tim', 'Mok', 'Animal Health Technician', 'tim', 'tytmok@ucalgary.ca', '403-222-2222', 'pass', '2020-10-05', true),
-(9, 'Olivia', 'Phan', 'Animal Health Technician', 'oliviaPhan1', 'olivia.phan@vet.com', '403-333-3333', 'oLIVIA456', '2020-11-05', false),
+(9, 'Olivia', 'Phan', 'Animal Health Technician', 'oliviaPhan1', 'guitarcore@live.ca', '403-333-3333', 'oLIVIA456', '2020-11-05', false),
 (10, 'Hacker', 'One', 'Teaching Technician', 'Instructor_1', 'hacker1@vet.com', '403-444-4444', 'pt@123', '2020-05-12', true),
 (11, 'Hacker', 'Two', 'Admin', 'Admin_1', 'hacket2@vet.com', '403-555-5555', 'pa', '2020-05-13', true),
 (12, 'Jimmy', 'Three', 'Animal Health Technician', 'Technician', 'guitarcore@live.ca', '403-666-6666', 'pe', '2020-05-14', true),

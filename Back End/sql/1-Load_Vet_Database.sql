@@ -32,7 +32,7 @@ VALUES
 (10, 'Hacker', 'One', 'Teaching Technician', 'Instructor_1', 'hacker1@vet.com', '403-444-4444', 'pt@123', '2020-05-12', true),
 (11, 'Hacker', 'Two', 'Admin', 'Admin_1', 'hacket2@vet.com', '403-555-5555', 'pa', '2020-05-13', true),
 (12, 'Jimmy', 'Three', 'Animal Health Technician', 'Technician', 'guitarcore@live.ca', '403-666-6666', 'pe', '2020-05-14', true),
-(13, 'Bill', '2nd', 'Student', 'student10', 'stduent10@vet.com', '403-616-611', 'password', '2020-05-14 00:00:00', true);
+(13, 'Bill', '2nd', 'Student', 'student10', 'stduent10@vet.com', '403-616-611', 'pass', '2020-05-14 00:00:00', true);
 
 
 DROP TABLE IF EXISTS ANIMAL; 

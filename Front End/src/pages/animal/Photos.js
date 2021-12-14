@@ -116,11 +116,11 @@ function Photos() {
         formdata.append('file', file)
         formdata.append('userID',userID)
 
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        }
+        // const config = {
+        //     headers: {
+        //         'content-type': 'multipart/form-data'
+        //     }
+        // }
 
         console.log(formdata)
 

@@ -21,17 +21,17 @@ CREATE TABLE USERS (
 INSERT INTO USERS (User_ID, First_Name, Last_Name, User_Type, Username,  Email, Phone_Number, User_Password, Start_Date, Is_Active)
 VALUES
 (1, 'Alfy', 'Boyd', 'Admin', 'alfyBoyd1', 'alfred.boyd@vet.com', '403-123-4567', 'pa', '2020-05-03 00:00:00', true),
-(2, 'Charles', 'Day', 'Animal Care Attendant', 'charlesDay1', 'charles.day@vet.com', '403-987-6543', 'WoRdPaSs231', '2020-06-30', true),
-(3, 'Eve', 'Fast', 'Animal Health Technician', 'evest1', 'eve.fast@vet.com', '403-546-9565', 'HeLlo!51', '2020-05-05', true),
+(2, 'Charles', 'Day', 'Animal Care Attendant', 'care1', 'charles.day@vet.com', '403-987-6543', 'pass', '2020-06-30', true),
+(3, 'Jimmy', 'Zhu', 'Animal Health Technician', 'evest1', 'zhuyj@ucalgary.ca', '403-546-9565', 'HeLlo!51', '2020-05-05', true),
 (4, 'Georgina', 'Hill', 'Teaching Technician', 'georgina2', 'georgina.hill@vet.com', '403-489-6213', 'wOrLd123!', '2020-05-06', true),
 (5, 'Ivan', 'Jo', 'Student', 'ivan', 'ivan.jo@vet.com', '403-651-8416', 'ivan', '2020-05-07', false),
 (6, 'Krity', 'Lou', 'Student', 'krityLou1', 'kristy.lou@vet.com', '403-498-6596', 'kRISTYYYY1!1', '2020-05-08', true),
-(7, 'Alfred', 'Boyd', 'Animal Health Technician', 'alfredBoyd1', 'alfred.boyd2@vet.com', '403-111-1111', 'HeLlo!52', '2020-09-05', true),
-(8, 'Marles', 'No', 'Animal Health Technician', 'marlesNo1', 'marles.no@vet.com', '403-222-2222', 'marles111', '2020-10-05', true),
+(7, 'Aron', 'Saengchan', 'Animal Health Technician', 'aron', 'aron.saengchan@ucalgary.ca', '403-111-1111', 'pass', '2020-09-05', true),
+(8, 'Tim', 'Mok', 'Animal Health Technician', 'tim', 'tytmok@ucalgary.ca', '403-222-2222', 'pass', '2020-10-05', true),
 (9, 'Olivia', 'Phan', 'Animal Health Technician', 'oliviaPhan1', 'olivia.phan@vet.com', '403-333-3333', 'oLIVIA456', '2020-11-05', false),
 (10, 'Hacker', 'One', 'Teaching Technician', 'Instructor_1', 'hacker1@vet.com', '403-444-4444', 'pt@123', '2020-05-12', true),
 (11, 'Hacker', 'Two', 'Admin', 'Admin_1', 'hacket2@vet.com', '403-555-5555', 'pa', '2020-05-13', true),
-(12, 'Hacker', 'Three', 'Animal Health Technician', 'Technician', 'hacker3@vet.com', '403-666-6666', 'pe', '2020-05-14', true),
+(12, 'Jimmy', 'Three', 'Animal Health Technician', 'Technician', 'guitarcore@live.ca', '403-666-6666', 'pe', '2020-05-14', true),
 (13, 'Bill', '2nd', 'Student', 'student10', 'stduent10@vet.com', '403-616-611', 'password', '2020-05-14 00:00:00', true);
 
 

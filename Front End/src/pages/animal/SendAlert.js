@@ -18,9 +18,9 @@ function SendAlert() {
     const [selectedStaff, setSelectedStaff] = useState([]);
 
     const animalID = localStorage.getItem("animalID")
-    const userID = localStorage.getItem("userID")
-    const userFirstName = localStorage.getItem("userFirstName")
-    const userLastName = localStorage.getItem("userLastName")
+    const animalName = localStorage.getItem("animalName")
+    const animalSpecies = localStorage.getItem("animalSpecies")
+    const currUserID = localStorage.getItem("userID")
 
     let navigate = useNavigate();
 
@@ -45,26 +45,21 @@ function SendAlert() {
     }
 
     function sendRequest(event){
-
         event.preventDefault();
-        var rightNow = new Date();
-        var formattedDay = rightNow.getDate() < 10 ? "0" + rightNow.getDate().toString() : rightNow.getDate()
-        var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
-        var requestDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
 
-        // axios.post('http://localhost:8080/app/request/animal/', {
-        //     animalID: parseInt(animalID),
-        //     requestID: 1, //dummy, backend assigns a new requestID
-        //     userID: parseInt(userID),
-        //     message: message,
-        //     userFirstName: userFirstName,
-        //     userLastName: userLastName
-            
-        // }).then(
-        //   res => {
-        //       console.log(res);
-        //   }
-        // )
+        let formdata = new FormData()
+        formdata.append('selectedStaff', selectedStaff)
+        formdata.append('message',message)
+        formdata.append('subjectType', "Alert for Animal #"+animalID+" "+animalName+", "+animalSpecies)
+        formdata.append("currUserID", currUserID)
+
+        axios({
+            method: "post",
+            url: "http://localhost:8080/app/user/send-email/", 
+            data: formdata,
+            headers: { "Content-Type": "multipart/form-data" },
+          })
+
         navigate(`/animal-info`)
         window.location.reload()
       }

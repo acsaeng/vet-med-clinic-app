@@ -53,13 +53,15 @@ export default class TreatmentsList extends Component{
     render(){
         return(
             <div className="overflow-auto">    
-                <div class="card text-black bg-basic mx-5 my-3"  style={{width: "30rem"}}>
+                {/* <div class="card text-black bg-basic mx-5 my-3"  style={{width: "30rem"}}> */}
                     {(this.state.treatmentList.length === 0) ? 
-                        <div class="card-header" >
-                            No ongoing treatments.
+                        <div class="card text-black bg-basic mx-5 my-3"  style={{width: "30rem"}}>
+                            <div class="card-header" >
+                                No ongoing treatments.
+                            </div>
                         </div>
-                        :<div>{this.state.treatmentList.map(treatment => 
-                            <div>
+                        :this.state.treatmentList.map(treatment => 
+                            <div class="card text-black bg-basic mx-5 my-3"  style={{width: "30rem"}}>
                                 <div class="card-header" >
                                     {this.cardLink(treatment)}
                                 </div>
@@ -71,9 +73,9 @@ export default class TreatmentsList extends Component{
                                     <button className="btn btn-success mx-2 my-2" onClick={ () => this.clickCompleteButton(treatment) }>Mark as Complete</button> 
                                 </div>
                             </div>)
-                        }</div>
+                        
                     }
-                 </div>
+                
             </div> 
         )
     }

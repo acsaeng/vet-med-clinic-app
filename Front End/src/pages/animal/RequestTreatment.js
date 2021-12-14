@@ -16,9 +16,9 @@ function RequestTreatment() {
     const [selectedStaff, setSelectedStaff] = useState([]);
     
     const animalID = localStorage.getItem("animalID")
-    const requesterID = localStorage.getItem("userID")
-    const requesterFirstName = localStorage.getItem("userFirstName")
-    const requesterLastName = localStorage.getItem("userLastName")
+    const animalName = localStorage.getItem("animalName")
+    const animalSpecies = localStorage.getItem("animalSpecies")
+    const currUserID = localStorage.getItem("userID")
 
     let token = localStorage.getItem("token")
     let decoded = jwt_decode(token)
@@ -50,26 +50,22 @@ function RequestTreatment() {
     }
 
     function sendRequest(event){
-
         event.preventDefault();
-        var rightNow = new Date();
-        var formattedDay = rightNow.getDate() < 10 ? "0" + rightNow.getDate().toString() : rightNow.getDate()
-        var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
-        var requestDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
 
-        // axios.post('http://localhost:8080/app/request/animal/', {
-        //     animalID: parseInt(animalID),
-        //     requesterID: parseInt(requesterID),
-        //     requestDate: requestDate,
-        //     message: message,
-        //     requesterFirstName: requesterFirstName,
-        //     requesterLastName: requesterLastName,
-            
-        // }).then(
-        //   res => {
-        //       console.log(res);
-        //   }
-        // )
+        let formdata = new FormData()
+        formdata.append('selectedStaff', selectedStaff)
+        formdata.append('message',message)
+        formdata.append('subjectType', "Request for Treatment for Animal #"+animalID+" "+animalName+", "+animalSpecies)
+        formdata.append("currUserID", currUserID)
+
+        axios({
+            method: "post",
+            url: "http://localhost:8080/app/user/send-email/", 
+            data: formdata,
+            headers: { "Content-Type": "multipart/form-data" },
+          })
+
+
         navigate(`/health-records`)
         window.location.reload()
       }

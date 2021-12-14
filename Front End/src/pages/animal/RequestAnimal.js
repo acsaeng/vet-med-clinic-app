@@ -95,9 +95,7 @@ function RequestAnimal() {
             <Sidebar />
         </div>
         <div className= "d-flex flex-column w-100">
-            <div>
-                <AnimalNavbar />
-            </div>
+            <AnimalNavbar />
             <h1 className="ms-5 mt-5 mb-4">Request Animal</h1>
             <div class="mt-3 mx-5">
             <label className="mb-2"> Checkout Date: </label> 

@@ -83,7 +83,7 @@ function RequestTreatment() {
         
         {GetStaffList()}
 
-        { allowView ? 
+        {/* { allowView ?  */}
         <div className="d-flex w-100 h-100">
             <div className="sidebar">
                 <Sidebar />
@@ -91,32 +91,36 @@ function RequestTreatment() {
             <div className="placeholder">
                 <Sidebar />
             </div>
+            
             <div className= "d-flex flex-column w-100">
                 <AnimalNavbar />
-                <h1 className="ms-5 mt-5 mb-5">Request Treatment</h1>
-                <div className="d-flex align-items-left">
-                    <div className="mx-5">
-                        <h6>Please select all health technicians to send this request to:</h6>
-                        <div className="align-items-left mx-1 mt-3">
-                        <select class="form-select" size='5' multiple aria-label="staffSelection" onChange={handleChange}> 
-                        {staffList.map(staff =>   
-                            <option value = {staff.id} >{staff.firstName} {staff.lastName}</option>
-                        )}      
-                        </select>  
-                        </div> 
+                { allowView ? 
+                <div>
+                    <h1 className="ms-5 mt-5 mb-5">Request Treatment</h1>
+                    <div className="d-flex align-items-left">
+                        <div className="mx-5">
+                            <h6>Please select all health technicians to send this request to:</h6>
+                            <div className="align-items-left mx-1 mt-3">
+                            <select class="form-select" size='5' multiple aria-label="staffSelection" onChange={handleChange}> 
+                            {staffList.map(staff =>   
+                                <option value = {staff.id} >{staff.firstName} {staff.lastName}</option>
+                            )}      
+                            </select>  
+                            </div> 
+                        </div>
                     </div>
-                </div>
-                <div class="custom-field mt-4 mx-5">
-                    <label className="mb-2"> Message: </label> <br/>
-                    <textarea className="form-control w-50" id="messageInput" onChange={getMessage} cols='100' rows='5' placeholder="Please enter a message">
-                    </textarea>
-                </div>
-                <div className="mt-4 mx-5 button">
-                    <button className="btn btn-secondary" onClick={clickButton}>Submit</button>
-                </div>
+                    <div class="custom-field mt-4 mx-5">
+                        <label className="mb-2"> Message: </label> <br/>
+                        <textarea className="form-control w-50" id="messageInput" onChange={getMessage} cols='100' rows='5' placeholder="Please enter a message">
+                        </textarea>
+                    </div>
+                    <div className="mt-4 mx-5 button">
+                        <button className="btn btn-secondary" onClick={clickButton}>Submit</button>
+                    </div>
+                </div>: <a href="/health-records">Only Animal Care Attendants may request treatments. Click to return to health records.</a>}
 
             </div>
-        </div>: <a href="/health-records">Only Animal Care Attendants may request treatments. Click to return to health records.</a>}
+        </div>
     </div>);
 }
 

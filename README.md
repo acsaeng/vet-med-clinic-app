@@ -81,3 +81,7 @@ The pages for the front end were completed using the React framework. A page for
 
 ### Backend
 The backend of this application was completed by connecting the API endpoints established in the previous sprint to a corresponding query for accessing information in the database. All user stories were addressed in this way and each endpoint call was tested once again using Postman. The files for the backend portion of this project can be found in `Back End/`. 
+
+## Include the jar files for sending emails
+
+Necessary jar files are included in a zipped folder in `Back End/email-files`

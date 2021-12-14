@@ -6,7 +6,7 @@ import AnimalNavbar from '../../components/AnimalNavbar';
 import axios from 'axios';
 import React, {useState} from 'react'
 import {useLocation} from 'react-router-dom'
-// import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 function AddDiagnosis() {
     const Authenticated = useState(localStorage.getItem("Authenticated"))
@@ -17,6 +17,8 @@ function AddDiagnosis() {
 
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
+
+    let navigate = useNavigate();
 
     // axios.get('http://localhost:8080/app/animal/'+animalID).then(
     // axios.get('http://localhost:8080/app/animal/'+102).then(
@@ -67,6 +69,7 @@ function AddDiagnosis() {
           }
         )
         
+        navigate(`/health-records`)
         window.location.reload()
       }
 

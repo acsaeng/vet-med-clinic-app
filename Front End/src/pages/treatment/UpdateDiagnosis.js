@@ -4,9 +4,9 @@ import AnimalNavbar from '../../components/AnimalNavbar';
 
 // Requires npm install axios --save
 import axios from 'axios';
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useLocation} from 'react-router-dom'
-// import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 function ManageDiagnosis() {
     // const Authenticated = useState(localStorage.getItem("Authenticated"))
@@ -15,26 +15,25 @@ function ManageDiagnosis() {
     const urlParams = new URLSearchParams(useLocation().search)
     const diagnosisID = urlParams.get("diagnosisID")
 
-    // window.location.reload()
-
-    const [diagnosis, setDiagnosis] = useState(localStorage.getItem("diagnosis"))
-    const [description, setDescription] = useState(localStorage.getItem("description"))
+    const [diagnosis, setDiagnosis] = useState(null)
+    const [description, setDescription] = useState(null)
     
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
-    // const diagnosisID = localStorage.getItem("diagnosisID")
-    const diagnosisStatus = localStorage.getItem("diagnosisStatus")
+    const diagnosisStatus = "Ongoing"
 
-    axios.get('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID).then(
-    // axios.get('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+4).then(
-        res => {
-            localStorage.setItem("diagnosisID", res.data[0].diagnosisID)
-            localStorage.setItem("diagnosis", res.data[0].diagnosis)
-            localStorage.setItem("description", res.data[0].description)
-            localStorage.setItem("diagnosisStatus", res.data[0].diagnosisStatus)
-            localStorage.setItem("animalID", res.data[0].animalID)
-        }
-    )
+    let navigate = useNavigate();
+
+    function GetDiagnosisForAnimal(){
+        useEffect(()=>{
+            axios.get('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID).then(
+                res => {
+                    var singleDiagnosis = res.data[0]
+                    setDiagnosis(singleDiagnosis.diagnosis)
+                    setDescription(singleDiagnosis.description)
+                })
+        },[])
+    }
 
     function getDiagnosis(diagnosis){
         setDiagnosis(diagnosis.target.value)
@@ -48,39 +47,7 @@ function ManageDiagnosis() {
         event.preventDefault();
         document.getElementById("diagnosisInput").value = ""
         document.getElementById("descriptionInput").value = ""
-        console.log("From Clicking the update button: " + diagnosis)
         sendRequest(event)
-    }
-
-    function clickCompleteButton(event){
-
-        event.preventDefault();
-        var rightNow = new Date();
-        var formattedDay = rightNow.getDate() < 10 ? "0" + rightNow.getDate().toString() : rightNow.getDate()
-        var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
-        var diagnosisDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay + " 00:00:00"
-
-        event.preventDefault();
-        document.getElementById("descriptionInput").value = ""
-        document.getElementById("diagnosisInput").value = ""
-        console.log("From Clicking the complete button: " + diagnosis + description)
-
-        axios.put('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID, {
-            diagnosisID: parseInt(diagnosisID),
-            diagnosis: diagnosis,
-            description: description,
-            diagnosisDate: diagnosisDate,
-            diagnosisStatus: "Complete",
-            animalID: parseInt(animalID),
-            userID: parseInt(userID)
-            
-        }).then(
-          res => {
-              console.log(res);
-          }
-        )
-        window.location.reload()
-        
     }
 
     function sendRequest(event){
@@ -93,9 +60,9 @@ function ManageDiagnosis() {
 
         axios.put('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID, {
             diagnosisID: parseInt(diagnosisID),
+            diagnosisDate: diagnosisDate,
             diagnosis: diagnosis,
             description: description,
-            diagnosisDate: diagnosisDate,
             diagnosisStatus: diagnosisStatus,
             animalID: parseInt(animalID),
             userID: parseInt(userID)
@@ -105,46 +72,76 @@ function ManageDiagnosis() {
               console.log(res);
           }
         )
+        navigate(`/health-records`)
         window.location.reload()
-      }
+    }
+
+    function clickCancelButton(event){
+
+        event.preventDefault();
+        var rightNow = new Date();
+        var formattedDay = rightNow.getDate() < 10 ? "0" + rightNow.getDate().toString() : rightNow.getDate()
+        var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
+        var diagnosisDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay + " 00:00:00"
+
+        event.preventDefault();
+        document.getElementById("descriptionInput").value = ""
+        document.getElementById("diagnosisInput").value = ""
+
+        axios.put('http://localhost:8080/app/treatment/diagnosis/diagnosisID='+diagnosisID, {
+            diagnosisID: parseInt(diagnosisID),
+            diagnosis: diagnosis,
+            description: description,
+            diagnosisDate: diagnosisDate,
+            diagnosisStatus: "Cancelled",
+            animalID: parseInt(animalID),
+            userID: parseInt(userID)
+            
+        }).then(
+          res => {
+              console.log(res);
+          }
+        )
+        
+        navigate(`/health-records`)
+        window.location.reload()
+    }
 
 
   return (
       
     <div className="main-container d-flex flex-column flex-grow-1">
-    <div className="d-flex w-100 h-100">
-        <div className="sidebar">
-            <Sidebar />
-        </div>
-        <div className="placeholder">
-            <Sidebar />
-        </div>
-        <div className= "d-flex flex-column w-100">
-            <div>
+        
+
+        <div className="d-flex w-100 h-100">
+            {GetDiagnosisForAnimal()}
+            <div className="sidebar">
+                <Sidebar />
+            </div>
+            <div className="placeholder">
+                <Sidebar />
+            </div>
+            <div className= "d-flex flex-column w-100">
                 <AnimalNavbar />
-            </div>
-            <h1 className="ms-5 mt-5">Update Diagnosis</h1>
 
-            <div class="custom-field mt-4 mb-3 mx-5">
-                <label className="mb-2"> Diagnosis: </label> <br/>
-                <textarea className="form-control w-25" id="diagnosisInput" onChange={getDiagnosis} cols='100' rows='1'>
-                    {diagnosis}
-                </textarea>
-            </div>
+                <h1 className="ms-5 mt-5">Update Diagnosis</h1>
 
-            <div class="custom-field mt-4 mb-3 mx-5">
-                <label className="mb-2"> Description: </label> <br/>
-                <textarea className="form-control w-50" id="descriptionInput" onChange={getDescription} cols='100' rows='5'>
-                    {description}
-                </textarea>
-            </div>
-            <div class="button mx-5 mt-3">
-                <button className="btn btn-secondary me-3" onClick={clickUpdateButton}>Update</button>
-                <button className="btn btn-secondary" onClick={clickCompleteButton}>Complete</button>
-            </div>
-            </div>
+                <div class="custom-field mt-4 mb-3 mx-5">
+                    <label className="mb-2"> Diagnosis: </label> <br/>
+                    <textarea className="form-control w-25" id="diagnosisInput" value={diagnosis} onChange={getDiagnosis} cols='100' rows='1'></textarea>
+                </div>
+
+                <div class="custom-field mt-4 mb-3 mx-5">
+                    <label className="mb-2"> Description: </label> <br/>
+                    <textarea className="form-control w-50" id="descriptionInput" value={description} onChange={getDescription} cols='100' rows='5'></textarea>
+                </div>
+                <div class="button mx-5 mt-3">
+                    <button className="btn btn-secondary me-3" onClick={clickUpdateButton}>Update</button>
+                    <button className="btn btn-secondary" onClick={clickCancelButton}>Cancel Diagnosis</button>
+                </div>
             </div>
         </div>
+    </div>
         
     );
 }
@@ -184,7 +181,7 @@ export default ManageDiagnosis;
 </div>
 <div class="button mx-5">
     <button onClick={clickUpdateButton}>Update</button>
-    <button onClick={clickCompleteButton}>Complete</button>
+    <button onClick={clickCancelButton}>Cancel</button>
 </div>
 </div>
 </div>

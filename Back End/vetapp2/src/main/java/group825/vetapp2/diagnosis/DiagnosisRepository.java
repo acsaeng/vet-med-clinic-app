@@ -78,8 +78,10 @@ public class DiagnosisRepository {
 
         try {
             // Execute SQL query
-            PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM DIAGNOSIS WHERE Animal_ID = ?;");
+            PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM DIAGNOSIS WHERE Animal_ID = ?"
+            		+ " AND Diagnosis_Status = ?;");
             statement.setInt(1, animalID);
+            statement.setString(2, "Ongoing");
             results = statement.executeQuery();
 
             // Process the results set and add entries into diagnosis

@@ -17,6 +17,7 @@ function AddTreatment() {
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
 
+    let navigate = useNavigate();
     // axios.get('http://localhost:8080/app/animal/'+animalID).then(
     //     res => {
     //         localStorage.setItem("animalID", res.data[0].animalID)
@@ -63,6 +64,8 @@ function AddTreatment() {
               console.log(res);
           }
         )
+
+        navigate(`/health-records`)
         window.location.reload()
       }
 

@@ -78,8 +78,10 @@ public class TreatmentRepository {
 
         try {
             // Execute SQL query
-            PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM TREATMENT WHERE Animal_ID = ?;");
+            PreparedStatement statement = this.dao.prepareStatement("SELECT * FROM TREATMENT WHERE Animal_ID = ?"
+            		+ " AND Treatment_Status = ?;");
             statement.setInt(1, animalID);
+            statement.setString(2, "Ongoing");
             results = statement.executeQuery();
 
             // Process the results set and add entries into treatment

@@ -4,31 +4,36 @@ import AnimalNavbar from '../../components/AnimalNavbar';
 
 // Requires npm install axios --save
 import axios from 'axios';
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useLocation} from 'react-router-dom'
-// import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 function ManageTreatment() {
     // const Authenticated = useState(localStorage.getItem("Authenticated"))
     // window.location.reload()
-    const [treatment, setTreatment] = useState(localStorage.getItem("treatment"));
-    const [description, setDescription] = useState(localStorage.getItem("description"));
+
+    const urlParams = new URLSearchParams(useLocation().search)
+    const treatmentID = urlParams.get("treatmentID")
+
+    const [treatment, setTreatment] = useState(null);
+    const [description, setDescription] = useState(null);
     
     const animalID = localStorage.getItem("animalID")
-    const treatmentID = localStorage.getItem("treatmentID")
-    const treatmentStatus = localStorage.getItem("treatmentStatus")
     const userID = localStorage.getItem("userID")
+    const treatmentStatus = "Ongoing"
 
-    // axios.get('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID).then(
-        axios.get('http://localhost:8080/app/treatment/protocol/treatmentID='+5).then(
-        res => {
-            localStorage.setItem("treatmentID", res.data[0].treatmentID)
-            localStorage.setItem("treatment", res.data[0].treatment)
-            localStorage.setItem("description", res.data[0].description)
-            localStorage.setItem("treatmentStatus", res.data[0].treatmentStatus)
-            localStorage.setItem("animalID", res.data[0].animalID)
-        }
-    )
+    let navigate = useNavigate();
+
+    function GetTreatmentForAnimal(){
+        useEffect(()=>{
+            axios.get('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID).then(
+                res => {
+                    var singleTreatment = res.data[0]
+                    setTreatment(singleTreatment.treatment)
+                    setDescription(singleTreatment.description)
+                })
+        },[])
+    }
 
     function getTreatment(treatment){
         setTreatment(treatment.target.value)
@@ -42,8 +47,32 @@ function ManageTreatment() {
         event.preventDefault();
         document.getElementById("treatmentInput").value = ""
         document.getElementById("descriptionInput").value = ""
-        console.log("From Clicking the update button: " + treatment)
         sendRequest(event)
+    }
+
+    function sendRequest(event){
+
+        event.preventDefault();
+        var rightNow = new Date();
+        var formattedDay = rightNow.getDate() < 10 ? "0" + rightNow.getDate().toString() : rightNow.getDate()
+        var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
+        var treatmentDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay + " 00:00:00"
+
+        axios.put('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID, {
+            treatmentID: parseInt(treatmentID), 
+            treatmentDate: treatmentDate,
+            treatment: treatment,
+            description: description,
+            treatmentStatus: treatmentStatus,
+            animalID: parseInt(animalID),
+            userID: parseInt(userID)
+        }).then(
+          res => {
+              console.log(res);
+          }
+        )
+        navigate(`/health-records`)
+        window.location.reload()
     }
 
     function clickCancelButton(event){
@@ -57,13 +86,12 @@ function ManageTreatment() {
         event.preventDefault();
         document.getElementById("descriptionInput").value = ""
         document.getElementById("treatmentInput").value = ""
-        console.log("From Clicking the cancel button: " + treatment)
 
         axios.put('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID, {
             treatmentID: parseInt(treatmentID), 
+            treatmentDate: treatmentDate,
             treatment: treatment,
             description: description,
-            treatmentDate: treatmentDate,
             treatmentStatus: "Cancelled",
             animalID: parseInt(animalID),
             userID: parseInt(userID)
@@ -73,74 +101,41 @@ function ManageTreatment() {
               console.log(res);
           }
         )
+        navigate(`/health-records`)
         window.location.reload()
-        
     }
-
-    function sendRequest(event){
-
-        event.preventDefault();
-        var rightNow = new Date();
-        var formattedDay = rightNow.getDate() < 10 ? "0" + rightNow.getDate().toString() : rightNow.getDate()
-        var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
-        var treatmentDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay + " 00:00:00"
-
-        axios.put('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID, {
-            treatmentID: parseInt(treatmentID), 
-            treatment: treatment,
-            description: description,
-            treatmentDate: treatmentDate,
-            treatmentStatus: treatmentStatus,
-            animalID: parseInt(animalID),
-            userID: parseInt(userID)
-        }).then(
-          res => {
-              console.log(res);
-          }
-        )
-        window.location.reload()
-      }
 
 
   return (
       
     <div className="main-container d-flex flex-column flex-grow-1">
-    <div className="d-flex w-100 h-100">
-        <div className="sidebar">
-            <Sidebar />
-        </div>
-        <div className="placeholder">
-            <Sidebar />
-        </div>
-        <div className= "d-flex flex-column w-100">
-            <div>
+        <div className="d-flex w-100 h-100">
+            {GetTreatmentForAnimal()}
+            <div className="sidebar">
+                <Sidebar />
+            </div>
+            <div className="placeholder">
+                <Sidebar />
+            </div>
+            <div className= "d-flex flex-column w-100">
                 <AnimalNavbar />
-            </div>
-            <h1 className="ms-5 mt-5">Update Treatment</h1>
+                <h1 className="ms-5 mt-5">Update Treatment</h1>
+                <div class="custom-field mt-4 mb-3 mx-5">
+                    <label className="mt-4 mb-2"> Treatment Protocol: </label> <br/>
+                    <textarea className="form-control w-25" id="treatmentInput" value={treatment} onChange={getTreatment} cols='100' rows='1'></textarea>
+                </div>
 
-
-            <div class="custom-field mt-4 mb-3 mx-5">
-                <label className="mt-4 mb-2"> Treatment Protocol: </label> <br/>
-                <textarea className="form-control w-25" id="treatmentInput" onChange={getTreatment} cols='100' rows='1'>
-                    {treatment}
-                </textarea>
-            </div>
-
-            <div class="custom-field mt-4 mb-3 mx-5">
-                <label className="mb-2"> Description: </label> <br/>
-                <textarea className="form-control w-50" id="descriptionInput" onChange={getDescription} cols='100' rows='5'>
-                    {description}
-                </textarea>
-            </div>
-            <div class="button mx-5 mt-3">
-                <button className="btn btn-secondary me-3" onClick={clickUpdateButton}>Update</button>
-                <button className="btn btn-secondary" onClick={clickCancelButton}>Cancel Treatment</button>
-            </div>
-            </div>
+                <div class="custom-field mt-4 mb-3 mx-5">
+                    <label className="mb-2"> Description: </label> <br/>
+                    <textarea className="form-control w-50" id="descriptionInput" value={description} onChange={getDescription} cols='100' rows='5'></textarea>
+                </div>
+                <div class="button mx-5 mt-3">
+                    <button className="btn btn-secondary me-3" onClick={clickUpdateButton}>Update</button>
+                    <button className="btn btn-secondary" onClick={clickCancelButton}>Cancel Treatment</button>
+                </div>
             </div>
         </div>
-        
-    );
+    </div>);
 }
 
 export default ManageTreatment;

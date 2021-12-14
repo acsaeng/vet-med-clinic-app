@@ -6,6 +6,7 @@ export default class StaffList extends Component{
     
     state = {
         staffList: [],
+        selectedStaff: [],
         currUserType: localStorage.getItem("userType"),
         currUserID: localStorage.getItem("userID")
     };
@@ -18,12 +19,16 @@ export default class StaffList extends Component{
         )
     }
 
+    handleChange = (e) => {
+        let value = Array.from(e.target.selectedOptions, option => option.value);
+        this.setState({selectedStaff: value});
+    }
+
 
     render(){
         return(
             <div>
-                <select class="form-select" size='6' multiple aria-label="multiple select staff">
-                    <option selected>Select all staff to alert</option>
+                <select class="form-select" size='5' multiple aria-label="staffSelection" onChange={this.handleChange} value={this.state.selectedStaff}>
                     {this.state.staffList.map(staff => 
                         <option value = {staff.id} >{staff.firstName} {staff.lastName}</option>
                         )

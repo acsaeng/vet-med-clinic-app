@@ -3,6 +3,7 @@ import React, {Component} from "react"
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import {useLocation} from 'react-router-dom'
 
+
 export default class TreatmentsList extends Component{
     
     state = {

@@ -7,6 +7,7 @@ import axios from 'axios';
 import React, {useState, useEffect} from 'react'
 import {useLocation} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
+import jwt_decode from "jwt-decode";
 
 function ManageTreatment() {
     // const Authenticated = useState(localStorage.getItem("Authenticated"))
@@ -21,6 +22,13 @@ function ManageTreatment() {
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
     const treatmentStatus = "Ongoing"
+
+    let token = localStorage.getItem("token")
+    let decoded = jwt_decode(token)
+    const [activeUserType, setType] = useState(decoded.sub);
+    let allowView=false;
+    if (activeUserType === "Animal Health Technician"){allowView = true}
+
 
     let navigate = useNavigate();
 
@@ -109,6 +117,8 @@ function ManageTreatment() {
   return (
       
     <div className="main-container d-flex flex-column flex-grow-1">
+        { allowView ? 
+
         <div className="d-flex w-100 h-100">
             {GetTreatmentForAnimal()}
             <div className="sidebar">
@@ -134,7 +144,7 @@ function ManageTreatment() {
                     <button className="btn btn-secondary" onClick={clickCancelButton}>Cancel Treatment</button>
                 </div>
             </div>
-        </div>
+        </div>: <a href="/health-records">Only Animal Health Technicians may update treatments. Click here to return to health records.</a>}
     </div>);
 }
 

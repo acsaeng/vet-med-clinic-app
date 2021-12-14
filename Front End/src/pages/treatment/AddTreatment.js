@@ -6,6 +6,7 @@ import AnimalNavbar from '../../components/AnimalNavbar';
 import axios from 'axios';
 import React, {useState} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom';
+import jwt_decode from "jwt-decode";
 
 function AddTreatment() {
     const Authenticated = useState(localStorage.getItem("Authenticated"))
@@ -16,6 +17,12 @@ function AddTreatment() {
     
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
+
+    let token = localStorage.getItem("token")
+    let decoded = jwt_decode(token)
+    const [activeUserType, setType] = useState(decoded.sub);
+    let allowView=false;
+    if (activeUserType === "Animal Health Technician"){allowView = true}
 
     let navigate = useNavigate();
     // axios.get('http://localhost:8080/app/animal/'+animalID).then(
@@ -74,41 +81,7 @@ function AddTreatment() {
       
 
     <div className="d-flex w-100 h-100">
-            {/* { Authenticated ==="isAuthenticated" ? 
-            <div className="d-flex w-100 h-100">
-                {(event) => singleRefresh(event)}
-                <div className="sidebar">
-                    <Sidebar />
-                </div>
-
-                <div className="placeholder">
-                    <Sidebar />
-                </div>
-            <div className= "d-flex flex-column">
-            <div>
-                <AnimalNavbar />
-            </div>
-            <div className="d-flex mx-3">
-              <h1>Add Treatment Protocol</h1>
-            </div>
-
-            <div class="custom-field mt-4 mb-3 mx-5">
-                <label> Treatment Protocol: </label> <br/>
-                <textarea id="treatmentInput" onChange={getTreatment} cols='100' rows='1' placeholder="Please enter the treatment protocol.">
-                </textarea>
-            </div>
-
-            <div class="custom-field mt-4 mb-3 mx-5">
-                <label> Description: </label> <br/>
-                <textarea id="descriptionInput" onChange={getDescription} cols='100' rows='5' placeholder="Please enter the description of the treatment protocol.">
-                </textarea>
-            </div>
-            <div class="button mx-5">
-                <button onClick={clickButton}>Submit</button>
-            </div>
-            </div>
-            </div>
-            : <a href="/">You are not authorized to view this page. Return to Login</a>} */}
+        { allowView ? 
 
     <div className="main-container d-flex flex-column flex-grow-1">
     <div className="d-flex w-100 h-100">
@@ -138,7 +111,7 @@ function AddTreatment() {
             </div>
             </div>
             </div>
-            </div>
+            </div>: <a href="/health-records">Only Animal Health Technicians may add treatments. Click here to return to health records.</a>}
         </div>
         
     );

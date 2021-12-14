@@ -7,8 +7,10 @@ import axios from 'axios';
 import React, {useState} from 'react'
 import {useLocation} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
+import jwt_decode from "jwt-decode";
 
 function AddDiagnosis() {
+    
     const Authenticated = useState(localStorage.getItem("Authenticated"))
     // window.location.reload()
     const [diagnosis, setDiagnosis] = useState(null);
@@ -17,6 +19,12 @@ function AddDiagnosis() {
 
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
+
+    let token = localStorage.getItem("token")
+    let decoded = jwt_decode(token)
+    const [activeUserType, setType] = useState(decoded.sub);
+    let allowView=false;
+    if (activeUserType === "Animal Health Technician"){allowView = true}
 
     let navigate = useNavigate();
 
@@ -75,11 +83,16 @@ function AddDiagnosis() {
 
 
   return (
+      
     <div className="main-container d-flex flex-column flex-grow-1">
+        
+    { allowView ? 
+
     <div className="d-flex w-100 h-100">
         <div className="sidebar">
             <Sidebar />
         </div>
+        
         <div className="placeholder">
             <Sidebar />
         </div>
@@ -102,7 +115,7 @@ function AddDiagnosis() {
                 <button className="mt-4 btn btn-secondary" onClick={clickButton}>Submit</button>
             </div>
             </div>
-            </div>
+            </div>: <a href="/health-records">Only Animal Health Technicians may add diagnoses. Click here to return to health records.</a>}
         </div>
 
 

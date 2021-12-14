@@ -6,7 +6,7 @@ import AnimalNavbar from '../../components/AnimalNavbar';
 import axios from 'axios';
 import React, {useState, useEffect} from 'react'
 // import {useLocation} from 'react-router-dom'
-// import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 import StaffList from '../../components/StaffList';
 
@@ -14,12 +14,24 @@ import StaffList from '../../components/StaffList';
 function SendAlert() {
     // const Authenticated = localStorage.getItem("Authenticated")
     const [message, setMessage] = useState(null);
+    const [staffList, setStaffList] = useState([]);
+    const [selectedStaff, setSelectedStaff] = useState([]);
 
     const animalID = localStorage.getItem("animalID")
     const userID = localStorage.getItem("userID")
     const userFirstName = localStorage.getItem("userFirstName")
     const userLastName = localStorage.getItem("userLastName")
 
+    let navigate = useNavigate();
+
+    function GetStaffList(){
+        useEffect(()=>{
+            axios.get('http://localhost:8080/app/user/userType=Animal%20Health%20Technician').then(
+                res => {
+                    setStaffList(res.data)
+                })
+        },[])
+    }
         
     function getMessage(message){
         setMessage(message.target.value)
@@ -28,15 +40,17 @@ function SendAlert() {
     function clickButton(event){
         event.preventDefault();
         document.getElementById("messageInput").value = ""
-        console.log("From Clicking the button: " + message)
+        console.log(selectedStaff.map( (staff) => staff ) + " " + message)
         sendRequest(event)
     }
 
     function sendRequest(event){
 
-        // console.log(checkedItems)
-
         event.preventDefault();
+        var rightNow = new Date();
+        var formattedDay = rightNow.getDate() < 10 ? "0" + rightNow.getDate().toString() : rightNow.getDate()
+        var formattedMonth = (rightNow.getMonth()+1) < 10 ? "0" + (rightNow.getMonth()+1).toString() : (rightNow.getMonth()+1)
+        var requestDate = rightNow.getFullYear() + "-" + formattedMonth +"-" + formattedDay
 
         // axios.post('http://localhost:8080/app/request/animal/', {
         //     animalID: parseInt(animalID),
@@ -51,13 +65,21 @@ function SendAlert() {
         //       console.log(res);
         //   }
         // )
+        navigate(`/animal-info`)
         window.location.reload()
       }
+
+      function handleChange(e){
+        let value = Array.from(e.target.selectedOptions, option => option.value);
+        setSelectedStaff(value);
+        console.log(selectedStaff)
+    }
 
 
   return (
 
     <div className="main-container d-flex flex-column flex-grow-1">
+        {GetStaffList()}
     <div className="d-flex w-100 h-100">
         <div className="sidebar">
             <Sidebar />
@@ -72,9 +94,13 @@ function SendAlert() {
             <div className="d-flex mx-5">
 
                         <div className="align-items-left">
-                            <h5>Health Technicians:</h5>
+                            <h6>Please select all health technicians you would like to alert:</h6>
                             <div className="align-items-left mx-1 mt-3"></div>
-                                <StaffList/>
+                            <select class="form-select" size='5' multiple aria-label="staffSelection" onChange={handleChange}> 
+                                {staffList.map(staff =>   
+                                    <option value = {staff.id} >{staff.firstName} {staff.lastName}</option>
+                                )}      
+                            </select> 
                         </div>
                     </div> 
 

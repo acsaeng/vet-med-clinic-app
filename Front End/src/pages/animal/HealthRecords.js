@@ -31,7 +31,7 @@ return (
                 <div className="d-flex mx-3">  
                     <div className= "d-flex flex-column w-80 mx-5">
                         {/* LEFT HAND SIDE */}
-                        <h2>Ongoing Conditions</h2>
+                        <h2>Conditions</h2>
                         <div className="d-flex justify-content-end mb-3">
                             <button className="p-2 ms-5 btn btn-secondary" onClick={() => {navigate(`/add-diagnosis`)}}>Add Diagnosis</button>
                              
@@ -42,7 +42,7 @@ return (
                     </div>
                     <div className= "d-flex flex-column mx-5">
                         {/* RIGHT HAND SIDE */}
-                        <h2>Ongoing Treatments</h2>
+                        <h2>Treatments</h2>
                         <div className="d-flex flex-row justify-content-end mb-3">      
                             <button className="me-3  btn btn-secondary" onClick={() => {navigate(`/add-treatment`)}}>Add Treatment</button>
                             <button className="p-2 btn btn-secondary" onClick={() => {navigate(`/request-treatment`)}}>Request Treatment</button>

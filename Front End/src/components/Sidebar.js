@@ -39,7 +39,15 @@ function Sidebar() {
                 <Link to="/add-user" />
             </MenuItem>
     }
+  }
 
+  function showRequests(){
+    if (userType === "Admin" || userType === "Animal Health Technician"  || userType === "Teaching Techncian"){
+      return <MenuItem icon={<FaPaperPlane />}>
+              View Requests
+              <Link to="/view-requests" />
+          </MenuItem>
+    }
   }
 
   return (
@@ -62,26 +70,12 @@ function Sidebar() {
                 Manage Animals
                 <Link to="/manage-animals" />
             </MenuItem>
-            <MenuItem icon={<FaPaperPlane />}>
-                View Requests
-                <Link to="/view-requests" />
-            </MenuItem>
+            {showRequests()}
             {manageUser()}
             <MenuItem icon={<IoLogOut />}>
                 Sign Out
                 <Link to="/" />
             </MenuItem>
-
-
-
-
-
-            {/* <MenuItem icon={<FaDog />}>
-                View Requests
-                <Link to="/view-requests" />
-            </MenuItem> */}
-
-
 
             </Menu>
         </SidebarContent>

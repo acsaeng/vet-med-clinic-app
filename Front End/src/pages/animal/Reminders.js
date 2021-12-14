@@ -45,7 +45,7 @@ function Reminders() {
                   }
                 
                 <div className="ex1">
-                  <RemindersList animalID={animalID} />
+                  <RemindersList animalID={animalID} usertype={activeUserType}/>
                 </div>
                   
             </div>

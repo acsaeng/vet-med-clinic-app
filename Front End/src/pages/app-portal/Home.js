@@ -6,7 +6,6 @@ import { useState } from 'react';
 import jwt_decode from "jwt-decode";
 
 function Home() {
-
     const [datetime, setDatetime] = useState(new Date());
     const months= ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -21,7 +20,7 @@ function Home() {
     }
     
 
-
+    // Displays the time on the screen
     function time() {
         time = "";
 
@@ -48,7 +47,7 @@ function Home() {
         return time;
     }
 
-
+    // Displays the homepage to the user
     return (
         <div className="main-container d-flex flex-column flex-grow-1">
             <div className="d-flex w-100 h-100">

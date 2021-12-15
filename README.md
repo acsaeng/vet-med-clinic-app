@@ -89,6 +89,6 @@ The integration of the frontend and backend was completed by implementing the ne
 ## Video Demonstration
 The functionality of the complete application is presented in the video demonstration by following the link below. The narrator of each clip in the video reflects the group member who contributed to that specific page or feature of the application. If you have any questions about anything related to this project feel free to contact any of the team members.
 
-Links:
+### Links to Videos:
 - [Watch the video on YouTube](https://youtu.be/6N30jf35RW0)
 - [Save the video on Google Drive](https://drive.google.com/file/d/1XIvUHj0f0U_hZABqPLSV2sw8Q5RQ5Tc6/view?usp=sharing)

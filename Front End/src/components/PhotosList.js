@@ -1,8 +1,6 @@
 import axios from 'axios';
 import React, {Component} from "react"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse';
-// import {useLocation} from 'react-router-dom'
 
 export default class PhotosList extends Component{
     state = {
@@ -11,17 +9,7 @@ export default class PhotosList extends Component{
         animalID : this.props.animalID
     };
 
-    // state = {
-    //     Colornames: {
-    //         Cricket:false,
-    //         Football:false,
-    //         Rugby:false
-    //     }
-    // }
-    
-
-    
-
+    //Get all the photos for one animal
     componentDidMount(){
         console.log(this.state.animalID)
         console.log('http://localhost:8080/app/photos/animal/'+this.state.animalID)
@@ -33,13 +21,14 @@ export default class PhotosList extends Component{
         )
     }
 
+    //update the state when a photo is select
     chkclick = (e) => {
         var {name, checked} = e.target;
 
         this.setState( (e)=>{
-            var Selectedsport = e.photoIDs;
-            return Selectedsport[name]= checked;
-            // Selectedsport[name]= checked;
+            var Selectedsphoto = e.photoIDs;
+            return Selectedsphoto[name]= checked;
+            // Selectedsphoto[name]= checked;
         });
     }
 
@@ -47,6 +36,7 @@ export default class PhotosList extends Component{
     render(){
         return(
             <div className="d-flex flex-wrap mx-3 my-5 overflow-auto">
+            {/* {Load in each photo} */}
             {this.state.photoPaths.map(photo =>     
                 <div class = "mx-3"> 
                     <input type="checkbox" name={"Photo"+photo.photoID} onChange={this.chkclick}/>

@@ -154,6 +154,9 @@ public class Animal {
                 this.cityTattoo == null || this.dob == null || this.rfid == "" || this.microchip == "" || this.colour == null);
     }
     
+    /**
+     * Update the search key name by generating it
+     */
     private void updateSearchKey() {
     	if (this.nameLength == 0) {this.nameLength = this.name.length();}
     	if (this.searchKeyName == null) {this.searchKeyName = SearchKey.generateSearchKey(this.name); }

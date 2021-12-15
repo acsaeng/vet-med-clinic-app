@@ -1,18 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../styling/Home.css';
 import AnimalNavbar from '../../components/AnimalNavbar';
 import Sidebar from '../../components/Sidebar';
 
-import axios from 'axios';
 import '../../styling/Comments.css';
 import RemindersList from '../../components/RemindersList'
 import React, {useState} from 'react'
-import {useLocation, Link} from 'react-router-dom'
 import jwt_decode from "jwt-decode";
 
 function Reminders() {
     const animalID = localStorage.getItem("animalID")
-    // const activeUserType = localStorage.getItem("userType")
 
     let token = localStorage.getItem("token")
     let decoded = jwt_decode(token);
@@ -43,7 +39,7 @@ function Reminders() {
                     </label>
                     :null
                   }
-                
+                {/* {Displays the reminders as cards within an autoscroll box} */}
                 <div className="ex1">
                   <RemindersList animalID={animalID} usertype={activeUserType}/>
                 </div>

@@ -11,6 +11,7 @@ export default class RemindersList extends Component{
         currUserType: this.props.usertype,
     };
 
+    //get all the reminders for one animal
     componentDidMount(){
         console.log(this.state.toggleStudent)
         axios.get('http://localhost:8080/app/reminders/animal/'+this.state.animalID).then(
@@ -21,6 +22,7 @@ export default class RemindersList extends Component{
         )
     }
 
+    //delete one reminder when the button is clicked
     deleteReminder(event){
         event.preventDefault();
         var currReminderID = event.target.getAttribute('reminderid')
@@ -38,6 +40,7 @@ export default class RemindersList extends Component{
     render(){
         return(
             <div className="overflow-auto">
+                {/* {Load all the reminders as cards} */}
             {this.state.reminders.map(reminder => 
                 <div class="card bg-light mx-5 my-3" key={reminder.commentId} style={{width: "50rem"}}>
                 <div class="card-header" >
@@ -45,6 +48,7 @@ export default class RemindersList extends Component{
                         <div>
                             {reminder.firstName} {reminder.lastName}, {reminder.userType}
                         </div>
+                        {/* {Delete button on the reminder card only appears for users who are not Students} */}
                         { this.state.currUserType !== "Student" ?
                             <div class="d-flex mx-5 ">
                                 <button class="btn btn-warning" reminderid={reminder.reminderID} onClick={(e) => this.deleteReminder(e)} >Delete</button>

@@ -4,7 +4,6 @@ import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
 
-
 /**
  * This class provides methods that sends email
  */
@@ -75,7 +74,7 @@ public class EmailModel {
     }
     
     /**
-     * get single instance of EmailModel for singleton implementation
+     * Get single instance of EmailModel for singleton implementation
      * @return EmailModel
      */
     public static EmailModel getSingleInstance()
@@ -86,7 +85,7 @@ public class EmailModel {
     }
     
     /**
-     * send an email to every health technician selected
+     * Sends an email to every health technician selected
      * @param emailAddresses = ArrayList of all the selected technician's emails
      * @param subject = Subject of the email
      * @param text = body of the email
@@ -114,6 +113,4 @@ public class EmailModel {
             System.out.println("Error sending out an email");
         }
     }
-    
-    
 }

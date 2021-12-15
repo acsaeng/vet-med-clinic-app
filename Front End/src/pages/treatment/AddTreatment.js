@@ -112,7 +112,7 @@ function AddTreatment() {
                     <button class="mt-4 btn btn-secondary" onClick={clickButton}>Submit</button>
                 </div>
             </div>: 
-            <a href="/health-records">Only Animal Care Attendants may request treatments. Click to return to health records.</a>}
+            <a href="/health-records">Only Animal Health Technicians may request treatments. Click to return to health records.</a>}
         </div>
         </div>
 

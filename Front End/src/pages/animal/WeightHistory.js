@@ -18,8 +18,6 @@ function WeightHistory() {
 
     // Retrieves the weight history of the selected animal
     useEffect(() => {
-        // let urlParams = new URLSearchParams(useLocation().search)
-        // this.state.animalID = parseInt(urlParams.get("animalID"))
         axios.get("http://localhost:8080/app/animal/weight-history/"+animalID)
            .then(res => {
                 const weightEntries = res.data;

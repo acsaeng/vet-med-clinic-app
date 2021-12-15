@@ -1,12 +1,9 @@
 package group825.vetapp2.users;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -122,8 +119,7 @@ public class UserService {
     public boolean blockUser(int userID) {
         return this.repo.blockUser(userID);
     }
-    
-    
+
     /**
      * Sends an email to all the selected users
      * @param selectedStaff = Arraylist of the selected staff user ids
@@ -152,5 +148,4 @@ public class UserService {
         			
         return 1;
     }
-
 }

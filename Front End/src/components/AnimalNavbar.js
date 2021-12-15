@@ -1,26 +1,15 @@
 import "../styling/Navbar.css";
-import profilePhoto from "../images/profile.png";
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import jwt_decode from "jwt-decode";
 import { useState } from 'react';
 
 const AnimalNavbar = () => {
-    
-    // window.onload = function() {
-        
-    //     if(!window.location.hash) {
-    //         window.location = window.location + '#';
-    //         window.location.reload();
-    //     }
-    // }
     let token = localStorage.getItem("token")
     let decoded = jwt_decode(token);
     const [activeUserType, setType] = useState(decoded.sub)
-    // let activeUserType = decoded.sub
-    // console.log(activeUserType)
 
-
+    // Sets the display of the health status in the navbar
     function healthStatus() {
         if (localStorage.getItem("healthStatus") === "Healthy") {
             return <p className="healthy-status-text">{localStorage.getItem("healthStatus")}</p>
@@ -35,9 +24,8 @@ const AnimalNavbar = () => {
 
 
     return (
+        // Display of the animal navbar
         <div className="navbar d-flex justify-content-start">
-            {/* <img src={profilePhoto} alt="Animal Profile" className="p-4"></img> */}
-            {/* {window.location.reload()} */}
             <div className="d-flex flex-column justify-content-start align-items-center py-4 animal-info mx-5">
                 <h3 className="mt-2 fw-bold">{localStorage.getItem("animalName")}</h3>
                 <p className="species-text">{localStorage.getItem("animalSpecies")}</p>
@@ -45,6 +33,7 @@ const AnimalNavbar = () => {
                 
             </div>
 
+            {/* Dropdown menu items */}
             <div className="px-4 dropdown" style={{paddingBottom: "35px"}}>
                 <DropdownButton id="dropdown-basic-button" title="Select an option..." variant="dark">
                     <Dropdown.Item href="/animal-info">Animal Information</Dropdown.Item>

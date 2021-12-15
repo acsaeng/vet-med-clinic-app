@@ -8,6 +8,7 @@ import axios from 'axios';
 function AddAnimal() {
     const [animalInfo, setAnimalInfo] = useState({});
 
+    // Sends request to add animal to the database
     function handleSubmit(event) {
         event.preventDefault();
 
@@ -24,6 +25,7 @@ function AddAnimal() {
         window.location.reload()
     }
 
+    // Form to add an animal
     return (
             <div className="d-flex w-100 h-100">
                 <div className="sidebar">

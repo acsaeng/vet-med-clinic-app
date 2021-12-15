@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import axios from 'axios';
 
 function AnimalInfo() {
+    // Hook to retrieve the input values
     const [isLoading, setLoading] = useState(true);
     const [name, setName] = useState();
     const [species, setSpecies] = useState();
@@ -23,16 +24,15 @@ function AnimalInfo() {
     const [additionalInfo, setAdditionalInfo] = useState();
 
     const urlParams = new URLSearchParams(useLocation().search)
-    
     var animalID = urlParams.get("animalID")
+
     if (animalID !== null){
         localStorage.setItem("animalID", animalID)
-    }else{
+    } else { 
         animalID = localStorage.getItem("animalID")
     }
     
-
-
+    // Loads the existing animal data
     function loadData() {
         if (isLoading) {
             axios.get("http://localhost:8080/app/animal/" + animalID)
@@ -62,6 +62,7 @@ function AnimalInfo() {
         }
     }
 
+    // Sends request to update the animal
     function handleSubmit(event) {
         event.preventDefault();
         
@@ -82,6 +83,7 @@ function AnimalInfo() {
 
     loadData();
 
+    // Form to update the animal information
     return (
             <div className="d-flex w-100 h-100">
                 <div className="sidebar">

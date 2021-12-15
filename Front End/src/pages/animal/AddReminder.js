@@ -27,6 +27,7 @@ function AddReminder() {
 
         today = yyyy + '-' + mm + '-' + dd  ;
 
+        //add reminder to the database
         axios.post('http://localhost:8080/app/reminders/', {
           animalID:  parseInt(localStorage.getItem('animalID')),
           reminderID: 1, //dummy value which will be updated in the backend
@@ -60,7 +61,7 @@ function AddReminder() {
                     <AnimalNavbar />
 
                     <h1 className="my-5 ms-5">Add a Reminder</h1>
-
+                    {/* {Single page to add a new reminder} */}
                     <form className="d-flex flex-column  align-items-start mt-2" onSubmit={handleSubmit}>
                         <div className="d-flex my-3 w-75">
                             <h4 className="w-100">Animal Name:</h4>

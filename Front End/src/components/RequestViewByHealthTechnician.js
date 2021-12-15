@@ -12,12 +12,7 @@ export default class RequestViewByHealthTechnician extends Component{
 
     };
     
-    idxReq = {
-        "animalID":0 , "requestID":1 , "requesterID":2 , "requestDate":3 , "checkoutDate":4 , "returnDate":5 , 
-        "reason":6 , "requestStatus":7 , "requesterFirstName":8 , "requesterLastName":9 , "animalName":10 , 
-        "animalSpecies":11 
-    }
-
+    //get all the requests
     componentDidMount(){
         console.log(this.state.toggleStudent)
         axios.get('http://localhost:8080/app/request/').then(
@@ -28,13 +23,7 @@ export default class RequestViewByHealthTechnician extends Component{
         )
     }
 
-
-    clickTest = (e) =>{
-        e.preventDefault();
-        console.log(">> click is working")
-        
-    }
-
+    //Update the request status to approved
     clickAccept(arrData){
         console.log(">>> Inside clickAccept()")
         console.log("request.requestID = " + arrData[this.idxReq.requestID])
@@ -60,6 +49,7 @@ export default class RequestViewByHealthTechnician extends Component{
         window.location.reload()
     }
 
+    //Update the request status to Rejected
     clickReject(arrData){
         console.log(">>> Inside clickREject()")
         console.log("request.requestID = " + arrData[this.idxReq.requestID])
@@ -89,6 +79,7 @@ export default class RequestViewByHealthTechnician extends Component{
     render(){
         return(
             <div className="overflow-auto">
+                {/* {Load all the requests as cards} */}
                 {this.state.allRequests.map(request => 
                 // currentRequest = [request.requestID]
                 (request.requestStatus === "Accepted" ) ? //Health Technicians will only see the Requests which have a status of "Accepted"
@@ -110,11 +101,8 @@ export default class RequestViewByHealthTechnician extends Component{
                                     <p> {request.reason} </p>
                                 </div>
                                 <div className="d-flex flex-column px-5 py-4 align-right">
-                                        {/* <button tasks={this.clickTest()}>testing</button> */}
-                                        {/* <button onclick={(e) => this.clickTest(e)}>Accept</button> */}
                                         <button className="btn btn-secondary" onClick={() => this.clickAccept([request.animalID, request.requestID, request.requesterID, request.requestDate, request.checkoutDate, request.returnDate, request.reason, request.requestStatus, request.requesterFirstName, request.requesterLastName, request.animalName, request.animalSpecies])}>APPROVE</button>
                                         <p/>
-                                        {/* <button onclick={(e) => this.clickTest(e)}>Reject</button> */}
                                         <button className="btn btn-secondary" onClick={() => this.clickReject([request.animalID, request.requestID, request.requesterID, request.requestDate, request.checkoutDate, request.returnDate, request.reason, request.requestStatus, request.requesterFirstName, request.requesterLastName, request.animalName, request.animalSpecies])}>REJECT</button>
                                     </div>
                             </div>

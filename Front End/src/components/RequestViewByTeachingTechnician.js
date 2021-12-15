@@ -15,12 +15,7 @@ export default class RequestViewByTeachingTechnician extends Component{
         updatedStatus: "Cancelled" //new status message passed to api and database
     };
     
-    idxReq = {
-        "animalID":0 , "requestID":1 , "requesterID":2 , "requestDate":3 , "checkoutDate":4 , "returnDate":5 , 
-        "reason":6 , "requestStatus":7 , "requesterFirstName":8 , "requesterLastName":9 , "animalName":10 , 
-        "animalSpecies":11 
-    }
-
+    //get all requests that the teaching technician submitted
     componentDidMount(){
         // console.log(this.state.toggleStudent)
         axios.get('http://localhost:8080/app/request/user/'+this.requesterID).then(
@@ -31,13 +26,7 @@ export default class RequestViewByTeachingTechnician extends Component{
         )
     }
 
-
-    clickTest = (e) =>{
-        e.preventDefault();
-        console.log(">> click is working")
-        
-    }
-
+    //update the request status to Cancelled
     clickCancel(arrData){
         console.log(">>> Inside clickCancel()")
         console.log("request.requestID = " + arrData[this.idxReq.requestID])
@@ -68,6 +57,7 @@ export default class RequestViewByTeachingTechnician extends Component{
     render(){
         return(
             <div className="overflow-auto">
+                {/* {Create a card for all requests} */}
                 {this.state.allRequests.map(request => 
                 ((request.requestStatus === "Pending" || request.requestStatus === "Accepted")) ? 
                     <div class="card bg-light mx-5 my-3" key={request.requestID} style={{width: "50rem"}}>

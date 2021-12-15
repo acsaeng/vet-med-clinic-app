@@ -11,6 +11,7 @@ export default class StaffList extends Component{
         currUserID: localStorage.getItem("userID")
     };
 
+    // Gets a list of Animal Health Technicians
     componentDidMount(){
         axios.get('http://localhost:8080/app/user/userType=Animal%20Health%20Technician').then(
             res => {
@@ -24,7 +25,7 @@ export default class StaffList extends Component{
         this.setState({selectedStaff: value});
     }
 
-
+    // creates a select menu for Animal Health Technicians
     render(){
         return(
             <div>

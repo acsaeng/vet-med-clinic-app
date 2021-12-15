@@ -22,7 +22,7 @@ function AddAnimal() {
         .catch(err => console.log(err));
 
         alert("Animal added")
-        // window.location.reload()
+        window.location.reload()
     }
 
     // Form to add an animal

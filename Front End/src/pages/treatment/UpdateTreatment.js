@@ -10,8 +10,6 @@ import {useNavigate} from 'react-router-dom'
 import jwt_decode from "jwt-decode";
 
 function ManageTreatment() {
-    // const Authenticated = useState(localStorage.getItem("Authenticated"))
-    // window.location.reload()
 
     const urlParams = new URLSearchParams(useLocation().search)
     const treatmentID = urlParams.get("treatmentID")
@@ -32,6 +30,7 @@ function ManageTreatment() {
 
     let navigate = useNavigate();
 
+    // Get all the treatments associated with one animal 
     function GetTreatmentForAnimal(){
         useEffect(()=>{
             axios.get('http://localhost:8080/app/treatment/protocol/treatmentID='+treatmentID).then(
@@ -79,6 +78,7 @@ function ManageTreatment() {
               console.log(res);
           }
         )
+        // naviagate back to heatlh records page when done
         navigate(`/health-records`)
         window.location.reload()
     }
@@ -109,6 +109,7 @@ function ManageTreatment() {
               console.log(res);
           }
         )
+        // naviagate back to heatlh records page when done
         navigate(`/health-records`)
         window.location.reload()
     }
@@ -117,7 +118,6 @@ function ManageTreatment() {
   return (
       
     <div className="main-container d-flex flex-column flex-grow-1">
-        { allowView ? 
 
         <div className="d-flex w-100 h-100">
             {GetTreatmentForAnimal()}
@@ -129,6 +129,9 @@ function ManageTreatment() {
             </div>
             <div className= "d-flex flex-column w-100">
                 <AnimalNavbar />
+                {/* Only allow Animal Health Technicians to update treatments */}
+                { allowView ? 
+                <div>
                 <h1 className="ms-5 mt-5">Update Treatment</h1>
                 <div class="custom-field mt-4 mb-3 mx-5">
                     <label className="mt-4 mb-2"> Treatment Protocol: </label> <br/>
@@ -143,49 +146,10 @@ function ManageTreatment() {
                     <button className="btn btn-secondary me-3" onClick={clickUpdateButton}>Update</button>
                     <button className="btn btn-secondary" onClick={clickCancelButton}>Cancel Treatment</button>
                 </div>
+            </div>: <a href="/health-records">Only Animal Health Technicians may update treatments. Click here to return to health records.</a>}
             </div>
-        </div>: <a href="/health-records">Only Animal Health Technicians may update treatments. Click here to return to health records.</a>}
+        </div>
     </div>);
 }
 
 export default ManageTreatment;
-
-
-{/* <div className="main-container d-flex flex-column flex-grow-1">
-{ Authenticated ==="isAuthenticated" ? 
-<div className="d-flex w-100 h-100">
-    {(event) => singleRefresh(event)}
-    <div className="sidebar">
-        <Sidebar />
-    </div>
-
-    <div className="placeholder">
-        <Sidebar />
-    </div>
-<div className= "d-flex flex-column">
-<div>
-    <AnimalNavbar />
-</div>
-<div className="d-flex mx-3">
-  <h1>Update Treatment Protocol</h1>
-</div>
-
-<div class="custom-field mt-4 mb-3 mx-5">
-    <label> Treatment Protocol: </label> <br/>
-    <textarea id="treatmentInput" onChange={getTreatment} cols='100' rows='1'>
-    </textarea>
-</div>
-
-<div class="custom-field mt-4 mb-3 mx-5">
-    <label> Description: </label> <br/>
-    <textarea id="descriptionInput" onChange={getDescription} cols='100' rows='5'>
-    </textarea>
-</div>
-<div class="button mx-5">
-    <button onClick={clickUpdateButton}>Update</button>
-    <button onClick={clickCancelButton}>Cancel</button>
-</div>
-</div>
-</div>
-: <a href="/">You are not authorized to view this page. Return to Login</a>}
-</div> */}

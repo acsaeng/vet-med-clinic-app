@@ -5,14 +5,11 @@ import AnimalNavbar from '../../components/AnimalNavbar';
 // Requires npm install axios --save
 import axios from 'axios';
 import React, {useState} from 'react'
-import {useLocation} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
 import jwt_decode from "jwt-decode";
 
 function AddDiagnosis() {
     
-    const Authenticated = useState(localStorage.getItem("Authenticated"))
-    // window.location.reload()
     const [diagnosis, setDiagnosis] = useState(null);
     const [description, setDescription] = useState(null);
     const diagnosisStatus = "Ongoing";
@@ -24,19 +21,10 @@ function AddDiagnosis() {
     let decoded = jwt_decode(token)
     const [activeUserType, setType] = useState(decoded.sub);
     let allowView=false;
+    // Only allow Animal Health Technicians to access this page
     if (activeUserType === "Animal Health Technician"){allowView = true}
 
     let navigate = useNavigate();
-
-    // axios.get('http://localhost:8080/app/animal/'+animalID).then(
-    // axios.get('http://localhost:8080/app/animal/'+102).then(
-    //     res => {
-    //         localStorage.setItem("animalID", res.data[0].animalID)
-    //         localStorage.setItem("animalName", res.data[0].animalName)
-    //         localStorage.setItem("animalSpecies", res.data[0].animalSpecies)
-    //         localStorage.setItem("animalStatus", res.data[0].animalStatus)
-    //     }
-    // )
 
     function getDiagnosis(diagnosis){
         setDiagnosis(diagnosis.target.value)
@@ -76,7 +64,7 @@ function AddDiagnosis() {
               console.log(res);
           }
         )
-        
+        // navigate to health records page when done
         navigate(`/health-records`)
         window.location.reload()
       }
@@ -85,9 +73,6 @@ function AddDiagnosis() {
   return (
       
     <div className="main-container d-flex flex-column flex-grow-1">
-        
-    
-
     <div className="d-flex w-100 h-100">
         <div className="sidebar">
             <Sidebar />
@@ -99,6 +84,7 @@ function AddDiagnosis() {
         <div className= "d-flex flex-column w-100">
            
             <AnimalNavbar />
+            {/* Only allow Animal Health Technicians to add diagnoses */}
             { allowView ? 
             <div>
                 <h1 className="ms-5 mt-5">Add Diagnosis</h1>
@@ -118,54 +104,8 @@ function AddDiagnosis() {
             </div>: <a href="/health-records">Only Animal Health Technicians may add diagnoses. Click here to return to health records.</a>}
             </div>
             </div>
-        </div>
-
-
-
-            
-    
-
-
-        
+        </div> 
     );
 }
 
 export default AddDiagnosis;
-
-{/* <div className="main-container d-flex flex-column flex-grow-1">
-{ Authenticated ==="isAuthenticated" ? 
-<div className="d-flex w-100 h-100">
-    {(event) => singleRefresh(event)}
-    <div className="sidebar">
-        <Sidebar />
-    </div>
-
-    <div className="placeholder">
-        <Sidebar />
-    </div>
-<div className= "d-flex flex-column">
-<div>
-    <AnimalNavbar />
-</div>
-<div className="d-flex mx-3">
-  <h1>Add Diagnosis</h1>
-</div>
-
-<div class="custom-field mt-4 mb-3 mx-5">
-    <label> Diagnosis: </label> <br/>
-    <textarea id="diagnosisInput" onChange={getDiagnosis} cols='100' rows='1' placeholder="Please enter the diagnosis.">
-    </textarea>
-</div>
-
-<div class="custom-field mt-4 mb-3 mx-5">
-    <label> Description: </label> <br/>
-    <textarea id="descriptionInput" onChange={getDescription} cols='100' rows='5' placeholder="Please enter the description of the diagnosis.">
-    </textarea>
-</div>
-<div class="button mx-5">
-    <button onClick={clickButton}>Submit</button>
-</div>
-</div>
-</div>
-: <a href="/">You are not authorized to view this page. Return to Login</a>}
-</div> */}

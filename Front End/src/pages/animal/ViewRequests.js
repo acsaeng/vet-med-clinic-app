@@ -5,7 +5,7 @@ import  '../../styling/Scrollbox.css';
 // Requires npm install axios --save
 import React from 'react'
 
-
+// different view of the page depending on the user's type
 import RequestViewByAdmin from '../../components/RequestViewByAdmin.js';
 import RequestViewByHealthTechnician from '../../components/RequestViewByHealthTechnician.js';
 import RequestViewByTeachingTechnician from '../../components/RequestViewByTeachingTechnician.js';
@@ -21,8 +21,7 @@ function ViewRequests() {
     let allowView=false;
     if (userType === "Admin" || userType === "Animal Health Technician"  || userType === "Teaching Techncian"){allowView = true}
 
-
-
+    // Only allows Admins, Animal Health Technicians, or Teaching Technicians to access this page as per the hackathon
     return(
     
     <div className="main-container d-flex flex-column flex-grow-1">
@@ -48,7 +47,6 @@ function ViewRequests() {
                     <div class="ex1 mt-4 ms-5 w-75">
                         {userType === "Admin" ?
                             <RequestViewByAdmin/>: null
-                            // <Request_ViewByHealthTechnician/>
                         }
                         {userType === "Animal Health Technician" ?
                             <RequestViewByHealthTechnician/>: null

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, {Component} from "react"
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import {useLocation} from 'react-router-dom'
 
 export default class ConditionsList extends Component{
     
@@ -12,6 +11,7 @@ export default class ConditionsList extends Component{
         currUserID: localStorage.getItem("userID")
     };
 
+    // get all the diagnoses associated with an animal
     componentDidMount(){
         axios.get('http://localhost:8080/app/treatment/diagnosis/animalID='+this.state.animalID).then(
             res => {
@@ -20,12 +20,14 @@ export default class ConditionsList extends Component{
         )
     }
 
+    // Provide access to individual diagnoses for editing
     cardLink(diagnosis){
         var diagnosisID = diagnosis.diagnosisID.toString()
 
         return <a href={"/update-diagnosis/single?diagnosisID="+diagnosisID}>{diagnosis.diagnosis}</a>
     }
 
+    // Update the diagnosis in the database to Complete
     clickCompleteButton(diagnosis){
 
         var rightNow = new Date();
@@ -52,7 +54,7 @@ export default class ConditionsList extends Component{
     render(){
         return(
             <div className="overflow-auto">
-                {/* <div class="card text-black bg-basic mx-5 my-3"  style={{width: "30rem"}}> */}
+                    {/* display a message if an animal has no ongoing conditions */}
                     {(this.state.diagnosisList.length === 0) ? 
                         <div class="card text-black bg-basic mx-5 my-3"  style={{width: "30rem"}}>
                             <div class="card-header" >

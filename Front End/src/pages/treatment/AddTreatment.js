@@ -5,12 +5,11 @@ import AnimalNavbar from '../../components/AnimalNavbar';
 // Requires npm install axios --save
 import axios from 'axios';
 import React, {useState} from 'react'
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import jwt_decode from "jwt-decode";
 
 function AddTreatment() {
-    const Authenticated = useState(localStorage.getItem("Authenticated"))
-    // window.location.reload()
+
     const [treatment, setTreatment] = useState(null);
     const [description, setDescription] = useState(null);
     const treatmentStatus = "Ongoing";
@@ -22,17 +21,10 @@ function AddTreatment() {
     let decoded = jwt_decode(token)
     const [activeUserType, setType] = useState(decoded.sub);
     let allowView=false;
+    // Only allow Animal Health Technicians to view this page
     if (activeUserType === "Animal Health Technician"){allowView = true}
 
     let navigate = useNavigate();
-    // axios.get('http://localhost:8080/app/animal/'+animalID).then(
-    //     res => {
-    //         localStorage.setItem("animalID", res.data[0].animalID)
-    //         localStorage.setItem("animalName", res.data[0].animalName)
-    //         localStorage.setItem("animalSpecies", res.data[0].animalSpecies)
-    //         localStorage.setItem("animalStatus", res.data[0].animalStatus)
-    //     }
-    // )
 
     function getTreatment(treatment){
         setTreatment(treatment.target.value)
@@ -71,7 +63,7 @@ function AddTreatment() {
               console.log(res);
           }
         )
-
+        // navigate to health records when done
         navigate(`/health-records`)
         window.location.reload()
       }
@@ -93,6 +85,7 @@ function AddTreatment() {
         </div>
         <div className= "d-flex flex-column w-100">
             <AnimalNavbar />
+            {/* Only allow Animal Health Technicians to view this page */}
             { allowView ? 
             <div>
                 <h1 className="ms-5 mt-5">Add Treatment</h1>

@@ -5,7 +5,7 @@ import AnimalNavbar from '../../components/AnimalNavbar';
 // Requires npm install axios --save
 import axios from 'axios';
 import React, {useState, useEffect} from 'react'
-import {useLocation, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 import jwt_decode from "jwt-decode";
 
@@ -24,10 +24,12 @@ function RequestTreatment() {
     let decoded = jwt_decode(token)
     const [activeUserType, setType] = useState(decoded.sub);
     let allowView=false;
+    // Only Animal Care Attendants can request treatments
     if (activeUserType === "Animal Care Attendant"){allowView = true}
 
     let navigate = useNavigate();
 
+    // Get a list of all Animal Health Technicians from the database
     function GetStaffList(){
         useEffect(()=>{
             axios.get('http://localhost:8080/app/user/userType=Animal%20Health%20Technician').then(
@@ -44,7 +46,6 @@ function RequestTreatment() {
     function clickButton(event){
         event.preventDefault();
         document.getElementById("messageInput").value = ""
-        // console.log("From Clicking the button: " + selectedStaff + message)
         console.log(selectedStaff.map( (staff) => staff ) + " " + message)
         sendRequest(event)
     }
@@ -70,6 +71,7 @@ function RequestTreatment() {
         window.location.reload()
       }
 
+    // Get the selected Animal Health Technicians from the list
     function handleChange(e){
         let value = Array.from(e.target.selectedOptions, option => option.value);
         setSelectedStaff(value);
@@ -79,11 +81,8 @@ function RequestTreatment() {
 
   return (
     
-    <div className="main-container d-flex flex-column flex-grow-1">
-        
+    <div className="main-container d-flex flex-column flex-grow-1"> 
         {GetStaffList()}
-
-        {/* { allowView ?  */}
         <div className="d-flex w-100 h-100">
             <div className="sidebar">
                 <Sidebar />
@@ -94,6 +93,7 @@ function RequestTreatment() {
             
             <div className= "d-flex flex-column w-100">
                 <AnimalNavbar />
+                {/* Only allow Animal Care Attendants to view this page */}
                 { allowView ? 
                 <div>
                     <h1 className="ms-5 mt-5 mb-5">Request Treatment</h1>
@@ -125,45 +125,3 @@ function RequestTreatment() {
 }
 
 export default RequestTreatment;
-
-            
-            {/* { Authenticated ==="isAuthenticated" ? 
-            <div className="d-flex w-100 h-100">
-                {(event) => singleRefresh(event)}
-                <div className="sidebar">
-                    <Sidebar />
-                </div>
-
-                <div className="placeholder">
-                    <Sidebar />
-                </div>
-            <div className= "d-flex flex-column">
-            <div>
-                <AnimalNavbar />
-            </div>
-            <div className="d-flex mx-3">
-              <h1>Request Treatment</h1>
-            </div>
-
-            <div className="d-flex mt-3 mx-3">
-                <h6> This request will be sent from {requesterFirstName} {requesterLastName}. </h6> 
-            </div>
-            
-            <div className="px-3 py-2">
-                <label> Animal Health Technician Requested: </label> <br/>
-                    <textarea id="requestForInput" onChange={getRequestFor} cols='100' rows='1' 
-                    placeholder="Please enter the animal health technician you would like to send a request to.">
-                </textarea>
-            </div> 
-
-            <div class="custom-field mt-4 mb-3 mx-3">
-                <label> Message: </label> <br/>
-                <textarea id="messageInput" onChange={getMessage} cols='100' rows='5' placeholder="Please enter the message for your request.">
-                </textarea>
-            </div>
-            <div class="button mx-3">
-                <button onClick={clickButton}>Submit</button>
-            </div>
-            </div>
-            </div>
-            : <a href="/">You are not authorized to view this page. Return to Login</a>} */}

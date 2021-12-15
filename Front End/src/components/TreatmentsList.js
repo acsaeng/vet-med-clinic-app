@@ -1,9 +1,8 @@
 import axios from 'axios';
 import React, {Component} from "react"
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import {useLocation} from 'react-router-dom'
 
-
+// Creates a list of treatments associated with an animal for the Health Records page
 export default class TreatmentsList extends Component{
     
     state = {
@@ -13,6 +12,7 @@ export default class TreatmentsList extends Component{
         currUserID: localStorage.getItem("userID")
     };
 
+    // Get all the treatments associated with an animal from the database
     componentDidMount(){
         axios.get('http://localhost:8080/app/treatment/protocol/animalID='+this.state.animalID).then(
             res => {
@@ -21,12 +21,13 @@ export default class TreatmentsList extends Component{
         )
     }
 
+    // Links each one to an update page
     cardLink(treatment){
         var treatmentID = treatment.treatmentID.toString()
-
         return <a href={"/update-treatment/single?treatmentID="+treatmentID}>{treatment.treatment}</a>
     }
 
+    // marks a treatment as complete in the database
     clickCompleteButton(treatment){
 
         var rightNow = new Date();
@@ -53,7 +54,7 @@ export default class TreatmentsList extends Component{
     render(){
         return(
             <div className="overflow-auto">    
-                {/* <div class="card text-black bg-basic mx-5 my-3"  style={{width: "30rem"}}> */}
+                {/* Display a message if there are no ongoing treatments associated with the animal  */}
                     {(this.state.treatmentList.length === 0) ? 
                         <div class="card text-black bg-basic mx-5 my-3"  style={{width: "30rem"}}>
                             <div class="card-header" >

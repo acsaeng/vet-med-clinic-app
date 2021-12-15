@@ -53,8 +53,8 @@ The Postman API platform was used to test all of the created API endpoints. The 
 The following Postman collection files includes the API request test to the following endpoints:
 - Status - `Back End/api-testing/old-tests/postman-collections/status.postman_collection.json` 
 - Reminders - `Back End/api-testing/old-tests/postman-collections/reminders.postman_collection.json` 
-- Comments - `Back End/api-testing/old-tests End/postman-tests/comments.postman_collection.json` 
-- Photos - `Back End/api-testing/old-tests End/postman-tests/photos.postman_collection.json` 
+- Comments - `Back End/api-testing/old-tests/postman-tests/comments.postman_collection.json` 
+- Photos - `Back End/api-testing/old-tests/postman-tests/photos.postman_collection.json` 
 
 These were setup where each object generates a random UUID pertaining to a specific animal that is created whenever the object is created. As a result, the Postman requests that involve using a specific animal UUID in the path (`GET`, `PUT`, and `DELETE` requests where the UUID is included) do not work for new executions of the requests.
 
@@ -88,4 +88,4 @@ The integration of the frontend and backend was completed by implementing the ne
 
 The functionality of the complete application is presented in the video demonstration by following the link below. The narrator of each clip in the video reflects the group member who contributed to that specific page or feature of the application. If you have any questions about anything related to this project feel free to contact any of the team members.
 
-Link to video demonstration: https://drive.google.com/file/d/1XIvUHj0f0U_hZABqPLSV2sw8Q5RQ5Tc6/view?usp=sharing
+[Link to video demonstration](https://drive.google.com/file/d/1XIvUHj0f0U_hZABqPLSV2sw8Q5RQ5Tc6/view?usp=sharing)

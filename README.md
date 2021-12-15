@@ -42,7 +42,7 @@ API endpoints were developed for each user story that required one. The table be
 
 Exception handling covering some basic exceptions were also completed. The associated files can be found in `vetapp/src/main/java/group825/vetapp/exceptions`.
 
-## Testing
+## API Testing
 
 ### Postman 
 

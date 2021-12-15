@@ -86,6 +86,9 @@ The backend of this application was completed by connecting the API endpoints es
 ### Integration
 The integration of the frontend and backend was completed by implementing the necessary requests from the pages in the frontend to the correct API calls in the backend in order to access the database information. Each page of the application is fully functional and each action taken on the frontend correspond to the updates made in the backend and database. Note that the necessary .jar files for the email feature can be found in `Back End/email-files`. 
 
+## Video Demonstration
 The functionality of the complete application is presented in the video demonstration by following the link below. The narrator of each clip in the video reflects the group member who contributed to that specific page or feature of the application. If you have any questions about anything related to this project feel free to contact any of the team members.
 
-[Link to video demonstration](https://drive.google.com/file/d/1XIvUHj0f0U_hZABqPLSV2sw8Q5RQ5Tc6/view?usp=sharing)
+Links:
+- [Watch the video on YouTube](https://youtu.be/6N30jf35RW0)
+- [Save the video on Google Drive](https://drive.google.com/file/d/1XIvUHj0f0U_hZABqPLSV2sw8Q5RQ5Tc6/view?usp=sharing)

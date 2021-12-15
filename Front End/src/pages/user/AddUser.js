@@ -8,10 +8,9 @@ import axios from 'axios';
 function AddUser() {
     const [userInfo, setUserInfo] = useState({});
 
+    // Request to add a user to the database
     function handleSubmit(event) {
         event.preventDefault();
-
-        
 
         axios.post("http://localhost:8080/app/user/add-user", userInfo)
         .then(res => {
@@ -23,8 +22,9 @@ function AddUser() {
         alert("User added")
         window.location.reload()
     }
-    
-  return (
+
+    // Form to add a new user
+    return (
         <div className="d-flex w-100 h-100">
             <div className="sidebar">
                 <Sidebar />
@@ -92,12 +92,8 @@ function AddUser() {
                                 <div className="w-50 mx-5"></div>
                                 <button className="btn btn-secondary px-4 py-2 mx-5 my-4" type="submit">Submit</button>
                             </div>
-
                         </form>
-
-
             </div>
-        
         </div>  
     );
 }

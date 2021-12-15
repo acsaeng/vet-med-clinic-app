@@ -16,8 +16,7 @@ function EditUser() {
     const [activeStatus, setActiveStatus] = useState();
     const [startDate, setStartDate] = useState();
 
-    
-
+    // Sends a request to search for a user in the database
     function handleSearch(event) {
         event.preventDefault();
         axios.get("http://localhost:8080/app/user/edit-user/" + userId)
@@ -41,6 +40,7 @@ function EditUser() {
         .catch(err => console.log(err));
     }
 
+    // Sends a request to update a user in the database
     function handleSubmit(event) {
         event.preventDefault();
         
@@ -57,8 +57,9 @@ function EditUser() {
         alert("User updated")
         window.location.reload()
     }
-    
-  return (
+
+    // Form to update a user
+    return (
         <div className="d-flex w-100 h-100">
             <div className="sidebar">
                 <Sidebar />

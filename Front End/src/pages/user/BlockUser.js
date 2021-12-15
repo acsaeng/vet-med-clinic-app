@@ -7,6 +7,7 @@ import axios from 'axios';
 function BlockUser() {
     const [userId, setUserId] = useState();
 
+    // Sends request to block a user in the database
     function handleSubmit(event) {
         event.preventDefault();
         axios.put("http://localhost:8080/app/user/block-user/" + userId);
@@ -15,7 +16,8 @@ function BlockUser() {
         window.location.reload()
     }
     
-  return (
+    // Form to block a user
+    return (
         <div className="d-flex w-100 h-100">
             <div className="sidebar">
                 <Sidebar />
@@ -40,10 +42,7 @@ function BlockUser() {
                                 <button className="btn btn-secondary px-4 py-2 mx-5 my-3" type="submit">Submit</button>
                         </div>
                     </form>
-
-
             </div>
-        
         </div>  
     );
 }

@@ -6,13 +6,14 @@ import ucvmLogo from "../../images/ucvm-logo-lg.png";
 
 
 const Login = () => {
+    // Hooks to get the username and password state
     const [usernameEntered, setUsername] = useState("");
     const [passwordEntered, setPassword] = useState("");
     window.localStorage.clear();
-    // localStorage.setItem("Authenticated", false)
     
     let navigate = useNavigate();
 
+    // Sends request to log in and authenticate the user
     function handleSubmit(event) {
         event.preventDefault();
 
@@ -21,11 +22,11 @@ const Login = () => {
             userName: usernameEntered,
             password: passwordEntered
             }}).then(
-                res=>{try{
-                    console.log(res.data)
-                    localStorage.setItem("token", res.data)
-                    window.location.reload()
-                    }catch{
+                res=>{ try {
+                        console.log(res.data)
+                        localStorage.setItem("token", res.data)
+                        window.location.reload()
+                    } catch{
                         window.location.reload()
                     }
                 }
@@ -48,29 +49,22 @@ const Login = () => {
               res => {
                   console.log(res.data);
                 let user = res.data
-                // console.log(user.firstName)
+
                 if (user.firstName === ""){ //if null
                     alert("Invalid username and/or password");
                 } else{
                     localStorage.setItem("userID", user.id)
                     localStorage.setItem("userFirstName", user.firstName)
                     localStorage.setItem("userLastName", user.lastName)
-                    // localStorage.setItem("userType", user.userType)
                     localStorage.setItem("email", user.email)
                     localStorage.setItem("phoneNum", user.phoneNum)
-                    // localStorage.setItem("Authenticated", "isAuthenticated")
-                    // navigate(`/home?requesterID=${user.id}&requesterFirstName=${user.firstName}&requesterLastName=${user.lastName}&userType=${user.userType.replace(" ", "%20")}`)
                     navigate(`/home`)
                     window.location.reload()
                 }
             })
-        
-        
-
-        
     }
 
-
+    // Displays the login page to the user
     return (
         <div className="d-flex flex-column vertical-center border border-4 border-dark bg-light shadow">
 

@@ -129,11 +129,14 @@ public class AnimalRepository {
 			}
 
 			animal.setAnimalID(rows);
+			animal.setNameLength(animal.getName().length());
+			animal.setSearchKeyName(SearchKey.generateSearchKey(animal.getName()));
+			
 
 			// Execute SQL query to add new animal
 			statement = this.dao.prepareStatement("INSERT INTO ANIMAL (Animal_ID, Animal_Name, " +
 					"Species, Breed, Tattoo_Num, City_Tattoo, Birth_Date, Sex, RFID, Microchip, Health_Status, " +
-					"Availability_Status, Colour, Additional_Info) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					"Availability_Status, Colour, Additional_Info, Length_Name, SearchKey_Name) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			statement.setInt(1, animal.getAnimalID());
 			statement.setString(2, animal.getName());
@@ -149,6 +152,8 @@ public class AnimalRepository {
 			statement.setBoolean(12, animal.isAvailabilityStatus());
 			statement.setString(13, animal.getColour());
 			statement.setString(14, animal.getAdditionalInfo());
+			statement.setInt(15, animal.getNameLength());
+			statement.setString(16, animal.getSearchKeyName());
 
 			statement.executeUpdate();
 			statement.close();

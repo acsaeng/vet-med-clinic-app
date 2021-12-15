@@ -50,7 +50,7 @@ CREATE TABLE ANIMAL (
     Health_Status			varchar(50) not null, 
     Availability_Status		boolean,
     Colour					varchar(50) not null,
-    Additional_Info			varchar(50) not null,
+    Additional_Info			varchar(50) ,
 	Length_Name			 	integer not null,
 	SearchKey_Name			varchar(150) not null,
 

@@ -1,0 +1,224 @@
+{
+	"info": {
+		"_postman_id": "d7b99218-da80-4d34-b850-a95c0610222e",
+		"name": "animal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/app/animal",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/app/animal",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"app",
+						"animal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/app/animal",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"e9b56d37-f058-40a5-ba2c-e2a62b433186\",\r\n    \"name\": \"Luna\",\r\n    \"type\": \"Cat\",\r\n    \"species\": \"Siamese\",\r\n    \"sex\": \"F\",\r\n    \"weight\": 5.3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/app/animal",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"app",
+						"animal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/app/animal",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/app/animal",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"app",
+						"animal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/app/animal/e9b56d37-f058-40a5-ba2c-e2a62b433186",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/app/animal/e9b56d37-f058-40a5-ba2c-e2a62b433186",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"app",
+						"animal",
+						"e9b56d37-f058-40a5-ba2c-e2a62b433186"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/app/animal",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/app/animal",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"app",
+						"animal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/app/animal",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"4ca69a6d-e51e-447e-ba65-8ddd47fab140\",\r\n    \"name\": \"Rosie\",\r\n    \"type\": \"Dog\",\r\n    \"species\": \"Shih Tzu\",\r\n    \"sex\": \"F\",\r\n    \"weight\": 4.4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/app/animal",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"app",
+						"animal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/app/animal",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/app/animal",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"app",
+						"animal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/app/animal/search?name=Rosie",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/app/animal/search?name=Rosie",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"app",
+						"animal",
+						"search"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Rosie"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/app/animal/search?id=e9b56d37-f058-40a5-ba2c-e2a62b433186",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/app/animal/search?id=e9b56d37-f058-40a5-ba2c-e2a62b433186",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"app",
+						"animal",
+						"search"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "e9b56d37-f058-40a5-ba2c-e2a62b433186"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

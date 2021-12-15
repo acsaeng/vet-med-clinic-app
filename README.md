@@ -13,12 +13,13 @@
 In collaboration with the Veterinary School of Medicine, the objective of this project is to create a full stack web application to use in the daily operations of their department. It serves to address three important areas - user management, animal management, add treatment process. This application will be primarily used by administrators and staff that service the animals. As such, an interface that meets the requirements of being both functional and user-friendly needs to be developed.
 
 ### Process
-The first four out of five sprint for this project have been completed:
+All five sprint for this project have been completed:
 
 1. [Developing epics and user stories](https://uofeng607825.atlassian.net/jira/software/projects/VET/boards/1/roadmap)
 2. [Designing wireframes](https://www.figma.com/file/xP4gjKlYZXzneQGNvUFXYK/ENSF-607---Term-Project-Wireframes?node-id=0%3A1)
 3. Designing the API
-4. Frontend and Backend
+4. Developing the Frontend and Backend
+5. Integrating the Frontend and Backend
 
 The contents of this repository address the deliverables completed in the third sprint and are described in the following sections.
 
@@ -52,8 +53,8 @@ The Postman API platform was used to test all of the created API endpoints. The 
 The following Postman collection files includes the API request test to the following endpoints:
 - Status - `testing/postman-collections/status.postman_collection.json` 
 - Reminders - `testing/postman-collections/reminders.postman_collection.json` 
-- Comments - `testing/postman-collections/comments.postman_collection.json` 
-- Photos - `testing/postman-collections/photos.postman_collection.json` 
+- Comments - `Back End/postman-tests/comments.postman_collection.json` 
+- Photos - `Back End/postman-tests/photos.postman_collection.json` 
 
 These were setup where each object generates a random UUID pertaining to a specific animal that is created whenever the object is created. As a result, the Postman requests that involve using a specific animal UUID in the path (`GET`, `PUT`, and `DELETE` requests where the UUID is included) do not work for new executions of the requests.
 
@@ -82,6 +83,10 @@ The pages for the front end were completed using the React framework. A page for
 ### Backend
 The backend of this application was completed by connecting the API endpoints established in the previous sprint to a corresponding query for accessing information in the database. All user stories were addressed in this way and each endpoint call was tested once again using Postman. The files for the backend portion of this project can be found in `Back End/`. 
 
-## Include the jar files for sending emails
+### Integration
+The integration of the frontend and backend was completed by implementing the necessary requests from the pages in the frontend to the correct API calls to the database in the backend. Each page of the application is fully functional and the actions made on the frontend fully correspond to the updates made to the backend and database. Note that the necessary .jar files for the email feature can be found in `Back End/email-files`. 
 
-Necessary jar files are included in a zipped folder in `Back End/email-files`
+The functionality of the complete application is presented in the video demonstration by following the link below. The narrator of each clip in the video reflects the group member who contributed to that specific page or feature of the application. If you have any questions about anything related to this project feel free to contact any of the team members.
+
+Link to video demonstration:
+

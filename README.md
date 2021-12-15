@@ -29,16 +29,16 @@ API endpoints were developed for each user story that required one. The table be
 
 | User Story                                                                | File Path                                                    |
 | ------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| `VET-36`</br>`VET-42`</br>`VET-43`                                        | `vetapp/src/main/java/group825/vetapp/animal`                |
-| `VET-24`</br>`VET-45`                                                     | `vetapp/src/main/java/group825/vetapp/animal/comments`       |
-| `VET-25`</br>`VET-46`                                                     | `vetapp/src/main/java/group825/vetapp/animal/photos`         |
-| `VET-38`                                                                  | `vetapp/src/main/java/group825/vetapp/animal/reminders`      |
-| `VET-33`                                                                  | `vetapp/src/main/java/group825/vetapp/animal/request`        |
-| `VET-15`                                                                  | `vetapp/src/main/java/group825/vetapp/animal/status`         |
-| `VET-25`                                                                  | `vetapp/src/main/java/group825/vetapp/animal/weight_history` |
-| `VET-31`                                                                  | `vetapp/src/main/java/group825/vetapp/treatment/diagnosis`   |
-| `VET-28`</br>`VET-32`                                                     | `vetapp/src/main/java/group825/vetapp/treatment/protocol`    |
-| `VET-19`</br>`VET-21`</br>`VET-22`</br>`VET-23`</br>`VET-40`</br>`VET-44` | `vetapp/src/main/java/group825/vetapp/user`                  |
+| `VET-36`</br>`VET-42`</br>`VET-43`                                        | `Back End/vetapp2/src/main/java/group825/vetapp/animal`                |
+| `VET-24`</br>`VET-45`                                                     | `Back End/vetapp2/src/main/java/group825/vetapp/animal/comments`       |
+| `VET-25`</br>`VET-46`                                                     | `Back End/vetapp2/src/main/java/group825/vetapp/animal/photos`         |
+| `VET-38`                                                                  | `Back End/vetapp2/src/main/java/group825/vetapp/animal/reminders`      |
+| `VET-33`                                                                  | `Back End/vetapp2/src/main/java/group825/vetapp/animal/request`        |
+| `VET-15`                                                                  | `Back End/vetapp2/src/main/java/group825/vetapp/animal/status`         |
+| `VET-25`                                                                  | `Back End/vetapp2/src/main/java/group825/vetapp/animal/weight_history` |
+| `VET-31`                                                                  | `Back End/vetapp2/src/main/java/group825/vetapp/treatment/diagnosis`   |
+| `VET-28`</br>`VET-32`                                                     | `Back End/vetapp2/src/main/java/group825/vetapp/treatment/protocol`    |
+| `VET-19`</br>`VET-21`</br>`VET-22`</br>`VET-23`</br>`VET-40`</br>`VET-44` | `Back End/vetapp2/src/main/java/group825/vetapp/user`                  |
 
 Exception handling covering some basic exceptions were also completed. The associated files can be found in `vetapp/src/main/java/group825/vetapp/exceptions`.
 
@@ -46,15 +46,15 @@ Exception handling covering some basic exceptions were also completed. The assoc
 
 ### Postman 
 
-The Postman API platform was used to test all of the created API endpoints. The Postman collections containing the tested requests are located in the `testing/postman-collections` folder in JSON format.
+The Postman API platform was used to test all of the created API endpoints. The Postman collections containing the tested requests are located in the `Back End/api-testing/old-tests/postman-collections` folder in JSON format.
 
 #### Note
 
 The following Postman collection files includes the API request test to the following endpoints:
-- Status - `testing/postman-collections/status.postman_collection.json` 
-- Reminders - `testing/postman-collections/reminders.postman_collection.json` 
-- Comments - `Back End/postman-tests/comments.postman_collection.json` 
-- Photos - `Back End/postman-tests/photos.postman_collection.json` 
+- Status - `Back End/api-testing/old-tests/postman-collections/status.postman_collection.json` 
+- Reminders - `Back End/api-testing/old-tests/postman-collections/reminders.postman_collection.json` 
+- Comments - `Back End/api-testing/old-tests End/postman-tests/comments.postman_collection.json` 
+- Photos - `Back End/api-testing/old-tests End/postman-tests/photos.postman_collection.json` 
 
 These were setup where each object generates a random UUID pertaining to a specific animal that is created whenever the object is created. As a result, the Postman requests that involve using a specific animal UUID in the path (`GET`, `PUT`, and `DELETE` requests where the UUID is included) do not work for new executions of the requests.
 
@@ -68,7 +68,7 @@ Another bug with the endpoints are the `DELETE` request can be sent multiple tim
 
 ### Example Tests
 
-Some example API endpoint tests that walk through the following user stories can be can be viewed in `testing/example_tests.pdf`. 
+Some example API endpoint tests that walk through the following user stories can be can be viewed in `Back End/api-testing/old-tests/example_tests.pdf`. 
 - Status (`VET-15`)
 - Reminders (`VET-38`)
 - Comments (`VET-24` and `VET-45`)
@@ -84,9 +84,8 @@ The pages for the front end were completed using the React framework. A page for
 The backend of this application was completed by connecting the API endpoints established in the previous sprint to a corresponding query for accessing information in the database. All user stories were addressed in this way and each endpoint call was tested once again using Postman. The files for the backend portion of this project can be found in `Back End/`. 
 
 ### Integration
-The integration of the frontend and backend was completed by implementing the necessary requests from the pages in the frontend to the correct API calls to the database in the backend. Each page of the application is fully functional and the actions made on the frontend fully correspond to the updates made to the backend and database. Note that the necessary .jar files for the email feature can be found in `Back End/email-files`. 
+The integration of the frontend and backend was completed by implementing the necessary requests from the pages in the frontend to the correct API calls in the backend in order to access the database information. Each page of the application is fully functional and each action taken on the frontend correspond to the updates made in the backend and database. Note that the necessary .jar files for the email feature can be found in `Back End/email-files`. 
 
 The functionality of the complete application is presented in the video demonstration by following the link below. The narrator of each clip in the video reflects the group member who contributed to that specific page or feature of the application. If you have any questions about anything related to this project feel free to contact any of the team members.
 
-Link to video demonstration:
-
+Link to video demonstration: https://drive.google.com/file/d/1XIvUHj0f0U_hZABqPLSV2sw8Q5RQ5Tc6/view?usp=sharing

@@ -16,6 +16,7 @@ const Login = () => {
     function handleSubmit(event) {
         event.preventDefault();
 
+        //get the jwt token and save it in local storage
         axios.get('http://localhost:8080/app/authenticate/', {params: { 
             userName: usernameEntered,
             password: passwordEntered
@@ -30,6 +31,7 @@ const Login = () => {
                 }
             )
 
+        //include the token in the header of all axios requests to the api
         axios.interceptors.request.use(
                 config =>{
                     config.headers.authorization = `Bearer ${localStorage.getItem("token")}`

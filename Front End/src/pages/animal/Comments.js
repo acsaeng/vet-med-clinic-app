@@ -11,49 +11,36 @@ import {useLocation, useNavigate} from 'react-router-dom'
 import jwt_decode from "jwt-decode";
 
 
-//sample url: http://localhost:3000/animal-comments?animalID=101&withStudents=true
-//this link works
-//windows.hash issue was in the AnimalNavBar
 
 function Comments() {
     const [message, setData] = useState(null);
     const [originalVal, setOriginalVal] = useState(null);
-    // const [showStudents, setStudentToggle] = useState(true);
 
-    //resource: https://www.youtube.com/watch?v=Jppuj6M1sJ4
     const urlParams = new URLSearchParams(useLocation().search)
     const commentID = 1; //dummy value, commentID is updated on the backEnd before being saved
-    // const animalID = urlParams.get("animalID")
     const showStudents = urlParams.get("withStudents")==="true" ? true:false
-    // const authorID = urlParams.get("authorID")
-    // const firstName = urlParams.get("firstName").replace("%20"," ")
-    // const lastName = urlParams.get("lastName").replace("%20"," ")
-    // const activeUserType = urlParams.get("userType").replace("%20"," ")
+
 
     const animalID = localStorage.getItem("animalID")
     const authorID = localStorage.getItem("userID")
     const firstName = localStorage.getItem("userFirstName")
     const lastName = localStorage.getItem("userLastName")
-    // const activeUserType = localStorage.getItem("userType")
+
     let token = localStorage.getItem("token")
     let decoded = jwt_decode(token);
     const [activeUserType, setType] = useState(decoded.sub)
-    
 
-    
-
-    //https://stackoverflow.com/questions/62861269/attempted-import-error-usehistory-is-not-exported-from-react-router-dom
     let navigate = useNavigate();
     let currLocation = useLocation();
 
-    // console.log(useLocation())
-
+    //update the state on change
     function getData(val){
         setData(val.target.value)
         setOriginalVal(val.target.value)
         // console.warn(val.target.value)
       }
       
+      //when the enter key is hit, get the information and create new comment on database
       function handleKeyDown(event){
         
         if (event.key === 'Enter'){ 
@@ -65,6 +52,7 @@ function Comments() {
         }
       }
     
+      //when the submit button is clicked, get the information and create new comment on database
       function clickButton(event){
         event.preventDefault();
         setData(originalVal)
@@ -73,6 +61,7 @@ function Comments() {
         postNewComment(event)
       }
 
+      //create new comment on the database
       function postNewComment(event){
         event.preventDefault();
         var rightNow = new Date();
@@ -83,19 +72,6 @@ function Comments() {
         var AMPM = rightNow.getHours() >=12 ? "PM":"AM"
         var formattedMinutes = rightNow.getMinutes() < 10 ? "0"+rightNow.getMinutes().toString() : rightNow.getMinutes().toString()
         var dateTime = rightNow.getFullYear() + "-" + formatedMonth +"-" + formatedDay +" "+ hours12 +":"+ formattedMinutes +" "+ AMPM
-
-        // const comment = {
-        //   id:  parseInt(animalID),
-        //   commentId: commentID,
-        //   authorId:  parseInt(authorID),
-        //   timestamp: dateTime,
-        //   message: message,
-        //   firstName: firstName,
-        //   lastName: lastName,
-        //   userType: activeUserType
-        // }
-
-        // console.log(JSON.stringify(comment))
 
         axios.post('http://localhost:8080/app/comments/', {
           animalID:  parseInt(animalID),
@@ -114,6 +90,7 @@ function Comments() {
       window.location.reload()
       }
 
+      //change the url to either include or exclude student comments
       function toggle(){
         console.log("inside toggle()")
 
@@ -155,11 +132,9 @@ function Comments() {
         </div>      
         
         <div className="d-flex flex-column flex-grow-1 align-items-left mx-5 ps-5 w-75">
+            {/* {displays the cards within an autoscroll box} */}
             <div class="ex1">
             <CommentsList animalID={animalID} toggleStudent={showStudents} usertype={activeUserType} />
-              {/* {showStudents === true ?
-                <CommentsList animalID={animalID} toggleStudent={showStudents} />:
-                null} */}
             </div>
             <label className="d-flex flex-row custom-field">
                 <input className="form-control" id="commentInput" type="text" required onChange={getData} onKeyDown={handleKeyDown} size="100" placeholder="Enter a message" />

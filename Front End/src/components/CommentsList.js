@@ -4,18 +4,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class CommentsList extends Component{
     
-    
-
     state = {
         comments: [],
-        // animalID: 101,
         animalID : this.props.animalID,
         toggleStudent: this.props.toggleStudent,
         currUserType: this.props.usertype,
         currUserID: localStorage.getItem("userID"),
-        // navigate : useNavigate()
     };
 
+    //get all comments for one animal
     componentDidMount(){
         console.log(this.state.toggleStudent)
         axios.get('http://localhost:8080/app/comments/animal/'+this.state.animalID).then(
@@ -29,12 +26,12 @@ export default class CommentsList extends Component{
     }
     
 
-
-    
+    //Any user who is not a student or if the comment card belong to the current student user
+    //the user can then click on the comment card and delete the comment
     cardLink2(comment){
         var authorID = comment.authorID.toString()
         var commentID = comment.commentID.toString()
-        // console.log("redirectPath = "+'"'+"/comments/single?commentID="+commentID+'"')
+
         if (this.state.currUserType !== "Student" || this.state.currUserID === authorID){
             return <a href={"/comments/single?commentID="+commentID}>
                 {comment.firstName} {comment.lastName}, {comment.userType}
@@ -50,6 +47,7 @@ export default class CommentsList extends Component{
     render(){
         return(
             <div className="overflow-auto">
+            {/* {Create a card for each comment} */}
             {this.state.comments.map(comment => 
                 //If the comment belongs to student, display card as Orange, else display card as grey
                 (comment.userType === "Student" ) ?
@@ -67,7 +65,6 @@ export default class CommentsList extends Component{
                             <small className="text-muted-white">{comment.timestamp}</small>
                         </p>
                     </div>
-                    {/* </a> */}
                 </div>:null):
                 <div className="card bg-light mx-5 my-3" key={comment.commentID} style={{width: "50rem"}}>
                 <div className="card-header" >

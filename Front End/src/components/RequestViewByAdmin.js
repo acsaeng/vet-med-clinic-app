@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, {Component} from "react"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import BlankNavbar from './BlankNavbar';
 
 export default class RequestViewByAdmin extends Component{
 
@@ -13,12 +12,7 @@ export default class RequestViewByAdmin extends Component{
 
     };
     
-    idxReq = {
-        "animalID":0 , "requestID":1 , "requesterID":2 , "requestDate":3 , "checkoutDate":4 , "returnDate":5 , 
-        "reason":6 , "requestStatus":7 , "requesterFirstName":8 , "requesterLastName":9 , "animalName":10 , 
-        "animalSpecies":11 
-    }
-
+    //get all requests
     componentDidMount(){
         // console.log(this.state.toggleStudent)
         axios.get('http://localhost:8080/app/request/').then(
@@ -30,12 +24,7 @@ export default class RequestViewByAdmin extends Component{
     }
 
 
-    clickTest = (e) =>{
-        e.preventDefault();
-        console.log(">> click is working")
-        
-    }
-
+    //update the status of the request status to accepted
     clickAccept(arrData){
         console.log(">>> Inside clickAccept()")
         console.log("request.requestID = " + arrData[this.idxReq.requestID])
@@ -61,6 +50,7 @@ export default class RequestViewByAdmin extends Component{
         window.location.reload()
     }
 
+    //Update the status of the request to be Rejected
     clickReject(arrData){
         console.log(">>> Inside clickREject()")
         console.log("request.requestID = " + arrData[this.idxReq.requestID])
@@ -89,8 +79,8 @@ export default class RequestViewByAdmin extends Component{
     render(){
         return(
             <div className="overflow-auto">
+                {/* {Load each request as a card} */}
                 {this.state.allRequests.map(request => 
-                // currentRequest = [request.requestID]
                 (request.requestStatus === "Pending" ) ? //Admin will only see the Requests which have a status of "Pending"
                     <div class="card bg-light mx-5 my-3" key={request.requestID} style={{width: "50rem"}}>
                         <div class="card-header" >
@@ -110,11 +100,8 @@ export default class RequestViewByAdmin extends Component{
                                     <p> {request.reason} </p>
                                 </div>
                                 <div className="d-flex flex-column px-5 py-4 align-right">
-                                        {/* <button tasks={this.clickTest()}>testing</button> */}
-                                        {/* <button onclick={(e) => this.clickTest(e)}>Accept</button> */}
                                         <button className="btn btn-secondary" onClick={() => this.clickAccept([request.animalID, request.requestID, request.requesterID, request.requestDate, request.checkoutDate, request.returnDate, request.reason, request.requestStatus, request.requesterFirstName, request.requesterLastName, request.animalName, request.animalSpecies])}>ACCEPT</button>
                                         <p/>
-                                        {/* <button onclick={(e) => this.clickTest(e)}>Reject</button> */}
                                         <button className="btn btn-secondary" onClick={() => this.clickReject([request.animalID, request.requestID, request.requesterID, request.requestDate, request.checkoutDate, request.returnDate, request.reason, request.requestStatus, request.requesterFirstName, request.requesterLastName, request.animalName, request.animalSpecies])}>REJECT</button>
                                         
                                     </div>

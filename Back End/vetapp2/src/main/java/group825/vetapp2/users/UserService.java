@@ -122,13 +122,11 @@ public class UserService {
 
     /**
      * Sends an email to all the selected users
-<<<<<<< HEAD
-=======
      * @param selectedStaff = Arraylist of the selected staff user ids
      * @param message = message to be included in the email
      * @param subjectType = whether this email is for an alert or for a request for a treatment
      * @param currUserID = the user id of the user who has sent out the alert or the request for a treatment
->>>>>>> Combined-YongJunZhu
+
      */
     public int sendEmail(ArrayList<Integer> selectedStaff, String message, String subjectType, String currUserID) {
     	ArrayList<String> technicianEmails = new ArrayList<String>();

@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "localhost:8080/app/comments/animal/999",
+			"name": "localhost:8080/app/comments/animal/999 Copy 2",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -159,96 +159,6 @@
 						"comments",
 						"animal",
 						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8080/app/comments/animal/1",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"id\": 102,\r\n        \"commentId\": 1,\r\n        \"authorId\": 4,\r\n        \"timestamp\": \"2021-11-17 10:50AM\",\r\n        \"message\": \"UPDATED the message inside commentId = 1!\",\r\n        \"firstName\": \"Bobby\",\r\n        \"lastName\": \"new\",\r\n        \"userType\": \"Student\"\r\n    }\r\n\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/app/comments/animal/1",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"app",
-						"comments",
-						"animal",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8080/app/comments/animal/1",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"id\": 102,\r\n        \"commentId\": 1,\r\n        \r\n        \"message\": \"UPDATED the message inside commentId = 1!\"\r\n    }\r\n\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/app/comments/animal/1",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"app",
-						"comments",
-						"animal",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8080/app/comments/animal/999",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"id\": 102,\r\n        \"commentId\": 999,\r\n        \"authorId\": 4,\r\n        \"timestamp\": \"2021-11-17 10:50AM\",\r\n        \"message\": \"UPDATED again??????? i hope not------\"\r\n    }\r\n\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/app/comments/animal/999",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"app",
-						"comments",
-						"animal",
-						"999"
 					]
 				}
 			},

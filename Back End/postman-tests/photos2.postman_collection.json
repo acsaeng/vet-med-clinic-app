@@ -6,39 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "localhost:8080/app/photos/animal/",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{   \r\n    \"reminderId\":\"105\",\r\n    \"status\":\"GOOD\",\r\n    \"dateDue\":\"2021-11-01\",\r\n    \"datePerformed\":\"2021-11-15\",\r\n    \"note\":\"removed splinter2222.\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/app/photos/animal/",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"app",
-						"photos",
-						"animal",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "localhost:8080/app/photos/animal/102",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -66,39 +33,6 @@
 						"photos",
 						"animal",
 						"102"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8080/app/photos/animal/999",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{   \r\n    \"reminderId\":\"105\",\r\n    \"status\":\"GOOD\",\r\n    \"dateDue\":\"2021-11-01\",\r\n    \"datePerformed\":\"2021-11-15\",\r\n    \"note\":\"removed splinter2222.\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/app/photos/animal/999",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"app",
-						"photos",
-						"animal",
-						"999"
 					]
 				}
 			},
@@ -159,96 +93,6 @@
 						"photos",
 						"animal",
 						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8080/app/photos/animal/1",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{   \r\n        \"id\":102,\r\n        \"photoId\" :1,\r\n        \"dateUploaded\" :\"2021-11-17 9:07PM\",\r\n        \"filepath\": \"src/resources/imag2.png\",\r\n        \"description\":\"pdated the description of the photo with id1\",\r\n        \"userId\":10\r\n}\r\n\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/app/photos/animal/1",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"app",
-						"photos",
-						"animal",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8080/app/photos/animal/999",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{   \r\n        \"id\":102,\r\n        \"photoId\" :999,\r\n        \"dateUploaded\" :\"2021-11-17 9:07PM\",\r\n        \"filepath\": \"src/resources/imag2.png\",\r\n        \"description\":\"pdated the description of the photo with id1\",\r\n        \"userId\":10\r\n}\r\n\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/app/photos/animal/999",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"app",
-						"photos",
-						"animal",
-						"999"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8080/app/photos/animal/3",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{   \r\n        \"id\":102,\r\n        \"photoId\" :3,\r\n        \"dateUploaded\" :\"2021-11-17 9:07PM\",\r\n\r\n        \"userId\":10\r\n}\r\n\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/app/photos/animal/3",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"app",
-						"photos",
-						"animal",
-						"3"
 					]
 				}
 			},
